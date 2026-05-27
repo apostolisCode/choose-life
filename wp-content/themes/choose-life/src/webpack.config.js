@@ -6,7 +6,7 @@ const {VueLoaderPlugin} = require('vue-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const installationUrl = 'http://localhost/choose-life/';
+const installationUrl = 'http://localhost/choose-life-donations/';
 
 const outputPath = '../assets';
 const srcPaths = {

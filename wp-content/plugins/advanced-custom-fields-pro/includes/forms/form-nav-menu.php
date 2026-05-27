@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -18,7 +27,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function __construct() {
 
 			// actions
@@ -44,7 +52,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   N/A
 		 * @return  N/A
 		 */
-
 		function admin_enqueue_scripts() {
 
 			// validate screen
@@ -71,7 +78,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   type $var Description. Default.
 		 * @return  type Description.
 		 */
-
 		function wp_nav_menu_item_custom_fields( $item_id, $item, $depth, $args, $id = '' ) {
 
 			// vars
@@ -136,7 +142,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function update_nav_menu( $menu_id ) {
 
 			// vars
@@ -168,7 +173,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function update_nav_menu_items( $menu_id ) {
 
 			// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
@@ -198,7 +202,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   type $var Description. Default.
 		 * @return  type Description.
 		 */
-
 		function wp_get_nav_menu_items( $items, $menu, $args ) {
 			acf_set_data( 'nav_menu_id', $menu->term_id );
 			return $items;
@@ -235,7 +238,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function acf_validate_save_post() {
 
 			// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified elsewhere.
@@ -266,7 +268,6 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function admin_footer() {
 
 			// vars
@@ -302,7 +303,7 @@ if ( ! class_exists( 'acf_form_nav_menu' ) ) :
 
 					echo '<div class="acf-menu-settings -' . esc_attr( $field_group['style'] ) . '">';
 
-					echo '<h2>' . esc_html( $field_group['title'] ) . '</h2>';
+					echo '<h2>' . acf_esc_html( acf_get_field_group_title( $field_group ) ) . '</h2>';
 
 					echo '<div class="acf-fields -left -clear">';
 

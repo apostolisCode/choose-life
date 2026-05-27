@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_button_group' ) ) :
 
@@ -16,7 +25,6 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -67,27 +75,45 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 
 				// append
 				$buttons[] = array(
-					'name'    => $field['name'],
-					'value'   => $_value,
-					'label'   => $_label,
-					'checked' => $checked,
+					'name'         => $field['name'],
+					'value'        => $_value,
+					'label'        => $_label,
+					'checked'      => $checked,
+					'button_group' => true,
 				);
 			}
+
 
 			// maybe select initial value
 			if ( ! $field['allow_null'] && $selected === null ) {
 				$buttons[0]['checked'] = true;
 			}
 
-			// div
-			$div = array( 'class' => 'acf-button-group' );
+			// Ensure roving tabindex when allow_null is enabled and no selection yet.
+			if ( $field['allow_null'] && $selected === null && ! empty( $buttons ) ) {
+				$buttons[0]['tabindex'] = '0';
+			}
 
-			if ( $field['layout'] == 'vertical' ) {
-				$div['class'] .= ' -vertical'; }
+			// div
+			$div = array(
+				'class' => 'acf-button-group',
+				'role'  => 'radiogroup',
+			);
+
+			// Add aria-labelledby if field has an ID for proper screen reader announcement
+			if ( ! empty( $field['id'] ) ) {
+				$div['aria-labelledby'] = $field['id'] . '-label';
+			}
+
+			if ( 'vertical' === $field['layout'] ) {
+				$div['class'] .= ' -vertical';
+			}
 			if ( $field['class'] ) {
-				$div['class'] .= ' ' . $field['class']; }
+				$div['class'] .= ' ' . $field['class'];
+			}
 			if ( $field['allow_null'] ) {
-				$div['data-allow_null'] = 1; }
+				$div['data-allow_null'] = 1;
+			}
 
 			// hdden input
 			$html .= acf_get_hidden_input( array( 'name' => $field['name'] ) );
@@ -224,7 +250,6 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 		 * @param   array $field The field array holding all the field options
 		 * @return  $field
 		 */
-
 		function update_field( $field ) {
 
 			return acf_get_field_type( 'radio' )->update_field( $field );
@@ -242,7 +267,6 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 		 * @param   array $field   The field array holding all the field options
 		 * @return  $value
 		 */
-
 		function load_value( $value, $post_id, $field ) {
 
 			return acf_get_field_type( 'radio' )->load_value( $value, $post_id, $field );
@@ -258,7 +282,6 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 		 * @param   array $field The field array holding all the field options
 		 * @return  $field
 		 */
-
 		function translate_field( $field ) {
 
 			return acf_get_field_type( 'radio' )->translate_field( $field );
@@ -276,7 +299,6 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 		 * @param   array $field   The field array holding all the field options
 		 * @return  $value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			return acf_get_field_type( 'radio' )->format_value( $value, $post_id, $field );
@@ -304,6 +326,17 @@ if ( ! class_exists( 'acf_field_button_group' ) ) :
 			}
 
 			return $schema;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'Text' );
 		}
 	}
 

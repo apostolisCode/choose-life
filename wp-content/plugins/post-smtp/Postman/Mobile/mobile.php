@@ -44,10 +44,12 @@ class Post_SMTP_Mobile {
 		
 		add_filter( 'post_smtp_sanitize', array( $this, 'sanitize' ), 10, 3 );
         add_filter( 'post_smtp_admin_tabs', array( $this, 'tabs' ), 11 );
-
-        include_once 'includes/rest-api/v1/rest-api.php';
-        include_once 'includes/controller/v1/controller.php';
-        include_once 'includes/email-content.php';
+       
+		include_once __DIR__ . '/includes/functions.php';
+        include_once __DIR__ . '/includes/rest-api/v1/rest-api.php';
+        include_once __DIR__ . '/includes/rest-api/v2/rest-api.php';
+        include_once __DIR__ . '/includes/controller/v1/controller.php';
+        include_once __DIR__ . '/includes/email-content.php';
         
         if( isset( $_GET['page'] ) && $_GET['page'] == 'postman/configuration' ) {
 			
@@ -83,11 +85,29 @@ class Post_SMTP_Mobile {
      * @version 1.0.0
      */
     public function add_menu() {
+
+        if( postman_is_bfcm() ) {
+
+            $menu_text = sprintf( 
+            '%s<span class="dashicons dashicons-smartphone">', 
+        __( 'Mobile App', 'post-smtp' )
+            );
+
+        }
+        else {
+
+            $menu_text = sprintf( 
+            '%s<span class="dashicons dashicons-smartphone"></span><span class="menu-counter">%s</span>', 
+        __( 'Mobile App', 'post-smtp' ), 
+                __( 'New', 'post-smtp' ) 
+            );
+
+        }
         
         add_submenu_page( 
             PostmanViewController::POSTMAN_MENU_SLUG, 
             __( 'Mobile Application', 'post-smtp' ), 
-            sprintf( '%s<span class="dashicons dashicons-smartphone"></span><span class="menu-counter">%s</span>', __( 'Mobile App', 'post-smtp' ), __( 'New', 'post-smtp' ) ),
+            $menu_text,
             'manage_options', 
             admin_url( 'admin.php?page=postman/configuration#mobile-app' ),
             '',
@@ -104,10 +124,32 @@ class Post_SMTP_Mobile {
      */
     public function tabs( $tabs ) {
         
-        $tabs['mobile-app'] = __( 'Mobile App', 'post-smtp' );
+        $tabs['mobile-app'] = sprintf( '<span class="dashicons dashicons-smartphone"></span> %s', __( 'Mobile App', 'post-smtp' ) );
 
         return $tabs;
         
+    }
+
+    /**
+     * Resolve which QR code class to use, without loading our phpqrcode lib if another plugin
+     * has already loaded one (avoids "Constant already defined" / "Cannot redeclare class").
+     *
+     * @since 2.7.0
+     * @return string|null Class name with static png() method, or null if none available.
+     */
+    private function get_qrcode_class() {
+        $candidates = array( 'QRcode', 'Yeekitqrcode' );
+        $candidates = apply_filters( 'post_smtp_qrcode_class_candidates', $candidates );
+        foreach ( $candidates as $class_name ) {
+            if ( class_exists( $class_name ) && method_exists( $class_name, 'png' ) ) {
+                return $class_name;
+            }
+        }
+        if ( defined( 'QR_MODE_NUL' ) || class_exists( 'qrstr' ) ) {
+            return null;
+        }
+        include_once dirname( __FILE__ ) . '/includes/phpqrcode/qrlib.php';
+        return class_exists( 'QRcode' ) ? 'QRcode' : null;
     }
 
     /**
@@ -118,14 +160,19 @@ class Post_SMTP_Mobile {
      */
     public function generate_qr_code() {
 
-        include_once 'includes/phpqrcode/qrlib.php';
+        $qr_class = $this->get_qrcode_class();
+        if ( $qr_class === null ) {
+            $this->qr_code = null;
+            return;
+        }
+
         $nonce = get_transient( 'post_smtp_auth_nonce' );
 		$authkey = $nonce ? $nonce : $this->generate_auth_key();
 		$site_title = get_bloginfo( 'name' );
         set_transient( 'post_smtp_auth_nonce', $authkey, 1800 );
         $endpoint = site_url( "?authkey={$authkey}&site_title={$site_title}" );
         ob_start();
-        QRcode::png( urlencode_deep( $endpoint ) );
+        $qr_class::png( urlencode_deep( $endpoint ) );
         $result_qr_content_in_png = ob_get_contents();
         ob_end_clean();
         // PHPQRCode change the content-type into image/png... we change it again into html
@@ -164,6 +211,8 @@ class Post_SMTP_Mobile {
      */
     public function section() {
 
+        $nonce = wp_create_nonce( 'ps-regenerate-qrcode-nonce' );
+
         //Incompatible server
         if( function_exists( 'ImageCreate' ) ):
         ?>
@@ -193,20 +242,22 @@ class Post_SMTP_Mobile {
                         And you are done👍.
                     </p>
                     <p>
-                        Want more details? Check out our complete guide <a href="https://postmansmtp.com/documentation/advance-functionality/postsmtp-mobile-app" target="_blank">Post SMTP Plugin with Mobile App</a>
+                        Want more details? Check out our complete guide <a href="https://postmansmtp.com/documentation/post-smtp-mobile-app/download-the-app-and-connect-with-plugin/?utm_source=plugin&utm_medium=settings" target="_blank">Post SMTP Plugin with Mobile App</a>
                     </p>
                 </div>
                 <div class="mobile-app-internal-box ps-qr-box" style="line-height: 30px;">
                     <?php 
                     if( !$this->app_connected ) {
-                        
-                        echo '<img src="data:image/jpeg;base64,'. $this->qr_code.'" width="300"/>'; 
-                        ?>
-                        <div>
-                            <a href="<?php echo esc_url( admin_url('admin-post.php?action=regenerate-qrcode') ); ?>"><?php _e( 'Regenerate QR Code', 'post-smtp' ) ?></a>
-                        </div>
-                        <?php
-
+                        if ( $this->qr_code !== null ) {
+                            echo '<img src="data:image/png;base64,' . esc_attr( $this->qr_code ) . '" width="300"/>';
+                            ?>
+                            <div>
+                                <a href="<?php echo esc_url( admin_url( "admin-post.php?action=regenerate-qrcode&_psnonce=$nonce" ) ); ?>"><?php _e( 'Regenerate QR Code', 'post-smtp' ) ?></a>
+                            </div>
+                            <?php
+                        } else {
+                            echo '<p>' . esc_html__( 'QR code is unavailable because another plugin has already loaded a conflicting QR code library. Please temporarily disable other plugins that use QR codes, or contact support.', 'post-smtp' ) . '</p>';
+                        }
                     }
 					else {
 						
@@ -372,6 +423,12 @@ class Post_SMTP_Mobile {
      * @version 1.0.0
      */
     public function regenerate_qrcode() {
+
+        if( ! isset( $_GET['_psnonce'] ) || ! wp_verify_nonce( $_GET['_psnonce'], 'ps-regenerate-qrcode-nonce' ) ) {
+
+            die( 'Security Check' );
+
+        }
 
         if( isset( $_GET['action'] ) && $_GET['action'] === 'regenerate-qrcode' ) {
 

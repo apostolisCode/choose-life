@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -19,7 +28,6 @@ if ( ! class_exists( 'ACF_Form_Gutenberg' ) ) :
 		 * @param   void
 		 * @return  void
 		 */
-
 		function __construct() {
 
 			// Add actions.

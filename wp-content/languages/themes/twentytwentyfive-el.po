@@ -1,0 +1,2004 @@
+# Translation of Themes - Twenty Twenty-Five in Greek
+# This file is distributed under the same license as the Themes - Twenty Twenty-Five package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2026-01-21 15:01:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: el_GR\n"
+"Project-Id-Version: Themes - Twenty Twenty-Five\n"
+
+#. Theme Name of the theme
+#: style.css patterns/footer-columns.php:66 patterns/footer-newsletter.php:42
+#: patterns/footer.php:75 patterns/page-portfolio-home.php:226
+#, gp-priority: high
+msgid "Twenty Twenty-Five"
+msgstr "Twenty Twenty-Five"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr "Υποσέλιδο"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr "Κεφαλίδα"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Contrast"
+msgstr "Αντίθεση"
+
+#: theme.json styles/02-noon.json styles/04-afternoon.json
+#: styles/05-twilight.json styles/06-morning.json styles/08-midnight.json
+#: styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-4.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font size name"
+msgid "Extra Large"
+msgstr "Πολύ Μεγάλο"
+
+#: theme.json styles/02-noon.json styles/04-afternoon.json
+#: styles/05-twilight.json styles/06-morning.json styles/08-midnight.json
+#: styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-4.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr "Μεγάλο"
+
+#: theme.json styles/02-noon.json styles/04-afternoon.json
+#: styles/05-twilight.json styles/06-morning.json styles/08-midnight.json
+#: styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-4.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr "Μεσαία"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Base"
+msgstr "Βασικό"
+
+#: styles/08-midnight.json styles/typography/typography-preset-7.json
+msgctxt "Font family name"
+msgid "Fira Sans"
+msgstr "Fira Sans"
+
+#: styles/03-dusk.json styles/typography/typography-preset-2.json
+msgctxt "Font family name"
+msgid "Vollkorn"
+msgstr "Vollkorn"
+
+#: styles/05-twilight.json styles/typography/typography-preset-4.json
+msgctxt "Font family name"
+msgid "Roboto Slab"
+msgstr "Roboto Slab"
+
+#: styles/04-afternoon.json styles/07-sunrise.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-6.json
+msgctxt "Font family name"
+msgid "Platypi"
+msgstr "Platypi"
+
+#: styles/04-afternoon.json styles/06-morning.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-5.json
+msgctxt "Font family name"
+msgid "Ysabeau Office"
+msgstr "Ysabeau Office"
+
+#: theme.json styles/03-dusk.json styles/typography/typography-preset-2.json
+msgctxt "Font family name"
+msgid "Fira Code"
+msgstr "Fira Code"
+
+#: styles/02-noon.json styles/06-morning.json styles/07-sunrise.json
+#: styles/08-midnight.json styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-6.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font family name"
+msgid "Literata"
+msgstr "Literata"
+
+#: theme.json styles/05-twilight.json
+#: styles/typography/typography-preset-4.json
+msgctxt "Font family name"
+msgid "Manrope"
+msgstr "Manrope"
+
+#: patterns/text-faqs.php:21
+msgctxt "Heading of the FAQs pattern."
+msgid "Frequently Asked Questions"
+msgstr "Συχνές Ερωτήσεις"
+
+#: patterns/template-single-offset.php:40
+#: patterns/template-single-photo-blog.php:36
+msgctxt "Prefix before the post date block."
+msgid "Published on"
+msgstr "Δημοσιεύθηκε στις"
+
+#: patterns/template-query-loop.php
+msgctxt "Pattern title"
+msgid "List of posts, 1 column"
+msgstr "Λίστα αναρτήσεων, 1 στήλη"
+
+#: styles/02-noon.json styles/typography/typography-preset-1.json
+msgctxt "Font family name"
+msgid "Beiruti"
+msgstr "Beiruti"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Sidebar"
+msgstr "Πλευρική Στήλη"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer Newsletter"
+msgstr "Ενημερωτικό δελτίο υποσέλιδου"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer Columns"
+msgstr "Στήλες υποσέλιδου"
+
+#: patterns/binding-format.php
+msgctxt "Pattern title"
+msgid "Post format name"
+msgstr "Όνομα μορφής άρθρου"
+
+#: patterns/banner-with-description-and-images-grid.php:23
+#: patterns/overlapped-images.php:37
+msgid "About Us"
+msgstr "Σχετικά με εμάς"
+
+#: patterns/cta-book-locations.php:43
+msgid "Australia"
+msgstr "Αυστραλία"
+
+#: patterns/cta-book-locations.php:23
+msgid "International editions"
+msgstr "Διεθνείς εκδόσεις"
+
+#: patterns/cta-book-locations.php
+msgctxt "Pattern description"
+msgid "A call to action section with links to get the book in the most popular locations."
+msgstr "Μια ενότητα κλήσης για ενέργεια με συνδέσμους για να αποκτήσετε το βιβλίο στις πιο δημοφιλείς τοποθεσίες."
+
+#: patterns/cta-book-locations.php
+msgctxt "Pattern title"
+msgid "Call to action with locations"
+msgstr "Κλήση με ενέργεια με τοποθεσίες"
+
+#: patterns/cta-book-links.php:57
+#: patterns/hero-overlapped-book-cover-with-links.php:100
+msgctxt "Pattern placeholder text with link."
+msgid "Outside Europe? View <a href=\"#\" rel=\"nofollow\">international editions</a>."
+msgstr "Εκτός Ευρώπης; Δείτε τις <a href=\"#\" rel=\"nofollow\">διεθνείς εκδόσεις</a>."
+
+#: patterns/cta-book-links.php:51
+msgctxt "Example brand name."
+msgid "Simon &amp; Schuster"
+msgstr "Simon &amp; Schuster"
+
+#: patterns/cta-book-links.php:47
+msgctxt "Example brand name."
+msgid "BAM!"
+msgstr "ΜΠΑΜ!"
+
+#: patterns/cta-book-links.php:43
+msgctxt "Example brand name."
+msgid "Spotify"
+msgstr "Spotify"
+
+#: patterns/cta-book-links.php:39
+msgctxt "Example brand name."
+msgid "Bookshop.org"
+msgstr "Bookshop.org"
+
+#: patterns/cta-book-links.php:35
+#: patterns/hero-overlapped-book-cover-with-links.php:62
+msgctxt "Example brand name."
+msgid "Apple Books"
+msgstr "Apple Books"
+
+#: patterns/cta-book-links.php:31
+#: patterns/hero-overlapped-book-cover-with-links.php:84
+msgctxt "Example brand name."
+msgid "Barnes &amp; Noble"
+msgstr "Barnes και Noble"
+
+#: patterns/cta-book-links.php:27
+#: patterns/hero-overlapped-book-cover-with-links.php:77
+msgctxt "Example brand name."
+msgid "Audible"
+msgstr "Audible"
+
+#: patterns/cta-book-links.php:23
+#: patterns/hero-overlapped-book-cover-with-links.php:55
+msgctxt "Example brand name."
+msgid "Amazon"
+msgstr "Amazon"
+
+#: patterns/cta-book-links.php:17
+msgid "Buy your copy of The Stories Book"
+msgstr "Αγοράστε το δικό σας αντίγραφο του The Stories Book"
+
+#: styles/sections/section-5.json
+msgctxt "Style variation name"
+msgid "Style 5"
+msgstr "Στυλ 5"
+
+#: styles/sections/section-4.json
+msgctxt "Style variation name"
+msgid "Style 4"
+msgstr "Στυλ 4"
+
+#: styles/sections/section-3.json
+msgctxt "Style variation name"
+msgid "Style 3"
+msgstr "Στυλ 3"
+
+#: styles/sections/section-2.json
+msgctxt "Style variation name"
+msgid "Style 2"
+msgstr "Στυλ 2"
+
+#: styles/sections/section-1.json
+msgctxt "Style variation name"
+msgid "Style 1"
+msgstr "Στυλ 1"
+
+#: styles/blocks/03-annotation.json
+msgctxt "Style variation name"
+msgid "Annotation"
+msgstr "Σχόλιο"
+
+#: styles/blocks/02-subtitle.json
+msgctxt "Style variation name"
+msgid "Subtitle"
+msgstr "Υπότιτλος"
+
+#: styles/blocks/01-display.json
+msgctxt "Style variation name"
+msgid "Display"
+msgstr "Απεικόνιση"
+
+#: patterns/cta-book-links.php
+msgctxt "Pattern description"
+msgid "A call to action section with links to get the book in different websites."
+msgstr "Μια ενότητα κλήσης για ενέργεια με συνδέσμους για να αποκτήσετε το βιβλίο σε διάφορους ιστότοπους."
+
+#: patterns/cta-book-links.php
+msgctxt "Pattern title"
+msgid "Call to action with book links"
+msgstr "Κλήση για ενέργεια με συνδέσμους βιβλίων"
+
+#: styles/05-twilight.json styles/colors/05-twilight.json
+msgctxt "Style variation name"
+msgid "Twilight"
+msgstr "Λυκόφως"
+
+#: patterns/contact-location-and-link.php:36
+msgid "The business location"
+msgstr "Η τοποθεσία της επιχείρησης"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 2"
+msgstr "Απόχρωση 2"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 1"
+msgstr "Απόχρωση 1"
+
+#: patterns/contact-location-and-link.php:26
+msgid "Get directions"
+msgstr "Λήψη Οδηγιών"
+
+#: patterns/contact-location-and-link.php:22
+msgid "Visit us at 123 Example St. Manhattan, NY 10300, United States"
+msgstr "Επισκεφθείτε μας στη διεύθυνση 123 Example St. Manhattan, NY 10300, Ηνωμένες Πολιτείες"
+
+#: patterns/contact-location-and-link.php
+msgctxt "Pattern description"
+msgid "Contact section with a location address, a directions link, and an image of the location."
+msgstr "Ενότητα επικοινωνίας με διεύθυνση τοποθεσίας, σύνδεσμο με οδηγίες και εικόνα της τοποθεσίας."
+
+#: patterns/contact-location-and-link.php
+msgctxt "Pattern title"
+msgid "Contact location and link"
+msgstr "Τοποθεσία και σύνδεσμος επικοινωνίας"
+
+#: patterns/contact-info-locations.php:86
+msgid "Portland"
+msgstr "Portland"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with large title"
+msgstr "Κεφαλίδα με μεγάλο τίτλο"
+
+#: patterns/text-faqs.php:83
+msgctxt "Question in the FAQs pattern."
+msgid "Are signed copies available?"
+msgstr "Υπάρχουν διαθέσιμα υπογεγραμμένα αντίγραφα;"
+
+#: patterns/text-faqs.php
+msgctxt "Pattern title"
+msgid "FAQs"
+msgstr "Συχνές Ερωτήσεις"
+
+#: styles/typography/typography-preset-7.json
+msgctxt "Style variation name"
+msgid "Literata & Fira Sans"
+msgstr "Literata & Fira Sans"
+
+#: styles/typography/typography-preset-6.json
+msgctxt "Style variation name"
+msgid "Platypi & Literata"
+msgstr "Platypi & Literata"
+
+#: styles/typography/typography-preset-5.json
+msgctxt "Style variation name"
+msgid "Literata & Ysabeau Office"
+msgstr "Literata & Ysabeau Office"
+
+#: styles/typography/typography-preset-4.json
+msgctxt "Style variation name"
+msgid "Roboto Slab & Manrope"
+msgstr "Roboto Slab & Manrope"
+
+#: styles/typography/typography-preset-3.json
+msgctxt "Style variation name"
+msgid "Platypi & Ysabeau Office"
+msgstr "Platypi & Ysabeau Office"
+
+#: patterns/template-single-photo-blog.php:79
+msgid "Next Photo"
+msgstr "Επόμενη Φωτογραφία"
+
+#: styles/typography/typography-preset-2.json
+msgctxt "Style variation name"
+msgid "Vollkorn & Fira Code"
+msgstr "Vollkorn & Fira Code"
+
+#: patterns/template-single-photo-blog.php:78
+msgid "Previous Photo"
+msgstr "Προηγούμενη Φωτογραφία"
+
+#: patterns/template-single-photo-blog.php:53
+msgctxt "Prefix before one or more categories. The categories are displayed in a separate block on the next line."
+msgid "Categories:"
+msgstr "Κατηγορίες:"
+
+#: patterns/template-single-photo-blog.php:42
+msgctxt "Prefix before the author name. The post author name is displayed in a separate block on the next line."
+msgid "Posted by"
+msgstr "Αναρτήθηκε από"
+
+#: patterns/template-single-left-aligned-content.php:31
+msgctxt "Prefix before the author name. The post author name is displayed in a separate block."
+msgid "by"
+msgstr "από"
+
+#: patterns/pricing-3-col.php:89 patterns/pricing-3-col.php:129
+msgid "Month"
+msgstr "Μήνας"
+
+#: patterns/contact-info-locations.php:74
+msgid "Salt Lake City"
+msgstr "Salt Lake City"
+
+#: patterns/contact-info-locations.php:62
+msgid "San Diego"
+msgstr "San Diego"
+
+#: patterns/contact-info-locations.php:54
+#: patterns/contact-info-locations.php:66
+#: patterns/contact-info-locations.php:78
+#: patterns/contact-info-locations.php:90
+msgid "123 Example St. Manhattan, NY 10300 United States"
+msgstr "123 Example St. Manhattan, NY 10300 Ηνωμένες Πολιτείες"
+
+#: patterns/contact-info-locations.php:51
+msgid "New York"
+msgstr "Νέα Υόρκη"
+
+#: patterns/contact-info-locations.php:41
+msgid "example@example.com"
+msgstr "example@example.com"
+
+#: patterns/contact-info-locations.php:38
+msgid "Email"
+msgstr "Email"
+
+#: patterns/contact-info-locations.php:35
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:44
+#: patterns/page-link-in-bio-with-tight-margins.php:56
+msgid "TikTok"
+msgstr "TikTok"
+
+#: patterns/contact-info-locations.php:34 patterns/footer-social.php:21
+msgid "Facebook"
+msgstr "Facebook"
+
+#: patterns/contact-info-locations.php:33 patterns/footer-social.php:22
+#: patterns/media-instagram-grid.php:24 patterns/page-cv-bio.php:47
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:36
+#: patterns/page-link-in-bio-with-tight-margins.php:48
+msgid "Instagram"
+msgstr "Instagram"
+
+#: patterns/contact-info-locations.php:32 patterns/footer-social.php:23
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:40
+#: patterns/page-link-in-bio-with-tight-margins.php:52
+msgctxt "Refers to the social media platform formerly known as Twitter."
+msgid "X"
+msgstr "X"
+
+#: patterns/pricing-2-col.php:34 patterns/pricing-3-col.php:37
+msgid "Free"
+msgstr "Δωρεάν"
+
+#: patterns/contact-info-locations.php:29
+#: patterns/contact-info-locations.php:31 patterns/footer-social.php:20
+msgid "Social media"
+msgstr "Κοινωνικά δίκτυα"
+
+#: patterns/contact-info-locations.php:21
+msgid "How to get in touch with us"
+msgstr "Πώς να έρθετε σε επαφή μαζί μας"
+
+#: patterns/page-cv-bio.php:47
+msgctxt "Link to a page with information about what the person is working on right now."
+msgid "Now"
+msgstr "Αυτή τη στιγμή"
+
+#: patterns/page-cv-bio.php:47
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: patterns/page-coming-soon.php:24
+msgid "Event"
+msgstr "Εκδήλωση"
+
+#: patterns/page-coming-soon.php
+msgctxt "Pattern title"
+msgid "Coming soon"
+msgstr "Έρχεται σύντομα"
+
+#: patterns/more-posts.php:18
+msgid "More posts"
+msgstr "Περισσότερα άρθρα"
+
+#: patterns/more-posts.php
+msgctxt "Pattern title"
+msgid "More posts"
+msgstr "Περισσότερα άρθρα"
+
+#: patterns/media-instagram-grid.php:56
+msgid "Close up of two flowers on a dark background."
+msgstr "Κοντινό σε δύο λουλούδια σε σκούρο υπόβαθρο."
+
+#: patterns/logos.php
+msgctxt "Pattern title"
+msgid "Logos"
+msgstr "Λογότυπα"
+
+#: patterns/hidden-written-by.php:16
+msgid "Written by "
+msgstr "Συντάχθηκε από "
+
+#: patterns/testimonials-large.php:47
+msgctxt "Alt text for testimonial image."
+msgid "Picture of a person typing on a typewriter."
+msgstr "Εικόνα ατόμου που πληκτρολογεί σε γραφομηχανή."
+
+#: patterns/hidden-written-by.php
+msgctxt "Pattern title"
+msgid "Written by"
+msgstr "Συντάχθηκε από"
+
+#: patterns/testimonials-large.php:24
+msgctxt "Testimonial heading."
+msgid "What people are saying"
+msgstr "Τι λέει ο κόσμος"
+
+#: patterns/hidden-sidebar.php:38 patterns/page-portfolio-home.php:65
+#: patterns/page-portfolio-home.php:87 patterns/page-portfolio-home.php:121
+#: patterns/page-portfolio-home.php:154 patterns/page-portfolio-home.php:176
+#: patterns/page-portfolio-home.php:203 patterns/template-home-news-blog.php:40
+#: patterns/template-home-posts-grid-news-blog.php:35
+#: patterns/template-home-posts-grid-news-blog.php:60
+#: patterns/template-home-posts-grid-news-blog.php:78
+#: patterns/template-home-posts-grid-news-blog.php:103
+#: patterns/template-home-with-sidebar-news-blog.php:62
+#: patterns/template-home-with-sidebar-news-blog.php:119
+#: patterns/template-query-loop-news-blog.php:55
+#: patterns/template-query-loop-photo-blog.php:22
+#: patterns/template-query-loop-text-blog.php:19
+#: patterns/template-query-loop-vertical-header-blog.php:47
+#: patterns/template-query-loop.php:31
+msgctxt "Message explaining that there are no results returned from a search."
+msgid "Sorry, but nothing was found. Please try a search with different keywords."
+msgstr "Λυπάμαι, αλλά δεν βρέθηκε τίποτα. Παρακαλώ δοκιμάστε μια αναζήτηση με διαφορετικές λέξεις-κλειδιά."
+
+#: patterns/testimonials-large.php
+msgctxt "Pattern description"
+msgid "A testimonial with a large image on the right."
+msgstr "Μια μαρτυρία με μια μεγάλη εικόνα στα δεξιά."
+
+#: patterns/hidden-search.php
+msgctxt "Pattern title"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: patterns/hidden-404.php:32
+msgctxt "404 error message"
+msgid "Page not found"
+msgstr "Η σελίδα δεν βρέθηκε"
+
+#: patterns/testimonials-large.php
+msgctxt "Pattern title"
+msgid "Review with large image on right"
+msgstr "Αξιολόγηση με μεγάλη εικόνα στα δεξιά"
+
+#: patterns/contact-info-locations.php
+msgctxt "Pattern description"
+msgid "Contact section with social media links, email, and multiple location details."
+msgstr "Τμήμα επικοινωνίας με συνδέσμους κοινωνικών μέσων, email και λεπτομέρειες πολλαπλών τοποθεσιών."
+
+#: patterns/testimonials-6-col.php:18
+msgctxt "Testimonial section heading."
+msgid "What people are saying"
+msgstr "Τι λέει ο κόσμος"
+
+#: patterns/hero-overlapped-book-cover-with-links.php:113
+msgid "Book Image"
+msgstr "Εικόνα βιβλίου"
+
+#: patterns/contact-info-locations.php
+msgctxt "Pattern title"
+msgid "Contact, info and locations"
+msgstr "Επικοινωνία, πληροφορίες και τοποθεσίες"
+
+#: patterns/hero-full-width-image.php:23
+msgctxt "Sample hero heading"
+msgid "Tell your story"
+msgstr "Πείτε την ιστορία σας"
+
+#: patterns/hero-full-width-image.php:18
+msgctxt "Alt text for cover image."
+msgid "Picture of a flower"
+msgstr "Εικόνα ενός λουλουδιού"
+
+#: patterns/hero-book.php:46
+msgctxt "CTA text of the hero section."
+msgid "Available for pre-order now."
+msgstr "Διαθέσιμο για προ-παραγγελία τώρα."
+
+#: patterns/header.php
+msgctxt "Pattern title"
+msgid "Header"
+msgstr "Κεφαλίδα"
+
+#: patterns/contact-centered-social-link.php:21
+msgctxt "Heading of the Contact social link pattern"
+msgid "Got questions? <br><a href=\"#\" rel=\"nofollow\">Feel free to reach out.</a>"
+msgstr "Έχετε ερωτήσεις; <br><a href=\"#\" rel=\"nofollow\">Μπορείτε να επικοινωνήσετε μαζί μας.</a>"
+
+#: patterns/testimonials-2-col.php
+msgctxt "Pattern description"
+msgid "Two columns with testimonials and avatars."
+msgstr "Δύο στήλες με μαρτυρίες και άβαταρ."
+
+#: patterns/testimonials-2-col.php
+msgctxt "Pattern title"
+msgid "2 columns with avatar"
+msgstr "2 στήλες με άβαταρ"
+
+#: patterns/template-single-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned single post"
+msgstr "Δεξιά ευθυγραμμισμένο μεμονωμένο άρθρο"
+
+#: patterns/header-large-title.php
+msgctxt "Pattern description"
+msgid "Site header with large site title and right-aligned navigation."
+msgstr "Κεφαλίδα με μεγάλο τίτλο ιστότοπου και δεξιά στοιχισμένη πλοήγηση."
+
+#: patterns/header-columns.php
+msgctxt "Pattern description"
+msgid "Site header with site title and navigation in columns."
+msgstr "Κεφαλίδα με τίτλο ιστότοπου και πλοήγηση σε στήλες."
+
+#: patterns/header-columns.php
+msgctxt "Pattern title"
+msgid "Header with columns"
+msgstr "Κεφαλίδα με στήλες"
+
+#: patterns/template-single-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog single post"
+msgstr "Φωτογραφία ιστιολογίου μεμονωμένου άρθρου"
+
+#: patterns/header-centered.php
+msgctxt "Pattern description"
+msgid "Site header with centered site title and navigation."
+msgstr "Κεφαλίδα με κεντραρισμένο τίτλο ιστότοπου και πλοήγηση."
+
+#: patterns/contact-centered-social-link.php
+msgctxt "Pattern description"
+msgid "Centered contact section with a prominent message and social media links."
+msgstr "Κεντρική ενότητα επικοινωνίας με εμφανές μήνυμα και συνδέσμους κοινωνικών δικτύων."
+
+#: patterns/grid-with-categories.php:64
+msgid "Sunflowers"
+msgstr "Ηλιοτρόπια"
+
+#: patterns/grid-with-categories.php:50
+msgid "Cactus"
+msgstr "Κάκτος"
+
+#: patterns/grid-with-categories.php:22
+msgid "Top Categories"
+msgstr "Κορυφαίες κατηγορίες"
+
+#: patterns/comments.php:18
+msgid "Comments"
+msgstr "Σχόλια"
+
+#: patterns/comments.php
+msgctxt "Pattern description"
+msgid "Comments area with comments list, pagination, and comment form."
+msgstr "Περιοχή σχολίων με λίστα σχολίων, σελιδοποίηση και φόρμα σχολίων."
+
+#: patterns/comments.php
+msgctxt "Pattern title"
+msgid "Comments"
+msgstr "Σχόλια"
+
+#: patterns/header.php
+msgctxt "Pattern description"
+msgid "Site header with site title and navigation."
+msgstr "Κεφαλίδα με τίτλο ιστότοπου και πλοήγηση."
+
+#: patterns/footer-columns.php:52 patterns/footer.php:61
+msgid "Themes"
+msgstr "Θέματα εμφάνισης"
+
+#: patterns/footer-columns.php:51 patterns/footer.php:59
+msgid "Patterns"
+msgstr "Μοτίβα"
+
+#: patterns/footer-columns.php:39 patterns/footer.php:51
+msgid "Authors"
+msgstr "Συντάκτες"
+
+#: patterns/footer-columns.php:38 patterns/footer.php:49
+msgid "FAQs"
+msgstr "Συχνές Ερωτήσεις"
+
+#: patterns/footer-columns.php:37 patterns/footer.php:47
+msgid "About"
+msgstr "Σχετικά"
+
+#: patterns/footer-columns.php
+msgctxt "Pattern title"
+msgid "Footer with columns"
+msgstr "Υποσέλιδο με στήλες"
+
+#: patterns/binding-format.php
+msgctxt "Pattern description"
+msgid "Prints the name of the post format with the help of the Block Bindings API."
+msgstr "Εκτυπώνει το όνομα της μορφής άρθρου με τη βοήθεια του API Block Bindings."
+
+#: patterns/template-home-with-sidebar-news-blog.php:88
+#: patterns/template-single-left-aligned-content.php:56
+#: patterns/template-single-news-blog.php:39
+msgctxt "Separator between date and categories."
+msgid "·"
+msgstr "."
+
+#: patterns/footer-columns.php
+msgctxt "Pattern description"
+msgid "Footer columns with title, tagline and links."
+msgstr "Στήλες υποσέλιδου με τίτλο, σλόγκαν και συνδέσμους."
+
+#: patterns/footer-columns.php:36 patterns/footer.php:45
+#: patterns/hidden-blog-heading.php:15 patterns/template-home-text-blog.php:20
+msgid "Blog"
+msgstr "Ιστολόγιο"
+
+#: patterns/banner-with-description-and-images-grid.php:48
+#: patterns/overlapped-images.php:26
+msgid "Black and white photography close up of a flower."
+msgstr "Ασπρόμαυρη φωτογραφία σε κοντινό πλάνο ενός λουλουδιού."
+
+#: patterns/banner-with-description-and-images-grid.php:42
+#: patterns/overlapped-images.php:21
+msgid "Photography close up of a red flower."
+msgstr "Φωτογραφία σε κοντινό πλάνο ενός κόκκινου λουλουδιού."
+
+#: patterns/footer-columns.php:50 patterns/footer.php:57
+msgid "Shop"
+msgstr "Κατάστημα"
+
+#: patterns/template-single-left-aligned-content.php
+msgctxt "Pattern title"
+msgid "Post with left-aligned content"
+msgstr "Άρθρο με περιεχόμενο σε αριστερή στοίχιση"
+
+#: patterns/event-schedule.php:57
+msgid "Fauna from North America and its characteristics"
+msgstr "Πανίδα από τη Βόρεια Αμερική και τα χαρακτηριστικά της"
+
+#: patterns/event-schedule.php:46 patterns/media-instagram-grid.php:60
+msgid "Birds on a lake."
+msgstr "Πουλιά σε λίμνη."
+
+#: patterns/cta-book-locations.php:27
+msgid "The Stories Book will be available from these international retailers."
+msgstr "Το The Stories Book θα είναι διαθέσιμο από τα παρακάτω διεθνή καταστήματα λιανικής πώλησης."
+
+#: patterns/event-schedule.php
+msgctxt "Pattern title"
+msgid "Event schedule"
+msgstr "Πρόγραμμα εκδήλωσης"
+
+#: patterns/template-search-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned blog, search"
+msgstr "Ιστιολόγιο Δεξιάς στοίχισης, αναζήτηση"
+
+#: patterns/event-rsvp.php:91
+msgid "Close up photo of white flowers on a grey background"
+msgstr "Κοντινή φωτογραφία λευκών λουλουδιών σε γκρι υπόβαθρο"
+
+#: styles/02-noon.json styles/colors/02-noon.json
+msgctxt "Style variation name"
+msgid "Noon"
+msgstr "Μεσημέρι"
+
+#: styles/01-evening.json styles/colors/01-evening.json
+msgctxt "Style variation name"
+msgid "Evening"
+msgstr "Απόγευμα"
+
+#: patterns/text-faqs.php:67
+msgctxt "Question in the FAQs pattern."
+msgid "When will The Stories Book be released?"
+msgstr "Πότε θα κυκλοφορήσει το The Stories Book;"
+
+#: patterns/event-3-col.php:50 patterns/event-3-col.php:74
+#: patterns/event-3-col.php:98
+msgid "Event details"
+msgstr "Λεπτομέρειες εκδήλωσης"
+
+#: patterns/text-faqs.php:47
+msgctxt "Question in the FAQs pattern."
+msgid "How much does The Stories Book cost?"
+msgstr "Πόσο κοστίζει το The Stories Book;"
+
+#: patterns/text-faqs.php:31
+msgctxt "Question in the FAQs pattern."
+msgid "What is The Stories Book about?"
+msgstr "Τι πραγματεύεται το βιβλίο The Stories Book;"
+
+#: patterns/event-3-col.php:20 patterns/footer-columns.php:49
+#: patterns/footer.php:55
+msgid "Events"
+msgstr "Εκδηλώσεις"
+
+#: patterns/testimonials-6-col.php
+msgctxt "Pattern description"
+msgid "A section with three columns and two rows, each containing a testimonial and citation."
+msgstr "Ένα τμήμα με τρεις στήλες και δύο σειρές, κάθε μία από τις οποίες περιέχει μια μαρτυρία και μια παραπομπή."
+
+#: patterns/cta-grid-products-link.php:84
+msgid "Free shipping"
+msgstr "Δωρεάν μεταφορικά"
+
+#: patterns/template-search-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog search results"
+msgstr "Ιστολόγιο φωτογραφίας αποτελέσματα αναζήτησης"
+
+#: patterns/cta-grid-products-link.php:76
+msgid "Tailored to your needs"
+msgstr "Προσαρμοσμένο στις ανάγκες σας"
+
+#: patterns/template-search-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog search results"
+msgstr "Ιστιολόγιο ειδήσεων αποτελέσματα αναζήτησης"
+
+#: patterns/testimonials-6-col.php
+msgctxt "Pattern title"
+msgid "3 column layout with 6 testimonials"
+msgstr "Διάταξη 3 στηλών με 6 μαρτυρίες"
+
+#: patterns/cta-grid-products-link.php:32
+msgid "Delivered every week"
+msgstr "Παράδοση κάθε εβδομάδα"
+
+#: patterns/cta-grid-products-link.php:26
+#: patterns/cta-grid-products-link.php:126
+msgid "Black and white flower"
+msgstr "Μαύρο και λευκό λουλούδι"
+
+#: patterns/testimonials-2-col.php:67 patterns/testimonials-6-col.php:34
+#: patterns/testimonials-6-col.php:51 patterns/testimonials-6-col.php:68
+#: patterns/testimonials-6-col.php:89 patterns/testimonials-6-col.php:104
+#: patterns/testimonials-6-col.php:119
+msgctxt "Sample testimonial citation."
+msgid "Otto Reid <br><sub>Springfield, IL</sub>"
+msgstr "Otto Reid <br><sub>Springfield, IL</sub>"
+
+#: patterns/template-query-loop.php
+msgctxt "Pattern description"
+msgid "A list of posts, 1 column, with featured image and post date."
+msgstr "Μία λίστα άρθρων, 1 στήλη, με χαρακτηριστική εικόνα και ημερομηνία άρθρου."
+
+#: patterns/testimonials-2-col.php:65 patterns/testimonials-6-col.php:30
+#: patterns/testimonials-6-col.php:47 patterns/testimonials-6-col.php:64
+#: patterns/testimonials-6-col.php:85 patterns/testimonials-6-col.php:101
+#: patterns/testimonials-6-col.php:116
+msgctxt "Sample testimonial."
+msgid "“Amazing quality and care. I love all your products.”"
+msgstr "\"Καταπληκτική ποιότητα και φροντίδα. Λατρεύω όλα τα προϊόντα σας.\""
+
+#: patterns/cta-events-list.php:75
+msgid "Mexico City, Mexico"
+msgstr "Πόλη του Μεξικό, Μεξικό"
+
+#: patterns/cta-events-list.php:51 patterns/cta-events-list.php:89
+#: patterns/cta-events-list.php:120 patterns/cta-events-list.php:158
+msgid "Buy Tickets"
+msgstr "Αγορά εισιτηρίων"
+
+#: patterns/cta-events-list.php:45 patterns/cta-events-list.php:83
+#: patterns/cta-events-list.php:114 patterns/cta-events-list.php:152
+#: patterns/event-3-col.php:44 patterns/event-3-col.php:68
+#: patterns/event-3-col.php:92 patterns/event-rsvp.php:37
+#: patterns/event-schedule.php:35 patterns/event-schedule.php:121
+msgctxt "Example event date in pattern."
+msgid "Mon, Jan 1"
+msgstr "Δευ, Ιαν 1"
+
+#: patterns/cta-grid-products-link.php:70
+msgid "Flora of Akaka Falls State Park"
+msgstr "Χλωρίδα του Akaka Falls State Park"
+
+#: patterns/cta-grid-products-link.php:59
+msgid "30€"
+msgstr "30€"
+
+#: patterns/testimonials-2-col.php:38 patterns/testimonials-large.php:36
+msgctxt "Sample testimonial citation."
+msgid "Jo Mulligan <br /><sub>Atlanta, GA</sub>"
+msgstr "Jo Mulligan <br /><sub>Atlanta, GA</sub>"
+
+#: patterns/testimonials-2-col.php:36 patterns/testimonials-large.php:32
+msgctxt "Sample testimonial."
+msgid "“Superb product and customer service!”"
+msgstr "\"Εξαιρετικό προϊόν και εξυπηρέτηση πελατών!\""
+
+#: patterns/testimonials-2-col.php:26 patterns/testimonials-2-col.php:55
+msgctxt "Alt text for testimonial image."
+msgid "Picture of a person"
+msgstr "Φωτογραφία ενός ατόμου"
+
+#: patterns/cta-grid-products-link.php:20
+msgid "Our online store."
+msgstr "Το διαδικτυακό μας κατάστημα."
+
+#: theme.json
+msgctxt "Space size name"
+msgid "XX-Large"
+msgstr "XX-Large"
+
+#: patterns/banner-poster.php:51
+msgid "Let’s hear them."
+msgstr "Ας τους ακούσουμε."
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Large"
+msgstr "X-Large"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Large"
+msgstr "Large"
+
+#: patterns/banner-intro.php
+msgctxt "Pattern title"
+msgid "Intro with left-aligned description"
+msgstr "Εισαγωγή με αριστερά στοιχισμένη περιγραφή"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Regular"
+msgstr "Regular"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Small"
+msgstr "Small"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Small"
+msgstr "X-Small"
+
+#: styles/typography/typography-preset-1.json
+msgctxt "Style variation name"
+msgid "Beiruti & Literata"
+msgstr "Beiruti & Literata"
+
+#: patterns/services-subscriber-only-section.php:21
+msgid "Subscribe to get unlimited access"
+msgstr "Εγγραφείτε για απεριόριστη πρόσβαση"
+
+#: styles/blocks/post-terms-1.json
+msgctxt "Style variation name"
+msgid "Pill shaped"
+msgstr "Σε σχήμα χαπιού"
+
+#: patterns/banner-intro-image.php:35
+msgctxt "Sample description for banner with flower."
+msgid "Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience, revealing hidden wonders."
+msgstr "Όπως τα λουλούδια που ανθίζουν σε αναπάντεχα μέρη, κάθε ιστορία ξεδιπλώνεται με ομορφιά και ανθεκτικότητα, αποκαλύπτοντας κρυμμένα θαύματα."
+
+#: patterns/services-subscriber-only-section.php
+msgctxt "Pattern description"
+msgid "A subscriber-only section highlighting exclusive services and offerings."
+msgstr "Ένα τμήμα μόνο για συνδρομητές που αναδεικνύει αποκλειστικές υπηρεσίες και προσφορές."
+
+#: patterns/services-subscriber-only-section.php
+msgctxt "Pattern title"
+msgid "Services, subscriber only section"
+msgstr "Υπηρεσίες, τμήμα μόνο για συνδρομητές"
+
+#: styles/08-midnight.json styles/colors/08-midnight.json
+msgctxt "Duotone name"
+msgid "Midnight filter"
+msgstr "Φίλτρο Μεσονύχτιου"
+
+#: styles/08-midnight.json styles/colors/08-midnight.json
+msgctxt "Style variation name"
+msgid "Midnight"
+msgstr "Μεσονύχτιο"
+
+#: patterns/services-3-col.php:68
+msgid "Deliver"
+msgstr "Παράδοση"
+
+#: styles/07-sunrise.json styles/colors/07-sunrise.json
+msgctxt "Style variation name"
+msgid "Sunrise"
+msgstr "Αυγή"
+
+#: styles/06-morning.json styles/colors/06-morning.json
+msgctxt "Style variation name"
+msgid "Morning"
+msgstr "Πρωί"
+
+#: styles/04-afternoon.json styles/colors/04-afternoon.json
+msgctxt "Style variation name"
+msgid "Afternoon"
+msgstr "Απόγευμα"
+
+#: patterns/services-3-col.php:50
+msgid "Assemble"
+msgstr "Συναρμολόγηση"
+
+#: styles/03-dusk.json styles/colors/03-dusk.json
+msgctxt "Style variation name"
+msgid "Dusk"
+msgstr "Αυγή"
+
+#: patterns/services-3-col.php:36 patterns/services-3-col.php:54
+#: patterns/services-3-col.php:72
+msgid "Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience"
+msgstr "Όπως τα λουλούδια που ανθίζουν σε απροσδόκητα μέρη, κάθε ιστορία ξεδιπλώνεται με ομορφιά και ανθεκτικότητα."
+
+#: patterns/template-query-loop-news-blog.php:45
+msgid "Newer Posts"
+msgstr "Νεότερα άρθρα"
+
+#: patterns/services-3-col.php:32
+msgid "Collect"
+msgstr "Συλλογή"
+
+#: patterns/template-query-loop-news-blog.php:30
+msgctxt "Prefix before the author name. The post author name is displayed in a separate block."
+msgid "Written by"
+msgstr "Συντάχθηκε από"
+
+#: patterns/page-business-home.php
+msgctxt "Pattern title"
+msgid "Business homepage"
+msgstr "Αρχική σελίδα επιχείρησης"
+
+#: patterns/services-team-photos.php:38
+msgid "Portrait of a nurse"
+msgstr "Πορτρέτο νοσοκόμου/ας"
+
+#: patterns/services-3-col.php:17
+msgid "Our services"
+msgstr "Οι υπηρεσίες μας"
+
+#: patterns/services-3-col.php:27 patterns/services-3-col.php:45
+#: patterns/services-3-col.php:63
+msgid "Image for service"
+msgstr "Εικόνα για την υπηρεσία"
+
+#: patterns/services-3-col.php
+msgctxt "Pattern description"
+msgid "Three columns with images and text to showcase services."
+msgstr "Τρεις στήλες με εικόνες και κείμενο ως ανάδειξη υπηρεσιών."
+
+#: patterns/services-3-col.php
+msgctxt "Pattern title"
+msgid "Services, 3 columns"
+msgstr "Υπηρεσίες, 3 στήλες"
+
+#: patterns/pricing-3-col.php:125
+msgid "40€"
+msgstr "40€"
+
+#: patterns/event-schedule.php:174
+msgid "An introduction to African dialects"
+msgstr "Μια εισαγωγή στις αφρικανικές διαλέκτους"
+
+#: patterns/pricing-3-col.php:85
+msgid "20€"
+msgstr "20€"
+
+#: patterns/event-schedule.php:163
+msgid "Black and white photo of an African woman."
+msgstr "Ασπρόμαυρη φωτογραφία μιας Αφρικανίδας."
+
+#: patterns/event-schedule.php:142
+msgid "Ancient buildings and symbols"
+msgstr "Αρχαία κτίρια και σύμβολα"
+
+#: patterns/pricing-2-col.php:82
+msgid "20€/month"
+msgstr "20€/μήνα"
+
+#: patterns/event-schedule.php:132 patterns/media-instagram-grid.php:52
+msgid "The Acropolis of Athens."
+msgstr "Η Ακρόπολη των Αθηνών."
+
+#: patterns/pricing-2-col.php:68 patterns/pricing-2-col.php:112
+#: patterns/pricing-3-col.php:59 patterns/pricing-3-col.php:99
+#: patterns/pricing-3-col.php:139
+msgctxt "Button text, refers to joining a community. Verb."
+msgid "Join"
+msgstr "Συμμετοχή"
+
+#: patterns/event-schedule.php:89
+msgid "Things you didn’t know about the deep ocean"
+msgstr "Πράγματα που δεν γνωρίζατε για το βυθό του ωκεανού"
+
+#: patterns/page-link-in-bio-with-tight-margins.php:27
+msgid "Black and white photo focusing on a woman and a child from afar."
+msgstr "Ασπρόμαυρη φωτογραφία εστιασμένη σε μία γυναίκα και ένα παιδί σε απόσταση."
+
+#: patterns/event-schedule.php:78 patterns/media-instagram-grid.php:44
+msgid "View of the deep ocean."
+msgstr "Θέα του βυθού του ωκεανού."
+
+#: patterns/hero-podcast.php
+msgctxt "Pattern title"
+msgid "Hero podcast"
+msgstr "Προτεινόμενη ενότητα podcast"
+
+#: patterns/page-link-in-bio-with-tight-margins.php
+msgctxt "Pattern title"
+msgid "Link in bio with tight margins"
+msgstr "Σύνδεσμος στην βιογραφία με σφικτά περιθώρια"
+
+#: patterns/page-link-in-bio-wide-margins.php:34
+msgid "Nora Winslow Keene"
+msgstr "Nora Winslow Keene"
+
+#: patterns/hero-overlapped-book-cover-with-links.php:34
+msgctxt "Hero - Overlapped book cover pattern subline text"
+msgid "A fine collection of moments in time featuring photographs from Louis Fleckenstein, Paul Strand and Asahachi Kōno."
+msgstr "Μια εξαιρετική συλλογή στιγμών στο χρόνο με φωτογραφίες των Louis Fleckenstein, Paul Strand και Asahachi Kōno."
+
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:57
+msgid "Photo of a woman worker."
+msgstr "Φωτογραφία μίας εργάτριας."
+
+#: patterns/event-schedule.php:65 patterns/event-schedule.php:97
+#: patterns/event-schedule.php:150 patterns/event-schedule.php:182
+msgctxt "Pattern placeholder text with link."
+msgid "Lecture by <a href=\"#\">Prof. Fiona Presley</a>"
+msgstr "Διάλεξη της <a href=\"#\">Καθηγήτριας Fiona Presley</a>"
+
+#: patterns/hero-overlapped-book-cover-with-links.php:28
+msgctxt "Hero - Overlapped book cover pattern headline text"
+msgid "The Stories Book"
+msgstr "The Stories Book"
+
+#: patterns/event-schedule.php:60 patterns/event-schedule.php:92
+#: patterns/event-schedule.php:145 patterns/event-schedule.php:177
+msgctxt "Example event time in pattern."
+msgid "9 AM — 11 AM"
+msgstr "9 π.μ. - 11 π.μ."
+
+#: patterns/event-schedule.php:20
+msgid "Agenda"
+msgstr "Ατζέντα"
+
+#: patterns/hero-overlapped-book-cover-with-links.php
+msgctxt "Pattern description"
+msgid "A hero with an overlapped book cover and links."
+msgstr "Ένα τμήμα με εξώφυλλο βιβλίου και συνδέσμους."
+
+#: patterns/hero-overlapped-book-cover-with-links.php
+msgctxt "Pattern title"
+msgid "Hero, overlapped book cover with links"
+msgstr "Προτεινόμενη ενότητα, επικάλυψη εξώφυλλου βιβλίου με συνδέσμους"
+
+#: patterns/event-schedule.php
+msgctxt "Pattern description"
+msgid "A section with specified dates and times for an event."
+msgstr "Μια ενότητα με καθορισμένες ημερομηνίες και ώρες για μια εκδήλωση."
+
+#: patterns/hero-full-width-image.php:27
+msgctxt "Sample hero paragraph"
+msgid "Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience, revealing hidden wonders."
+msgstr "Όπως τα λουλούδια που ανθίζουν σε απροσδόκητα μέρη, κάθε ιστορία ξεδιπλώνεται με ομορφιά και ανθεκτικότητα, αποκαλύπτοντας κρυμμένα θαύματα."
+
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:30
+msgid "Lewis W. Hine studied sociology before moving to New York in 1901 to work at the Ethical Culture School, where he took up photography to enhance his teaching practices"
+msgstr "Ο Lewis W. Hine σπούδασε κοινωνιολογία πριν μετακομίσει στη Νέα Υόρκη το 1901 για να εργαστεί στο Ethical Culture School, όπου καταπιάστηκε με τη φωτογραφία για να ενισχύσει τις διδακτικές του πρακτικές."
+
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php:26
+msgid "Lewis Hine"
+msgstr "Lewis Hine"
+
+#: patterns/hero-full-width-image.php
+msgctxt "Pattern description"
+msgid "A hero with a full width image, heading, short paragraph and button."
+msgstr "Μια προτεινόμενη ενότητα με μια εικόνα πλήρους πλάτους, μια επικεφαλίδα, μια σύντομη παράγραφο και ένα κουμπί."
+
+#: patterns/event-rsvp.php:81
+msgctxt "Abbreviation for \"Please respond\"."
+msgid "RSVP"
+msgstr "RSVP"
+
+#: patterns/hero-full-width-image.php
+msgctxt "Pattern title"
+msgid "Hero, full width image"
+msgstr "Προτεινόμενη ενότητα, εικόνα πλήρους πλάτους"
+
+#: patterns/hero-book.php:42
+msgctxt "Content of the hero section."
+msgid "A fine collection of moments in time featuring photographs from Louis Fleckenstein, Paul Strand and Asahachi Kōno."
+msgstr "Μια εξαιρετική συλλογή στιγμών στο χρόνο με φωτογραφίες των Louis Fleckenstein, Paul Strand και Asahachi Kōno."
+
+#: patterns/hero-book.php:38
+msgctxt "Heading of the hero section."
+msgid "The Stories Book"
+msgstr "The Stories Book"
+
+#: patterns/hero-book.php:24
+msgid "Image of the book"
+msgstr "Εικόνα του βιβλίου"
+
+#: patterns/hero-book.php
+msgctxt "Pattern description"
+msgid "A hero section for the book with a description and pre-order link."
+msgstr "Μια ειδική ενότητα για το βιβλίο με περιγραφή και σύνδεσμο προπαραγγελίας."
+
+#: patterns/hero-book.php
+msgctxt "Pattern title"
+msgid "Hero book"
+msgstr "Ενότητα βιβλίου"
+
+#: patterns/heading-and-paragraph-with-image.php:36
+msgctxt "Alt text for Overview picture."
+msgid "Cliff Palace, Colorado"
+msgstr "Cliff Palace, Colorado"
+
+#: patterns/footer-newsletter.php:24
+msgid "Receive our articles in your inbox."
+msgstr "Λάβετε τα άρθρα μας στα εισερχόμενά σας."
+
+#: patterns/footer-columns.php:48
+msgid "Featured"
+msgstr "Προτεινόμενα"
+
+#: patterns/event-rsvp.php:57
+msgid "Free Workshop"
+msgstr "Δωρεάν εργαστήριο"
+
+#: patterns/event-rsvp.php
+msgctxt "Pattern title"
+msgid "Event RSVP"
+msgstr "Εκδήλωση RSVP"
+
+#: patterns/event-3-col.php:34 patterns/event-3-col.php:58
+#: patterns/event-3-col.php:82 patterns/format-audio.php:20
+msgid "Event image"
+msgstr "Εικόνα εκδήλωσης"
+
+#: patterns/event-3-col.php:24 patterns/event-schedule.php:23
+msgid "These are some of the upcoming events."
+msgstr "Αυτές είναι μερικές από τις επερχόμενες εκδηλώσεις."
+
+#: patterns/event-3-col.php
+msgctxt "Pattern description"
+msgid "A header with title and text and three columns that show 3 events with their images and titles."
+msgstr "Μια επικεφαλίδα με τίτλο και κείμενο και τρεις στήλες που δείχνουν 3 εκδηλώσεις με τις εικόνες και τους τίτλους τους."
+
+#: patterns/event-rsvp.php:73
+msgid "This immersive event celebrates the universal human experience through the lenses of history and ancestry, featuring a diverse array of photographers whose works capture the essence of different cultures and historical moments."
+msgstr "Αυτή η καθηλωτική εκδήλωση γιορτάζει την παγκόσμια ανθρώπινη εμπειρία μέσα από τους φακούς της ιστορίας και της καταγωγής, παρουσιάζοντας ένα ευρύ φάσμα φωτογράφων, τα έργα των οποίων αποτυπώνουν την ουσία διαφορετικών πολιτισμών και ιστορικών στιγμών."
+
+#: patterns/hidden-404.php
+msgctxt "Pattern title"
+msgid "404"
+msgstr "404"
+
+#: patterns/hero-podcast.php:57
+msgctxt "Button text"
+msgid "Spotify"
+msgstr "Spotify"
+
+#: patterns/banner-about-book.php:22
+msgid "About the book"
+msgstr "Σχετικά με το βιβλίο"
+
+#: functions.php:113
+msgid "Pages"
+msgstr "Σελίδες"
+
+#: patterns/cta-book-locations.php:55
+msgid "Brazil"
+msgstr "Βραζιλία"
+
+#: patterns/cta-book-locations.php:67
+msgid "Canada"
+msgstr "Καναδάς"
+
+#: patterns/cta-book-locations.php:79
+msgid "Japan"
+msgstr "Ιαπωνία"
+
+#: patterns/cta-book-locations.php:95
+msgid "New Zealand"
+msgstr "Νέα Ζηλανδία"
+
+#: patterns/cta-book-locations.php:107
+msgid "Switzerland"
+msgstr "Ελβετία"
+
+#: patterns/cta-book-locations.php:131
+msgid "United Kingdom"
+msgstr "Ηνωμένο Βασίλειο"
+
+#: patterns/cta-book-locations.php:119
+msgid "United States"
+msgstr "Ηνωμένες Πολιτείες"
+
+#: patterns/footer-newsletter.php
+msgctxt "Pattern title"
+msgid "Footer with newsletter signup"
+msgstr "Υποσέλιδο με εγγραφή στο ενημερωτικό δελτίο"
+
+#. translators: Designed with WordPress. %s: WordPress link.
+#: patterns/footer-centered.php:33 patterns/footer-columns.php:73
+#: patterns/footer-newsletter.php:49 patterns/footer-social.php:35
+#: patterns/footer.php:82
+msgid "Designed with %s"
+msgstr "Σχεδιασμένο με το %s"
+
+#: patterns/footer-centered.php
+msgctxt "Pattern description"
+msgid "Footer with centered site title and tagline."
+msgstr "Υποσέλιδο με κεντραρισμένο τίτλο και υπότιτλο ιστότοπου."
+
+#: patterns/hidden-404.php:21
+msgctxt "image description"
+msgid "Small totara tree on ridge above Long Point"
+msgstr "Μικρό δέντρο totara στην κορυφογραμμή πάνω από το Long Point"
+
+#: patterns/hero-podcast.php:65
+msgctxt "Button text"
+msgid "RSS"
+msgstr "RSS"
+
+#: patterns/cta-heading-search.php:21 patterns/hidden-search.php:14
+msgctxt "Search input field placeholder text."
+msgid "Type here..."
+msgstr "Πληκτρολογήστε εδώ..."
+
+#: patterns/cta-heading-search.php:21 patterns/hidden-search.php:14
+msgctxt "Search form label."
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: patterns/cta-heading-search.php:18
+msgid "What are you looking for?"
+msgstr "Τι ψάχνετε;"
+
+#: patterns/hero-podcast.php:61
+msgctxt "Button text"
+msgid "Pocket Casts"
+msgstr "Pocket Casts"
+
+#: patterns/hero-podcast.php:53
+msgctxt "Button text"
+msgid "Apple Podcasts"
+msgstr "Apple Podcasts"
+
+#: patterns/cta-heading-search.php
+msgctxt "Pattern description"
+msgid "Large heading with a search form for quick navigation."
+msgstr "Μεγάλη επικεφαλίδα με φόρμα αναζήτησης για γρήγορη πλοήγηση."
+
+#: patterns/hero-podcast.php:43
+msgid "Subscribe on your favorite platform"
+msgstr "Εγγραφείτε στην αγαπημένη σας πλατφόρμα"
+
+#: patterns/cta-newsletter.php
+msgctxt "Pattern title"
+msgid "Newsletter sign-up"
+msgstr "Εγγραφή σε ενημερωτικό δελτίο"
+
+#: patterns/footer-centered.php
+msgctxt "Pattern title"
+msgid "Centered footer"
+msgstr "Κεντραρισμένο υποσέλιδο"
+
+#: patterns/hero-podcast.php:36
+msgctxt "Podcast description"
+msgid "Storytelling, expert analysis, and vivid descriptions. The Stories Podcast brings history to life, making it accessible and engaging for a global audience."
+msgstr "Αφήγηση ιστοριών, ανάλυση από ειδικούς και ζωντανές περιγραφές. Το The Stories Podcast ζωντανεύει την ιστορία, καθιστώντας την προσιτή και ελκυστική για ένα παγκόσμιο ακροατήριο."
+
+#: patterns/hero-podcast.php:32
+msgid "The Stories Podcast"
+msgstr "The Stories Podcast"
+
+#: patterns/post-navigation.php
+msgctxt "Pattern title"
+msgid "Post navigation"
+msgstr "Πλοήγηση σε άρθρα"
+
+#: patterns/hero-podcast.php:22
+msgctxt "Alt text for hero image."
+msgid "Picture of a person"
+msgstr "Φωτογραφία ενός ατόμου"
+
+#: patterns/heading-and-paragraph-with-image.php:27
+msgctxt "Event Overview Text."
+msgid "Held over a weekend, the event is structured around a series of exhibitions, workshops, and panel discussions. The exhibitions showcase a curated selection of photographs that tell compelling stories from various corners of the globe, each image accompanied by detailed narratives that provide context and deeper insight into the historical significance of the scenes depicted. These photographs are drawn from the archives of renowned photographers, as well as emerging talents, ensuring a blend of both classical and contemporary perspectives."
+msgstr "Η εκδήλωση, η οποία πραγματοποιείται σε ένα Σαββατοκύριακο, είναι δομημένη γύρω από μια σειρά εκθέσεων, εργαστηρίων και συζητήσεων. Οι εκθέσεις παρουσιάζουν μια επιμελημένη επιλογή φωτογραφιών που αφηγούνται συναρπαστικές ιστορίες από διάφορες γωνιές του πλανήτη, ενώ κάθε εικόνα συνοδεύεται από λεπτομερείς αφηγήσεις που παρέχουν το πλαίσιο και βαθύτερη κατανόηση της ιστορικής σημασίας των σκηνών που απεικονίζονται. Οι φωτογραφίες αυτές προέρχονται από τα αρχεία διάσημων φωτογράφων, καθώς και από ανερχόμενα ταλέντα, εξασφαλίζοντας ένα μείγμα τόσο κλασικών όσο και σύγχρονων προοπτικών."
+
+#: patterns/heading-and-paragraph-with-image.php:23
+msgid "About the event"
+msgstr "Σχετικά με την εκδήλωση"
+
+#: patterns/page-portfolio-home.php
+msgctxt "Pattern description"
+msgid "A portfolio homepage pattern."
+msgstr "Μοτίβο αρχικής σελίδας πορτφόλιο."
+
+#: patterns/page-portfolio-home.php
+msgctxt "Pattern title"
+msgid "Portfolio homepage"
+msgstr "Αρχική σελίδα πορτφόλιο"
+
+#: patterns/heading-and-paragraph-with-image.php
+msgctxt "Pattern description"
+msgid "A two-column section with a heading and paragraph on the left, and an image on the right."
+msgstr "Μια ενότητα δύο στηλών με έναν τίτλο και μία παράγραφο στα αριστερά και μια εικόνα στα δεξιά."
+
+#: patterns/heading-and-paragraph-with-image.php
+msgctxt "Pattern title"
+msgid "Heading and paragraph with image on the right"
+msgstr "Επικεφαλίδα και παράγραφος με εικόνα στα δεξιά"
+
+#: patterns/page-link-in-bio-wide-margins.php
+msgctxt "Pattern title"
+msgid "Link in bio with profile, links and wide margins"
+msgstr "Σύνδεσμος στη βιογραφία με προφίλ, συνδέσμους και ευρεία περιθώρια"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 3"
+msgstr "Απόχρωση 3"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page No Title"
+msgstr "Σελίδα χωρίς τίτλο"
+
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php
+msgctxt "Pattern description"
+msgid "A link in bio landing page with a heading, paragraph, links and a full height image."
+msgstr "Ένας σύνδεσμος στη βιογραφία της σελίδας προορισμού με επικεφαλίδα, παράγραφο, συνδέσμους και εικόνα πλήρους ύψους."
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 6"
+msgstr "Απόχρωση 6"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 5"
+msgstr "Απόχρωση 5"
+
+#: theme.json styles/01-evening.json styles/02-noon.json styles/03-dusk.json
+#: styles/04-afternoon.json styles/05-twilight.json styles/06-morning.json
+#: styles/07-sunrise.json styles/08-midnight.json styles/colors/01-evening.json
+#: styles/colors/02-noon.json styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json styles/colors/05-twilight.json
+#: styles/colors/06-morning.json styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Accent 4"
+msgstr "Απόχρωση 4"
+
+#: patterns/grid-with-categories.php
+msgctxt "Pattern description"
+msgid "A grid section with different categories."
+msgstr "Μια ενότητα πλέγματος με διάφορες κατηγορίες."
+
+#: patterns/grid-with-categories.php
+msgctxt "Pattern title"
+msgid "Grid with categories"
+msgstr "Πλέγμα με κατηγορίες"
+
+#: patterns/page-link-in-bio-heading-paragraph-links-image.php
+msgctxt "Pattern title"
+msgid "Link in bio heading, paragraph, links and full-height image"
+msgstr "Σύνδεσμος στη βιογραφία επικεφαλίδα, παράγραφος, σύνδεσμοι και εικόνα πλήρους ύψους"
+
+#: patterns/template-single-photo-blog.php:61
+msgctxt "Prefix before one or more tags. The tags are displayed in a separate block on the next line."
+msgid "Tagged:"
+msgstr "Με ετικέτα:"
+
+#: patterns/page-landing-podcast.php
+msgctxt "Pattern title"
+msgid "Landing page for podcast"
+msgstr "Σελίδα προορισμού για podcast"
+
+#: patterns/grid-videos.php:23
+msgid "Podcast"
+msgstr "Podcast"
+
+#: patterns/grid-videos.php:19
+msgid "Explore the episodes"
+msgstr "Εξερευνήστε τα επεισόδια"
+
+#: patterns/grid-videos.php
+msgctxt "Pattern description"
+msgid "A grid with videos."
+msgstr "Ένα πλέγμα με βίντεο."
+
+#: patterns/grid-videos.php
+msgctxt "Pattern title"
+msgid "Grid with videos"
+msgstr "Πλέγμα με βίντεο"
+
+#: patterns/format-link.php:23
+msgid "https://example.com"
+msgstr "https://example.com"
+
+#: patterns/page-business-home.php
+msgctxt "Pattern description"
+msgid "A business homepage pattern."
+msgstr "Μοτίβο αρχικής σελίδας επιχείρησης."
+
+#: patterns/header-large-title.php
+msgctxt "Pattern title"
+msgid "Header with large title"
+msgstr "Κεφαλίδα με μεγάλο τίτλο"
+
+#: patterns/format-link.php:17
+msgid "The Stories Book, a fine collection of moments in time featuring photographs from Louis Fleckenstein, Paul Strand and Asahachi Kōno, is available for pre-order"
+msgstr "Το The Stories Book, μια εξαιρετική συλλογή στιγμιότυπων στο χρόνο με φωτογραφίες από τους Louis Fleckenstein, Paul Strand και Asahachi Kōno, είναι διαθέσιμο για προπαραγγελία."
+
+#: patterns/overlapped-images.php
+msgctxt "Pattern description"
+msgid "A section with overlapping images, and a description."
+msgstr "Μία ενότητα με επικαλυπτόμενες εικόνες και μία περιγραφή."
+
+#: patterns/overlapped-images.php
+msgctxt "Pattern title"
+msgid "Overlapping images and paragraph on right"
+msgstr "Επικαλυπτόμενες εικόνες και παράγραφος στα δεξιά"
+
+#: patterns/template-single-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog single post with sidebar"
+msgstr "Μεμονωμένο άρθρο ιστιολογίου ειδήσεων με πλευρική στήλη"
+
+#: patterns/media-instagram-grid.php
+msgctxt "Pattern title"
+msgid "Instagram grid"
+msgstr "Πλέγμα Instagram"
+
+#. translators: %s is the brand name, e.g., 'Fleurs'.
+#: patterns/banner-with-description-and-images-grid.php:31
+#: patterns/overlapped-images.php:47
+msgid "%s is a flower delivery and subscription business. Based in the EU, our mission is not only to deliver stunning flower arrangements across but also foster knowledge and enthusiasm on the beautiful gift of nature: flowers."
+msgstr "Το %s είναι μια επιχείρηση παράδοσης λουλουδιών. Με έδρα την ΕΕ, η αποστολή μας δεν είναι μόνο να παραδίδουμε εκπληκτικές συνθέσεις λουλουδιών σε όλη την επικράτεια, αλλά και να προωθούμε τη γνώση και τον ενθουσιασμό για το όμορφο δώρο της φύσης: τα λουλούδια."
+
+#: patterns/post-navigation.php:17 patterns/post-navigation.php:18
+#: patterns/template-single-left-aligned-content.php:78
+#: patterns/template-single-left-aligned-content.php:79
+#: patterns/template-single-news-blog.php:95
+#: patterns/template-single-news-blog.php:96
+#: patterns/template-single-offset.php:61
+#: patterns/template-single-offset.php:62
+#: patterns/template-single-photo-blog.php:76
+#: patterns/template-single-photo-blog.php:77
+#: patterns/template-single-text-blog.php:36
+#: patterns/template-single-text-blog.php:37
+#: patterns/template-single-vertical-header-blog.php:82
+#: patterns/template-single-vertical-header-blog.php:83
+msgid "Post navigation"
+msgstr "Πλοήγηση άρθρων"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Tiny"
+msgstr "Tiny"
+
+#: patterns/pricing-2-col.php:38 patterns/pricing-3-col.php:49
+msgid "0€"
+msgstr "0€"
+
+#: patterns/pricing-2-col.php:18 patterns/pricing-3-col.php:23
+msgid "Pricing"
+msgstr "Τιμολόγηση"
+
+#: patterns/pricing-2-col.php
+msgctxt "Pattern description"
+msgid "Pricing section with two columns, pricing plan, description, and call-to-action buttons."
+msgstr "Ενότητα τιμολόγησης με δύο στήλες, σχέδιο τιμολόγησης, περιγραφή και κουμπιά κλήσης για ενέργεια."
+
+#: patterns/pricing-2-col.php
+msgctxt "Pattern title"
+msgid "Pricing, 2 columns"
+msgstr "Τιμολόγηση, 2 στήλες"
+
+#: patterns/post-navigation.php
+msgctxt "Pattern description"
+msgid "Next and previous post links."
+msgstr "Επόμενοι και προηγούμενοι σύνδεσμοι άρθρου."
+
+#: patterns/page-shop-home.php
+msgctxt "Pattern description"
+msgid "A shop homepage pattern."
+msgstr "Μοτίβο αρχικής σελίδας καταστήματος."
+
+#: patterns/page-shop-home.php
+msgctxt "Pattern title"
+msgid "Shop homepage"
+msgstr "Αρχική σελίδα καταστήματος"
+
+#: patterns/page-portfolio-home.php:229
+msgctxt "Phone number."
+msgid "+1 555 349 1806"
+msgstr "+1 555 349 1806"
+
+#: patterns/media-instagram-grid.php:48
+msgid "Portrait of an African Woman dressed in traditional costume, wearing decorative jewelry."
+msgstr "Πορτρέτο Αφρικανής γυναίκας ντυμένης με παραδοσιακή στολή, φορώντας διακοσμητικά κοσμήματα."
+
+#: patterns/format-link.php
+msgctxt "Pattern description"
+msgid "A link post format with a description and an emphasized link for key content."
+msgstr "Ενας σύνδεσμος μορφής άρθρου με περιγραφή και έναν τονισμένο σύνδεσμο για το βασικό περιεχόμενο."
+
+#: patterns/format-link.php
+msgctxt "Pattern title"
+msgid "Link format"
+msgstr "Μορφή συνδέσμου"
+
+#: patterns/media-instagram-grid.php
+msgctxt "Pattern description"
+msgid "A grid section with photos and a link to an Instagram profile."
+msgstr "Μία ενότητα πλέγματος με φωτογραφίες και έναν σύνδεσμο για προφίλ στο Instagram."
+
+#: patterns/format-audio.php:30
+msgid "Acoma Pueblo, in New Mexico, stands as a testament to the resilience and cultural heritage of the Acoma people"
+msgstr "Το Acoma Pueblo, στο Νέο Μεξικό, αποτελεί απόδειξη της ανθεκτικότητας και της πολιτιστικής κληρονομιάς της φυλής Acoma."
+
+#: patterns/format-audio.php:26
+msgid "Episode 1: Acoma Pueblo with Prof. Fiona Presley"
+msgstr "Επεισόδιο 1: Acoma Pueblo με την καθηγήτρια Fiona Presley"
+
+#: patterns/format-audio.php
+msgctxt "Pattern description"
+msgid "An audio post format with an image, title, audio player, and description."
+msgstr "Μια μορφή άρθρου ήχου με εικόνα, τίτλο, πρόγραμμα αναπαραγωγής ήχου και περιγραφή."
+
+#: patterns/format-audio.php
+msgctxt "Pattern title"
+msgid "Audio format"
+msgstr "Μορφή ήχου"
+
+#: patterns/footer.php
+msgctxt "Pattern description"
+msgid "Footer columns with logo, title, tagline and links."
+msgstr "Στήλες υποσέλιδου με λογότυπο, τίτλο, σλόγκαν και συνδέσμους."
+
+#: patterns/footer.php
+msgctxt "Pattern title"
+msgid "Footer"
+msgstr "Υποσέλιδο"
+
+#: patterns/footer-social.php
+msgctxt "Pattern description"
+msgid "Footer with centered site title and social links."
+msgstr "Υποσέλιδο με κεντραρισμένο τίτλο ιστότοπου και συνδέσμους κοινωνικών δικτύων."
+
+#: patterns/footer-social.php
+msgctxt "Pattern title"
+msgid "Centered footer with social links"
+msgstr "Κεντραρισμένο υποσέλιδο με συνδέσμους κοινωνικών δικτύων"
+
+#: patterns/footer-newsletter.php
+msgctxt "Pattern description"
+msgid "Footer with large site title and newsletter signup."
+msgstr "Υποσέλιδο με μεγάλο τίτλο ιστότοπου και φόρμα εγγραφής στο ενημερωτικό δελτίο."
+
+#: patterns/banner-intro-image.php:42 patterns/cta-centered-heading.php:28
+#: patterns/hero-full-width-image.php:33
+msgid "Learn more"
+msgstr "Μάθετε περισσότερα"
+
+#: patterns/cta-centered-heading.php:22
+msgid "Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience, revealing hidden wonders."
+msgstr "Όπως τα λουλούδια που ανθίζουν σε αναπάντεχα μέρη, κάθε ιστορία ξεδιπλώνεται με ομορφιά και ανθεκτικότητα, αποκαλύπτοντας κρυμμένα θαύματα."
+
+#: patterns/cta-centered-heading.php:19 patterns/cta-events-list.php:33
+#: patterns/cta-events-list.php:102 patterns/event-3-col.php:40
+#: patterns/event-3-col.php:64 patterns/event-3-col.php:88
+#: patterns/template-home-photo-blog.php:27
+msgid "Tell your story"
+msgstr "Πείτε την ιστορία σας"
+
+#: patterns/cta-centered-heading.php
+msgctxt "Pattern description"
+msgid "A hero with a centered heading, paragraph and button."
+msgstr "Μια κεντρικη εικόνα(hero) με κεντραρισμένη επικεφαλίδα, παράγραφο και κουμπί."
+
+#: patterns/cta-centered-heading.php
+msgctxt "Pattern title"
+msgid "Centered heading"
+msgstr "Κεντραρισμένη επικεφαλίδα"
+
+#: patterns/cta-book-locations.php:47 patterns/cta-book-locations.php:59
+#: patterns/cta-book-locations.php:71 patterns/cta-book-locations.php:83
+#: patterns/cta-book-locations.php:99 patterns/cta-book-locations.php:111
+#: patterns/cta-book-locations.php:123 patterns/cta-book-locations.php:135
+msgid "Book Store"
+msgstr "Βιβλιοπωλείο"
+
+#: patterns/contact-centered-social-link.php
+msgctxt "Pattern title"
+msgid "Centered link and social links"
+msgstr "Κεντραρισμένος σύνδεσμος και σύνδεσμοι κοινωνικών δικτύων"
+
+#: patterns/template-page-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog page"
+msgstr "Σελίδα ιστολογίου φωτογραφιών"
+
+#: patterns/template-home-with-sidebar-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog with sidebar"
+msgstr "Ιστολόγιο ειδήσεων με πλευρική στήλη"
+
+#: patterns/template-home-posts-grid-news-blog.php:114
+msgid "Architecture"
+msgstr "Αρχιτεκτονική"
+
+#: patterns/template-home-posts-grid-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog with featured posts grid"
+msgstr "Ιστολόγιο ειδήσεων με πλέγμα προτεινόμενων άρθρων"
+
+#: patterns/template-home-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog home"
+msgstr "Αρχική σελίδα ιστολογίου φωτογραφιών"
+
+#: patterns/template-home-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog home"
+msgstr "Αρχική σελίδα ιστολογίου ειδήσεων"
+
+#: patterns/template-archive-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog archive"
+msgstr "Αρχείο ιστολογίου φωτογραφιών"
+
+#: patterns/template-archive-news-blog.php
+msgctxt "Pattern title"
+msgid "News blog archive"
+msgstr "Αρχείο ιστολογίου ειδήσεων"
+
+#: patterns/services-team-photos.php:50
+msgid "Man in hat, standing in front of a building."
+msgstr "Άνδρας με καπέλο, στεκούμενος μπροστά από ένα κτίριο."
+
+#: patterns/services-team-photos.php:44
+msgid "Picture of a person typing on a typewriter."
+msgstr "Φωτογραφία ατόμου που πληκτρολογεί σε γραφομηχανή."
+
+#: patterns/services-team-photos.php:21
+msgid "Our small team is a group of driven, detail-oriented people who are passionate about their customers."
+msgstr "Η μικρή μας ομάδα είναι μια ομάδα ανθρώπων με κίνητρο, προσανατολισμένη στη λεπτομέρεια και με πάθος για τους πελάτες τους."
+
+#: patterns/services-team-photos.php
+msgctxt "Pattern description"
+msgid "Display team photos in a services section with grid layout."
+msgstr "Εμφανίστε τις φωτογραφίες της ομάδας σε μια ενότητα υπηρεσιών με διάταξη πλέγματος."
+
+#: patterns/services-team-photos.php
+msgctxt "Pattern title"
+msgid "Services, team photos"
+msgstr "Υπηρεσίες, φωτογραφίες της ομάδας"
+
+#: patterns/services-subscriber-only-section.php:69
+msgid "Smartphones capturing a scenic wildflower meadow with trees"
+msgstr "Smartphones που καταγράφουν ένα γραφικό λιβάδι με αγριολούλουδα και δέντρα"
+
+#: patterns/services-subscriber-only-section.php:55
+msgid "View plans"
+msgstr "Προβολή πακέτων"
+
+#: patterns/template-query-loop-news-blog.php:49
+msgid "Older Posts"
+msgstr "Παλαιότερα άρθρα"
+
+#: patterns/template-query-loop-photo-blog.php
+msgctxt "Pattern title"
+msgid "Photo blog posts"
+msgstr "Άρθρα στο ιστολόγιο φωτογραφιών"
+
+#: patterns/pricing-2-col.php:60 patterns/pricing-2-col.php:104
+#: patterns/services-subscriber-only-section.php:43
+msgid "Join our forums."
+msgstr "Εγγραφείτε στο φόρουμ μας."
+
+#: patterns/template-home-with-sidebar-news-blog.php:42
+msgid "The Latest"
+msgstr "Τα πιο πρόσφατα"
+
+#: patterns/cta-newsletter.php:32 patterns/footer-newsletter.php:30
+#: patterns/page-coming-soon.php:39
+#: patterns/services-subscriber-only-section.php:51
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: theme.json styles/02-noon.json styles/04-afternoon.json
+#: styles/05-twilight.json styles/06-morning.json styles/08-midnight.json
+#: styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-4.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr "Μικρό"
+
+#: patterns/pricing-2-col.php:78 patterns/pricing-3-col.php:73
+msgctxt "Name of membership package."
+msgid "Single"
+msgstr "Μεμονωμένο"
+
+#: patterns/hidden-sidebar.php
+msgctxt "Pattern title"
+msgid "Sidebar"
+msgstr "Στήλη"
+
+#: patterns/cta-grid-products-link.php:134
+msgid "Shop now"
+msgstr "Αγοράστε τώρα"
+
+#: patterns/cta-heading-search.php:21 patterns/hidden-search.php:14
+msgctxt "Button text. Verb."
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: functions.php:121
+msgid "Post formats"
+msgstr "Φορμάτ άρθρων"
+
+#: functions.php:142
+msgctxt "Label for the block binding placeholder in the editor"
+msgid "Post format name"
+msgstr "Όνομα μορφής άρθρου"
+
+#: patterns/banner-intro-image.php:22
+msgctxt "Alt text for intro picture."
+msgid "Picture of a flower"
+msgstr "Εικόνα ενός λουλουδιού"
+
+#: patterns/hidden-sidebar.php:14
+msgid "Other Posts"
+msgstr "Άλλες δημοσιεύσεις"
+
+#: patterns/banner-intro-image.php:31
+msgctxt "Heading for banner pattern."
+msgid "New arrivals"
+msgstr "Νέες αφίξεις"
+
+#: patterns/hidden-written-by.php:20
+msgid "in"
+msgstr "σε"
+
+#: theme.json styles/02-noon.json styles/04-afternoon.json
+#: styles/05-twilight.json styles/06-morning.json styles/08-midnight.json
+#: styles/typography/typography-preset-1.json
+#: styles/typography/typography-preset-3.json
+#: styles/typography/typography-preset-4.json
+#: styles/typography/typography-preset-5.json
+#: styles/typography/typography-preset-7.json
+msgctxt "Font size name"
+msgid "Extra Extra Large"
+msgstr "Πάρα Πολύ Μεγάλο"
+
+#: patterns/pricing-3-col.php:113
+msgctxt "Name of membership package."
+msgid "Expert"
+msgstr "Ειδικός"
+
+#: patterns/cta-events-list.php
+msgctxt "Pattern title"
+msgid "Events list"
+msgstr "Λίστα εκδηλώσεων"
+
+#: patterns/hidden-sidebar.php:37
+#: patterns/template-home-posts-grid-news-blog.php:34
+#: patterns/template-home-with-sidebar-news-blog.php:61
+msgid "Add text or blocks that will display when a query returns no results."
+msgstr "Προσθήκη κείμενου ή μπλοκς που θα εμφανιστούν όταν το ερώτημα δεν επιστρέφει αποτελέσματα."
+
+#: patterns/cta-events-list.php:19
+msgid "Upcoming events"
+msgstr "Μελλοντικές εκδηλώσεις"
+
+#: patterns/hero-podcast.php:49
+msgctxt "Button text"
+msgid "YouTube"
+msgstr "YouTube"
+
+#: patterns/text-faqs.php
+msgctxt "Pattern description"
+msgid "A FAQs section with a FAQ heading and list of questions and answers."
+msgstr "Μια ενότητα Συχνών Ερωτήσεων με μια επικεφαλίδα Συχνές Ερωτήσεις και μια λίστα με ερωτήσεις και απαντήσεις."
+
+#: patterns/banner-cover-big-heading.php:27 patterns/footer-columns.php:33
+#: patterns/footer-columns.php:35 patterns/footer-newsletter.php:20
+#: patterns/template-home-photo-blog.php:22
+msgid "Stories"
+msgstr "Ιστορίες"
+
+#: patterns/banner-poster.php:59
+msgid "#stories"
+msgstr "#stories"
+
+#: patterns/vertical-header.php
+msgctxt "Pattern description"
+msgid "Vertical site header with site title and navigation."
+msgstr "Κάθετη Κεφαλίδα με τίτλο του ιστότοπου και πλοήγηση."
+
+#: patterns/vertical-header.php
+msgctxt "Pattern title"
+msgid "Vertical site header"
+msgstr "Κάθετη Κεφαλίδα ιστοτόπου"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Vertical site header"
+msgstr "Κάθετη Κεφαλίδα ιστοτόπου"
+
+#: patterns/template-page-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned page"
+msgstr "Δεξιά στοιχισμένη σελίδα"
+
+#: patterns/header-centered.php
+msgctxt "Pattern title"
+msgid "Centered site header"
+msgstr "Κεφαλίδα ιστοτόπου με στοίχιση στο κέντρο"
+
+#: patterns/template-404-vertical-header-blog.php
+msgctxt "Pattern title"
+msgid "Right-aligned 404"
+msgstr "Δεξιάς στοίχισης, 404"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "the WordPress team"
+msgstr "η Ομάδα του WordPress"
+
+#. Author URI of the theme
+#: style.css patterns/footer-centered.php:34 patterns/footer-columns.php:74
+#: patterns/footer-newsletter.php:50 patterns/footer-social.php:36
+#: patterns/footer.php:83
+#, gp-priority: low
+msgid "https://wordpress.org"
+msgstr "https://wordpress.org"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://wordpress.org/themes/twentytwentyfive/"
+msgstr "https://el.wordpress.org/themes/twentytwentyfive/"

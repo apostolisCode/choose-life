@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field__accordion' ) ) :
 
@@ -17,7 +26,6 @@ if ( ! class_exists( 'acf_field__accordion' ) ) :
 		 * @param  n/a
 		 * @return n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -27,7 +35,10 @@ if ( ! class_exists( 'acf_field__accordion' ) ) :
 			$this->description   = __( 'Allows you to group and organize custom fields into collapsable panels that are shown while editing content. Useful for keeping large datasets tidy.', 'acf' );
 			$this->preview_image = acf_get_url() . '/assets/images/field-type-previews/field-preview-accordion.png';
 			$this->doc_url       = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/accordion/', 'docs', 'field-type-selection' );
-			$this->supports      = array( 'required' => false );
+			$this->supports      = array(
+				'required' => false,
+				'bindings' => false,
+			);
 			$this->defaults      = array(
 				'open'         => 0,
 				'multi_expand' => 0,
@@ -47,7 +58,6 @@ if ( ! class_exists( 'acf_field__accordion' ) ) :
 		 * @param  array $field
 		 * @return n/a
 		 */
-
 		function render_field( $field ) {
 
 			// vars
@@ -122,7 +132,6 @@ if ( ! class_exists( 'acf_field__accordion' ) ) :
 		 *
 		 * @return  $field - the field array holding all the field options
 		 */
-
 		function load_field( $field ) {
 
 			// remove name to avoid caching issue
@@ -136,6 +145,17 @@ if ( ! class_exists( 'acf_field__accordion' ) ) :
 
 			// return
 			return $field;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array();
 		}
 	}
 

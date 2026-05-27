@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 // vars
 $disabled = false;
@@ -139,8 +148,19 @@ if ( empty( $field['conditional_logic'] ) ) {
 							</td>
 							<td class="value">
 								<?php
+								$conditional_field = get_field_object( $rule['field'] );
 
-								// create field
+								/**
+								 * Filters the choices available for a conditional logic rule.
+								 *
+								 * @since 6.3.0
+								 *
+								 * @param array $choices The available choices.
+								 * @param array $conditional_field The field object for the conditional field.
+								 * @param mixed $value The value of the rule.
+								 */
+								$choices = apply_filters( 'acf/conditional_logic/choices', array( $rule['value'] => $rule['value'] ), $conditional_field, $rule['value'] );
+
 								acf_render_field(
 									array(
 										'type'     => 'select',
@@ -149,12 +169,9 @@ if ( empty( $field['conditional_logic'] ) ) {
 										'class'    => 'condition-rule-value',
 										'disabled' => $disabled,
 										'value'    => $rule['value'],
-										'choices'  => array(
-											$rule['value'] => $rule['value'],
-										),
+										'choices'  => $choices,
 									)
 								);
-
 								?>
 							</td>
 							<td class="add">

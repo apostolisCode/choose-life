@@ -1,14 +1,14 @@
 <?php
-
 /**
- * ACF Taxonomy Form Class
+ * @package ACF
+ * @author  WP Engine
  *
- * All the logic for adding fields to taxonomy terms
- *
- * @class       acf_form_taxonomy
- * @package     ACF
- * @subpackage  Forms
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
  */
+
 if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 
 	class acf_form_taxonomy {
@@ -26,7 +26,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function __construct() {
 
 			// actions
@@ -51,7 +50,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   n/a
 		 * @return  (boolean)
 		 */
-
 		function validate_page() {
 
 			// global
@@ -78,7 +76,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   N/A
 		 * @return  N/A
 		 */
-
 		function admin_enqueue_scripts() {
 
 			// validate page
@@ -110,7 +107,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function add_term( $taxonomy ) {
 
 			// vars
@@ -162,7 +158,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function edit_term( $term, $taxonomy ) {
 
 			// vars
@@ -188,17 +183,16 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 				);
 
 				foreach ( $field_groups as $field_group ) {
-
-						// title
-					if ( $field_group['style'] == 'default' ) {
-						echo '<h2>' . esc_html( $field_group['title'] ) . '</h2>';
+					// title
+					if ( $field_group['style'] === 'default' ) {
+						echo '<h2>' . acf_esc_html( acf_get_field_group_title( $field_group ) ) . '</h2>';
 					}
 
-						// fields
-						echo '<table class="form-table">';
+					// fields
+					echo '<table class="form-table">';
 					$fields = acf_get_fields( $field_group );
 					acf_render_fields( $fields, $post_id, 'tr', 'field' );
-						echo '</table>';
+					echo '</table>';
 				}
 			}
 		}
@@ -214,7 +208,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function admin_footer() {
 
 			?>
@@ -309,7 +302,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function save_term( $term_id, $tt_id, $taxonomy ) {
 
 			// vars
@@ -338,7 +330,6 @@ if ( ! class_exists( 'acf_form_taxonomy' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function delete_term( $term, $tt_id, $taxonomy, $deleted_term ) {
 
 			// bail early if termmeta table exists

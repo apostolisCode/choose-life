@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_gallery' ) ) :
 
@@ -15,7 +24,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -27,6 +35,7 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			$this->doc_url       = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/gallery/', 'docs', 'field-type-selection' );
 			$this->tutorial_url  = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/how-to-use-the-gallery-field/', 'docs', 'field-type-selection' );
 			$this->pro           = true;
+			$this->supports      = array( 'bindings' => false );
 			$this->defaults      = array(
 				'return_format' => 'array',
 				'preview_size'  => 'medium',
@@ -64,7 +73,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function input_admin_enqueue_scripts() {
 
 			// localize
@@ -76,32 +84,27 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			);
 		}
 
-
 		/**
-		 * description
+		 * AJAX handler for retrieving and rendering an attachment.
 		 *
-		 * @type    function
-		 * @date    13/12/2013
-		 * @since   5.0.0
+		 * @since 5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
-
-		function ajax_get_attachment() {
-
-			// Validate requrest.
-			if ( ! acf_verify_ajax() ) {
-				die();
-			}
-
+		public function ajax_get_attachment() {
 			// Get args.
 			$args = acf_request_args(
 				array(
 					'id'        => 0,
 					'field_key' => '',
+					'nonce'     => '',
 				)
 			);
+
+			// Validate request.
+			if ( ! acf_verify_ajax( $args['nonce'], $args['field_key'], true ) ) {
+				die();
+			}
 
 			// Cast args.
 			$args['id'] = (int) $args['id'];
@@ -122,26 +125,22 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			die;
 		}
 
-
 		/**
-		 * description
+		 * AJAX handler for updating an attachment.
 		 *
-		 * @type    function
-		 * @date    13/12/2013
 		 * @since   5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
+		public function ajax_update_attachment() {
+			$args = acf_request_args(
+				array(
+					'nonce'     => '',
+					'field_key' => '',
+				)
+			);
 
-		function ajax_update_attachment() {
-
-			if ( ! isset( $_POST['nonce'] ) ) {
-				wp_send_json_error();
-			}
-
-			// validate nonce
-			if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'acf_nonce' ) ) {
+			if ( ! acf_verify_ajax( $args['nonce'], $args['field_key'], true ) ) {
 				wp_send_json_error();
 			}
 
@@ -152,6 +151,7 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 			// loop over attachments
 			foreach ( $_POST['attachments'] as $id => $changes ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by WP core when saved.
+				$id = (int) $id;
 
 				if ( ! current_user_can( 'edit_post', $id ) ) {
 					wp_send_json_error();
@@ -200,22 +200,14 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			wp_send_json_success();
 		}
 
-
 		/**
-		 * description
+		 * AJAX handler for getting the attachment sort order.
 		 *
-		 * @type    function
-		 * @date    13/12/2013
-		 * @since   5.0.0
+		 * @since 5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
-
-		function ajax_get_sort_order() {
-
-			// vars
-			$r     = array();
+		public function ajax_get_sort_order() {
 			$order = 'DESC';
 			$args  = acf_parse_args(
 				$_POST, // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified below.
@@ -227,23 +219,22 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// validate
-			if ( ! wp_verify_nonce( $args['nonce'], 'acf_nonce' ) ) {
+			if ( ! acf_verify_ajax( $args['nonce'], $args['field_key'], true ) ) {
 				wp_send_json_error();
 			}
 
-			// reverse
-			if ( $args['sort'] == 'reverse' ) {
+			// Reverse order.
+			if ( $args['sort'] === 'reverse' ) {
 				$ids = array_reverse( $args['ids'] );
-
 				wp_send_json_success( $ids );
 			}
 
-			if ( $args['sort'] == 'title' ) {
+			// Ascending order.
+			if ( $args['sort'] === 'title' ) {
 				$order = 'ASC';
 			}
 
-			// find attachments (DISTINCT POSTS)
+			// Find attachments (DISTINCT POSTS).
 			$ids = get_posts(
 				array(
 					'post_type'   => 'attachment',
@@ -256,12 +247,10 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// success
 			if ( ! empty( $ids ) ) {
 				wp_send_json_success( $ids );
 			}
 
-			// failure
 			wp_send_json_error();
 		}
 
@@ -392,7 +381,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 * @since   3.6
 		 * @date    23/01/13
 		 */
-
 		function render_field( $field ) {
 
 			// Enqueue uploader assets.
@@ -409,6 +397,7 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				'data-mime_types'   => $field['mime_types'],
 				'data-insert'       => $field['insert'],
 				'data-columns'      => 4,
+				'data-nonce'        => wp_create_nonce( 'acf_field_' . $this->name . '_' . $field['key'] ),
 			);
 
 			// Set gallery height with deafult of 400px and minimum of 200px.
@@ -522,7 +511,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 *
 		 * @param   $field  - an array holding all the field's data
 		 */
-
 		function render_field_settings( $field ) {
 			acf_render_field_setting(
 				$field,
@@ -734,7 +722,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// Bail early if no value.
@@ -800,7 +787,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function validate_value( $valid, $value, $field, $input ) {
 
 			if ( empty( $value ) || ! is_array( $value ) ) {
@@ -829,7 +815,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 *
 		 * @return  $value - the modified value
 		 */
-
 		function update_value( $value, $post_id, $field ) {
 
 			// Bail early if no value.
@@ -935,6 +920,51 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		 */
 		public function format_value_for_rest( $value, $post_id, array $field ) {
 			return acf_format_numerics( $value );
+		}
+
+		/**
+		 * Formats the field value for JSON-LD output.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param mixed          $value   The value of the field.
+		 * @param integer|string $post_id The ID of the post.
+		 * @param array          $field   The field array.
+		 * @return mixed
+		 */
+		public function format_value_for_jsonld( $value, $post_id, $field ) {
+			if ( empty( $value ) || ! is_array( $value ) ) {
+				return null;
+			}
+
+			$image_field_type = acf_get_field_type( 'image' );
+			$images           = array();
+
+			foreach ( $value as $attachment_id ) {
+				// Create a temporary field config with the same output format.
+				$image_field = array(
+					'schema_output_format' => $field['schema_output_format'] ?? '',
+					'schema_property'      => $field['schema_property'] ?? '',
+				);
+
+				$formatted = $image_field_type->format_value_for_jsonld( $attachment_id, $post_id, $image_field );
+				if ( $formatted ) {
+					$images[] = $formatted;
+				}
+			}
+
+			return empty( $images ) ? null : $images;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'ImageObject', 'URL' );
 		}
 	}
 

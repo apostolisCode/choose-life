@@ -3,7 +3,7 @@
   "name": "wordpress-theme",
   "private": true,
   "engines": {
-    "node": "20.12.2"
+    "node": "24.11.0"
   },
   "devDependencies": {
     "browser-sync": "^3.0.2",

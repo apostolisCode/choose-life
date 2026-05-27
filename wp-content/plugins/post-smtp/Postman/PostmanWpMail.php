@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+	exit; // Exit if accessed directly
 }
 if ( ! class_exists( 'PostmanWpMail' ) ) {
 
@@ -26,7 +26,7 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 			require_once 'Postman-Auth/PostmanAuthenticationManagerFactory.php';
 			require_once 'PostmanState.php';
 
-            PostmanEmailLogService::getInstance();
+			PostmanEmailLogService::getInstance();
 		}
 
 		/**
@@ -50,14 +50,115 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 			$postmanMessage = $this->processWpMailCall( $to, $subject, $message, $headers, $attachments );
 
 			// build the email log entry
+		//	$log = new PostmanEmailLog();
+			
+			// Merge forced recipients with original $to for logging
+			// $options = PostmanOptions::getInstance();
+			// $forcedTo = $options->getForcedToRecipients();
+			// $allRecipients = array();
+			
+			// // Add original recipients
+			// if ( is_array( $to ) ) {
+			// 	$allRecipients = array_merge( $allRecipients, $to );
+			// } elseif ( ! empty( $to ) ) {
+			// 	// Split comma-separated string into array
+			// 	$allRecipients = array_merge( $allRecipients, array_map( 'trim', explode( ',', $to ) ) );
+			// }
+			
+			// // Add forced recipients if set
+			// if ( ! empty( $forcedTo ) ) {
+			// 	// Split comma-separated string into array
+			// 	$forcedRecipients = array_map( 'trim', explode( ',', $forcedTo ) );
+			// 	$allRecipients = array_merge( $allRecipients, $forcedRecipients );
+			// }
+			
+			// // Remove duplicates and empty values, then convert back to comma-separated string
+			// $allRecipients = array_unique( array_filter( $allRecipients ) );
+			// $log->originalTo = implode( ', ', $allRecipients );
+			
+			// $log->originalSubject = $subject;
+			// $log->originalMessage = $message;
+			// $log->originalHeaders = $headers;
+
+			/*
+			 * Build the email log entry from the *final* message, after all wp_mail
+			 * filters and header parsing have been applied.
+			 *
+			 * This makes the log reflect what was actually sent to the recipient
+			 * (subject, body, headers, recipients), instead of the raw wp_mail()
+			 * arguments.
+			 */
 			$log = new PostmanEmailLog();
-			$log->originalTo = $to;
-			$log->originalSubject = $subject;
-			$log->originalMessage = $message;
-			$log->originalHeaders = $headers;
+			$log->originalTo      = $this->format_recipients_for_log( $postmanMessage->getToRecipients() );
+			$log->originalSubject = $postmanMessage->getSubject();
+			$log->originalMessage = $postmanMessage->getBody();
+			$log->originalHeaders = $this->flatten_headers_for_log( $postmanMessage );
 
 			// send the message and return the result
 			return $this->sendMessage( $postmanMessage, $log );
+		}
+
+		/**
+		 * Convert PostmanEmailAddress recipients to a string suitable for logging
+		 * and for passing back into wp_mail() when resending.
+		 *
+		 * @param array $recipients Array of PostmanEmailAddress objects.
+		 *
+		 * @return string Comma separated list of recipients in "Name <email>" format.
+		 */
+		private function format_recipients_for_log( $recipients ) {
+			if ( empty( $recipients ) || ! is_array( $recipients ) ) {
+				return '';
+			}
+
+			$emails = array();
+
+			foreach ( $recipients as $recipient ) {
+				if ( $recipient instanceof PostmanEmailAddress ) {
+					$emails[] = $recipient->format();
+				}
+			}
+
+			return implode( ', ', $emails );
+		}
+
+		/**
+		 * Build a wp_mail()-compatible headers string from the PostmanMessage.
+		 *
+		 * Historically we stored the original $headers argument exactly as it was
+		 * passed into wp_mail(). To keep resend behaviour working while still
+		 * reflecting the final email, we reconstruct the headers from the parsed
+		 * PostmanMessage structure.
+		 *
+		 * @param PostmanMessage $message
+		 *
+		 * @return string Header lines separated by "\r\n".
+		 */
+		private function flatten_headers_for_log( PostmanMessage $message ) {
+			$lines = array();
+
+			// Generic headers collected during parsing (X-*, custom headers, etc).
+			foreach ( (array) $message->getHeaders() as $header ) {
+				if ( isset( $header['name'], $header['content'] ) && '' !== trim( $header['content'] ) ) {
+					$lines[] = trim( $header['name'] ) . ': ' . trim( $header['content'] );
+				}
+			}
+
+			// Explicit Reply-To header if present.
+			if ( $message->getReplyTo() instanceof PostmanEmailAddress ) {
+				$lines[] = 'Reply-To: ' . $message->getReplyTo()->format();
+			}
+
+			// Content-Type + charset.
+			if ( $message->getContentType() ) {
+				$header = 'Content-Type: ' . $message->getContentType();
+				if ( $message->getCharset() ) {
+					$header .= '; charset=' . $message->getCharset();
+				}
+				$lines[] = $header;
+			}
+
+			return implode( "\r\n", array_unique( $lines ) );
 		}
 
         /**
@@ -65,28 +166,28 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
          * @return PostmanMessage
          */
 		private function apply_default_headers( $message ) {
-            $headers[] = 'Message-ID: ' . $this->createMessageId();
-            $message->addHeaders($headers);
-        }
+			$headers[] = 'Message-ID: ' . $this->createMessageId();
+			$message->addHeaders($headers);
+		}
 
-        /**
-         * Creates the Message-ID
-         *
-         * @return string
-         */
-        public function createMessageId() {
+		/**
+		 * Creates the Message-ID
+		 *
+		 * @return string
+		 */
+		public function createMessageId() {
 
-            $id = md5(uniqid(time()));
+			$id = md5(uniqid(time()));
 
-            if (isset($_SERVER["SERVER_NAME"])) {
-                $hostName = sanitize_text_field($_SERVER["SERVER_NAME"]);
-            } else {
-                $hostName = php_uname('n');
-            }
+			if (isset($_SERVER["SERVER_NAME"])) {
+				$hostName = sanitize_text_field($_SERVER["SERVER_NAME"]);
+			} else {
+				$hostName = php_uname('n');
+			}
 
-            return $id . '@' . str_replace('www.', '', $hostName);
+			return $id . '@' . str_replace('www.', '', $hostName);
 
-        }
+		}
 
 		/**
 		 * Builds a PostmanMessage based on the WordPress wp_mail parameters
@@ -111,6 +212,7 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 			 *        	subject, message, headers, and attachments values.
 			 */
 			$atts = apply_filters( 'wp_mail', compact( 'to', 'subject', 'message', 'headers', 'attachments' ) );
+
 			if ( isset( $atts ['to'] ) ) {
 				$to = $atts ['to'];
 			}
@@ -162,7 +264,15 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 			$options = PostmanOptions::getInstance();
 			// the From is set now so that it can be overridden
 			$transport = PostmanTransportRegistry::getInstance()->getActiveTransport();
-			$message->setFrom( $transport->getFromEmailAddress(), $transport->getFromName() );
+			if ( $transport !== null ) {
+				$fromEmail = $transport->getFromEmailAddress();
+				$fromName = $transport->getFromName();
+			} else {
+				// fallback to options or defaults if transport is null
+				$fromEmail = $options->getMessageSenderEmail();
+				$fromName = $options->getMessageSenderName();
+			}
+			$message->setFrom( $fromEmail, $fromName );
 			// the Reply-To is set now so that it can be overridden
 			$message->setReplyTo( $options->getReplyTo() );
 			$message->setCharset( get_bloginfo( 'charset' ) );
@@ -180,7 +290,7 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 		 */
 		public function sendMessage( PostmanMessage $message, PostmanEmailLog $log ) {
 
-		    $this->apply_default_headers( $message );
+			$this->apply_default_headers( $message );
 
 			// get the Options and AuthToken
 			$options = PostmanOptions::getInstance();
@@ -197,6 +307,10 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 			$message->addTo( $options->getForcedToRecipients() );
 			$message->addCc( $options->getForcedCcRecipients() );
 			$message->addBcc( $options->getForcedBccRecipients() );
+
+			// Ensure originalTo reflects the final list of all \"To\" recipients,
+			// including any global \"To Recipient(s)\" configured in Settings.
+			$log->originalTo = $this->format_recipients_for_log( $message->getToRecipients() );
 
 			// apply the WordPress filters
 			// may impact the from address, from email, charset and content-type
@@ -239,13 +353,13 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 					 * @since 2.5.0
 					 * @version 1.0.0
 					 */
-                    if ( $send_email = apply_filters( 'post_smtp_do_send_email', true ) && apply_filters( 'post_smtp_send_email', true ) ) {
+					if ( $send_email = apply_filters( 'post_smtp_do_send_email', true ) && apply_filters( 'post_smtp_send_email', true ) ) {
 
 						$engine->send( $message );
 
-                    } else {
-                        $this->transcript = 'Bypassed By MailControl For Post SMTP';
-                    }
+					} else {
+						$this->transcript = 'Bypassed By MailControl For Post SMTP';
+					}
 
 					// increment the success counter, unless we are just tesitng
 					if ( ! $testMode ) {
@@ -256,13 +370,18 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 				// clean up
 				$this->postSend( $engine, $startTime, $options, $transport );
 
-                /**
-                 * Do stuff after successful delivery
-                 */
-                do_action( 'post_smtp_on_success', $log, $message, $engine->getTranscript(), $transport );
-
-				// return successful
-				return true;
+				   /**
+					* Do stuff after successful delivery
+					*/
+				   if ($transport !== null) {
+					   do_action( 'post_smtp_on_success', $log, $message, $engine->getTranscript(), $transport );
+				   } else {
+					   if ($this->logger) {
+						   $this->logger->warning('Transport is null, skipping post_smtp_on_success action to avoid fatal error.');
+					   }
+				   }
+				   // return successful
+				   return true;
 			} catch ( Exception $e ) {
 				// save the error for later
 				$this->exception = $e;
@@ -279,17 +398,23 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 				$this->postSend( $engine, $startTime, $options, $transport );
 
 
-                /**
-                 * Do stuff after failed delivery
-                 */
-                do_action( 'post_smtp_on_failed', $log, $message, $engine->getTranscript(), $transport, $e->getMessage() );
+				   /**
+					* Do stuff after failed delivery
+					*/
+				   if ($transport !== null) {
+					   do_action( 'post_smtp_on_failed', $log, $message, $engine->getTranscript(), $transport, $e->getMessage() );
+				   } else {
+					   if ($this->logger) {
+						   $this->logger->warning('Transport is null, skipping post_smtp_on_failed action to avoid fatal error.');
+					   }
+				   }
 
-                // Fallback
-                if ( $this->fallback( $log, $message, $options ) ) {
+				   // Fallback
+				   if ( $this->fallback( $log, $message, $options ) ) {
 
-				    return true;
+					   return true;
 
-                }
+				}
 
 				$mail_error_data = array(
 					'to' => $message->getToRecipients(),
@@ -303,9 +428,9 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 				do_action( 'wp_mail_failed', new WP_Error( 'wp_mail_failed', $e->getMessage(), $mail_error_data ) );
 
 				// return failure
-                if ( PostmanOptions::getInstance()->getSmtpMailer() == 'phpmailer' ) {
-                    throw new phpmailerException($e->getMessage(), $e->getCode());
-                }
+				if ( PostmanOptions::getInstance()->getSmtpMailer() == 'phpmailer' ) {
+					throw new phpmailerException($e->getMessage(), $e->getCode());
+				}
 				return false;
 
 			}
@@ -313,22 +438,22 @@ if ( ! class_exists( 'PostmanWpMail' ) ) {
 
 		private function fallback( $log, $postMessage,$options ) {
 
-            if ( ! $options->is_fallback && $options->getFallbackIsEnabled() && $options->getFallbackIsEnabled() == 'yes' ) {
+			if ( ! $options->is_fallback && $options->getFallbackIsEnabled() && $options->getFallbackIsEnabled() == 'yes' ) {
 
-                $options->is_fallback = true;
+				$options->is_fallback = true;
 
-                $status = $this->sendMessage( $postMessage, $log );
+				$status = $this->sendMessage( $postMessage, $log );
 
-                $options->is_fallback = false;
+				$options->is_fallback = false;
 
-                return $status;
+				return $status;
 
-            } else {
-                $options->is_fallback = false;
-            }
+			} else {
+				$options->is_fallback = false;
+			}
 
 			return false;
-        }
+		}
 
 		/**
 		 * Clean up after sending the mail

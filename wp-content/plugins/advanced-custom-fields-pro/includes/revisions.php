@@ -1,15 +1,26 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 if ( ! class_exists( 'acf_revisions' ) ) :
-	#[AllowDynamicProperties]
 	class acf_revisions {
 
-		// vars
-		var $cache = array();
+		/**
+		 * An array to cache post IDs for revisions.
+		 * @var array
+		 */
+		public $cache = array();
 
 		/**
 		 * Constructs the acf_revisions class.
@@ -78,6 +89,10 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @return boolean
 		 */
 		public function check_acf_fields_have_changed( $post_has_changed, $last_revision, $post ) {
+			if ( apply_filters( 'acf/revisions/skip_legacy_metabox_handling', false ) ) {
+				return $post_has_changed;
+			}
+
 			if ( acf_maybe_get_GET( 'meta-box-loader', false ) ) {
 				// We're in a legacy AJAX request, so we copy fields over to the latest revision.
 				$this->maybe_save_revision( $last_revision->ID, $post->ID );
@@ -100,10 +115,19 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @return void
 		 */
 		public function maybe_save_revision( $revision_id, $post_id ) {
+			if ( apply_filters( 'acf/revisions/skip_legacy_metabox_handling', false ) ) {
+				return;
+			}
+
 			// We don't have anything to copy over yet.
 			if ( ! did_action( 'acf/save_post' ) ) {
 				delete_metadata( 'post', $post_id, '_acf_changed' );
 				delete_metadata( 'post', $revision_id, '_acf_changed' );
+				return;
+			}
+
+			// Bail if this is an autosave in Classic Editor, it already has the field values.
+			if ( acf_maybe_get_POST( '_acf_changed' ) && wp_is_post_autosave( $revision_id ) ) {
 				return;
 			}
 
@@ -123,7 +147,6 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @param   $fields (array)
 		 * @return  $fields
 		 */
-
 		function wp_preview_post_fields( $fields ) {
 
 			// bail early if not previewing a post
@@ -148,12 +171,11 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @type    filter
 		 * @date    19/09/13
 		 *
-		 * @param   $return (boolean) defaults to true
-		 * @param   $last_revision (object) the last revision that WP will compare against
-		 * @param   $post (object) the $post object that WP will compare against
-		 * @return  $return (boolean)
+		 * @param   boolean $return        defaults to true
+		 * @param   object  $last_revision the last revision that WP will compare against
+		 * @param   object  $post          the $post object that WP will compare against
+		 * @return  boolean $return
 		 */
-
 		function wp_save_post_revision_check_for_changes( $return, $last_revision, $post ) {
 
 			// if acf has changed, return false and prevent WP from performing 'compare' logic
@@ -177,7 +199,6 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function wp_post_revision_fields( $fields, $post = null ) {
 
 			// validate page
@@ -284,22 +305,17 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 			return $fields;
 		}
 
-
 		/**
-		 * This filter will load the value for the given field and return it for rendering
+		 * Load the value for the given field and return it for rendering.
 		 *
-		 * @type    filter
-		 * @date    11/08/13
-		 *
-		 * @param   $value (mixed) should be false as it has not yet been loaded
-		 * @param   $field_name (string) The name of the field
-		 * @param   post (mixed) Holds the $post object to load from - in WP 3.5, this is not passed!
-		 * @param   $direction (string) to / from - not used
-		 * @return  $value (string)
+		 * @param mixed  $value      Should be false as it has not yet been loaded.
+		 * @param string $field_name The name of the field
+		 * @param mixed  $post       Holds the $post object to load from - in WP 3.5, this is not passed!
+		 * @param string $direction  To / from - not used.
+		 * @return string $value
 		 */
-		function wp_post_revision_field( $value, $field_name, $post = null, $direction = false ) {
-
-			// bail early if is empty.
+		public function wp_post_revision_field( $value, $field_name, $post = null, $direction = false ) {
+			// Bail early if is empty.
 			if ( empty( $value ) ) {
 				return '';
 			}
@@ -326,7 +342,6 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 			return $value;
 		}
 
-
 		/**
 		 * This action will copy and paste the metadata from a revision to the post
 		 *
@@ -336,7 +351,6 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @param   $parent_id (int) the destination post
 		 * @return  $revision_id (int) the source post
 		 */
-
 		function wp_restore_post_revision( $post_id, $revision_id ) {
 
 			// copy postmeta from revision to post (restore from revision)
@@ -366,7 +380,6 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 		 * @param   $_post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function acf_validate_post_id( $post_id, $_post_id ) {
 
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended

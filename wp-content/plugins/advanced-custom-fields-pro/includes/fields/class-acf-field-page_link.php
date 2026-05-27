@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_page_link' ) ) :
 
@@ -15,7 +24,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -36,24 +44,53 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 			// extra
 			add_action( 'wp_ajax_acf/fields/page_link/query', array( $this, 'ajax_query' ) );
 			add_action( 'wp_ajax_nopriv_acf/fields/page_link/query', array( $this, 'ajax_query' ) );
+			add_filter( 'acf/conditional_logic/choices', array( $this, 'render_field_page_link_conditional_choices' ), 10, 3 );
 		}
 
+		/**
+		 * Filters choices in page link conditions.
+		 *
+		 * @since 6.3
+		 *
+		 * @param array  $choices           The selected choice.
+		 * @param array  $conditional_field The conditional field settings object.
+		 * @param string $rule_value        The rule value.
+		 * @return array
+		 */
+		public function render_field_page_link_conditional_choices( $choices, $conditional_field, $rule_value ) {
+			if ( ! is_array( $conditional_field ) || $conditional_field['type'] !== 'page_link' ) {
+				return $choices;
+			}
+			if ( ! empty( $rule_value ) ) {
+				$post_title = esc_html( get_the_title( $rule_value ) );
+				$choices    = array( $rule_value => $post_title );
+			}
+			return $choices;
+		}
 
 		/**
-		 * description
+		 * Returns AJAX results for the Page Link field.
 		 *
-		 * @type    function
-		 * @date    24/10/13
-		 * @since   5.0.0
+		 * @since 5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
+		public function ajax_query() {
+			$nonce             = acf_request_arg( 'nonce', '' );
+			$key               = acf_request_arg( 'field_key', '' );
+			$conditional_logic = (bool) acf_request_arg( 'conditional_logic', false );
 
-		function ajax_query() {
+			if ( $conditional_logic ) {
+				if ( ! acf_current_user_can_admin() ) {
+					die();
+				}
 
-			// validate
-			if ( ! acf_verify_ajax() ) {
+				// Use the standard ACF admin nonce.
+				$nonce = '';
+				$key   = '';
+			}
+
+			if ( ! acf_verify_ajax( $nonce, $key, ! $conditional_logic ) ) {
 				die();
 			}
 
@@ -65,6 +102,7 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 					's'         => '',
 					'field_key' => '',
 					'paged'     => 1,
+					'include'   => '',
 				)
 			);
 
@@ -76,7 +114,7 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 
 			// paged
 			$args['posts_per_page'] = 20;
-			$args['paged']          = $options['paged'];
+			$args['paged']          = (int) $options['paged'];
 
 			// search
 			if ( $options['s'] !== '' ) {
@@ -102,10 +140,8 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 				$args['post_type'] = acf_get_post_types();
 			}
 
-			// post status
-			if ( ! empty( $options['post_status'] ) ) {
-				$args['post_status'] = acf_get_array( $options['post_status'] );
-			} elseif ( ! empty( $field['post_status'] ) ) {
+			// Post status - use field config only, don't accept from user input.
+			if ( ! empty( $field['post_status'] ) ) {
 				$args['post_status'] = acf_get_array( $field['post_status'] );
 			}
 
@@ -126,6 +162,10 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 						'terms'    => $terms,
 					);
 				}
+			}
+
+			if ( ! empty( $options['include'] ) ) {
+				$args['include'] = (int) $options['include'];
 			}
 
 			// filters
@@ -164,6 +204,11 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 						'children' => $children,
 					);
 				}
+			}
+
+			// If there is an include set, we will unset search to avoid attempting to further filter by the search term.
+			if ( isset( $args['include'] ) ) {
+				unset( $args['s'] );
 			}
 
 			// get posts grouped by post type
@@ -223,7 +268,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 * @param   $text (string)
 		 * @return  (array)
 		 */
-
 		function get_post_result( $id, $text ) {
 
 			// vars
@@ -258,7 +302,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 * @param   $post_id (int) the post_id to which this value is saved to
 		 * @return  (string)
 		 */
-
 		function get_post_title( $post, $field, $post_id = 0, $is_search = 0 ) {
 
 			// get post_id
@@ -289,7 +332,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 * @param   $value (array)
 		 * @return  $value
 		 */
-
 		function get_posts( $value, $field ) {
 
 			// force value to array
@@ -344,22 +386,20 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 
 
 		/**
-		 * Create the HTML interface for your field
+		 * Renders the Page Link field.
 		 *
-		 * @param   $field - an array holding all the field's data
+		 * @since 3.6
 		 *
-		 * @type    action
-		 * @since   3.6
-		 * @date    23/01/13
+		 * @param array $field The field settings array.
+		 * @return void
 		 */
-
-		function render_field( $field ) {
-
+		public function render_field( $field ) {
 			// Change Field into a select
 			$field['type']    = 'select';
 			$field['ui']      = 1;
 			$field['ajax']    = 1;
 			$field['choices'] = array();
+			$field['nonce']   = wp_create_nonce( 'acf_field_' . $this->name . '_' . $field['key'] );
 
 			// populate choices if value exists
 			if ( ! empty( $field['value'] ) ) {
@@ -505,7 +545,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// ACF4 null
@@ -559,7 +598,6 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 *
 		 * @return  $value - the modified value
 		 */
-
 		function update_value( $value, $post_id, $field ) {
 
 			// Bail early if no value.
@@ -665,6 +703,46 @@ if ( ! class_exists( 'acf_field_page_link' ) ) :
 		 */
 		public function format_value_for_rest( $value, $post_id, array $field ) {
 			return acf_format_numerics( $value );
+		}
+
+		/**
+		 * Formats the field value for JSON-LD output.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param mixed          $value   The value of the field.
+		 * @param integer|string $post_id The ID of the post.
+		 * @param array          $field   The field array.
+		 * @return mixed
+		 */
+		public function format_value_for_jsonld( $value, $post_id, $field ) {
+			$value = acf_format_numerics( $value );
+
+			if ( ! $value ) {
+				return $value;
+			}
+
+			if ( is_array( $value ) ) {
+				return array_map(
+					function ( $post_id ) {
+						return get_permalink( $post_id );
+					},
+					$value
+				);
+			}
+
+			return get_permalink( $value );
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'URL' );
 		}
 	}
 

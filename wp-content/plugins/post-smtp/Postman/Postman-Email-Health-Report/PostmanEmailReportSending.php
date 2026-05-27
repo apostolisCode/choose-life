@@ -36,53 +36,83 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 		 * @version 1.0.0
 		 */
 		public function __construct() {
-
-			add_action( 'init', array( $this, 'send_report' ) );
+			add_action( 'init', array( $this, 'schedule_email_reporting' ) );
+			add_action( 'postman_rat_email_report', array( $this,  'handle_email_reporting' ) );
+			add_filter( 'cron_schedules', array( $this, 'add_monthly_schedule' ) );
 		}
 
+
 		/**
-		 * Send the report
+		 * Schedules the email reporting cron event based on user-defined settings.
 		 *
-		 * @since 2.9.0
-		 * @version 1.0.0
+		 * This function retrieves the reporting interval from plugin options and schedules
+		 * a WordPress cron job accordingly. If a schedule already exists and its interval
+		 * is different from the new one, the existing schedule is unscheduled and a new
+		 * schedule is created.
+		 * @since 3.0.1
+		 * @version 3.0.1
 		 */
-		public function send_report() {
+		public function schedule_email_reporting() {
+			$options = get_option( 'postman_rat', array() );
+			if ( isset( $options['enable_email_reporting'] ) && $options['enable_email_reporting'] ) {
+				$schedules = array(
+					'd' => 'daily',
+					'w' => 'weekly',
+					'm' => 'monthly',
+				);
 
-			$options = get_option( 'postman_rat' );
+				if ( isset( $options['reporting_interval'] ) && isset( $schedules[ $options['reporting_interval'] ] ) ) {
+					$schedule = $schedules[ $options['reporting_interval'] ];
 
-			$enabled = ( $options && isset( $options['enable_email_reporting'] ) ) ? $options['enable_email_reporting'] : false;
-
-			$interval = ( $options && isset( $options['reporting_interval'] ) ) ? $options['reporting_interval'] : false;
-
-			$has_sent = get_transient( 'ps_rat_has_sent' );
-
-			// If transient expired, let's send :).
-			if ( $enabled && $interval && ! $has_sent ) {
-
-				$expiry_time = '';
-				$report_sent = $this->send_mail( $interval );
-
-				if ( $report_sent ) {
-
-					if ( $interval === 'd' ) {
-
-						$expiry_time = DAY_IN_SECONDS;
+					if ( ! wp_next_scheduled( 'postman_rat_email_report' ) ) {
+						wp_schedule_event( current_time( 'timestamp' ), $schedule, 'postman_rat_email_report' );
 					}
-					if ( $interval === 'w' ) {
-
-						$expiry_time = WEEK_IN_SECONDS;
-					}
-					if ( $interval === 'm' ) {
-
-						$expiry_time = MONTH_IN_SECONDS;
-					}
-
-					// Set Future Transient :D.
-					set_transient( 'ps_rat_has_sent', '1', $expiry_time );
 				}
 			}
 		}
 
+		/**
+		 * Handles the email reporting functionality triggered by the cron job.
+		 *
+		 * This function checks if email reporting is enabled and retrieves the configured 
+		 * reporting interval. If both conditions are met, it triggers the email-sending 
+		 * functionality.
+		 *  @since 3.0.1
+		 *  @version 3.0.1
+		 */
+		public function handle_email_reporting() {
+			$options = get_option( 'postman_rat' );
+			$enabled = isset( $options['enable_email_reporting'] ) ? $options['enable_email_reporting'] : false;
+			$interval = isset( $options['reporting_interval'] ) ? $options['reporting_interval'] : false;
+
+			if ( $enabled && $interval ) {
+				$report_sent = $this->send_mail( $interval );
+			}
+		}
+
+		/**
+		 * Add a custom monthly schedule to WordPress's cron system.
+		 *
+		 * @param array $schedules The existing cron schedules.
+		 * @return array Modified array of cron schedules with 'monthly' added.
+		 * @since 3.0.1
+		 * @version 3.0.1
+		 */
+		public function add_monthly_schedule( $schedules ) {
+			// Check if textdomain is loaded to avoid early translation loading
+			$display_text = 'Once Monthly';
+
+			if ( did_action( 'init' ) && function_exists( 'is_textdomain_loaded' ) && is_textdomain_loaded( 'post-smtp' ) ) {
+				$display_text = __( 'Once Monthly', 'post-smtp' );
+			}
+			
+			$schedules['monthly'] = array(
+				'interval' => 30 * DAY_IN_SECONDS,
+				'display'  => $display_text,
+			);
+			
+			return $schedules;
+    	}
 
 		/**
 		 * Get total email count
@@ -104,7 +134,10 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 			$where = ( ! empty( $from ) && ! empty( $to ) ) ? " WHERE pl.time >= {$from} && pl.time <= {$to}" : '';
 
 
-			$query = "SELECT pl.original_subject AS subject, COUNT( pl.original_subject ) AS total, SUM( pl.success = 1 ) As sent, SUM( pl.success != 1 ) As failed FROM {$ps_query->table} AS pl";
+			$query = "SELECT pl.original_subject AS subject, COUNT( pl.original_subject ) AS total, 
+				SUM( pl.success = 1 OR pl.success = 'Sent ( ** Fallback ** )' OR pl.success LIKE '( ** Fallback ** )%' ) As sent, 
+				SUM( pl.success != 1 AND pl.success != 'Sent ( ** Fallback ** )' AND pl.success NOT LIKE '( ** Fallback ** )%' ) As failed 
+				FROM {$ps_query->table} AS pl";
 
 			/**
 			 * Filter to get query from extension
@@ -128,7 +161,7 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 		 * Get the email body
 		 *
 		 * @param string $interval Time interval.
-		 * @since 3.0.0
+		 * @since 2.9.0
 		 * @version 1.0.0
 		 */
 		public function get_body( $interval ) {
@@ -137,35 +170,22 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 			$yesterday->setTime( 23, 59, 0 );
 			$to = strtotime( $yesterday->format( 'Y-m-d H:i:s' ) );
 			$from = '';
-
+			$current_time  = current_time( 'timestamp' );
 			$duration = '';
 
 			if ( $interval === 'd' ) {
-
-				$duration = 'day';
-				$date = new DateTime( date( 'Y-m-d', $to ) );
-				$date->setTime( 23, 59, 0 );
-				$from = $date->sub( new DateInterval( 'P1D' ) );
-				$from = strtotime( $from->format( 'Y-m-d H:i:s' ) );
+				$from = strtotime( 'today', $current_time );
 			}
 			if ( $interval === 'w' ) {
-
-				$duration = 'week';
-				$date = new DateTime( date( 'Y-m-d', $to ) );
-				$date->setTime( 23, 59, 0 );
-				$from = $date->sub( new DateInterval( 'P1W' ) );
-				$from = strtotime( $from->format( 'Y-m-d H:i:s' ) );
+				$today  = strtotime( 'today', $current_time );
+				$from = strtotime( '-7 days', $today );
 			}
 			if ( $interval === 'm' ) {
-
-				$duration = 'month';
-				$date = new DateTime( date( 'Y-m-d', $to ) );
-				$date->setTime( 23, 59, 0 );
-				$from = $date->sub( new DateInterval( 'P1M' ) );
-				$from = strtotime( $from->format( 'Y-m-d H:i:s' ) );
+				$today  = strtotime( 'today', $current_time );
+				$from = strtotime( '-1 month', $today );
 			}
 
-			$logs = $this->get_total_logs( $from, $to, 4 );
+			$logs = $this->get_total_logs( $from, $current_time );
 
 			include_once POST_SMTP_PATH . '/Postman/Postman-Email-Health-Report/PostmanReportTemplate.php';
 			$get_body = new PostmanReportTemplate();
@@ -179,7 +199,7 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 		 * Function to send the report
 		 *
 		 * @param string $interval Time Interval.
-		 * @since 3.0.0
+		 * @since 2.9.0
 		 * @version 1.0.0
 		 */
 		public function send_mail( $interval ) {
@@ -203,7 +223,7 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 			 * Filters the site title to be used in the email subject.
 			 *
 			 * @param string $site_title The site title.
-			 * @since 3.0.0
+			 * @since 2.9.0
 			 * @version 1.0.0
 			 */
 			$site_title = apply_filters( 'postman_rat_reporting_email_site_title', get_bloginfo( 'name' ) );
@@ -212,7 +232,7 @@ if ( ! class_exists( 'PostmanEmailReportSending' ) ) :
 			 * Filters the email address to which the report is sent.
 			 *
 			 * @param string $to The email address to which the report is sent.
-			 * @since 3.0.0
+			 * @since 2.9.0
 			 * @version 1.0.0
 			 */
 			$to = apply_filters( 'postman_rat_reporting_email_to', get_option( 'admin_email' ) );

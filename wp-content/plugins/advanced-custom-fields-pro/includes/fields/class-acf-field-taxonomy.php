@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 
@@ -42,37 +51,40 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			add_action( 'wp_ajax_acf/fields/taxonomy/query', array( $this, 'ajax_query' ) );
 			add_action( 'wp_ajax_nopriv_acf/fields/taxonomy/query', array( $this, 'ajax_query' ) );
 			add_action( 'wp_ajax_acf/fields/taxonomy/add_term', array( $this, 'ajax_add_term' ) );
+			add_filter( 'acf/conditional_logic/choices', array( $this, 'render_field_taxonomy_conditional_choices' ), 10, 3 );
 
 			// actions
 			add_action( 'acf/save_post', array( $this, 'save_post' ), 15, 1 );
 		}
 
-
 		/**
-		 * description
+		 * Returns AJAX results for the Taxonomy field.
 		 *
-		 * @type    function
-		 * @date    24/10/13
-		 * @since   5.0.0
+		 * @since 5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
+		public function ajax_query() {
+			$nonce             = acf_request_arg( 'nonce', '' );
+			$key               = acf_request_arg( 'field_key', '' );
+			$conditional_logic = (bool) acf_request_arg( 'conditional_logic', false );
 
-		function ajax_query() {
+			if ( $conditional_logic ) {
+				if ( ! acf_current_user_can_admin() ) {
+					die();
+				}
 
-			// validate
-			if ( ! acf_verify_ajax() ) {
+				// Use the standard ACF admin nonce.
+				$nonce = '';
+				$key   = '';
+			}
+
+			if ( ! acf_verify_ajax( $nonce, $key, ! $conditional_logic ) ) {
 				die();
 			}
 
-			// get choices
-			$response = $this->get_ajax_query( $_POST );
-
-			// return
-			acf_send_ajax_results( $response );
+			acf_send_ajax_results( $this->get_ajax_query( $_POST ) );
 		}
-
 
 		/**
 		 * This function will return an array of data formatted for use in a select2 AJAX response
@@ -84,32 +96,36 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		 * @param   $options (array)
 		 * @return  (array)
 		 */
-
 		function get_ajax_query( $options = array() ) {
-
-			// defaults
 			$options = acf_parse_args(
 				$options,
 				array(
 					'post_id'   => 0,
 					's'         => '',
 					'field_key' => '',
-					'paged'     => 0,
+					'term_id'   => '',
+					'include'   => '',
+					'paged'     => 1,
 				)
 			);
 
-			// load field
 			$field = acf_get_field( $options['field_key'] );
 			if ( ! $field ) {
 				return false;
 			}
 
-			// bail early if taxonomy does not exist
+			// if options include isset, then we are loading a specific term.
+			if ( ! empty( $options['include'] ) ) {
+				$options['term_id'] = $options['include'];
+				// paged should be 1.
+				$options['paged'] = 1;
+			}
+
+			// Bail early if taxonomy does not exist.
 			if ( ! taxonomy_exists( $field['taxonomy'] ) ) {
 				return false;
 			}
 
-			// vars
 			$results         = array();
 			$is_hierarchical = is_taxonomy_hierarchical( $field['taxonomy'] );
 			$is_pagination   = ( $options['paged'] > 0 );
@@ -117,14 +133,12 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			$limit           = 20;
 			$offset          = 20 * ( $options['paged'] - 1 );
 
-			// args
 			$args = array(
 				'taxonomy'   => $field['taxonomy'],
 				'hide_empty' => false,
 			);
 
-			// pagination
-			// - don't bother for hierarchial terms, we will need to load all terms anyway
+			// Don't bother for hierarchial terms, we will need to load all terms anyway.
 			if ( $is_pagination && ! $is_hierarchical ) {
 				$args['number'] = $limit;
 				$args['offset'] = $offset;
@@ -136,82 +150,81 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 				// strip slashes (search may be integer)
 				$s = wp_unslash( strval( $options['s'] ) );
 
-				// update vars
-				$args['search'] = $s;
+				$args['search'] = isset( $options['term_id'] ) && $options['term_id'] ? '' : $s;
 				$is_search      = true;
 			}
 
-			// filters
 			$args = apply_filters( 'acf/fields/taxonomy/query', $args, $field, $options['post_id'] );
 
-			// get terms
+			if ( ! empty( $options['include'] ) ) {
+				// Limit search to a specific id if one is provided.
+				$args['include'] = $options['include'];
+			}
+
 			$terms = acf_get_terms( $args );
 
-			// sort into hierachial order!
+			// Sort hierachial.
 			if ( $is_hierarchical ) {
-
-				// update vars
 				$limit  = acf_maybe_get( $args, 'number', $limit );
 				$offset = acf_maybe_get( $args, 'offset', $offset );
 
-				// get parent
 				$parent = acf_maybe_get( $args, 'parent', 0 );
 				$parent = acf_maybe_get( $args, 'child_of', $parent );
 
-				// this will fail if a search has taken place because parents wont exist
+				// This will fail if a search has taken place because parents wont exist.
 				if ( ! $is_search ) {
-
-					// order terms
 					$ordered_terms = _get_term_children( $parent, $terms, $field['taxonomy'] );
-
-					// check for empty array (possible if parent did not exist within original data)
+					// Check for empty array. Possible if parent did not exist within original data.
 					if ( ! empty( $ordered_terms ) ) {
 						$terms = $ordered_terms;
 					}
 				}
 
-				// fake pagination
-				if ( $is_pagination ) {
+				// Fake pagination.
+				if ( $is_pagination && ! $options['include'] ) {
 					$terms = array_slice( $terms, $offset, $limit );
 				}
 			}
 
-			// append to r
+			// Append to r.
 			foreach ( $terms as $term ) {
 
-				// add to json
+				// Add to json.
 				$results[] = array(
 					'id'   => $term->term_id,
-					'text' => $this->get_term_title( $term, $field, $options['post_id'] ),
+					'text' => $this->get_term_title( $term, $field, $options['post_id'], true ),
 				);
 			}
 
-			// vars
 			$response = array(
 				'results' => $results,
 				'limit'   => $limit,
 			);
 
-			// return
 			return $response;
 		}
 
 		/**
 		 * Returns the Term's title displayed in the field UI.
 		 *
-		 * @date    1/11/2013
 		 * @since   5.0.0
 		 *
-		 * @param   WP_Term $term    The term object.
-		 * @param   array   $field   The field settings.
-		 * @param   mixed   $post_id The post_id being edited.
+		 * @param   WP_Term $term     The term object.
+		 * @param   array   $field    The field settings.
+		 * @param   mixed   $post_id  The post_id being edited.
+		 * @param   boolean $unescape Should we return an unescaped post title.
 		 * @return  string
 		 */
-		function get_term_title( $term, $field, $post_id = 0 ) {
+		function get_term_title( $term, $field, $post_id = 0, $unescape = false ) {
 			$title = acf_get_term_title( $term );
 
 			// Default $post_id to current post being edited.
 			$post_id = $post_id ? $post_id : acf_get_form_data( 'post_id' );
+
+			// unescape for select2 output which handles the escaping.
+			if ( $unescape ) {
+				$title = html_entity_decode( $title );
+			}
 
 			/**
 			 * Filters the term title.
@@ -238,7 +251,6 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		 * @param   $value (array)
 		 * @return  $value
 		 */
-
 		function get_terms( $value, $taxonomy = 'category' ) {
 
 			// load terms in 1 query to save multiple DB calls from following code
@@ -278,7 +290,6 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		 *
 		 * @return  $value - the value to be saved in te database
 		 */
-
 		function load_value( $value, $post_id, $field ) {
 
 			// get valid terms
@@ -430,7 +441,6 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// bail early if no value
@@ -457,21 +467,19 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			return $value;
 		}
 
-
 		/**
-		 * Create the HTML interface for your field
+		 * Renders the Taxonomy field.
 		 *
-		 * @type    action
-		 * @since   3.6
-		 * @date    23/01/13
+		 * @since 3.6
 		 *
-		 * @param   $field - an array holding all the field's data
+		 * @param array $field The field settings array.
+		 * @return void
 		 */
-
-		function render_field( $field ) {
-
+		public function render_field( $field ) {
 			// force value to array
 			$field['value'] = acf_get_array( $field['value'] );
+
+			$nonce = wp_create_nonce( 'acf_field_' . $this->name . '_' . $field['key'] );
 
 			// vars
 			$div = array(
@@ -480,8 +488,8 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 				'data-ftype'      => $field['field_type'],
 				'data-taxonomy'   => $field['taxonomy'],
 				'data-allow_null' => $field['allow_null'],
+				'data-nonce'      => $nonce,
 			);
-
 			// get taxonomy
 			$taxonomy = get_taxonomy( $field['taxonomy'] );
 
@@ -502,11 +510,11 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			if ( $field['field_type'] == 'select' ) {
 				$field['multiple'] = 0;
 
-				$this->render_field_select( $field );
+				$this->render_field_select( $field, $nonce );
 			} elseif ( $field['field_type'] == 'multi_select' ) {
 				$field['multiple'] = 1;
 
-				$this->render_field_select( $field );
+				$this->render_field_select( $field, $nonce );
 			} elseif ( $field['field_type'] == 'radio' ) {
 				$this->render_field_checkbox( $field );
 			} elseif ( $field['field_type'] == 'checkbox' ) {
@@ -518,7 +526,6 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			<?php
 		}
 
-
 		/**
 		 * Create the HTML interface for your field
 		 *
@@ -528,13 +535,13 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		 *
 		 * @param   $field - an array holding all the field's data
 		 */
-
-		function render_field_select( $field ) {
+		function render_field_select( $field, $nonce ) {
 
 			// Change Field into a select
 			$field['type']    = 'select';
 			$field['ui']      = 1;
 			$field['ajax']    = 1;
+			$field['nonce']   = $nonce;
 			$field['choices'] = array();
 
 			// value
@@ -603,9 +610,18 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			$args = apply_filters( 'acf/fields/taxonomy/wp_list_categories/name=' . $field['_name'], $args, $field );
 			$args = apply_filters( 'acf/fields/taxonomy/wp_list_categories/key=' . $field['key'], $args, $field );
 
+			// Build UL attributes for accessibility and consistency.
+			$ul = array(
+				'class' => 'acf-checkbox-list acf-bl',
+				'role'  => $field['field_type'] === 'radio' ? 'radiogroup' : 'group',
+			);
+
+			if ( ! empty( $field['id'] ) ) {
+				$ul['aria-labelledby'] = $field['id'] . '-label';
+			}
 			?>
 <div class="categorychecklist-holder">
-	<ul class="acf-checkbox-list acf-bl">
+	<ul <?php echo acf_esc_attrs( $ul ); ?>>
 			<?php wp_list_categories( $args ); ?>
 	</ul>
 </div>
@@ -734,26 +750,35 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 		}
 
 		/**
-		 * description
+		 * Filters choices in taxonomy conditions.
 		 *
-		 * @type    function
-		 * @date    17/04/2015
-		 * @since   5.2.3
+		 * @since 6.3
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @param array  $choices           The selected choice.
+		 * @param array  $conditional_field The conditional field settings object.
+		 * @param string $rule_value        The rule value.
+		 * @return mixed
 		 */
-
-		function ajax_add_term() {
-
-			// verify nonce
-			if ( ! acf_verify_ajax() ) {
-				die();
+		public function render_field_taxonomy_conditional_choices( $choices, $conditional_field, $rule_value ) {
+			if ( is_array( $conditional_field ) && $conditional_field['type'] === 'taxonomy' ) {
+				if ( ! empty( $rule_value ) ) {
+					$term    = get_term( $rule_value );
+					$choices = array( $rule_value => $term->name );
+				}
 			}
+			return $choices;
+		}
 
-			// vars
-			$args = wp_parse_args(
-				$_POST,
+
+		/**
+		 * AJAX handler for adding Taxonomy field terms.
+		 *
+		 * @since 5.2.3
+		 *
+		 * @return void
+		 */
+		public function ajax_add_term() {
+			$args = acf_request_args(
 				array(
 					'nonce'       => '',
 					'field_key'   => '',
@@ -761,6 +786,10 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 					'term_parent' => '',
 				)
 			);
+
+			if ( ! acf_verify_ajax( $args['nonce'], $args['field_key'], true ) ) {
+				die();
+			}
 
 			// load field
 			$field = acf_get_field( $args['field_key'] );
@@ -938,6 +967,99 @@ if ( ! class_exists( 'acf_field_taxonomy' ) ) :
 			}
 
 			return $links;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'DefinedTerm', 'Text' );
+		}
+
+		/**
+		 * Formats the field value for JSON-LD output.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param mixed          $value   The value of the field.
+		 * @param integer|string $post_id The ID of the post.
+		 * @param array          $field   The field array.
+		 * @return mixed
+		 */
+		public function format_value_for_jsonld( $value, $post_id, $field ) {
+			if ( empty( $value ) ) {
+				return null;
+			}
+
+			// Get output format with fallback.
+			$output_format = $field['schema_output_format'] ?? '';
+			if ( empty( $output_format ) ) {
+				$property      = $field['schema_property'] ?? '';
+				$output_format = \ACF\AI\GEO\Schema::get_default_output_format( $this->name, $property );
+			}
+
+			// Default to Text if no format determined.
+			if ( empty( $output_format ) ) {
+				$output_format = 'Text';
+			}
+
+			// Force value to array for consistent processing.
+			$value = acf_get_array( $value );
+
+			// Get term objects.
+			$terms = $this->get_terms( $value, $field['taxonomy'] );
+
+			if ( empty( $terms ) ) {
+				return null;
+			}
+
+			// Format based on output format.
+			$formatted = array();
+			foreach ( $terms as $term ) {
+				if ( ! $term instanceof \WP_Term ) {
+					continue;
+				}
+
+				if ( 'Text' === $output_format ) {
+					$formatted[] = $term->name;
+				} else {
+					// DefinedTerm format.
+					$term_data = array(
+						'@type' => 'DefinedTerm',
+						'name'  => $term->name,
+					);
+
+					// Add term URL if available.
+					$term_link = get_term_link( $term );
+					if ( ! is_wp_error( $term_link ) ) {
+						$term_data['url'] = $term_link;
+					}
+
+					// Add term ID as identifier.
+					$term_data['identifier'] = (string) $term->term_id;
+
+					$formatted[] = $term_data;
+				}
+			}
+
+			if ( empty( $formatted ) ) {
+				return null;
+			}
+
+			// Return single value for single-value field types.
+			// Radio is always single. Select is single unless multiple is enabled.
+			$is_single = 'radio' === $field['field_type'] ||
+				( 'select' === $field['field_type'] && empty( $field['multiple'] ) );
+
+			if ( $is_single ) {
+				return $formatted[0];
+			}
+
+			return $formatted;
 		}
 	}
 

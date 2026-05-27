@@ -1,7 +1,15 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_oembed' ) ) :
-	#[AllowDynamicProperties]
 	class acf_field_oembed extends acf_field {
 
 
@@ -15,7 +23,6 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -51,7 +58,6 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 		 * @param   $field (array)
 		 * @return  (int)
 		 */
-
 		function prepare_field( $field ) {
 
 			// defaults
@@ -98,30 +104,26 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 		}
 
 		/**
-		 * description
+		 * Returns AJAX results for the oEmbed field.
 		 *
-		 * @type    function
-		 * @date    24/10/13
-		 * @since   5.0.0
+		 * @since 5.0.0
 		 *
-		 * @param   $post_id (int)
-		 * @return  $post_id (int)
+		 * @return void
 		 */
+		public function ajax_query() {
+			$args = acf_request_args(
+				array(
+					'nonce'     => '',
+					'field_key' => '',
+				)
+			);
 
-		function ajax_query() {
-
-			// validate
-			if ( ! acf_verify_ajax() ) {
+			if ( ! acf_verify_ajax( $args['nonce'], $args['field_key'], true ) ) {
 				die();
 			}
 
-			// get choices
-			$response = $this->get_ajax_query( $_POST );
-
-			// return
-			wp_send_json( $response );
+			wp_send_json( $this->get_ajax_query( $_POST ) );
 		}
-
 
 		/**
 		 * This function will return an array of data formatted for use in a select2 AJAX response
@@ -133,7 +135,6 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 		 * @param   $options (array)
 		 * @return  (array)
 		 */
-
 		function get_ajax_query( $args = array() ) {
 
 			// defaults
@@ -166,33 +167,26 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 
 
 		/**
-		 * render_field()
+		 * Renders the oEmbed field.
 		 *
-		 * Create the HTML interface for your field
+		 * @since 3.6
 		 *
-		 * @param   $field - an array holding all the field's data
-		 *
-		 * @type    action
-		 * @since   3.6
-		 * @date    23/01/13
+		 * @param array $field The field settings array.
+		 * @return void
 		 */
-
-		function render_field( $field ) {
-
-			// atts
+		public function render_field( $field ) {
 			$atts = array(
-				'class' => 'acf-oembed',
+				'class'      => 'acf-oembed',
+				'data-nonce' => wp_create_nonce( 'acf_field_' . $this->name . '_' . $field['key'] ),
 			);
 
-			// <strong><?php _e("Error.", 'acf'); </strong> _e("No embed found for the given URL.", 'acf');
-			// value
 			if ( $field['value'] ) {
 				$atts['class'] .= ' has-value';
 			}
 
 			?>
 <div <?php echo acf_esc_attrs( $atts ); ?>>
-	
+
 			<?php
 			acf_hidden_input(
 				array(
@@ -202,7 +196,7 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 				)
 			);
 			?>
-	
+
 	<div class="title">
 			<?php
 			acf_text_input(
@@ -218,7 +212,7 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 			<a data-name="clear-button" href="#" class="acf-icon -cancel grey"></a>
 		</div>
 	</div>
-	
+
 	<div class="canvas">
 		<div class="canvas-media">
 			<?php
@@ -229,7 +223,7 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 		</div>
 		<i class="acf-icon -picture hide-if-value"></i>
 	</div>
-	
+
 </div>
 			<?php
 		}
@@ -310,6 +304,100 @@ if ( ! class_exists( 'acf_field_oembed' ) ) :
 			$schema['format'] = 'uri';
 
 			return $schema;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'VideoObject', 'AudioObject', 'MediaObject' );
+		}
+
+		/**
+		 * Formats the field value for JSON-LD output.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param mixed          $value   The value of the field (URL).
+		 * @param integer|string $post_id The ID of the post.
+		 * @param array          $field   The field array.
+		 * @return mixed
+		 */
+		public function format_value_for_jsonld( $value, $post_id, $field ) {
+			if ( empty( $value ) ) {
+				return null;
+			}
+
+			// Get output format with fallback.
+			$output_format = $field['schema_output_format'] ?? '';
+			if ( empty( $output_format ) ) {
+				$property      = $field['schema_property'] ?? '';
+				$output_format = \ACF\AI\GEO\Schema::get_default_output_format( $this->name, $property );
+			}
+
+			// Default to VideoObject if no format determined.
+			if ( empty( $output_format ) ) {
+				$output_format = 'VideoObject';
+			}
+
+			// Get oEmbed data for richer output.
+			$oembed_data = _wp_oembed_get_object()->get_data( $value, array() );
+
+			$result = array(
+				'@type' => $output_format,
+				'url'   => $value,
+			);
+
+			if ( $oembed_data ) {
+				// Add name/title.
+				if ( ! empty( $oembed_data->title ) ) {
+					$result['name'] = $oembed_data->title;
+				}
+
+				// Add thumbnail.
+				if ( ! empty( $oembed_data->thumbnail_url ) ) {
+					$result['thumbnailUrl'] = $oembed_data->thumbnail_url;
+				}
+
+				// Add provider information.
+				if ( ! empty( $oembed_data->provider_name ) ) {
+					$result['publisher'] = array(
+						'@type' => 'Organization',
+						'name'  => $oembed_data->provider_name,
+					);
+					if ( ! empty( $oembed_data->provider_url ) ) {
+						$result['publisher']['url'] = $oembed_data->provider_url;
+					}
+				}
+
+				// Add dimensions for video.
+				if ( 'VideoObject' === $output_format || 'video' === ( $oembed_data->type ?? '' ) ) {
+					if ( ! empty( $oembed_data->width ) ) {
+						$result['width'] = (int) $oembed_data->width;
+					}
+					if ( ! empty( $oembed_data->height ) ) {
+						$result['height'] = (int) $oembed_data->height;
+					}
+				}
+
+				// Add author if available.
+				if ( ! empty( $oembed_data->author_name ) ) {
+					$author = array(
+						'@type' => 'Person',
+						'name'  => $oembed_data->author_name,
+					);
+					if ( ! empty( $oembed_data->author_url ) ) {
+						$author['url'] = $oembed_data->author_url;
+					}
+					$result['author'] = $author;
+				}
+			}
+
+			return $result;
 		}
 	}
 

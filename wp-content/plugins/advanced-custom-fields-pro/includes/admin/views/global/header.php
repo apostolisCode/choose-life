@@ -1,4 +1,14 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 //phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- included template file.
 
 global $post_type, $post_type_object, $acf_page_title;
@@ -24,7 +34,7 @@ if ( $page_title ) {
 	echo esc_html( $page_title );
 	?>
 	<?php if ( $acf_is_options_page_preview ) { ?>
-			<div class="acf-pro-label">PRO</div>
+			<div class="acf-pro-label"><img src="<?php echo esc_url( acf_get_url( 'assets/images/pro-chip.svg' ) ); ?>" alt="<?php esc_attr_e( 'ACF PRO logo', 'acf' ); ?>"></div>
 		<?php
 	}
 	?>

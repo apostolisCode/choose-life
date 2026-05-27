@@ -1,13 +1,12 @@
 <?php
-
 /**
- * ACF Attachment Form Class
+ * @package ACF
+ * @author  WP Engine
  *
- * All the logic for adding fields to attachments
- *
- * @class       acf_form_attachment
- * @package     ACF
- * @subpackage  Forms
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if ( ! class_exists( 'acf_form_attachment' ) ) :
@@ -24,7 +23,6 @@ if ( ! class_exists( 'acf_form_attachment' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function __construct() {
 
 			// actions
@@ -49,7 +47,6 @@ if ( ! class_exists( 'acf_form_attachment' ) ) :
 		 * @param   N/A
 		 * @return  N/A
 		 */
-
 		function admin_enqueue_scripts() {
 
 			// bail early if not valid screen
@@ -81,7 +78,6 @@ if ( ! class_exists( 'acf_form_attachment' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function admin_footer() {
 
 			// render post data
@@ -113,7 +109,6 @@ acf.unload.active = 0;
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function edit_attachment( $form_fields, $post ) {
 
 			// vars
@@ -189,7 +184,6 @@ acf.unload.active = 0;
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function save_attachment( $post, $attachment ) {
 
 			// bail early if not valid nonce

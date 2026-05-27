@@ -1,7 +1,15 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field__group' ) ) :
-	#[AllowDynamicProperties]
 	class acf_field__group extends acf_field {
 
 
@@ -15,7 +23,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -25,6 +32,9 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 			$this->description   = __( 'Provides a way to structure fields into groups to better organize the data and the edit screen.', 'acf' );
 			$this->preview_image = acf_get_url() . '/assets/images/field-type-previews/field-preview-group.png';
 			$this->doc_url       = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/group/', 'docs', 'field-type-selection' );
+			$this->supports      = array(
+				'bindings' => false,
+			);
 			$this->defaults      = array(
 				'sub_fields' => array(),
 				'layout'     => 'block',
@@ -48,7 +58,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 *
 		 * @return  $field - the field array holding all the field options
 		 */
-
 		function load_field( $field ) {
 
 			// vars
@@ -76,7 +85,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   $field (array) the field array holding all the field options
 		 * @return  $value
 		 */
-
 		function load_value( $value, $post_id, $field ) {
 
 			// bail early if no sub fields
@@ -154,7 +162,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 *
 		 * @return  $value - the modified value
 		 */
-
 		function update_value( $value, $post_id, $field ) {
 
 			// bail early if no value
@@ -210,7 +217,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   $field (array)
 		 * @return  $field
 		 */
-
 		function prepare_field_for_db( $field ) {
 
 			// bail early if no sub fields
@@ -239,7 +245,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @since   3.6
 		 * @date    23/01/13
 		 */
-
 		function render_field( $field ) {
 
 			// bail early if no sub fields
@@ -289,7 +294,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function render_field_block( $field ) {
 
 			// vars
@@ -316,7 +320,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function render_field_table( $field ) {
 
 			?>
@@ -381,7 +384,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 *
 		 * @param   $field  - an array holding all the field's data
 		 */
-
 		function render_field_settings( $field ) {
 
 			// vars
@@ -435,7 +437,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function validate_value( $valid, $value, $field, $input ) {
 
 			// bail early if no $value
@@ -484,7 +485,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 *
 		 * @return  $field - the modified field
 		 */
-
 		function duplicate_field( $field ) {
 
 			// get sub fields
@@ -561,7 +561,6 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 		 * @param   array  $field    The field settings
 		 * @return  void
 		 */
-
 		function delete_value( $post_id, $meta_key, $field ) {
 
 			// bail early if no sub fields
@@ -647,6 +646,86 @@ if ( ! class_exists( 'acf_field__group' ) ) :
 			}
 
 			return $value;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'Thing' );
+		}
+
+		/**
+		 * Formats the field value for JSON-LD output.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param mixed          $value   The value of the field.
+		 * @param integer|string $post_id The ID of the post.
+		 * @param array          $field   The field array.
+		 * @return mixed
+		 */
+		public function format_value_for_jsonld( $value, $post_id, $field ) {
+			if ( empty( $value ) || ! is_array( $value ) || empty( $field['sub_fields'] ) ) {
+				return null;
+			}
+
+			// Get output format with fallback.
+			$output_format = $field['schema_output_format'] ?? '';
+			if ( empty( $output_format ) ) {
+				$property      = $field['schema_property'] ?? '';
+				$output_format = \ACF\AI\GEO\Schema::get_default_output_format( $this->name, $property );
+			}
+
+			// Build the JSON-LD object.
+			$result = array();
+
+			// Add @type if we have a specific output format.
+			if ( ! empty( $output_format ) ) {
+				$result['@type'] = $output_format;
+			}
+
+			// Modify names for DB access.
+			$field = $this->prepare_field_for_db( $field );
+
+			// Process each sub field.
+			foreach ( $field['sub_fields'] as $sub_field ) {
+				// Get the sub field value.
+				$sub_value = $value[ $sub_field['key'] ] ?? $value[ $sub_field['_name'] ] ?? null;
+
+				if ( null === $sub_value ) {
+					continue;
+				}
+
+				// Check if sub field has a schema property mapping.
+				$schema_property = $sub_field['schema_property'] ?? '';
+
+				if ( empty( $schema_property ) ) {
+					// No schema property - skip this field for JSON-LD output.
+					continue;
+				}
+
+				// Parse qualified property (e.g., "Thing.name" -> "name") to strip type prefix.
+				$property_name = \ACF\AI\GEO\Schema::get_property_name( $schema_property );
+
+				// Format the sub field value for JSON-LD.
+				$formatted_value = \ACF\AI\GEO\GEO::format_field_value_for_jsonld( $sub_value, $sub_field );
+
+				if ( null !== $formatted_value ) {
+					$result[ $property_name ] = $formatted_value;
+				}
+			}
+
+			// Only return if we have content beyond @type.
+			if ( count( $result ) > 1 || ( count( $result ) === 1 && ! isset( $result['@type'] ) ) ) {
+				return $result;
+			}
+
+			return null;
 		}
 	}
 

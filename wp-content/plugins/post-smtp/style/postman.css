@@ -638,11 +638,12 @@ section#delete_settings {
 .ui-state-default, 
 .ui-widget-content .ui-state-default, 
 .ui-widget-header .ui-state-default {
-    background-color: #fff;
+    background-color: #f9f9fa;
 }
 
 .ui-tabs .ui-tabs-nav li {
-    border: 1px solid #e6e6e6;
+    border: none;
+    margin-top: 5px;
 }
 
 .ui-widget-content .ui-state-default a {
@@ -655,27 +656,17 @@ section#delete_settings {
     font-weight: bold;
 }
 
-.ui-tabs .ui-tabs-nav li:first-child {
-    border-top-left-radius: 17px;
-}
-
-.ui-tabs .ui-tabs-nav li:last-child {
-    border-top-right-radius: 17px;
-}
-
-.ui-tabs .ui-tabs-nav li.visited-config-ui-tab {
-    background-color: #4db556;
+.ui-tabs .ui-tabs-nav li a:focus {
+    box-shadow: none;
 }
 
 .ui-tabs .ui-tabs-active,
 .ui-tabs .ui-tabs-nav li.visited-config-ui-tab.ui-tabs-active {
-    background: #466cff;
+    background: #ffffff;
 }
 
-.ui-tabs .ui-tabs-active a,
-.ui-tabs .ui-tabs-nav li.visited-config-ui-tab.ui-tabs-active a,
-.ui-tabs .ui-tabs-nav li.visited-config-ui-tab a {
-    color: #fff;
+.ui-tabs .ui-tabs-active a {
+    color: #375caf;
 }
 .ps-less-secure {
     color: red;
@@ -1437,6 +1428,10 @@ div#ps-email-log_length{
     margin: 3px 0;
 }
 
+.ps-email-log-status-buttons {
+    margin-top: 15px;
+}
+
 /* View And Session Transcript Popup */
 .ps-popup-wrap {
     width: 100%;
@@ -1464,7 +1459,7 @@ div#ps-email-log_length{
     overflow: auto;
 }
   
-.ps-popup-close-btn {
+.ps-popup-close-btn, .ps-print-email {
     text-align: center;
     width: 19px;
     height: 19px;
@@ -1473,11 +1468,28 @@ div#ps-email-log_length{
     top: 10px;
     right: 10px;
     border-radius: 1000px;
-    background: #dc3545;
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
+    color: #000;
     line-height: 190%;
+}
+
+.ps-popup-close-btn {
+    top: 6px;
+}
+
+.ps-popup-close-btn span {
+    font-size: 27px;
+}
+
+.ps-popup-close-btn:hover {
+    color: #000;
+}
+
+.ps-print-email {
+    right: 33px;
+    background: none;
+    color: #000;
 }
 
 .transform-in, .transform-out {
@@ -1587,4 +1599,146 @@ div#ps-email-log_length{
 
 .ps-pro-icon {
     color: #fed90f;
+}
+
+.button.ps-status-btn {
+    border-radius: 50px;
+}
+
+.ps-status-btn {
+    background-color: #ffffff!important;
+    color: #000000!important;
+    border: 1px solid #4578ea!important;
+}
+
+.ps-status-btn.active {
+    background-color: #4578ea!important;;
+    color: #ffffff!important;
+    border: none;
+}
+
+.ps-status-btn:focus {
+    box-shadow: none!important;
+}
+
+.post-smtp-remove-webhook-url {
+    vertical-align: text-top;
+}
+
+.post-smtp-remove-webhook-url {
+    color: #999999;
+    border-radius: 50px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+.post-smtp-webhook-urls input {
+    width: 400px;
+}
+
+.post_smtp_diagnostic_container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post_smtp_diagnostic_container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#post_smtp_diagnostic_form .form-group {
+    margin-bottom: 15px;
+}
+
+#post_smtp_diagnostic_form .form-group label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#post_smtp_diagnostic_form .form-group input[type="text"], #post_smtp_diagnostic_form .form-group input[type="email"], #post_smtp_diagnostic_form .form-group select {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#post_smtp_diagnostic_form .form-group .post-smtp-diagnostic-submit-btn {
+    background-color: #2271b1;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#post_smtp_diagnostic_form .form-group .post-smtp-diagnostic-submit-btn:hover {
+    background-color: #1a5a8f;
+}
+.report_sent_message{
+    display: none;
+    color: green;
+}
+.report_validation_error{
+    display: none;
+    color: red;
+}
+h3.diagnostic-report-heading {
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.copy_diagnostic_report{
+    background-color: #2271b1;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: normal;
+}
+.copy_diagnostic_report:disabled{
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+.post-smtp-diagnostic-submit-btn:disabled{
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 25px 0; /* Space between divs */
+}
+@media (min-width: 800px) {
+    #post_smtp_diagnostic_form .form-group input[type="text"], #post_smtp_diagnostic_form .form-group input[type="email"], #post_smtp_diagnostic_form .form-group select {
+        width: 30%;
+    }
+}
+label.ps-switch-1.ps-gmail-one-click {
+   position: relative;
+}
+label.ps-switch-1.ps-gmail-one-click:hover:before {
+    content: "";
+    position: absolute;
+    left: 160px;
+    right: 0;
+    width: 400px;
+    height: 288px;
+    background: url(images/gmail-once-click.gif) no-repeat #ffff;
+    box-shadow: 0px 3px 36px -7px #000;
+    border-radius: 5px;
+    z-index: 2;
+    top: -40px;
+    background-size: 100%;
+
 }

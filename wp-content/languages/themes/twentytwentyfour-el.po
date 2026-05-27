@@ -2,14 +2,39 @@
 # This file is distributed under the same license as the Themes - Twenty Twenty-Four package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-10-25 15:07:54+0000\n"
+"PO-Revision-Date: 2025-01-31 13:20:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.1\n"
+"X-Generator: GlotPress/4.0.3\n"
 "Language: el_GR\n"
 "Project-Id-Version: Themes - Twenty Twenty-Four\n"
+
+#: patterns/footer.php:73
+msgid "Terms and Conditions"
+msgstr "Όροι και Προϋποθέσεις"
+
+#: patterns/footer.php:49
+msgid "Team"
+msgstr "Ομάδα"
+
+#: patterns/footer.php:74
+msgid "Contact Us"
+msgstr "Επικοινωνήστε μαζί μας"
+
+#: patterns/footer.php:50
+msgid "History"
+msgstr "Ιστορικό"
+
+#: patterns/footer.php:72
+msgid "Privacy Policy"
+msgstr "Πολιτική απορρήτου"
+
+#: functions.php:199
+msgctxt "Block pattern category"
+msgid "Pages"
+msgstr "Σελίδες"
 
 #: theme.json
 msgctxt "Template part name"
@@ -23,28 +48,28 @@ msgstr "Κεφαλίδα"
 
 #. Author URI of the theme
 #. Translators: WordPress link.
-#: style.css patterns/footer-centered-logo-nav.php:21
-#: patterns/footer-colophon-3-col.php:90 patterns/footer.php:116
+#: style.css patterns/footer-centered-logo-nav.php:22
+#: patterns/footer-colophon-3-col.php:91 patterns/footer.php:117
 msgid "https://wordpress.org"
 msgstr "https://wordpress.org"
 
-#: styles/ember.json styles/fossil.json styles/ice.json styles/maelstrom.json
-#: styles/mint.json styles/onyx.json styles/rust.json theme.json
+#: theme.json styles/ember.json styles/fossil.json styles/ice.json
+#: styles/maelstrom.json styles/mint.json styles/onyx.json styles/rust.json
 msgctxt "Color name"
 msgid "Contrast"
 msgstr "Αντίθεση"
 
-#: styles/fossil.json styles/ice.json styles/maelstrom.json theme.json
+#: theme.json styles/fossil.json styles/ice.json styles/maelstrom.json
 msgctxt "Font size name"
 msgid "Extra Large"
 msgstr "Πολύ Μεγάλο"
 
-#: styles/fossil.json styles/ice.json styles/maelstrom.json theme.json
+#: theme.json styles/fossil.json styles/ice.json styles/maelstrom.json
 msgctxt "Font size name"
 msgid "Large"
 msgstr "Μεγάλο"
 
-#: styles/fossil.json styles/ice.json styles/maelstrom.json theme.json
+#: theme.json styles/fossil.json styles/ice.json styles/maelstrom.json
 msgctxt "Font size name"
 msgid "Medium"
 msgstr "Μεσαία"
@@ -84,16 +109,285 @@ msgctxt "Template part name"
 msgid "Post Meta"
 msgstr "Μεταδεδομένα άρθρου"
 
-#: styles/fossil.json styles/ice.json theme.json
+#: theme.json styles/fossil.json styles/ice.json
 msgctxt "Font family name"
 msgid "Inter"
 msgstr "Inter"
 
-#: styles/ember.json styles/fossil.json styles/ice.json styles/maelstrom.json
-#: styles/mint.json styles/onyx.json styles/rust.json theme.json
+#: theme.json styles/ember.json styles/fossil.json styles/ice.json
+#: styles/maelstrom.json styles/mint.json styles/onyx.json styles/rust.json
 msgctxt "Color name"
 msgid "Base"
 msgstr "Βασικό"
+
+#: patterns/hidden-sidebar.php:49
+msgid "Useful Links"
+msgstr "Χρήσιμοι σύνδεσμοι"
+
+#: patterns/cta-pricing.php:87
+msgctxt "Button text for the first pricing level"
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: patterns/cta-pricing.php:145
+msgctxt "Button text for the second pricing level"
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: patterns/cta-pricing.php:203
+msgctxt "Button text for the third pricing level"
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: patterns/footer.php:92
+msgid "Social Media"
+msgstr "Κοινωνικά Δίκτυα"
+
+#: patterns/footer.php:86
+msgid "Social"
+msgstr "Social"
+
+#: theme.json styles/fossil.json styles/ice.json styles/maelstrom.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr "Μικρό"
+
+#: patterns/cta-subscribe-centered.php:31
+msgctxt "Sample text for Sign Up Button"
+msgid "Sign up"
+msgstr "Δημιουργία λογαριασμού"
+
+#: patterns/page-newsletter-landing.php:40
+msgctxt "Sample content for newsletter subscribe button"
+msgid "Sign up"
+msgstr "Δημιουργία λογαριασμού"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Sidebar"
+msgstr "Στήλη"
+
+#: patterns/hidden-sidebar.php
+msgctxt "Pattern title"
+msgid "Sidebar"
+msgstr "Στήλη"
+
+#: patterns/hidden-sidebar.php:75
+msgctxt "search form placeholder"
+msgid "Search..."
+msgstr "Αναζήτηση..."
+
+#: patterns/hidden-search.php
+msgctxt "Pattern title"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: patterns/hidden-search.php:9 patterns/hidden-sidebar.php:75
+msgctxt "search form label"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: patterns/hidden-search.php:9
+msgctxt "search button text"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: patterns/cta-rsvp.php
+msgctxt "Pattern title"
+msgid "RSVP"
+msgstr "RSVP"
+
+#: patterns/cta-rsvp.php:11
+msgctxt "Name of RSVP pattern"
+msgid "RSVP"
+msgstr "RSVP"
+
+#: patterns/cta-rsvp.php:21 patterns/page-rsvp-landing.php:23
+msgctxt "Initials for ´please respond´"
+msgid "RSVP"
+msgstr "RSVP"
+
+#: patterns/hidden-404.php
+msgctxt "Pattern title"
+msgid "404"
+msgstr "404"
+
+#: patterns/footer-colophon-3-col.php:39
+msgid "Contact"
+msgstr "Contact"
+
+#: patterns/text-feature-grid-3-col.php:84
+msgctxt "Sample feature heading"
+msgid "Consulting"
+msgstr "Consulting"
+
+#: patterns/hidden-comments.php
+msgctxt "Pattern title"
+msgid "Comments"
+msgstr "Σχόλια"
+
+#: patterns/hidden-comments.php:12
+msgid "Comments"
+msgstr "Σχόλια"
+
+#: patterns/hidden-post-meta.php:20
+msgctxt "Prefix for the post author block: By author name"
+msgid "by"
+msgstr "από"
+
+#: theme.json styles/onyx.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr "Έμφαση"
+
+#: patterns/text-title-left-image-right.php:35
+msgctxt "Call to Action button text"
+msgid "About us"
+msgstr "Σχετικά με εμάς"
+
+#: patterns/banner-hero.php:37
+msgctxt "Button text of the hero section"
+msgid "About us"
+msgstr "Σχετικά με εμάς"
+
+#: patterns/footer.php:41 patterns/footer.php:47
+msgid "About"
+msgstr "Περί"
+
+#: patterns/page-about-business.php
+msgctxt "Pattern title"
+msgid "About"
+msgstr "Περί"
+
+#: patterns/hidden-post-navigation.php:9 patterns/hidden-post-navigation.php:10
+#: patterns/hidden-posts-heading.php:10
+#: patterns/template-index-portfolio.php:16
+msgid "Posts"
+msgstr "Αναρτήσεις"
+
+#: patterns/hidden-post-navigation.php
+msgctxt "Pattern title"
+msgid "Post navigation"
+msgstr "Πλοήγηση δημοσιεύσεων"
+
+#: patterns/hidden-post-meta.php
+msgctxt "Pattern title"
+msgid "Post meta"
+msgstr "Μεταδεδομένα άρθρου"
+
+#: patterns/hidden-sidebar.php:33
+msgid "Popular Categories"
+msgstr "Δημοφιλείς Κατηγορίες"
+
+#: functions.php:51
+msgid "Pill"
+msgstr "Χάπι"
+
+#: patterns/hidden-404.php:10
+msgctxt "Heading for a webpage that is not found"
+msgid "Page Not Found"
+msgstr "Η σελίδα δε βρέθηκε"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page No Title"
+msgstr "Σελίδα χωρίς τίτλο"
+
+#: patterns/cta-pricing.php:18
+msgctxt "Sample heading for pricing pattern"
+msgid "Our Services"
+msgstr "Οι Υπηρεσίες μας"
+
+#: patterns/cta-services-image-left.php:39
+msgctxt "Sample button text to view the services"
+msgid "Our services"
+msgstr "Οι υπηρεσίες μας"
+
+#: patterns/hidden-no-results.php
+msgctxt "Pattern title"
+msgid "No results"
+msgstr "Χωρίς αποτελέσματα"
+
+#: patterns/hidden-post-navigation.php:12
+msgctxt "Label before the title of the next post. There is a space after the colon."
+msgid "Next: "
+msgstr "Επόμενο:"
+
+#: patterns/posts-1-col.php
+msgctxt "Pattern title"
+msgid "List of posts, 1 column"
+msgstr "Λίστα αναρτήσεων, 1 στήλη"
+
+#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:95
+msgid "Instagram"
+msgstr "Instagram"
+
+#: patterns/banner-hero.php
+msgctxt "Pattern title"
+msgid "Hero"
+msgstr "Hero"
+
+#: patterns/cta-pricing.php:37
+msgctxt "Sample heading for the first pricing level"
+msgid "Free"
+msgstr "Δωρεάν"
+
+#: patterns/footer-colophon-3-col.php:57
+msgid "Follow"
+msgstr "Follow"
+
+#: patterns/text-faq.php:12
+msgctxt "Name of the FAQ pattern"
+msgid "FAQs"
+msgstr "Συχνές Ερωτήσεις"
+
+#: patterns/text-faq.php:15
+msgctxt "Heading of the FAQs"
+msgid "FAQs"
+msgstr "Συχνές Ερωτήσεις"
+
+#: patterns/text-faq.php
+msgctxt "Pattern title"
+msgid "FAQ"
+msgstr "Συχνές Ερωτήσεις"
+
+#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:94
+msgid "Facebook"
+msgstr "Facebook"
+
+#: theme.json styles/fossil.json styles/ice.json styles/maelstrom.json
+msgctxt "Font size name"
+msgid "Extra Extra Large"
+msgstr "Πάρα Πολύ Μεγάλο"
+
+#: patterns/cta-pricing.php:157
+msgctxt "Sample heading for the third pricing level"
+msgid "Expert"
+msgstr "Ειδικός"
+
+#: patterns/footer.php:64 patterns/footer.php:70
+msgid "Privacy"
+msgstr "Απόρρητο"
+
+#: patterns/cta-pricing.php:11
+msgctxt "Name for the pricing pattern"
+msgid "Pricing Table"
+msgstr "Πίνακας τιμών"
+
+#: patterns/cta-pricing.php
+msgctxt "Pattern title"
+msgid "Pricing"
+msgstr "Τιμοκατάλογος"
+
+#: patterns/hidden-post-navigation.php:11
+msgctxt "Label before the title of the previous post. There is a space after the colon."
+msgid "Previous: "
+msgstr "Προηγούμενο:"
+
+#: patterns/testimonial-centered.php:12
+msgctxt "Name of testimonial pattern"
+msgid "Testimonial"
+msgstr "Είπαν για εμάς"
 
 #. Author of the theme
 #: style.css

@@ -14,6 +14,7 @@ class PostmanUtils {
 	private static $emailValidator;
 
 	const POSTMAN_SETTINGS_PAGE_STUB = 'postman';
+	const POSTMAN_CONFIGURATION_PAGE_STUB = 'postman/configuration';
 	const REQUEST_OAUTH2_GRANT_SLUG = 'postman/requestOauthGrant';
 	const POSTMAN_EMAIL_LOG_PAGE_STUB = 'postman_email_log';
 
@@ -61,10 +62,17 @@ class PostmanUtils {
 	}
 
 	/**
-	 * Returns an escaped URL
+	 * Returns an escaped URL for Postman settings (legacy top-level menu)
 	 */
 	public static function getSettingsPageUrl() {
 		return menu_page_url( self::POSTMAN_SETTINGS_PAGE_STUB, self::NO_ECHO );
+	}
+
+	/**
+	 * Returns an escaped URL for Postman configuration panel
+	 */
+	public static function getConfigurationPageUrl() {
+		return menu_page_url( self::POSTMAN_CONFIGURATION_PAGE_STUB, self::NO_ECHO );
 	}
 
 	public static function isCurrentPagePostmanAdmin( $page = 'postman' ) {
@@ -213,7 +221,13 @@ class PostmanUtils {
 				'TiB',
 				'PiB',
 		);
-		return @round( $size / pow( 1024, ($i = floor( log( $size, 1024 ) )) ), 2 ) . ' ' . $unit [ $i ];
+		
+		$log = log( $size, 1024 );
+		$unit_key = floor( $log );
+		$pow = pow( 1024, $unit_key );
+		$pow = floor( $pow );
+
+		return @round( $size / $pow, 2 ) . ' ' . $unit[$unit_key];
 	}
 
 	/**
@@ -259,11 +273,19 @@ class PostmanUtils {
 
 	static function deleteLockFile( $tempDirectory = null ) {
 		$path = PostmanUtils::calculateTemporaryLockPath( $tempDirectory );
-		$success = @unlink( $path );
-		if ( PostmanUtils::$logger->isTrace() ) {
-			PostmanUtils::$logger->trace( sprintf( 'Deleting file %s : %s', $path, $success ) );
+
+		if ( file_exists( $path ) ) {
+			$success = @unlink( $path );
+			if (PostmanUtils::$logger->isTrace()) {
+				PostmanUtils::$logger->trace( sprintf( 'Deleting file %s : %s', $path, $success ) );
+			}
+			return $success;
+		} else {
+			if (PostmanUtils::$logger->isTrace()) {
+				PostmanUtils::$logger->trace( sprintf( 'Lock file %s does not exist.', $path ) );
+			}
+			return false;
 		}
-		return $success;
 	}
 	static function createLockFile( $tempDirectory = null ) {
 		if ( self::lockFileExists() ) {

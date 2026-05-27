@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_textarea' ) ) :
 
@@ -15,7 +24,6 @@ if ( ! class_exists( 'acf_field_textarea' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -43,7 +51,6 @@ if ( ! class_exists( 'acf_field_textarea' ) ) :
 		 * @since   3.6
 		 * @date    23/01/13
 		 */
-
 		function render_field( $field ) {
 
 			// vars
@@ -180,7 +187,6 @@ if ( ! class_exists( 'acf_field_textarea' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// bail early if no value or not for template
@@ -238,6 +244,17 @@ if ( ! class_exists( 'acf_field_textarea' ) ) :
 			}
 
 			return $schema;
+		}
+
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'Text' );
 		}
 	}
 

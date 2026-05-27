@@ -1,9 +1,31 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_checkbox' ) ) :
 
 	class acf_field_checkbox extends acf_field {
 
+		/**
+		 * A local store of all values for de-duplication.
+		 *
+		 * @var array
+		 */
+		private array $_values; //phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore -- backwards compatibility.
+
+		/**
+		 * An internal boolean tracking if all checkboxes are checked.
+		 *
+		 * @var boolean
+		 */
+		private bool $_all_checked; //phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore -- backwards compatibility.
 
 		/**
 		 * This function will setup the field type data
@@ -15,7 +37,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -50,7 +71,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   $field (array) the $field being edited
 		 * @return  n/a
 		 */
-
 		function render_field( $field ) {
 
 			// reset vars
@@ -68,7 +88,13 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 			$li = '';
 			$ul = array(
 				'class' => 'acf-checkbox-list',
+				'role'  => 'group',
 			);
+
+			// Add aria-labelledby if field has an ID for proper screen reader announcement
+			if ( ! empty( $field['id'] ) ) {
+				$ul['aria-labelledby'] = $field['id'] . '-label';
+			}
 
 			// append to class
 			$ul['class'] .= ' ' . ( $field['layout'] == 'horizontal' ? 'acf-hl' : 'acf-bl' );
@@ -109,7 +135,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function render_field_choices( $field ) {
 
 			// walk
@@ -151,7 +176,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function render_field_toggle( $field ) {
 
 			// vars
@@ -186,7 +210,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function render_field_custom( $field ) {
 
 			// vars
@@ -443,7 +466,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 *
 		 * @return  $field - the modified field
 		 */
-
 		function update_field( $field ) {
 
 			// Decode choices (convert to array).
@@ -466,7 +488,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 *
 		 * @return  $value - the modified value
 		 */
-
 		function update_value( $value, $post_id, $field ) {
 
 			// bail early if is empty
@@ -530,7 +551,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 * @param   $field (array)
 		 * @return  $field
 		 */
-
 		function translate_field( $field ) {
 
 			return acf_get_field_type( 'select' )->translate_field( $field );
@@ -550,7 +570,6 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// Bail early if is empty.
@@ -593,8 +612,18 @@ if ( ! class_exists( 'acf_field_checkbox' ) ) :
 
 			return $schema;
 		}
-	}
 
+		/**
+		 * Returns an array of JSON-LD Property output types that are supported by this field type.
+		 *
+		 * @since 6.8
+		 *
+		 * @return string[]
+		 */
+		public function get_jsonld_output_types(): array {
+			return array( 'Text' );
+		}
+	}
 
 	// initialize
 	acf_register_field_type( 'acf_field_checkbox' );

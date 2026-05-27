@@ -140,7 +140,7 @@ class WPSEO_Option_Titles extends WPSEO_Option {
 	/**
 	 * Used for "caching" during pageload.
 	 *
-	 * @var string[]
+	 * @var string[]|null
 	 */
 	protected $enriched_defaults = null;
 
@@ -543,7 +543,7 @@ class WPSEO_Option_Titles extends WPSEO_Option {
 								$key, // Suffix-id for the error message box.
 								/* translators: %s expands to a post type. */
 								sprintf( __( 'Please select a valid taxonomy for post type "%s"', 'wordpress-seo' ), $post_type ), // The error message.
-								'error' // Message type.
+								'error', // Message type.
 							);
 						}
 					}
@@ -581,7 +581,7 @@ class WPSEO_Option_Titles extends WPSEO_Option {
 								'_' . $tax, // Suffix-ID for the error message box.
 								/* translators: %s expands to a taxonomy slug. */
 								sprintf( __( 'Please select a valid post type for taxonomy "%s"', 'wordpress-seo' ), $tax ), // The error message.
-								'error' // Message type.
+								'error', // Message type.
 							);
 							unset( $tax );
 						}
@@ -830,13 +830,12 @@ class WPSEO_Option_Titles extends WPSEO_Option {
 		 * {@internal This clean-up action can only be done effectively once the taxonomies
 		 *            and post_types have been registered, i.e. at the end of the init action.}}
 		 */
-		if ( isset( $original ) && current_filter() === 'wpseo_double_clean_titles' || did_action( 'wpseo_double_clean_titles' ) > 0 ) {
+		if ( ( isset( $original ) && current_filter() === 'wpseo_double_clean_titles' ) || did_action( 'wpseo_double_clean_titles' ) > 0 ) {
 			$rename = [
 				'title-'           => 'title-tax-',
 				'metadesc-'        => 'metadesc-tax-',
 				'noindex-'         => 'noindex-tax-',
 				'tax-hideeditbox-' => 'hideeditbox-tax-',
-
 			];
 
 			$taxonomy_names  = get_taxonomies( [ 'public' => true ], 'names' );
@@ -872,46 +871,6 @@ class WPSEO_Option_Titles extends WPSEO_Option {
 				}
 			}
 			unset( $rename, $taxonomy_names, $post_type_names, $defaults, $tax, $old_prefix, $new_prefix );
-		}
-
-		/*
-		 * Make sure the values of the variable option key options are cleaned as they
-		 * may be retained and would not be cleaned/validated then.
-		 */
-		if ( is_array( $option_value ) && $option_value !== [] ) {
-			foreach ( $option_value as $key => $value ) {
-				$switch_key = $this->get_switch_key( $key );
-
-				// Similar to validation routine - any changes made there should be made here too.
-				switch ( $switch_key ) {
-					/* Text fields. */
-					case 'title-':
-					case 'metadesc-':
-					case 'bctitle-ptarchive-':
-						$option_value[ $key ] = WPSEO_Utils::sanitize_text_field( $value );
-						break;
-
-					case 'separator':
-						if ( ! array_key_exists( $value, $this->get_separator_options() ) ) {
-							$option_value[ $key ] = false;
-						}
-						break;
-
-					/*
-					 * Boolean fields.
-					 */
-
-					/*
-					 * Covers:
-					 *  'noindex-'
-					 *  'hideeditbox-'
-					 */
-					default:
-						$option_value[ $key ] = WPSEO_Utils::validate_bool( $value );
-						break;
-				}
-			}
-			unset( $key, $value, $switch_key );
 		}
 
 		return $option_value;
