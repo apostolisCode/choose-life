@@ -1,0 +1,80 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+A WordPress installation for **Choose Life**, a donation platform. The site is served from a subdirectory (`/choose-life-donations/`) under WAMP on Windows. Almost all custom code lives in the theme at `wp-content/themes/choose-life/`; the WordPress core files in the repo root and the third-party plugins under `wp-content/plugins/` are stock and rarely edited.
+
+Donations and recurring subscriptions are processed through the **Cardlink** (Greek bank) hosted payment gateway. The site is bilingual via WPML.
+
+## Build & development
+
+The front-end build lives in `wp-content/themes/choose-life/src/` (this is where `package.json` and `node_modules` are — **not** the theme root). Webpack compiles into the theme's `assets/` directory (`../assets` relative to `src/`).
+
+```bash
+cd wp-content/themes/choose-life/src
+npm install              # requires Node 24.11.0 (see engines)
+npm run build            # production build (minified)
+npm start                # dev build, --watch, with BrowserSync live-reload
+```
+
+`npm start` proxies `http://localhost/choose-life-donations/` through BrowserSync and reloads on changes to compiled CSS and any `.php` file. There is no test suite or linter configured.
+
+Webpack entry points (`src/webpack.config.js`) → output bundles in `assets/js/`:
+- `main` — site-wide JS + SCSS (loads `main.scss`, lazysizes, the my-account-links Vue widget)
+- `admin` — wp-admin assets
+- `my-account` — the My Account Vue SPA
+- `checkout` — the checkout/donation Vue SPA
+- `vendors` — split chunk of `node_modules`
+
+`jQuery` and `Vue` are treated as webpack externals (expected on `window`). SCSS partials in `src/assets/scss/config/`, the bootstrap functions/variables/mixins, and `helpers/mixins/_list.scss` are auto-injected into every `.scss` file via `sass-resources-loader` — don't re-import them.
+
+## PHP architecture
+
+`functions.php` is intentionally minimal — it requires `includes/post-types/index.php`, `template-hooks.php`, and `template-functions.php`. The real bootstrapping happens in `theme_setup()` (in `template-functions.php`, hooked to `after_setup_theme`), which includes the three autoloader files.
+
+### Three class autoloaders (PSR-like, by prefix)
+
+Classes are autoloaded by filename convention `class-{name}.php` where `{name}` is the lowercased class name (minus prefix) with `_` → `-`. Never manually `require` these; just instantiate.
+
+| Prefix       | Directory       | Loader file                      | Example |
+|--------------|-----------------|----------------------------------|---------|
+| `Inc_`       | `includes/`     | `includes/includes-loader.php`   | `Inc_Api`, `Inc_Donation`, `Inc_Payment` |
+| `CRL_`       | `library/` (+ `library/helpers/`) | `library/library-loader.php` | `CRL_Cache`, `CRL_Utils`, `CRL_Html`, `CRL_Svg` |
+| `Component_` | `components/`   | `components/components-loader.php` | `Component_Button`, `Component_Element` |
+
+Service classes under `includes/` follow a singleton pattern (`Inc_Foo::get_instance()`). They are wired up at the bottom of `template-hooks.php` on `after_setup_theme` / `acf/init` (e.g. `Inc_Api`, `Inc_Auth`, `Inc_Subscription`, `Inc_Admin`, `Inc_Window_Data`).
+
+### The donation flow
+
+1. **`Inc_Api`** registers all custom REST routes under the `api/v1` namespace (see its `register_rest_routes()` for the full list: place-order, payment, donation/get, donation/pay, donation/recurring, user/*). All routes are `POST` with `permission_callback => __return_true`; auth is enforced inside handlers via JWT.
+2. **`Inc_Donation`** creates `donations` / `subscriptions` custom posts (registered in `includes/post-types/index.php`; both are non-public, admin-only, no front-end create).
+3. **`Inc_Payment`** builds the Cardlink hosted-form params (HMAC-signed with `payment_secret`), supports one-off and recurring (`extRecurring*`) donations, and handles the gateway's redirect callback. Test vs. production endpoint is chosen by the `enable_test_environment` ACF option.
+4. **`Inc_Auth`** / the `jwt-auth` plugin issue tokens consumed by the Vue SPAs.
+
+### Configuration via ACF
+
+Settings are ACF options-page fields (`get_field( '...', 'options' )`), not constants: e.g. `payment_mid`, `payment_secret`, `enable_test_environment`, `checkout_page_url`, `my_account_url`. The options page ("Theme Options") is registered in `acf_init_options_page()`. ACF field group definitions are version-controlled as JSON in `acf-json/` (local JSON sync is enabled — editing a field group in wp-admin writes a new JSON file here, and vice versa).
+
+## Vue front-end
+
+Two Vue 3 SPAs (Pinia + vue-router, hash-mode) live in `src/assets/js/scripts/vue/`:
+- **`checkout/`** — donation checkout flow (Start → Login/Register → Payment → Complete).
+- **`my-account/`** — logged-in account area (Account, Donations, Reset Password).
+
+They share `vue/api/index.js` (axios wrapper; `axiosPublic` vs `axiosPrivate` which injects the JWT `Authorization` header), `vue/stores/` (`user`, `ui`), and `vue/helpers/`. They mount only on the matching page templates (`templates/checkout.php`, `templates/my-account.php`) — see `theme_scripts()` for the conditional enqueue.
+
+### PHP → JS data bridge
+
+- `theme_scripts_localize()` exposes `window.urls` (home, theme, assets, ajax, **rest**, privacy).
+- `Inc_Window_Data::print_object()` prints `window.app_config` in the footer with translated UI `strings`, `my_account_url`, and (on checkout/my-account templates) the ACF `countries_list`. Add user-facing translatable strings to `get_strings()` rather than hardcoding them in Vue.
+
+All translatable strings use the `'choose-life'` text domain.
+
+## Conventions & gotchas
+
+- The site runs in a **subdirectory**; `.htaccess` uses `RewriteBase /choose-life-donations/`. Hardcoded `installationUrl` in `webpack.config.js` also assumes this path.
+- `wp-config.php`, `.htaccess`, `wp-content/uploads/`, and debug logs are git-ignored. The theme's `src/node_modules/` is committed in this repo (it shows up in searches) — ignore it when grepping; scope searches to `wp-content/themes/choose-life/` excluding `src/node_modules`.
+- Use `write_log( $data )` (defined in `template-functions.php`) for debugging — it writes to `wp-content/site-debug.log`.
+- `template-hooks.php` deliberately strips WP defaults: oEmbed, XML-RPC, emojis, generator version, query-string versions on assets, and block-library CSS.
