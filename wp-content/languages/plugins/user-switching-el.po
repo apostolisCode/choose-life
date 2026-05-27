@@ -1,0 +1,77 @@
+# Translation of Plugins - User Switching - Stable (latest release) in Greek
+# This file is distributed under the same license as the Plugins - User Switching - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-02-26 11:53:24+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.0-beta.2\n"
+"Language: el_GR\n"
+"Project-Id-Version: Plugins - User Switching - Stable (latest release)\n"
+
+#: user-switching.php:829
+msgctxt "verb"
+msgid "Sponsor"
+msgstr "Χορηγός"
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/user-switching/"
+msgstr "https://wordpress.org/plugins/user-switching/"
+
+#. Author URI of the plugin
+msgid "https://github.com/johnbillion/user-switching/graphs/contributors"
+msgstr "https://github.com/johnbillion/user-switching/graphs/contributors"
+
+#. Author of the plugin
+msgid "John Blackbourn & contributors"
+msgstr "John Blackbourn & contributors"
+
+#. Description of the plugin
+msgid "Instant switching between user accounts in WordPress"
+msgstr "Στιγμιαία εναλλαγή μεταξύ λογαριασμών χρηστών στο WordPress"
+
+#. Plugin Name of the plugin
+msgid "User Switching"
+msgstr "User Switching"
+
+#. Translators: "switch off" means to temporarily log out
+#: user-switching.php:562
+msgid "Switch Off"
+msgstr "Κλείσιμο"
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:960
+msgid "Switched back to %1$s (%2$s)."
+msgstr "Εναλλάχθηκε ξανά σε %1$s (%2$s)"
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:939
+msgid "Switch back to %1$s (%2$s)"
+msgstr "Εναλλαγή ξανά σε %1$s (%2$s)"
+
+#. Translators: 1: user display name; 2: username;
+#: user-switching.php:918
+msgid "Switched to %1$s (%2$s)."
+msgstr "Εναλλαγή σε %1$s (%2$s)."
+
+#. Translators: "switch off" means to temporarily log out
+#: user-switching.php:261 user-switching.php:282
+msgid "Could not switch off."
+msgstr "Αδύνατο το κλείσιμο."
+
+#: user-switching.php:185 user-switching.php:210 user-switching.php:219
+#: user-switching.php:224 user-switching.php:252
+msgid "Could not switch users."
+msgstr "Αδύνατη η εναλλαγή χρηστών."
+
+#: user-switching.php:135 user-switching.php:581 user-switching.php:730
+#: user-switching.php:778 user-switching.php:809 user-switching.php:1045
+msgid "Switch&nbsp;To"
+msgstr "Εναλλαγή&nbsp;Σε"
+
+#: user-switching.php:131
+msgctxt "User Switching title on user profile screen"
+msgid "User Switching"
+msgstr "Εναλλαγή Χρηστών"

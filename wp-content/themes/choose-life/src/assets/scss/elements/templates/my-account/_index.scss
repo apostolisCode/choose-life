@@ -1,0 +1,21 @@
+body.page-template-checkout .site__wrapper,
+body.page-template-my-account .site__wrapper {
+	background-color: $c_grey_light;
+	min-height: 523px;
+	position: relative;
+	.page-loader {
+		background-color: $c_grey_light;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 3;
+		.spinner-border {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -1rem 0 0 -1rem;
+		}
+	}
+}

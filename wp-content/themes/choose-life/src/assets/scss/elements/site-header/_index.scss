@@ -1,0 +1,78 @@
+.site-header {
+	box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.15);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+	background-color: $c_white;
+	&__wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px 0;
+	}
+	&__logo {
+		img {
+			max-width: 150px;
+		}
+	}
+	&__menu {
+		.menu {
+			@include list--inline;
+			&__item {
+				margin: 0 4px;
+				padding: 0 4px 3px;
+				&--current {
+					border-bottom: 1px solid $c_body;
+				}
+			}
+			&__link {
+				font-size: 13px;
+				text-decoration: none !important;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+.account-links {
+	position: relative;
+	padding: 5px 0;
+	&:hover > div {
+		opacity: 1;
+		visibility: visible;
+	}
+	> div {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 250ms ease, visibility 250ms ease;
+	}
+	ul {
+		@include list--no;
+		background-color: $c_white;
+		box-shadow: 0px 4px 15px 0px rgba($c_body, .15);
+		padding: 4px 0;
+		li {
+			white-space: nowrap;
+			a {
+				padding: 4px 12px;
+				transition: background-color 250ms ease;
+				text-decoration: none;
+				font-size: 12px;
+				color: $c_body;
+				display: block;
+				&.router-link-exact-active {
+					color: $c_main;
+				}
+				&:hover {
+					background-color: #E6E6EB;
+				}
+			}
+		}
+	}
+}

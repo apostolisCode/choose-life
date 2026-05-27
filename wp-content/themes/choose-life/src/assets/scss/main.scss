@@ -1,0 +1,40 @@
+@import './config/paths';
+@import './config/colors';
+@import './config/typography';
+/*
+ *
+ */
+@import './helpers/mixins/list';
+/*
+ * Vendor styles
+ */
+@import "./vendor/bootstrap/scss/functions";
+@import "./vendor/bootstrap/scss/variables";
+@import "./vendor/bootstrap/scss/mixins";
+
+
+$custom-colors: (
+	primary: $c_main
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import './vendor/bootstrap/scss/bootstrap';
+//@import './vendor/choices-js/choices';
+@import "./vendor/vue-toast-notification/theme-bootstrap";
+
+/*
+ * global styles
+ */
+@import './elements/site';
+@import './elements/site-header/index';
+@import './elements/site-footer/index';
+@import './elements/buttons';
+/*
+* Component styles
+*/
+
+
+/*
+* Templates styles
+*/
+@import './elements/templates/my-account/index';

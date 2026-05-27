@@ -1,0 +1,6 @@
+node_modules
+.idea
+nbproject
+debug.log
+assets/*
+src/package.lock

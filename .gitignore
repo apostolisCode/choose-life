@@ -1,0 +1,12 @@
+.idea/
+wp-content/aiowps_backups
+wp-content/cache
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/w3tc-config
+wp-content/uploads/
+wp-content/debug.log
+wp-content/site-debug.log
+.htaccess
+.DS_Store
+wp-config.php

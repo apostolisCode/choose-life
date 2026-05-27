@@ -1,0 +1,28 @@
+/* =========================================
+        Site
+   ========================================= */
+
+* {
+	&::selection {
+		color: $c_white;
+		background-color: $c_main;
+	}
+}
+
+.site__body {
+	height: 100%;
+	font-size: 16px;
+	color: $c_body;
+	font-family: $base_font;
+	padding-top: 93px;
+}
+
+a {
+	color: $c_body;
+	text-decoration: none;
+	transition: color 300ms ease;
+	&:hover {
+		text-decoration: underline;
+		color: $c_main;
+	}
+}
