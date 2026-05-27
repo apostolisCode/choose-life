@@ -32,8 +32,8 @@ export default {
 	},
   methods: {
     ...mapActions(userStore, ['userLogout', 'setDonationAmount']),
-    logout() {
-      this.userLogout();
+    async logout() {
+      await this.userLogout();
       window.location.href = this.myAccountUrl;
     }
   }

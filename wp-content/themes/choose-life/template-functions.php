@@ -138,6 +138,7 @@ if ( ! function_exists( 'theme_scripts_localize' ) ) {
 			'ajax'    => admin_url( 'admin-ajax.php' ),
 			'rest'    => get_rest_url(),
 			'privacy' => get_privacy_policy_url(),
+			'nonce'   => wp_create_nonce( 'cl_ajax' ),
 		] );
 	}
 }

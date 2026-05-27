@@ -31,8 +31,8 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['userLogout']),
-    logout() {
-      this.userLogout();
+    async logout() {
+      await this.userLogout();
       this.$router.push({ name: 'login' });
     }
   }

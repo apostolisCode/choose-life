@@ -97,13 +97,7 @@ class Inc_User {
 			throw new Exception( wp_strip_all_tags( $user_id->get_error_message( $error_code ) ), 500 );
 		}
 
-		$user_class         = new Inc_User( $user_id );
-		$jwt_auth           = new JWTAuth\Auth();
-		$user               = get_user_by( "id", $user_id );
-		$user_data          = $user_class->get_user_fields();
-		$user_data['token'] = $jwt_auth->generate_token( $user );
-
-		return $user_data;
+		return $user_id;
 	}
 
 	public function get_user_subscriptions( $paged = 1, $per_page = 10 ) {

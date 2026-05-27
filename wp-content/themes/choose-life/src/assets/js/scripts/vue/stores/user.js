@@ -83,7 +83,8 @@ export const userStore = defineStore('user', {
                     return res;
                 });
         },
-        userLogout() {
+        async userLogout() {
+            await api.logout();
             helpers.clearStorage('user');
             this.userData = false;
         },

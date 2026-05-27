@@ -48,10 +48,16 @@ Service classes under `includes/` follow a singleton pattern (`Inc_Foo::get_inst
 
 ### The donation flow
 
-1. **`Inc_Api`** registers all custom REST routes under the `api/v1` namespace (see its `register_rest_routes()` for the full list: place-order, payment, donation/get, donation/pay, donation/recurring, user/*). All routes are `POST` with `permission_callback => __return_true`; auth is enforced inside handlers via JWT.
+1. **`Inc_Api`** exposes the front-end (Vue) endpoints as **admin-ajax actions** (`register_ajax_actions()`), prefixed `cl_` (e.g. `cl_place_order`, `cl_get_donation`, `cl_pay_donation`, `cl_update_user`, `cl_user_donations`, `cl_user_subscriptions`, `cl_reset_password*`). It also keeps **two REST routes** under `api/v1` — `payment` and `donation/recurring` — which are the Cardlink gateway callbacks (browser redirect / server-to-server), verified by HMAC digest, not nonce/cookie.
 2. **`Inc_Donation`** creates `donations` / `subscriptions` custom posts (registered in `includes/post-types/index.php`; both are non-public, admin-only, no front-end create).
 3. **`Inc_Payment`** builds the Cardlink hosted-form params (HMAC-signed with `payment_secret`), supports one-off and recurring (`extRecurring*`) donations, and handles the gateway's redirect callback. Test vs. production endpoint is chosen by the `enable_test_environment` ACF option.
-4. **`Inc_Auth`** / the `jwt-auth` plugin issue tokens consumed by the Vue SPAs.
+
+### Authentication (admin-ajax + WP cookie + nonce)
+
+Auth is WordPress-native cookie session, **not** JWT (the old `jwt-auth` / `jwt-whitelist` plugins were removed). **`Inc_Auth`** is the auth/session ajax handler exposing `cl_login` (`wp_signon`), `cl_register` (creates user via `Inc_User::create_user`, then auto-logs-in via `wp_set_auth_cookie`), `cl_me` (session check, replaces token validation), and `cl_logout`. Every ajax action verifies a nonce (`check_ajax_referer('cl_ajax', '_ajax_nonce')`).
+
+- The front-end posts `application/x-www-form-urlencoded` with `action`, `_ajax_nonce`, and `payload` (a JSON string, decoded server-side via `get_payload()`). Handlers emit results with `wp_send_json($response)` keeping the legacy `{success, statusCode, code, message, data}` shape.
+- A fresh `cl_ajax` nonce is localized into `window.urls.nonce` on every page load ([template-functions.php](wp-content/themes/choose-life/template-functions.php) `theme_scripts_localize()`). After an in-SPA login/register the handler returns a **new nonce** (the `set_logged_in_cookie` hook in `Inc_Auth` makes `wp_create_nonce` use the new session token); the JS keeps it in-memory (`currentNonce` in [api/index.js](wp-content/themes/choose-life/src/assets/js/scripts/vue/api/index.js)). No nonce is persisted client-side.
 
 ### Configuration via ACF
 
