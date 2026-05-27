@@ -35,7 +35,10 @@ class Inc_User {
 			'billing_city'         => get_field( 'billing_city', 'user_' . $this->user_id ),
 			'billing_postal_code'  => get_field( 'billing_postal_code', 'user_' . $this->user_id ),
 			'billing_country'      => get_field( 'billing_country', 'user_' . $this->user_id ),
-			'marketing_acceptance' => get_field( 'marketing_acceptance', 'user_' . $this->user_id ),
+			// Return the checkbox-compatible string ('1'/'') instead of the ACF
+			// true_false boolean, so the front-end checkbox (value="1") hydrates
+			// as checked. See Account.vue / Complete.vue.
+			'marketing_acceptance' => get_field( 'marketing_acceptance', 'user_' . $this->user_id ) ? '1' : '',
 			'email'                => $user_info->user_email
 		];
 	}
