@@ -10,3 +10,4 @@ wp-content/site-debug.log
 .htaccess
 .DS_Store
 wp-config.php
+.claude
