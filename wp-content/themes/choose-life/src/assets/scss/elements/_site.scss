@@ -37,3 +37,8 @@ a {
 		color: $c_main;
 	}
 }
+
+// Lenis (scripts/smooth-scroll.js) does the easing; native smooth scrolling would fight it
+html.lenis-smooth {
+	scroll-behavior: auto !important;
+}

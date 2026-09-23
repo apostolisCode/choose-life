@@ -4,5 +4,6 @@ import 'lazysizes';
 import './scripts/vue/my-account-links/index';
 import './scripts/site-header';
 import './scripts/instagram-feed';
+import './scripts/smooth-scroll';
 import './scripts/animations';
 import './scripts/faq-tabs';
