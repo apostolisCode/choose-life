@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: el_GR\n"
 "Project-Id-Version: Themes - Twenty Twenty-Five\n"
 
@@ -1279,14 +1279,14 @@ msgctxt "Pattern description"
 msgid "A header with title and text and three columns that show 3 events with their images and titles."
 msgstr "Μια επικεφαλίδα με τίτλο και κείμενο και τρεις στήλες που δείχνουν 3 εκδηλώσεις με τις εικόνες και τους τίτλους τους."
 
-#: patterns/event-rsvp.php:73
-msgid "This immersive event celebrates the universal human experience through the lenses of history and ancestry, featuring a diverse array of photographers whose works capture the essence of different cultures and historical moments."
-msgstr "Αυτή η καθηλωτική εκδήλωση γιορτάζει την παγκόσμια ανθρώπινη εμπειρία μέσα από τους φακούς της ιστορίας και της καταγωγής, παρουσιάζοντας ένα ευρύ φάσμα φωτογράφων, τα έργα των οποίων αποτυπώνουν την ουσία διαφορετικών πολιτισμών και ιστορικών στιγμών."
-
 #: patterns/hidden-404.php
 msgctxt "Pattern title"
 msgid "404"
 msgstr "404"
+
+#: patterns/event-rsvp.php:73
+msgid "This immersive event celebrates the universal human experience through the lenses of history and ancestry, featuring a diverse array of photographers whose works capture the essence of different cultures and historical moments."
+msgstr "Αυτή η καθηλωτική εκδήλωση γιορτάζει την παγκόσμια ανθρώπινη εμπειρία μέσα από τους φακούς της ιστορίας και της καταγωγής, παρουσιάζοντας ένα ευρύ φάσμα φωτογράφων, τα έργα των οποίων αποτυπώνουν την ουσία διαφορετικών πολιτισμών και ιστορικών στιγμών."
 
 #: patterns/hero-podcast.php:57
 msgctxt "Button text"
@@ -1297,7 +1297,7 @@ msgstr "Spotify"
 msgid "About the book"
 msgstr "Σχετικά με το βιβλίο"
 
-#: functions.php:113
+#: functions.php:108
 msgid "Pages"
 msgstr "Σελίδες"
 
@@ -1418,14 +1418,14 @@ msgctxt "Alt text for hero image."
 msgid "Picture of a person"
 msgstr "Φωτογραφία ενός ατόμου"
 
+#: patterns/heading-and-paragraph-with-image.php:23
+msgid "About the event"
+msgstr "Σχετικά με την εκδήλωση"
+
 #: patterns/heading-and-paragraph-with-image.php:27
 msgctxt "Event Overview Text."
 msgid "Held over a weekend, the event is structured around a series of exhibitions, workshops, and panel discussions. The exhibitions showcase a curated selection of photographs that tell compelling stories from various corners of the globe, each image accompanied by detailed narratives that provide context and deeper insight into the historical significance of the scenes depicted. These photographs are drawn from the archives of renowned photographers, as well as emerging talents, ensuring a blend of both classical and contemporary perspectives."
 msgstr "Η εκδήλωση, η οποία πραγματοποιείται σε ένα Σαββατοκύριακο, είναι δομημένη γύρω από μια σειρά εκθέσεων, εργαστηρίων και συζητήσεων. Οι εκθέσεις παρουσιάζουν μια επιμελημένη επιλογή φωτογραφιών που αφηγούνται συναρπαστικές ιστορίες από διάφορες γωνιές του πλανήτη, ενώ κάθε εικόνα συνοδεύεται από λεπτομερείς αφηγήσεις που παρέχουν το πλαίσιο και βαθύτερη κατανόηση της ιστορικής σημασίας των σκηνών που απεικονίζονται. Οι φωτογραφίες αυτές προέρχονται από τα αρχεία διάσημων φωτογράφων, καθώς και από ανερχόμενα ταλέντα, εξασφαλίζοντας ένα μείγμα τόσο κλασικών όσο και σύγχρονων προοπτικών."
-
-#: patterns/heading-and-paragraph-with-image.php:23
-msgid "About the event"
-msgstr "Σχετικά με την εκδήλωση"
 
 #: patterns/page-portfolio-home.php
 msgctxt "Pattern description"
@@ -1875,11 +1875,11 @@ msgctxt "Button text. Verb."
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: functions.php:121
+#: functions.php:116
 msgid "Post formats"
 msgstr "Φορμάτ άρθρων"
 
-#: functions.php:142
+#: functions.php:136
 msgctxt "Label for the block binding placeholder in the editor"
 msgid "Post format name"
 msgstr "Όνομα μορφής άρθρου"

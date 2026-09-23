@@ -1,5 +1,5 @@
-# Translation of WordPress - 7.0.x - Development - Administration - Network Admin in Greek
-# This file is distributed under the same license as the WordPress - 7.0.x - Development - Administration - Network Admin package.
+# Translation of WordPress - 7.1.x - Development - Administration - Network Admin in Greek
+# This file is distributed under the same license as the WordPress - 7.1.x - Development - Administration - Network Admin package.
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2025-11-21 13:44:36+0000\n"
@@ -7,9 +7,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: el_GR\n"
-"Project-Id-Version: WordPress - 7.0.x - Development - Administration - Network Admin\n"
+"Project-Id-Version: WordPress - 7.1.x - Development - Administration - Network Admin\n"
 
 #: wp-admin/network/sites.php:361
 msgid "Site flagged for deletion."
@@ -675,7 +675,7 @@ msgstr "Διαδρομή"
 msgid "Domain"
 msgstr "τομέας (domain)"
 
-#: wp-admin/network/user-new.php:29 wp-admin/network/users.php:270
+#: wp-admin/network/user-new.php:29 wp-admin/network/users.php:297
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Users_Screen\">Documentation on Network Users</a>"
 msgstr "<a href=\"https://codex.wordpress.org/Network_Admin_Users_Screen\">Τεκμηρίωση σχετικά με τους χρήστες δικτύου</a>"
 
@@ -743,7 +743,7 @@ msgstr "Προσθέστε τα ακόλουθα στο αρχείο %1$s μέσ
 msgid "Confirm your action"
 msgstr "Επιβεβαίωση ενέργειας"
 
-#: wp-admin/network/users.php:260
+#: wp-admin/network/users.php:287
 msgid "Hover over any user on the list to make the edit links appear. The Edit link on the left will take you to their Edit User profile page; the Edit link on the right by any site name goes to an Edit Site screen for that site."
 msgstr "Μεταφέρετε τον δείκτη του ποντικιού πάνω από κάθε χρήστη στη λίστα για να εμφανιστούν οι σύνδεσμοι επεξεργασίας. Ο σύνδεσμος \"Επεξεργασία\" στα αριστερά θα σας μεταφέρει στη σελίδα Επεξεργασία Προφίλ Χρήστη. Ο σύνδεσμος \"Επεξεργασία\" στα δεξιά από κάθε όνομα ιστότοπου θα σας μεταφέρει στη σελίδα \"Επεξεργασία ιστότοπου\" για το συγκεκριμένο που επιλέξατε."
 
@@ -1097,10 +1097,6 @@ msgstr "Δίκτυο"
 msgid "The choice of subdirectory sites is disabled if this setup is more than a month old because of permalink problems with &#8220;/blog/&#8221; from the main site. This disabling will be addressed in a future version."
 msgstr "Η επιλογή subdirectory ιστοτόποπων είναι απενεργοποιημένη αν αυτή η εγκατάσταση υπάρχει για περισσότερο από ένα μήνα λόγω προβλημάτων permalink με &#8220;/blog/&#8221 από τον κύριο ιστότοπο. Αυτή η δυσλειτουργία θα επιλυθεί σε μελλοντική έκδοση."
 
-#: wp-admin/network.php:65
-msgid "Once you add this code and refresh your browser, multisite should be enabled. This screen, now in the Network Admin navigation menu, will keep an archive of the added code. You can toggle between Network Admin and Site Admin by clicking on the Network Admin or an individual site name under the My Sites dropdown in the Toolbar."
-msgstr "Από τη στιγμή που θα προσθέσετε τον κώδικα και κάνετε ανανέωση στον browser σας, θα πρέπει να έχει ενεργοποιηθεί η επιλογή multisite. Αυτή η σελίδα, στο μενού πλοήγησης διαχειριστή δικτύου μπορεί να κρατάει αρχείο του κώδικα που έχει προσθεθεί. Μπορείτε να μεταπηδήσετε από την διαχείριση δικτύου στην διαχείριση ιστοτόπου κάνοντας κλικ στην επιλογή \"Διαχείριση δικτύου\" ή σε κάποιο τίτλο ιστοτόπου στο αναδιπλούμενο μενού του συνδέσμου \"Οι ιστότοποι μου\" στη γραμμή εργαλείων."
-
 #: wp-admin/network.php:63
 msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
 msgstr "Η επόμενη οθόνη για την εγκατάσταση δικτύου θα σας δώσει μεμονωμένες δημιουργημένες γραμμές κώδικα για να τα προσθέσετε στο  wp-config.php και .htaccess αρχείο σας. Βεβαιωθείτε ότι οι ρυθμίσεις FTP του πελάτη σας, επιτρέπουν στα αρχεία να ξεκινάνε με μια τελεία ορατή, έτσι ώστε να μπορείτε να βρείτε .htaccess; ίσως χρειαστεί να δημιουργήσετε αυτό το αρχείο αν δεν είναι πραγματικά εκεί. Δημιουργήστε αντίγραφα ασφαλείας αυτών των δύο αρχείων."
@@ -1122,7 +1118,7 @@ msgid "The Network creation panel is not for WordPress MU networks."
 msgstr "Τα πλαίσια δημιουργία δικτύου δεν είναι για τα δίκτυα WordPress MU."
 
 #. translators: %s: User login.
-#: wp-admin/network/users.php:87 wp-admin/network/users.php:126
+#: wp-admin/network/users.php:88 wp-admin/network/users.php:127
 msgid "Warning! User cannot be modified. The user %s is a network administrator."
 msgstr "Προσοχή! Αδύνατη η τροποποίηση μέλους. Το μέλος %s είναι διαχειριστής δικτύου."
 
@@ -1142,11 +1138,11 @@ msgstr "Η μεταφορά του ποντικιού πάνω σε ένα ισ�
 msgid "Operational settings has fields for the network&#8217;s name and admin email."
 msgstr "Στην περιοχή Λειτουργικές ρυθμίσεις υπάρχουν πεδία που αφορούν το όνομα του δικτύου και το email του διαχειριστή."
 
-#: wp-admin/network/users.php:263
+#: wp-admin/network/users.php:290
 msgid "The bulk action will permanently delete selected users, or mark/unmark those selected as spam. Spam users will have posts removed and will be unable to sign up again with the same email addresses."
 msgstr "Η μαζική επεξεργασία θα σβήσει τους επιλεγμένους χρήστες οριστικά ή θα μαρκάρει/ξεμαρκάρει τους επιλεγμένους σαν spam χρήστες. Όλα τα άρθρα που έχουν γράψει οι spam χρήστες θα διαγραφούν και δεν θα μπορέσουν να ξανασυνδεθούν με τον ίδιο λογαριασμό email."
 
-#: wp-admin/network/users.php:261
+#: wp-admin/network/users.php:288
 msgid "You can also go to the user&#8217;s profile page by clicking on the individual username."
 msgstr "Μπορείτε επίσης να επισκεφθείτε την σελίδα προφίλ του χρήστη πατώντας πάνω στο όνομα χρήστη του καθενός."
 
@@ -1154,7 +1150,7 @@ msgstr "Μπορείτε επίσης να επισκεφθείτε την σε�
 msgid "Upload settings control the size of the uploaded files and the amount of available upload space for each site. You can change the default value for specific sites when you edit a particular site. Allowed file types are also listed (space separated only)."
 msgstr "Οι Ρυθμίσεις μεταφορτώσεων ορίζουν το μέγιστο μέγεθος αρχείου που μπορεί να μεταφορτωθεί και τον διαθέσιμο χώρο αρχείων για κάθε ιστότοπο. Μπορείτε να αλλάξετε τις τιμές για μεμονωμένο ιστότοπο κατά την επεξεργασία του. Επίσης εδώ καθορίζετε και τους επιτρεπόμενους τύπους αρχείων (τιμές χωρισμένες με κόμμα)."
 
-#: wp-admin/network/users.php:264
+#: wp-admin/network/users.php:291
 msgid "You can make an existing user an additional super admin by going to the Edit User profile page and checking the box to grant that privilege."
 msgstr "Μπορείτε να μετατρέψετε ένα χρήστη ως Υπερδιαχειριστή πηγαίνοντας στη σελίδα Επεξεργασία Προφίλ Χρήστη και τσεκάροντας το πλαίσιο ελέγχου που δίνει αυτό το προνόμιο."
 
@@ -1162,11 +1158,11 @@ msgstr "Μπορείτε να μετατρέψετε ένα χρήστη ως Υ
 msgid "Users who are signed up to the network without a site are added as subscribers to the main or primary dashboard site, giving them profile pages to manage their accounts. These users will only see Dashboard and My Sites in the main navigation until a site is created for them."
 msgstr "Οι χρήστες που έχουν εγγραφεί στο δίκτυο χωρίς ιστοτόπο προστίθενται ως συνδρομητές του κύριου ή βασικού ιστοτόπου, έτσι ώστε να έχουν σελίδες προφίλ για να διαχειρίζονται το λογαριασμό τους. Οι χρήστες αυτοί, θα έχουν πρόσβαση μόνο στον Πίνακα ελέγχου και στο Οι ιστότοποί μου στο περιβάλλον διαχείρισης, μέχρι τη στιγμή που θα δημιουργηθεί ένας ιστότοπος για αυτούς."
 
-#: wp-admin/network/users.php:262
+#: wp-admin/network/users.php:289
 msgid "You can sort the table by clicking on any of the table headings and switch between list and excerpt views by using the icons above the users list."
 msgstr "Μπορείτε να ταξινομήσετε τον πίνακα πατώντας σε οποιαδήποτε από τις επικεφαλίδες του πίνακας και την προβολή αποσπασμάτων χρησιμοποιώντας τα εικονίδια πάνω από την λίστα χρηστών."
 
-#: wp-admin/network/users.php:259
+#: wp-admin/network/users.php:286
 msgid "This table shows all users across the network and the sites to which they are assigned."
 msgstr "Αυτός ο πίνακας δείχνει όλους τους χρήστες του δικτύου και τους ιστότοπους στους οποίους είναι μέλη."
 
@@ -1223,7 +1219,7 @@ msgstr "Αν θέλετε να αποκλείσετε χρήστες από συ
 msgid "If you want to limit site registrations to certain domains. One domain per line."
 msgstr "Αν θέλετε να περιορίσετε τις εγγραφές μελών μόνο από συγκεκριμένα domains θέστε ένα domain σε κάθε γραμμή."
 
-#: wp-admin/network/users.php:294
+#: wp-admin/network/users.php:321
 msgid "Users removed from spam."
 msgstr "Τα μέλη αποχαρακτηρίστηκαν."
 
@@ -1243,11 +1239,11 @@ msgstr "Οι ιστότοποι σημάνθηκαν ως ανεπιθύμητο
 msgid "Sites removed from spam."
 msgstr "Οι ιστότοποι αποχαρακτηρίστηκαν."
 
-#: wp-admin/network/users.php:297
+#: wp-admin/network/users.php:324
 msgid "Users deleted."
 msgstr "Τα μέλη διαγράφηκαν."
 
-#: wp-admin/network/users.php:291
+#: wp-admin/network/users.php:318
 msgid "Users marked as spam."
 msgstr "Τα μέλη σημάνθηκαν ως ανεπιθύμητα."
 

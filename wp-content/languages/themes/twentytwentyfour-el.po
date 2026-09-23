@@ -7,31 +7,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: el_GR\n"
 "Project-Id-Version: Themes - Twenty Twenty-Four\n"
 
-#: patterns/footer.php:73
+#: patterns/footer.php:78
 msgid "Terms and Conditions"
 msgstr "Όροι και Προϋποθέσεις"
 
-#: patterns/footer.php:49
+#: patterns/footer.php:54
 msgid "Team"
 msgstr "Ομάδα"
 
-#: patterns/footer.php:74
+#: patterns/footer.php:79
 msgid "Contact Us"
 msgstr "Επικοινωνήστε μαζί μας"
 
-#: patterns/footer.php:50
+#: patterns/footer.php:55
 msgid "History"
 msgstr "Ιστορικό"
 
-#: patterns/footer.php:72
+#: patterns/footer.php:77
 msgid "Privacy Policy"
 msgstr "Πολιτική απορρήτου"
 
-#: functions.php:199
+#: functions.php:188
 msgctxt "Block pattern category"
 msgid "Pages"
 msgstr "Σελίδες"
@@ -48,8 +48,8 @@ msgstr "Κεφαλίδα"
 
 #. Author URI of the theme
 #. Translators: WordPress link.
-#: style.css patterns/footer-centered-logo-nav.php:22
-#: patterns/footer-colophon-3-col.php:91 patterns/footer.php:117
+#: style.css patterns/footer-centered-logo-nav.php:27
+#: patterns/footer-colophon-3-col.php:96 patterns/footer.php:122
 msgid "https://wordpress.org"
 msgstr "https://wordpress.org"
 
@@ -120,30 +120,30 @@ msgctxt "Color name"
 msgid "Base"
 msgstr "Βασικό"
 
-#: patterns/hidden-sidebar.php:49
+#: patterns/hidden-sidebar.php:55
 msgid "Useful Links"
 msgstr "Χρήσιμοι σύνδεσμοι"
 
-#: patterns/cta-pricing.php:87
+#: patterns/cta-pricing.php:92
 msgctxt "Button text for the first pricing level"
 msgid "Subscribe"
 msgstr "Εγγραφή"
 
-#: patterns/cta-pricing.php:145
+#: patterns/cta-pricing.php:150
 msgctxt "Button text for the second pricing level"
 msgid "Subscribe"
 msgstr "Εγγραφή"
 
-#: patterns/cta-pricing.php:203
+#: patterns/cta-pricing.php:208
 msgctxt "Button text for the third pricing level"
 msgid "Subscribe"
 msgstr "Εγγραφή"
 
-#: patterns/footer.php:92
+#: patterns/footer.php:97
 msgid "Social Media"
 msgstr "Κοινωνικά Δίκτυα"
 
-#: patterns/footer.php:86
+#: patterns/footer.php:91
 msgid "Social"
 msgstr "Social"
 
@@ -152,12 +152,12 @@ msgctxt "Font size name"
 msgid "Small"
 msgstr "Μικρό"
 
-#: patterns/cta-subscribe-centered.php:31
+#: patterns/cta-subscribe-centered.php:36
 msgctxt "Sample text for Sign Up Button"
 msgid "Sign up"
 msgstr "Δημιουργία λογαριασμού"
 
-#: patterns/page-newsletter-landing.php:40
+#: patterns/page-newsletter-landing.php:45
 msgctxt "Sample content for newsletter subscribe button"
 msgid "Sign up"
 msgstr "Δημιουργία λογαριασμού"
@@ -172,7 +172,7 @@ msgctxt "Pattern title"
 msgid "Sidebar"
 msgstr "Στήλη"
 
-#: patterns/hidden-sidebar.php:75
+#: patterns/hidden-sidebar.php:81
 msgctxt "search form placeholder"
 msgid "Search..."
 msgstr "Αναζήτηση..."
@@ -182,12 +182,12 @@ msgctxt "Pattern title"
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: patterns/hidden-search.php:9 patterns/hidden-sidebar.php:75
+#: patterns/hidden-search.php:14 patterns/hidden-sidebar.php:81
 msgctxt "search form label"
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: patterns/hidden-search.php:9
+#: patterns/hidden-search.php:14
 msgctxt "search button text"
 msgid "Search"
 msgstr "Αναζήτηση"
@@ -197,12 +197,12 @@ msgctxt "Pattern title"
 msgid "RSVP"
 msgstr "RSVP"
 
-#: patterns/cta-rsvp.php:11
+#: patterns/cta-rsvp.php:16
 msgctxt "Name of RSVP pattern"
 msgid "RSVP"
 msgstr "RSVP"
 
-#: patterns/cta-rsvp.php:21 patterns/page-rsvp-landing.php:23
+#: patterns/cta-rsvp.php:26 patterns/page-rsvp-landing.php:28
 msgctxt "Initials for ´please respond´"
 msgid "RSVP"
 msgstr "RSVP"
@@ -212,11 +212,11 @@ msgctxt "Pattern title"
 msgid "404"
 msgstr "404"
 
-#: patterns/footer-colophon-3-col.php:39
+#: patterns/footer-colophon-3-col.php:44
 msgid "Contact"
 msgstr "Contact"
 
-#: patterns/text-feature-grid-3-col.php:84
+#: patterns/text-feature-grid-3-col.php:89
 msgctxt "Sample feature heading"
 msgid "Consulting"
 msgstr "Consulting"
@@ -226,11 +226,11 @@ msgctxt "Pattern title"
 msgid "Comments"
 msgstr "Σχόλια"
 
-#: patterns/hidden-comments.php:12
+#: patterns/hidden-comments.php:17
 msgid "Comments"
 msgstr "Σχόλια"
 
-#: patterns/hidden-post-meta.php:20
+#: patterns/hidden-post-meta.php:25
 msgctxt "Prefix for the post author block: By author name"
 msgid "by"
 msgstr "από"
@@ -240,17 +240,17 @@ msgctxt "Color name"
 msgid "Accent"
 msgstr "Έμφαση"
 
-#: patterns/text-title-left-image-right.php:35
+#: patterns/text-title-left-image-right.php:40
 msgctxt "Call to Action button text"
 msgid "About us"
 msgstr "Σχετικά με εμάς"
 
-#: patterns/banner-hero.php:37
+#: patterns/banner-hero.php:42
 msgctxt "Button text of the hero section"
 msgid "About us"
 msgstr "Σχετικά με εμάς"
 
-#: patterns/footer.php:41 patterns/footer.php:47
+#: patterns/footer.php:46 patterns/footer.php:52
 msgid "About"
 msgstr "Περί"
 
@@ -259,9 +259,9 @@ msgctxt "Pattern title"
 msgid "About"
 msgstr "Περί"
 
-#: patterns/hidden-post-navigation.php:9 patterns/hidden-post-navigation.php:10
-#: patterns/hidden-posts-heading.php:10
-#: patterns/template-index-portfolio.php:16
+#: patterns/hidden-post-navigation.php:14
+#: patterns/hidden-post-navigation.php:15 patterns/hidden-posts-heading.php:16
+#: patterns/template-index-portfolio.php:21
 msgid "Posts"
 msgstr "Αναρτήσεις"
 
@@ -275,15 +275,15 @@ msgctxt "Pattern title"
 msgid "Post meta"
 msgstr "Μεταδεδομένα άρθρου"
 
-#: patterns/hidden-sidebar.php:33
+#: patterns/hidden-sidebar.php:39
 msgid "Popular Categories"
 msgstr "Δημοφιλείς Κατηγορίες"
 
-#: functions.php:51
+#: functions.php:48
 msgid "Pill"
 msgstr "Χάπι"
 
-#: patterns/hidden-404.php:10
+#: patterns/hidden-404.php:15
 msgctxt "Heading for a webpage that is not found"
 msgid "Page Not Found"
 msgstr "Η σελίδα δε βρέθηκε"
@@ -293,12 +293,12 @@ msgctxt "Custom template name"
 msgid "Page No Title"
 msgstr "Σελίδα χωρίς τίτλο"
 
-#: patterns/cta-pricing.php:18
+#: patterns/cta-pricing.php:23
 msgctxt "Sample heading for pricing pattern"
 msgid "Our Services"
 msgstr "Οι Υπηρεσίες μας"
 
-#: patterns/cta-services-image-left.php:39
+#: patterns/cta-services-image-left.php:44
 msgctxt "Sample button text to view the services"
 msgid "Our services"
 msgstr "Οι υπηρεσίες μας"
@@ -308,7 +308,7 @@ msgctxt "Pattern title"
 msgid "No results"
 msgstr "Χωρίς αποτελέσματα"
 
-#: patterns/hidden-post-navigation.php:12
+#: patterns/hidden-post-navigation.php:17
 msgctxt "Label before the title of the next post. There is a space after the colon."
 msgid "Next: "
 msgstr "Επόμενο:"
@@ -318,7 +318,7 @@ msgctxt "Pattern title"
 msgid "List of posts, 1 column"
 msgstr "Λίστα αναρτήσεων, 1 στήλη"
 
-#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:95
+#: patterns/footer-colophon-3-col.php:65 patterns/footer.php:100
 msgid "Instagram"
 msgstr "Instagram"
 
@@ -327,21 +327,21 @@ msgctxt "Pattern title"
 msgid "Hero"
 msgstr "Hero"
 
-#: patterns/cta-pricing.php:37
+#: patterns/cta-pricing.php:42
 msgctxt "Sample heading for the first pricing level"
 msgid "Free"
 msgstr "Δωρεάν"
 
-#: patterns/footer-colophon-3-col.php:57
+#: patterns/footer-colophon-3-col.php:62
 msgid "Follow"
 msgstr "Follow"
 
-#: patterns/text-faq.php:12
+#: patterns/text-faq.php:17
 msgctxt "Name of the FAQ pattern"
 msgid "FAQs"
 msgstr "Συχνές Ερωτήσεις"
 
-#: patterns/text-faq.php:15
+#: patterns/text-faq.php:20
 msgctxt "Heading of the FAQs"
 msgid "FAQs"
 msgstr "Συχνές Ερωτήσεις"
@@ -351,7 +351,7 @@ msgctxt "Pattern title"
 msgid "FAQ"
 msgstr "Συχνές Ερωτήσεις"
 
-#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:94
+#: patterns/footer-colophon-3-col.php:65 patterns/footer.php:99
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -360,16 +360,16 @@ msgctxt "Font size name"
 msgid "Extra Extra Large"
 msgstr "Πάρα Πολύ Μεγάλο"
 
-#: patterns/cta-pricing.php:157
+#: patterns/cta-pricing.php:162
 msgctxt "Sample heading for the third pricing level"
 msgid "Expert"
 msgstr "Ειδικός"
 
-#: patterns/footer.php:64 patterns/footer.php:70
+#: patterns/footer.php:69 patterns/footer.php:75
 msgid "Privacy"
 msgstr "Απόρρητο"
 
-#: patterns/cta-pricing.php:11
+#: patterns/cta-pricing.php:16
 msgctxt "Name for the pricing pattern"
 msgid "Pricing Table"
 msgstr "Πίνακας τιμών"
@@ -379,12 +379,12 @@ msgctxt "Pattern title"
 msgid "Pricing"
 msgstr "Τιμοκατάλογος"
 
-#: patterns/hidden-post-navigation.php:11
+#: patterns/hidden-post-navigation.php:16
 msgctxt "Label before the title of the previous post. There is a space after the colon."
 msgid "Previous: "
 msgstr "Προηγούμενο:"
 
-#: patterns/testimonial-centered.php:12
+#: patterns/testimonial-centered.php:17
 msgctxt "Name of testimonial pattern"
 msgid "Testimonial"
 msgstr "Είπαν για εμάς"
