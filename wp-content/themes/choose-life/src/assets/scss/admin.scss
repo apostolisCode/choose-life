@@ -1,1 +1,56 @@
 
+/* =========================================
+		Journeys: map under the latitude / longitude fields
+		(scripts/admin/coords-picker.js)
+   ========================================= */
+
+.cl-coords-picker {
+	&__search {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 8px;
+
+		input[type="search"] {
+			flex: 1 1 auto;
+			max-width: 420px;
+		}
+	}
+
+	&__results {
+		max-height: 180px;
+		margin: 0 0 8px;
+		padding: 6px 10px;
+		overflow-y: auto;
+		border: 1px solid #dcdcde;
+		background: #fff;
+
+		li {
+			margin: 4px 0;
+		}
+
+		.button-link {
+			text-align: left;
+		}
+	}
+
+	&__map {
+		height: 320px;
+		border: 1px solid #dcdcde;
+		border-radius: 4px;
+	}
+
+	&__pin span {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		width: 22px;
+		height: 22px;
+		margin-left: -11px;
+		border: 3px solid #fff;
+		border-radius: 50% 50% 50% 0;
+		background: #D91A21;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
+		transform: rotate(-45deg);
+	}
+}

@@ -227,6 +227,13 @@ if ( ! function_exists( 'admin_scripts' ) ) {
 	function admin_scripts() {
 		$theme_dir = get_template_directory_uri();
 		wp_enqueue_script( 'admin-main', "$theme_dir/assets/js/admin.js", array( 'jquery' ), theme_asset_version( 'js/admin.js' ), true );
+
+		// map for the coordinates of journeys and hospitals (scripts/admin/coords-picker.js)
+		$screen = get_current_screen();
+		if ( $screen && ( 'journey' === $screen->post_type || 'journey_hospital' === $screen->taxonomy ) ) {
+			wp_enqueue_style( 'leaflet', "$theme_dir/assets/vendor/leaflet/leaflet.css", array(), '1.9.4' );
+			wp_enqueue_script( 'leaflet', "$theme_dir/assets/vendor/leaflet/leaflet.js", array(), '1.9.4', true );
+		}
 	}
 }
 

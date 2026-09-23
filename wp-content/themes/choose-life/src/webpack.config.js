@@ -85,6 +85,8 @@ const config = {
 				{from: srcPaths.fonts, to: `${outputPath}/fonts`},
 				{from: srcPaths.images, to: `${outputPath}/img`},
 				{from: srcPaths.svg, to: `${outputPath}/svg`},
+				// map of the journeys' coordinate fields in wp-admin (scripts/admin/coords-picker.js)
+				{from: 'node_modules/leaflet/dist', to: `${outputPath}/vendor/leaflet`, globOptions: {ignore: ['**/*.map', '**/*-src*']}},
 			],
 		}),
 		new MiniCssExtractPlugin({
