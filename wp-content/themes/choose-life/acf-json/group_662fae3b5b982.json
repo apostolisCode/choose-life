@@ -168,6 +168,61 @@
             "append": ""
         },
         {
+            "key": "field_68f1a0c400001",
+            "label": "Donors list display",
+            "name": "donor_list_display",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "anonymous": "Anonymous",
+                "name": "Donor name",
+                "other": "Other name"
+            },
+            "default_value": "anonymous",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_68f1a0c400002",
+            "label": "Name shown in the donors list",
+            "name": "donor_list_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68f1a0c400001",
+                        "operator": "==",
+                        "value": "other"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_662fae585f3f4",
             "label": "Email",
             "name": "email",
@@ -600,5 +655,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1715609536
+    "modified": 1790164083
 }

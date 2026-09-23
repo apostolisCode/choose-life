@@ -29,6 +29,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import './elements/site-header/index';
 @import './elements/site-footer/index';
 @import './elements/buttons';
+@import './elements/forms';
+@import './elements/donation-amounts';
 /*
 * Component styles
 */

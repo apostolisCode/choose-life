@@ -60,6 +60,63 @@
             "delay": 0
         },
         {
+            "key": "field_68f1a0c300001",
+            "label": "Register",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_68f1a0c300002",
+            "label": "Title",
+            "name": "register_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68f1a0c300003",
+            "label": "Content",
+            "name": "register_content",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
             "key": "field_66322a9d43e23",
             "label": "Donations",
             "name": "",
@@ -162,7 +219,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/my-account.php"
+                "value": "templates/my-account.php"
             }
         ]
     ],
@@ -175,5 +232,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1714563964
+    "modified": 1790158328
 }

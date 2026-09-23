@@ -1,0 +1,224 @@
+/* =========================================
+		Form fields (2026 redesign)
+   ========================================= */
+
+.cl-field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	font-family: $manrope_font;
+
+	&__label {
+		margin: 0;
+		font-size: 14px;
+		line-height: 18px;
+		font-weight: 500;
+		color: $c_grey;
+	}
+
+	&__input {
+		width: 100%;
+		padding: 16px 20px;
+		border: 1px solid $c_dark;
+		border-radius: 14px;
+		background-color: $c_white;
+		font-size: 16px;
+		line-height: 20px;
+		color: $c_dark;
+		transition: border-color 300ms ease, box-shadow 300ms ease;
+
+		&::placeholder {
+			color: $c_grey;
+			opacity: 1;
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba($c_dark, .12);
+		}
+
+		&.is-invalid {
+			border-color: $c_main;
+			&:focus {
+				box-shadow: 0 0 0 3px rgba($c_main, .15);
+			}
+		}
+	}
+
+	&__error {
+		font-size: 14px;
+		line-height: 18px;
+		color: $c_main;
+	}
+}
+
+/* =========================================
+		Auth forms (login / register)
+   ========================================= */
+
+.cl-form {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	font-family: $manrope_font;
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 30px;
+		line-height: 38px;
+		font-weight: 700;
+		color: $c_dark;
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+}
+
+.cl-link {
+	font-family: $manrope_font;
+	font-size: 16px;
+	line-height: 22px;
+	font-weight: 700;
+	color: $c_main;
+	&:hover {
+		color: darken($c_main, 10%);
+	}
+	&--sm {
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+// two fields side by side (first / last name, city / postal code)
+.cl-field-row {
+	display: flex;
+	gap: 16px;
+	> .cl-field {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+	@include media-breakpoint-down(sm) {
+		flex-direction: column;
+	}
+}
+
+select.cl-field__input {
+	appearance: none;
+	padding-right: 48px;
+	background: $c_white url('#{$p_svg}checkout/chevron-down.svg') no-repeat right 16px center / 20px 20px;
+	cursor: pointer;
+}
+
+/* =========================================
+		Radio / checkbox (2026 redesign)
+   ========================================= */
+
+.cl-choice {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin: 0;
+	font-family: $manrope_font;
+	font-size: 16px;
+	line-height: 20px;
+	color: #0A0A0A;
+	cursor: pointer;
+
+	&__input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&__control {
+		flex: 0 0 20px;
+		width: 20px;
+		height: 20px;
+		background: url('#{$p_svg}checkout/radio.svg') no-repeat center / 20px 20px;
+	}
+
+	&__input:checked + &__control {
+		background-image: url('#{$p_svg}checkout/radio-checked.svg');
+	}
+
+	&__input:checked ~ &__label {
+		font-weight: 700;
+	}
+
+	&__input:focus-visible + &__control {
+		outline: 2px solid $c_dark;
+		outline-offset: 2px;
+		border-radius: 50%;
+	}
+
+	&--checkbox {
+		font-size: 14px;
+		line-height: 20px;
+
+		.cl-choice__control {
+			border: 1px solid $c_dark;
+			border-radius: 6px;
+			background: $c_white;
+		}
+
+		.cl-choice__input:checked + .cl-choice__control {
+			border-color: $c_main;
+			background: $c_main url('#{$p_svg}checkout/check.svg') no-repeat center / 16px 16px;
+		}
+
+		.cl-choice__input:checked ~ .cl-choice__label {
+			font-weight: 400;
+		}
+
+		.cl-choice__input:focus-visible + .cl-choice__control {
+			border-radius: 6px;
+		}
+
+		.cl-choice__input.is-invalid + .cl-choice__control {
+			border-color: $c_main;
+		}
+	}
+
+	&__label a {
+		color: $c_main;
+		text-decoration: underline;
+	}
+}
+
+/* =========================================
+		Status badges (2026 redesign)
+   ========================================= */
+
+.cl-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-family: $manrope_font;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: 700;
+	white-space: nowrap;
+
+	&--success {
+		background-color: #E8F5EE;
+		color: #146C43;
+	}
+
+	&--danger {
+		background-color: #FDECEE;
+		color: #B21722;
+	}
+
+	&--warning {
+		background-color: #FFF4E0;
+		color: #8A5300;
+	}
+}

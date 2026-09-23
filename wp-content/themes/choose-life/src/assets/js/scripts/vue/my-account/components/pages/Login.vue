@@ -1,37 +1,37 @@
 <template>
-  <div class="container py-5">
-      <div class="row mb-3 pt-lg-5">
-          <div class="col-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
-              <h1 class="text-center" v-html="pageContent.login.title"></h1>
-              <div v-html="pageContent.login.content"></div>
-          </div>
-      </div>
-      <login-form class="pb-lg-5"/>
+  <div class="container cl-page">
+    <auth-layout
+        :title="pageContent.login.title || strings.login_welcome_title"
+        :content="pageContent.login.content || strings.account_login_text"
+        :tagline="strings.login_tagline">
+      <login-form redirect="my-account">
+        <template #actions>
+          <or-divider/>
+          <router-link :to="{ name: 'register' }" class="cl-btn cl-btn--outline cl-btn--block" v-html="strings.create_account"></router-link>
+        </template>
+      </login-form>
+    </auth-layout>
   </div>
 </template>
 
 <script>
 
-import LoginForm from '../parts/LoginForm.vue';
+import LoginForm from '../../../shared/auth/LoginForm.vue';
+import AuthLayout from '../../../shared/auth/AuthLayout.vue';
+import OrDivider from '../../../shared/auth/OrDivider.vue';
 
 export default {
   name: 'Login',
   components: {
-    LoginForm
+    LoginForm,
+    AuthLayout,
+    OrDivider
   },
   data() {
     return {
       strings: window.app_config.strings,
       pageContent: window.page_content
     }
-  },
-  created() {
-    
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-
-</style>

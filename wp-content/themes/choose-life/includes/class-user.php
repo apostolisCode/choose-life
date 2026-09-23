@@ -136,20 +136,20 @@ class Inc_User {
 
 				$end_date           = get_field( 'end_date' );
 				$end_date_datetime  = DateTime::createFromFormat( 'Ymd', $end_date );
-				$end_date_formatted = date_i18n('F j, Y', $end_date_datetime->getTimestamp());
+				$end_date_formatted = date_i18n( 'j F, Y', $end_date_datetime->getTimestamp() );
 
 				$status          = get_field( 'subscription_status' );
 				$payment_cycle   = get_field( 'payment_cycle' );
 				$donation_amount = get_field( 'donation_amount' );
 
-				$status_output = sprintf( '<span class="badge text-bg-%s">%s</span>',
+				$status_output = sprintf( '<span class="cl-badge cl-badge--%s">%s</span>',
 					$status_labels[ $status ]['class'],
 					$status_labels[ $status ]['label']
 				);
 
 				$payment_cycle_output = __( 'Monthly', 'choose-life' );
 				if ( $payment_cycle > 1 ) {
-					$payment_cycle_output = sprintf( __( 'Every %s months' ), $payment_cycle );
+					$payment_cycle_output = sprintf( __( 'Every %s months', 'choose-life' ), $payment_cycle );
 				}
 
 				$subscription_data = [
@@ -211,7 +211,7 @@ class Inc_User {
 				$fields          = $donation_class->get_donation_fields_by_id( get_the_ID() );
 				$donation_status = get_field( 'donation_status' );
 
-				$status_output = sprintf( '<span class="badge text-bg-%s">%s</span>',
+				$status_output = sprintf( '<span class="cl-badge cl-badge--%s">%s</span>',
 					$status_labels[ $donation_status ]['class'],
 					$status_labels[ $donation_status ]['label']
 				);
@@ -221,7 +221,8 @@ class Inc_User {
 					'status'  => $status_output,
 					'amount'  => $fields['donation_amount']['value'] . '€',
 					'date'    => get_the_date( 'j F Y, H:i' ),
-					'actions' => $donation_status !== 'completed' ? 'pay_action' : ''
+					// failed payments get a "retry", unpaid (pending) ones a "pay" button
+					'actions' => $donation_status === 'failed' ? 'retry_action' : ( $donation_status !== 'completed' ? 'pay_action' : '' )
 				];
 				$donations[]   = $donation_data;
 

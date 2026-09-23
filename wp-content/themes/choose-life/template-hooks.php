@@ -111,6 +111,16 @@ add_filter( 'script_loader_src', 'remove_version_from_style_js' );
 
 add_filter( 'acf/settings/enable_post_types', '__return_false' );
 
+// The front-end (checkout / my account) talks to admin-ajax.php, where WordPress
+// would answer in the logged-in user's profile language. Answer the theme's
+// cl_* actions in the site language instead, like the pages themselves.
+add_action( 'admin_init', function () {
+	$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
+	if ( wp_doing_ajax() && strpos( $action, 'cl_' ) === 0 && get_locale() !== determine_locale() ) {
+		switch_to_locale( get_locale() );
+	}
+}, 1 );
+
 add_action( 'after_setup_theme', [ 'Inc_Api', 'get_instance' ] );
 add_action( 'after_setup_theme', [ 'Inc_Auth', 'get_instance' ] );
 add_action( 'after_setup_theme', [ 'Inc_Subscription', 'get_instance' ] );

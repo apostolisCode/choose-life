@@ -262,9 +262,19 @@ class Inc_Api {
 			wp_send_json( $response );
 		}
 
+		$donation_id                = $donation['data']['donation_id'];
 		$payment_class              = new Inc_Payment();
-		$response['data']['status'] = get_field( 'donation_status', $donation['data']['donation_id'] );
+		$response['data']['status'] = get_field( 'donation_status', $donation_id );
 		$response['data']['texts']  = $payment_class->get_payment_status_messages( $response['data']['status'] );
+		// summary shown on the thank you / failed payment page
+		$response['data']['summary'] = [
+			'reference'          => Inc_Donation::get_reference( $donation_id ),
+			'amount'             => (int) $donation['data']['donation_amount']['value'],
+			'donation_type'      => $donation['data']['donation_type']['value'],
+			'donation_frequency' => (int) $donation['data']['donation_frequency']['value'],
+		];
+		$donors_list_link                = get_field( 'donors_list_link', 'options' );
+		$response['data']['donors_list'] = ! empty( $donors_list_link['url'] ) ? $donors_list_link : null;
 
 		$response['success']    = true;
 		$response['statusCode'] = 200;

@@ -1,0 +1,467 @@
+/* =========================================
+		Donation amounts picker
+		Shared by the checkout Vue component (DonationAmounts.vue) and the
+		donation page template (elements/parts/donation-amounts.php).
+   ========================================= */
+
+@import 'swiper/css';
+
+.donation-amounts {
+  position: relative;
+  width: calc(100% - 2 * clamp(16px, 4.8vw, 92px));
+  max-width: 1736px;
+  margin: 0 auto;
+  padding: 120px 40px;
+  overflow: hidden;
+  border-radius: 60px;
+  background-color: $c_dark;
+  font-family: $manrope_font;
+
+  // inside a section that already provides the dark background (donation page)
+  &--embedded {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+  }
+
+  &__doodle {
+    position: absolute;
+    pointer-events: none;
+    &--start {
+      left: -50px;
+      top: 116px;
+    }
+    &--end {
+      right: -48px;
+      bottom: 110px;
+      width: 362.6px;
+      height: 305px;
+    }
+  }
+
+  &__doodle-heart,
+  &__doodle-box {
+    position: absolute;
+    display: block;
+  }
+
+  &__doodle-heart {
+    left: 103px;
+    top: 0;
+  }
+
+  &__doodle-box {
+    left: 0;
+    top: 105px;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: -20px; // 80px to the cards
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: $manrope_font;
+    font-size: 68px;
+    line-height: 78px;
+    font-weight: 700;
+    letter-spacing: -1.7px;
+    color: $c_white;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 22px;
+    line-height: 34px;
+    color: #E6E6E6;
+  }
+
+  &__slider {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 100%;
+  }
+
+  &__swiper {
+    // three cards side by side, as in the design
+    width: calc(3 * 286px + 2 * 32px);
+    max-width: 100%;
+    min-width: 0;
+    margin: -32px 0 0;
+    // room for the "most popular" badge that sits on the card's top edge
+    padding-top: 32px;
+    .swiper-wrapper {
+      align-items: center;
+    }
+  }
+}
+
+.slider-arrow {
+  position: relative;
+  flex: 0 0 auto;
+  width: 165.54px;
+  height: 112.913px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 250ms ease;
+
+  &--prev {
+    transform: scaleX(-1);
+  }
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &--prev:hover {
+    transform: scaleX(-1) translateX(4px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $c_white;
+    outline-offset: 4px;
+    border-radius: 999px;
+  }
+
+  &__pill {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 154.121px;
+    height: 60.421px;
+    border-radius: 999px;
+    background-color: $c_main;
+    transform: translate(-50%, -50%) rotate(-21.6deg);
+  }
+
+  &__icon {
+    position: absolute;
+    left: 20px;
+    top: 3px;
+    display: block;
+  }
+}
+
+.donation-card-wrap {
+  position: relative;
+  width: auto;
+}
+
+.donation-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 286px;
+  padding: 40px 36px;
+  border-radius: 36px;
+  background-color: $c_offwhite;
+  cursor: pointer;
+  transition: background-color 250ms ease;
+
+  &:focus-visible {
+    outline: 3px solid $c_white;
+    outline-offset: 3px;
+  }
+
+  &__badge {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 0;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background-color: rgba(248, 244, 243, .84);
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: $c_main;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    img {
+      display: block;
+    }
+  }
+
+  &__label {
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    color: $c_grey;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    img {
+      display: block;
+    }
+  }
+
+  &__amount {
+    margin: 0;
+    font-size: 92px;
+    line-height: 98px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: $c_dark;
+  }
+
+  &__add {
+    padding: 16px 30px;
+    border: 0;
+    border-radius: 40px;
+    background-color: $c_main;
+    font-family: $manrope_font;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: $c_white;
+    cursor: pointer;
+    transition: background-color 250ms ease, color 250ms ease;
+    &:hover {
+      background-color: darken($c_main, 8%);
+    }
+  }
+
+  &.is-active {
+    background-color: $c_main;
+    .donation-card__label {
+      color: rgba(255, 255, 255, .9);
+    }
+    .donation-card__amount {
+      color: $c_white;
+    }
+    .donation-card__add {
+      background-color: $c_white;
+      color: $c_main;
+      &:hover {
+        background-color: $c_offwhite;
+      }
+    }
+  }
+}
+
+.donation-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 1016px;
+  max-width: 100%;
+  padding: 30px 40px;
+  border-radius: 32px;
+  background-color: $c_offwhite;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    margin: 0;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    color: rgba(28, 28, 28, .7);
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 280px;
+    max-width: 100%;
+    height: 74px;
+    padding: 11px 20px 11px 21px;
+    border: 1px solid $c_grey_divider;
+    border-radius: 20px;
+    background-color: $c_white;
+    font-size: 48px;
+    line-height: 52px;
+    font-weight: 700;
+    color: #252525;
+    transition: border-color 250ms ease;
+
+    &:focus-within {
+      border-color: $c_dark;
+    }
+
+    &.is-invalid {
+      border-color: $c_main;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      letter-spacing: -1.2px;
+      color: inherit;
+      -moz-appearance: textfield;
+      &:focus {
+        outline: none;
+      }
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+
+  &__error {
+    font-size: 14px;
+    line-height: 18px;
+    color: $c_main;
+  }
+
+  &__submit {
+    padding: 14px 24px;
+    border-width: 0;
+    font-size: 22px;
+    line-height: 35.2px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1399.98px) {
+  .donation-amounts__slider {
+    gap: 24px;
+  }
+  .donation-amounts__swiper {
+    width: calc(3 * 230px + 2 * 24px);
+  }
+  .slider-arrow {
+    width: 91px;
+    height: 62px;
+    &__pill {
+      transform: translate(-50%, -50%) rotate(-21.6deg) scale(.55);
+    }
+    // icon centre scaled by .55 around its own centre
+    &__icon {
+      left: -21.2px;
+      top: -18.8px;
+      scale: .55;
+    }
+  }
+  .donation-card {
+    width: 230px;
+    padding: 36px 24px;
+    &__amount {
+      font-size: 68px;
+      line-height: 74px;
+    }
+  }
+}
+
+// the doodles only fit in the side margins of a wide section
+@media (max-width: 1699.98px) {
+  .donation-amounts__doodle {
+    display: none;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .slider-arrow {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .donation-amounts {
+    padding: 80px 24px;
+    &__title {
+      font-size: 48px;
+      line-height: 56px;
+    }
+    &__slider {
+      width: 100%;
+    }
+    &__swiper {
+      width: 100%;
+    }
+  }
+  .donation-custom {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    &__input {
+      width: 100%;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .donation-amounts {
+    padding: 56px 16px;
+    border-radius: 36px;
+    &__inner {
+      gap: 64px;
+    }
+    &__header {
+      margin-bottom: -24px;
+    }
+    &__title {
+      font-size: 34px;
+      line-height: 42px;
+      letter-spacing: -.8px;
+    }
+    &__text {
+      font-size: 17px;
+      line-height: 27px;
+    }
+  }
+  .donation-card {
+    width: 230px;
+    padding: 32px 24px;
+    &__amount {
+      font-size: 64px;
+      line-height: 70px;
+    }
+  }
+}

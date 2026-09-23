@@ -4,6 +4,14 @@ defined( 'ABSPATH' ) or die();
 
 class Inc_Donation {
 
+	// Allowed donation amount range (€), also used by the checkout front-end
+	const MIN_AMOUNT = 5;
+	const MAX_AMOUNT = 9999;
+
+	// How the donor appears in the public donors list
+	const DONOR_LIST_OPTIONS = [ 'anonymous', 'name', 'other' ];
+	const DONOR_LIST_NAME_MAX_LENGTH = 100;
+
 	public static $instance = null;
 
 	public static function get_instance() {
@@ -84,6 +92,16 @@ class Inc_Donation {
 				'required' => false,
 				'label'    => __( 'Marketing acceptance', 'choose-life' )
 			],
+			'donor_list_display'  => [
+				'type'     => 'string',
+				'required' => false,
+				'label'    => __( 'Donors list display', 'choose-life' )
+			],
+			'donor_list_name'     => [
+				'type'     => 'string',
+				'required' => false,
+				'label'    => __( 'Name shown in the donors list', 'choose-life' )
+			],
 		];
 
 	}
@@ -126,6 +144,25 @@ class Inc_Donation {
 			}
 			$field_value = $this->submission[ $key ];
 			switch ( $key ) {
+				case 'donation_amount':
+					if ( ! preg_match( '/^\d+$/', (string) $field_value ) || (int) $field_value < self::MIN_AMOUNT || (int) $field_value > self::MAX_AMOUNT ) {
+						throw new Exception( sprintf( __( 'The donation amount must be between %1$s€ and %2$s€.', 'choose-life' ), self::MIN_AMOUNT, number_format( self::MAX_AMOUNT, 0, ',', '.' ) ) );
+					}
+					break;
+				case 'donor_list_display':
+					if ( ! in_array( $field_value, self::DONOR_LIST_OPTIONS, true ) ) {
+						throw new Exception( __( 'Please choose how you want to appear in the donors list.', 'choose-life' ) );
+					}
+					if ( $field_value === 'other' ) {
+						$name = trim( (string) ( $this->submission['donor_list_name'] ?? '' ) );
+						if ( $name === '' ) {
+							throw new Exception( __( 'Please enter the name to show in the donors list.', 'choose-life' ) );
+						}
+						if ( mb_strlen( $name ) > self::DONOR_LIST_NAME_MAX_LENGTH ) {
+							throw new Exception( sprintf( __( 'The name shown in the donors list can be up to %d characters.', 'choose-life' ), self::DONOR_LIST_NAME_MAX_LENGTH ) );
+						}
+					}
+					break;
 				case 'billing_country':
 					$countries_list = acf()->fields->get_field_type( 'country' )->get_countries();
 					if ( ! array_key_exists( $field_value, $countries_list ) ) {
@@ -170,6 +207,11 @@ class Inc_Donation {
 
 		$data_to_save['donation_status'] = 'pending';
 
+		// the custom name only applies to the "other name" choice
+		if ( ( $data_to_save['donor_list_display'] ?? '' ) !== 'other' ) {
+			unset( $data_to_save['donor_list_name'] );
+		}
+
 		if ( $data_to_save['donation_type'] == 'recurring' ) {
 			$data_to_save['recurring_end_date'] = Inc_Payment::calculate_recurring_end_date();
 		} else {
@@ -206,6 +248,56 @@ class Inc_Donation {
 			'ID'         => $this->id,
 			'post_title' => '#' . $this->id . ' ' . $first_name . ' ' . $last_name,
 		] );
+	}
+
+	/**
+	 * Preset donation amounts (Theme Options → Donation amounts), limited to the
+	 * allowed range, with a default set when none are configured.
+	 *
+	 * @return array[] [ [ 'amount' => int, 'featured' => bool ], ... ]
+	 */
+	public static function get_amount_options() {
+		$amounts = array_values( array_filter( array_map( function ( $row ) {
+			return [
+				'amount'   => (int) $row['amount'],
+				'featured' => ! empty( $row['featured'] ),
+			];
+		}, get_field( 'donation_amounts', 'options' ) ?: [] ), function ( $row ) {
+			return $row['amount'] >= self::MIN_AMOUNT && $row['amount'] <= self::MAX_AMOUNT;
+		} ) );
+
+		if ( empty( $amounts ) ) {
+			$amounts = [
+				[ 'amount' => 25, 'featured' => false ],
+				[ 'amount' => 50, 'featured' => true ],
+				[ 'amount' => 100, 'featured' => false ],
+			];
+		}
+
+		return $amounts;
+	}
+
+	/**
+	 * Allowed custom amount range, for the front-end
+	 *
+	 * @return array
+	 */
+	public static function get_amount_limits() {
+		return [
+			'min' => self::MIN_AMOUNT,
+			'max' => self::MAX_AMOUNT,
+		];
+	}
+
+	/**
+	 * Human-friendly donation reference, e.g. #CL-2026-0612
+	 *
+	 * @param int $donation_id
+	 *
+	 * @return string
+	 */
+	public static function get_reference( $donation_id ) {
+		return sprintf( '#CL-%s-%04d', get_the_date( 'Y', $donation_id ), $donation_id );
 	}
 
 	public function get_donation_fields_by_id( $id = null ) {

@@ -1,58 +1,44 @@
 <template>
-  <div class="py-5">
-    <login-form redirect="complete"/>
-		<div class="more-links mt-4">
-			<div class="more-links__or my-2"><span v-html="strings.or_upper"></span></div>
-			<router-link :to="{ name: 'register' }" class="btn btn-outline-secondary w-100 my-2" v-html="strings.create_account"></router-link>
-			<router-link :to="{ name: 'complete' }" class="btn btn-outline-secondary w-100 my-2" v-html="strings.continue_as_guest"></router-link>
-		</div>
-  </div>
+  <auth-layout
+      :title="pageContent.start.title || strings.login_welcome_title"
+      :content="pageContent.start.content || strings.login_welcome_text"
+      :tagline="strings.login_tagline">
+    <login-form redirect="donation">
+      <template #actions>
+        <or-divider/>
+        <router-link :to="{ name: 'register' }" class="cl-btn cl-btn--outline cl-btn--block" v-html="strings.create_account"></router-link>
+      </template>
+      <router-link :to="{ name: 'donation' }" class="checkout-guest cl-link">
+        <span v-html="strings.continue_as_guest"></span> <span aria-hidden="true">&rarr;</span>
+      </router-link>
+    </login-form>
+  </auth-layout>
 </template>
 
 <script>
 
-import LoginForm from '../../../my-account/components/parts/LoginForm.vue';
+import LoginForm from '../../../shared/auth/LoginForm.vue';
+import AuthLayout from '../../../shared/auth/AuthLayout.vue';
+import OrDivider from '../../../shared/auth/OrDivider.vue';
 
 export default {
   name: 'Login',
   components: {
-    LoginForm
+    LoginForm,
+    AuthLayout,
+    OrDivider
   },
   data() {
     return {
       strings: window.app_config.strings,
       pageContent: window.page_content
     }
-  },
-  created() {
-    
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.more-links {
-	max-width: 450px;
-	margin-left: auto;
-	margin-right: auto;
-	&__or {
-		position: relative;
-		text-align: center;
-		&:before {
-			content: '';
-			width: 100%;
-			height: 1px;
-			position: absolute;
-			top: 50%;
-			left: 0;
-			background: #D9D9DB;
-		}
-		span {
-			position: relative;
-			z-index: 1;
-			background: $c_grey_light;
-			padding: 0 30px;
-		}
-	}
+.checkout-guest {
+  align-self: center;
 }
 </style>

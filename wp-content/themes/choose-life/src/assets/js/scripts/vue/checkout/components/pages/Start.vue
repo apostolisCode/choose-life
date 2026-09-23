@@ -1,11 +1,6 @@
 <template>
-	<div class="container py-5">
-		<div class="row mb-3 pt-lg-5">
-			<div class="col-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
-				<h1 class="text-center" v-html="pageContent.start.title"></h1>
-				<div v-html="pageContent.start.content"></div>
-			</div>
-		</div>
+	<div class="checkout-start container">
+		<checkout-steps current="login" class="checkout-start__steps"/>
 		<router-view v-slot="{ Component }">
 			<transition name="fade" mode="out-in">
 				<component :is="Component"></component>
@@ -16,23 +11,32 @@
 
 <script>
 
+import CheckoutSteps from '../parts/CheckoutSteps.vue';
 
 export default {
 	name: 'Start',
-	components: {},
-	data() {
-		return {
-			strings: window.app_config.strings,
-			pageContent: window.page_content
-		}
+	components: {
+		CheckoutSteps
 	},
-	created() {
-
-	}
 }
 </script>
 
 <style lang="scss" scoped>
+.checkout-start {
+	padding-top: 80px;
+	padding-bottom: 147px;
 
+	&__steps {
+		margin-bottom: 44px;
+	}
 
+	@include media-breakpoint-down(lg) {
+		padding-top: 48px;
+		padding-bottom: 64px;
+
+		&__steps {
+			margin-bottom: 32px;
+		}
+	}
+}
 </style>

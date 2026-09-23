@@ -1,41 +1,42 @@
 <template>
-	<div class="container py-5">
-		<div class="mb-5">
-			<h2 v-html="pageContent.donations.recurring_donations_title"></h2>
-			<div v-html="pageContent.donations.recurring_donations_content"></div>
-			<div v-if="subscriptions.rows.length === 0">
-				<p v-html="strings.no_active_subscriptions_found"></p>
-			</div>
-			<table-component v-else
-					:head="subscriptions.head"
-					:rows="subscriptionsRows"
-					:page="subscriptions.page"
-					:total-pages="subscriptions.totalPages"
-					:loading="subscriptions.loading"
-					@paged="fetchSubscriptions"
-			/>
+	<account-layout>
+		<div class="account-donations">
+			<section class="account-donations__card account-donations__card--recurring">
+				<h2 class="account-donations__title" v-html="pageContent.donations.recurring_donations_title"></h2>
+				<div v-if="pageContent.donations.recurring_donations_content" class="account-donations__text" v-html="pageContent.donations.recurring_donations_content"></div>
+				<p v-if="subscriptions.rows.length === 0" class="account-donations__empty" v-html="strings.no_active_subscriptions_found"></p>
+				<table-component v-else
+						class="account-donations__table"
+						:head="subscriptions.head"
+						:rows="subscriptionsRows"
+						:page="subscriptions.page"
+						:total-pages="subscriptions.totalPages"
+						:loading="subscriptions.loading"
+						@paged="fetchSubscriptions"
+				/>
+			</section>
+			<section class="account-donations__card">
+				<h2 class="account-donations__title" v-html="pageContent.donations.completed_donations_title"></h2>
+				<div v-if="pageContent.donations.completed_donations_content" class="account-donations__text" v-html="pageContent.donations.completed_donations_content"></div>
+				<p v-if="donations.rows.length === 0" class="account-donations__empty" v-html="strings.no_donations_found"></p>
+				<table-component v-else
+						class="account-donations__table"
+						:head="donations.head"
+						:rows="donationsRows"
+						:page="donations.page"
+						:total-pages="donations.totalPages"
+						:loading="donations.loading"
+						@paged="fetchDonations"
+				/>
+			</section>
 		</div>
-		<div>
-			<h2 v-html="pageContent.donations.completed_donations_title"></h2>
-			<div v-html="pageContent.donations.completed_donations_content"></div>
-			<div v-if="donations.rows.length === 0">
-				<p v-html="strings.no_donations_found"></p>
-			</div>
-			<table-component v-else
-					:head="donations.head"
-					:rows="donationsRows"
-					:page="donations.page"
-					:total-pages="donations.totalPages"
-					:loading="donations.loading"
-					@paged="fetchDonations"
-			/>
-		</div>
-	</div>
+	</account-layout>
 </template>
 
 <script>
 
 import TableComponent from "../parts/TableComponent.vue";
+import AccountLayout from "../parts/AccountLayout.vue";
 
 import {uiStore} from '../../../stores/ui';
 import {userStore} from '../../../stores/user';
@@ -44,7 +45,8 @@ import {mapActions, mapState} from 'pinia';
 export default {
 	name: 'Donations',
 	components: {
-		TableComponent
+		TableComponent,
+		AccountLayout
 	},
 	computed: {
 		...mapState(uiStore, ['isLoading']),
@@ -161,5 +163,65 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.account-donations {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	max-width: 1180px;
+	font-family: $manrope_font;
+	color: $c_dark;
 
+	&__card {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		padding: 40px;
+		border-radius: 40px;
+		background-color: #F7F5F2;
+		&--recurring {
+			background-color: $c_pink;
+		}
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 32px;
+		line-height: 40px;
+		font-weight: 700;
+		color: $c_dark;
+	}
+
+	&__text {
+		font-size: 16px;
+		line-height: 24px;
+		:deep(p) {
+			margin: 0;
+		}
+	}
+
+	&__table {
+		margin-top: 8px;
+	}
+
+	&__empty {
+		margin: 8px 0 0;
+		padding: 24px;
+		border-radius: 24px;
+		background-color: $c_white;
+		font-size: 16px;
+		line-height: 24px;
+	}
+
+	@include media-breakpoint-down(sm) {
+		&__card {
+			padding: 28px 16px;
+			border-radius: 28px;
+		}
+		&__title {
+			font-size: 26px;
+			line-height: 34px;
+		}
+	}
+}
 </style>

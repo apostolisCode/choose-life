@@ -7,7 +7,8 @@ import {uiStore} from '../../stores/ui';
 const Account = () => import(/* webpackChunkName: "chunk-account" */'../components/pages/Account.vue');
 const Donations = () => import(/* webpackChunkName: "chunk-donations" */'../components/pages/Donations.vue');
 const Login = () => import(/* webpackChunkName: "chunk-login" */'../components/pages/Login.vue');
-const ResetPassword = () => import(/* webpackChunkName: "chunk-reset-password" */'../components/pages/ResetPassword.vue');
+const Register = () => import(/* webpackChunkName: "chunk-register" */'../components/pages/Register.vue');
+const ResetPassword = () => import(/* webpackChunkName: "chunk-reset-password" */'../../shared/auth/ResetPassword.vue');
 
 const routes = [
     { 
@@ -26,6 +27,12 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Login,
+        meta: { requiresAuth: false },
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register,
         meta: { requiresAuth: false },
     },
     {
@@ -62,6 +69,7 @@ router.beforeEach(async (to, from, next) => {
     }
     switch(to.name) {
         case 'login':
+        case 'register':
             if (canAccess) {
                 return next({ name: 'my-account' });
             }

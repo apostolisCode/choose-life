@@ -1,0 +1,93 @@
+{
+    "key": "group_68f1a0c200001",
+    "title": "Donation amounts",
+    "fields": [
+        {
+            "key": "field_68f1a0c200002",
+            "label": "Donation amounts",
+            "name": "donation_amounts",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Preset amounts shown when a visitor reaches checkout without a donation. Mark one as \"Most popular\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add amount",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_68f1a0c200003",
+                    "label": "Amount (€)",
+                    "name": "amount",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 5,
+                    "max": 9999,
+                    "placeholder": "",
+                    "step": 1,
+                    "prepend": "",
+                    "append": "€",
+                    "parent_repeater": "field_68f1a0c200002"
+                },
+                {
+                    "key": "field_68f1a0c200004",
+                    "label": "Most popular",
+                    "name": "featured",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_68f1a0c200002"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790157268
+}

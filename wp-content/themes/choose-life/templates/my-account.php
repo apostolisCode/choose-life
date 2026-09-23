@@ -10,6 +10,10 @@ $page_content = [
 		"title"   => get_field( 'my_account_title' ),
 		"content" => get_field( 'my_account_content' )
 	],
+	"register"   => [
+		"title"   => get_field( 'register_title' ),
+		"content" => get_field( 'register_content' )
+	],
 	"my_account" => [
 		"my_account"    => __( 'My Account', 'choose-life' ),
 		"save_changes"  => __( 'Save changes', 'choose-life' ),

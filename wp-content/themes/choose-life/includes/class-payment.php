@@ -217,7 +217,14 @@ class Inc_Payment {
 			'failed'    => get_field( 'payment_failed_messages', 'options' )
 		];
 
-		return $messages[ $status ];
+		// anything not completed (failed, or still pending) gets the "failed" texts
+		$texts = $messages[ $status ] ?? $messages['failed'];
+
+		return [
+			'title'        => $texts['title'] ?? '',
+			'content'      => $texts['content'] ?? '',
+			'closing_text' => $texts['closing_text'] ?? '',
+		];
 
 	}
 }

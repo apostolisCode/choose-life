@@ -37,6 +37,7 @@ class Inc_Admin {
 		$columns['donation_status'] = 'Status';
 		$columns['donation_type'] = 'Type';
 		$columns['donation_amount'] = 'Amount';
+		$columns['donor_list_display'] = 'Donors list';
 
 		$columns['date'] = $date;
 
@@ -79,6 +80,16 @@ class Inc_Admin {
 				];
 				$donation_type = get_field('donation_type', $post_id);
 				echo '<span class="donation-type ' . $donation_type . '">' . $donation_types[ $donation_type ] . '</span>';
+				break;
+			case 'donor_list_display' :
+				$display = get_field( 'donor_list_display', $post_id );
+				if ( $display === 'name' ) {
+					echo esc_html( trim( get_field( 'first_name', $post_id ) . ' ' . get_field( 'last_name', $post_id ) ) );
+				} elseif ( $display === 'other' ) {
+					echo esc_html( get_field( 'donor_list_name', $post_id ) ) . ' <em>(other name)</em>';
+				} else {
+					echo '<em>Anonymous</em>';
+				}
 				break;
 			case 'order_user' :
 				$author_id    = get_post_field( 'post_author', $post_id );

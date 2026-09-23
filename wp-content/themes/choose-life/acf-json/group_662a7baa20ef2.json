@@ -366,12 +366,12 @@
                     "delay": 0
                 },
                 {
-                    "key": "field_6630d674fcd42",
-                    "label": "Image",
-                    "name": "image",
+                    "key": "field_68f1a0c500001",
+                    "label": "Closing message",
+                    "name": "closing_text",
                     "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
+                    "type": "text",
+                    "instructions": "Short line shown in red at the bottom of the page.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -379,16 +379,11 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "url",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "large"
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
                 }
             ]
         },
@@ -449,12 +444,12 @@
                     "delay": 0
                 },
                 {
-                    "key": "field_6630d68ffcd46",
-                    "label": "Image",
-                    "name": "image",
+                    "key": "field_68f1a0c500002",
+                    "label": "Closing message",
+                    "name": "closing_text",
                     "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
+                    "type": "text",
+                    "instructions": "Short line shown in red at the bottom of the page.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -462,18 +457,29 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "url",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "large"
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
                 }
             ]
+        },
+        {
+            "key": "field_68f1a0c500003",
+            "label": "Donors list button",
+            "name": "donors_list_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Button on the thank you page. Leave empty to hide it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -494,5 +500,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1715947785
+    "modified": 1790166204
 }
