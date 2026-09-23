@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Inazo Flamingo auto trash\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. Text in function
+#: add.php:1
+msgid "Configuration des délais de suppression automatique pour flamingo"
+msgstr "Configuring automatic deletion times for flamingo"
+
+#. Text in function
+#: add.php:19
+msgid "Supprimer tous les contacts de plus de "
+msgstr "Delete all contacts over "
+
+#. Text in function
+#: add.php:25
+msgid "Supprimer tous les messages entrant de plus de "
+msgstr "Delete all incoming messages from more than "
+
+#. Text in function
+#: add.php:31
+msgid "Supprimer tous les messages sortant de plus de "
+msgstr "Delete all outgoing messages over "
+
+#. Text in function
+#: add.php:37
+msgid "Supprimer tous les messages en spam de plus de "
+msgstr "Delete all spam messages over "
+
+#. Text in function
+#: add.php:33
+msgid "jours"
+msgstr "days"
+
+#. Text in echo
+#: modif-ok.php:9
+msgid "Les modifications ont bien été enregistrées."
+msgstr "The changes have been saved."

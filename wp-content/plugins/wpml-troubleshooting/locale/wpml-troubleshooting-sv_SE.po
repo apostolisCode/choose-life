@@ -1,0 +1,1116 @@
+# Copyright (C) 2026 OnTheGoSystems
+# This file is distributed under the same license as the WPML Troubleshooting plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WPML Troubleshooting 5.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpml-troubleshooting\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-15T09:32:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wpml-troubleshooting\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: plugin.php
+msgid "WPML Troubleshooting"
+msgstr "WPML-felsökning"
+
+#. Plugin URI of the plugin
+#: plugin.php
+msgid "https://wpml.org/"
+msgstr "https://wpml.org/"
+
+#. Description of the plugin
+#: plugin.php
+msgid "The repair tools for a WPML site, as a plugin of their own | <a href=\"https://wpml.org/troubleshooting/troubleshooting-tools/\">Documentation</a>"
+msgstr "Reparationsverktyg för en WPML-webbplats, som ett eget tillägg | <a href=\"https://wpml.org/troubleshooting/troubleshooting-tools/\">Dokumentation</a>"
+
+#. Author of the plugin
+#: plugin.php
+msgid "OnTheGoSystems"
+msgstr "OnTheGoSystems"
+
+#. Author URI of the plugin
+#: plugin.php
+msgid "http://www.onthegosystems.com/"
+msgstr "http://www.onthegosystems.com/"
+
+#: plugin.php:86
+msgid "Please activate WPML Multilingual CMS to have WPML Troubleshooting working."
+msgstr "Aktivera WPML Multilingual CMS för att WPML-felsökning ska fungera."
+
+#: plugin.php:99
+msgid "WPML Troubleshooting needs WPML 5.0.0 or newer. Please update WPML first."
+msgstr "WPML-felsökning behöver WPML 5.0.0 eller nyare. Uppdatera WPML först."
+
+#. translators: Error message returned when a request from the browser cannot be trusted and is turned away.
+#: src/Ajax/RepairTypeAssignmentsAjaxController.php:39
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:80
+msgid "Invalid request!"
+msgstr "Ogiltig begäran!"
+
+#: src/Endpoints/SingleUrlCache/Endpoint.php:33
+msgid "You do not have permission to manage troubleshooting tools."
+msgstr "Du har inte behörighet att hantera felsökningsverktyg."
+
+#. translators: Error message returned when a request from the browser cannot be trusted and is turned away.
+#: src/Engine/WPML_Troubleshoot_Action.php:31
+msgid "Invalid nonce."
+msgstr "Ogiltig nonce."
+
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:29
+msgid "Some parameters are missing for this request."
+msgstr "Vissa parametrar saknas för denna begäran."
+
+#. translators: Progress message on the Troubleshooting screen. %d: the number of the group of items being worked through.
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:45
+#, php-format
+msgid "Running now batch #%d"
+msgstr "Kör nu batch nr %d"
+
+#. translators: Message shown when a repair on the Troubleshooting screen has finished. %1$d: how many posts were worked through, %2$s: the name of the content type.
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:53
+#, php-format
+msgid "Completed: %1$d posts were processed for \"%2$s\"."
+msgstr "Slutfört: %1$d inlägg bearbetades för “%2$s”."
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:41
+msgid "Token is not defined"
+msgstr "Token är inte definierad"
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:45
+msgid "ICanLocalize.com is already active and authorized"
+msgstr "ICanLocalize.com är redan aktivt och auktoriserat"
+
+#. translators: Message shown after a translation service was set up and can be used.
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:66
+msgid "Service activated."
+msgstr "Tjänsten är aktiverad."
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:72
+msgid "The authentication didn't work. Please make sure you entered your details correctly and try again."
+msgstr "Autentiseringen fungerade inte. Kontrollera att du har angett dina uppgifter korrekt och försök igen."
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/GetFromICL.php:34
+msgid "Error happened! Please try again."
+msgstr "Ett fel uppstod! Försök igen."
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/Save.php:92
+msgid "There was an error when saving the following translators:"
+msgstr "Det uppstod ett fel när följande översättare sparades:"
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/Save.php:96
+msgid "The translators were saved successfully."
+msgstr "Översättarna sparades."
+
+#: src/Integration/StringTranslation/BackendHooks.php:33
+msgid "Show custom MO Files Pre-generation dialog box"
+msgstr "Visa dialogrutan för förgenerering av anpassade MO-filer"
+
+#: src/Integration/StringTranslation/BackendHooks.php:40
+#: src/Tool/DatabaseStringsController.php:129
+#: src/Tools/DbStringsTools.php:90
+msgid "Cleanup and optimize string tables"
+msgstr "Rensa och optimera strängtabeller"
+
+#: src/Integration/StringTranslation/BackendHooks.php:41
+msgid "Cleanup and optimization completed!"
+msgstr "Rensning och optimering slutförd!"
+
+#: src/Integration/StringTranslation/BackendHooks.php:46
+#: src/Tool/DatabaseStringsController.php:243
+#: src/Tools/DbStringsTools.php:93
+msgid "Check for string issues"
+msgstr "Leta efter strängproblem"
+
+#. translators: Name of the WPML Support screen: the admin menu item, the page heading, and the back-link that returns to it. Noun (help from the WPML support team), not the verb "to support".
+#: src/Integration/StringTranslation/StringTroubleshootingMenuAlias.php:106
+msgid "Support"
+msgstr "Support"
+
+#. translators: Answer returned when a job on the Troubleshooting screen went through.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-clear-ts.php:37
+msgid "Ok!"
+msgstr "Ok!"
+
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-clear-ts.php:39
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:102
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:112
+msgid "You can't do that!"
+msgstr "Du kan inte göra så!"
+
+#. translators: Question asked before the work sent to a translation service is dropped. %1$s: the name of that service.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:81
+#, php-format
+msgid "Are you sure you want to reset the %1$s translation process?"
+msgstr "Är du säker på att du vill återställa översättningsprocessen för %1$s?"
+
+#. translators: Message shown after the work sent to a translation service was dropped. %1$s: the name of that service.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:184
+#, php-format
+msgid "The translation process with %1$s was reset."
+msgstr "Översättningsprocessen med %1$s har återställts."
+
+#. translators: Message shown after the site was disconnected from a translation service. %1$s: the name of that service, in both places. "the translators tab" is a tab of the Translation Management screen.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:187
+#, php-format
+msgid "Your site was successfully disconnected from %1$s. Go to the translators tab to connect a new %1$s account or use a different translation service."
+msgstr "Din webbplats har kopplats bort från %1$s. Gå till fliken för översättare för att ansluta ett nytt %1$s-konto eller använd en annan översättningstjänst."
+
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:189
+msgid "PRO translation has been reset."
+msgstr "PRO-översättning har återställts."
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:18
+msgid "Reset preferred translation service"
+msgstr "Återställ föredragen översättningstjänst"
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:19
+msgid "Reset and fetch  local preferred translation service to use Preferred Translation Service configured on WPML.org account."
+msgstr "Återställ och hämta lokal föredragen översättningstjänst för att använda den föredragna översättningstjänst som konfigurerats på WPML.org-kontot."
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:20
+msgid "Reset & Fetch"
+msgstr "Återställ och hämta"
+
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:36
+msgid "Synchronize local job ids with ATE jobs"
+msgstr "Synkronisera lokala jobb-ID:n med ATE-jobb"
+
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:44
+msgid "Synchronize local job ids with their ATE counterparts. You will have to refresh a few times any admin page to accomplish the process."
+msgstr "Synkronisera lokala jobb-ID:n med deras ATE-motsvarigheter. Du kommer att behöva uppdatera valfri adminsida några gånger för att slutföra processen."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:38
+msgid "No translation job IDs were provided."
+msgstr "Inga ID:n för översättningsjobb angavs."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:62
+msgid "No matching remote translation jobs were found for the provided job IDs."
+msgstr "Inga matchande externa översättningsjobb hittades för de angivna jobb-ID:na."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:84
+msgid "Invalid request: missing job IDs or the security check failed."
+msgstr "Ogiltig begäran: jobb-ID:n saknas eller säkerhetskontrollen misslyckades."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:98
+msgid "Fix WPML Translation Jobs \"tp_id\" field"
+msgstr "Fixa fältet “tp_id” för WPML-översättningsjobb"
+
+#. translators: Explanation under a tool on the Troubleshooting screen. "It" is that tool. "tp_id" and "rid" are field names and stay as they are; "in progress" is the wording of a translation state.
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:100
+msgid "Fixes the \"tp_id\" field of WPML ranslation jobs and set the status to \"in progress\" (it requires manual action to re-sync translation status + download translations). It accepts comma separated values of translation job IDs (rid)."
+msgstr "Fixar fältet “tp_id” för WPML-översättningsjobb och sätter statusen till “in progress” (kräver manuell åtgärd för att synkronisera om översättningsstatus + ladda ner översättningar). Den accepterar kommaseparerade värden för översättningsjobbens ID:n (rid)."
+
+#: src/Tool/ATESyncController.php:41
+msgid "Synchronize with the <b>Advanced Translation Editor</b>"
+msgstr "Synkronisera med den <b>avancerade översättningsredigeraren</b>"
+
+#: src/Tool/ATESyncController.php:44
+msgid "Re-align local records with the state on the <b>Advanced Translation Editor</b> server."
+msgstr "Synkronisera lokala poster med statusen på servern för den <b>avancerade översättningsredigeraren</b>."
+
+#. translators: Warning above a group of tools on WPML → Support. "These" are the tools below it.
+#: src/Tool/ATESyncController.php:53
+msgid "Only run these when WPML Support asks you to"
+msgstr "Kör endast dessa när WPML-supporten ber dig om det"
+
+#: src/Tool/ATESyncController.php:56
+msgid "These tools push local data to overwrite the ATE server's view. Running them at the wrong time can unassign translators, reset job ownership, or duplicate jobs."
+msgstr "Dessa verktyg skriver över data på ATE-servern med lokal data. Om de körs vid fel tillfälle kan det leda till att översättare tas bort, jobbägarskap återställs eller att jobb dupliceras."
+
+#: src/Tool/ATESyncController.php:64
+msgid "Synchronize local job IDs with ATE"
+msgstr "Synkronisera lokala jobb-ID:n med ATE"
+
+#: src/Tool/ATESyncController.php:67
+msgid "Reconciles the job IDs in your local database with the IDs on the ATE server when the two have drifted apart. Use to unblock jobs that appear stuck or can't be opened in the editor."
+msgstr "Synkroniserar jobb-ID:n i din lokala databas med ID:n på ATE-servern när de två har hamnat i otakt. Används för att låsa upp jobb som verkar ha fastnat eller inte kan öppnas i redigeraren."
+
+#: src/Tool/ATESyncController.php:73
+#: src/Tool/ATESyncController.php:98
+#: src/Tool/DatabaseStringsController.php:310
+#: src/Tool/DatabaseStringsController.php:607
+#: src/Tool/FixTranslationsController.php:213
+msgid "I understand and want to proceed"
+msgstr "Jag förstår och vill fortsätta"
+
+#: src/Tool/ATESyncController.php:81
+msgid "Synchronize job IDs"
+msgstr "Synkronisera jobb-ID:n"
+
+#: src/Tool/ATESyncController.php:89
+msgid "Synchronize translators and translation managers with ATE"
+msgstr "Synkronisera översättare och översättningsansvariga med ATE"
+
+#: src/Tool/ATESyncController.php:92
+msgid "Re-pushes your current translator and translation-manager assignments to the ATE server. Use when translators are missing from the ATE-side assignment list, or are assigned to jobs they should not see."
+msgstr "Skickar på nytt dina nuvarande tilldelningar av översättare och översättningsansvariga till ATE-servern. Används när översättare saknas i tilldelningslistan på ATE-sidan, eller är tilldelade jobb de inte borde se."
+
+#: src/Tool/ATESyncController.php:106
+msgid "Synchronize translators and managers"
+msgstr "Synkronisera översättare och ansvariga"
+
+#. translators: Status shown next to a button on WPML → Support while its action is running.
+#: src/Tool/ATESyncController.php:145
+#: src/Tool/DatabaseStringsController.php:378
+#: src/Tool/DatabaseStringsController.php:423
+#: src/Tool/DatabaseStringsController.php:497
+#: src/Tool/FixLanguageDataController.php:52
+#: src/Tool/FixTranslationsController.php:54
+#: src/Tool/UrlResolutionCacheSection.php:60
+msgid "Working…"
+msgstr "Arbetar…"
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished.
+#: src/Tool/ATESyncController.php:152
+#: src/Tool/DatabaseStringsController.php:382
+#: src/Tool/DatabaseStringsController.php:566
+#: src/Tool/FixTranslationsController.php:52
+msgid "Done."
+msgstr "Klar."
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished.
+#: src/Tool/ATESyncController.php:153
+msgid "One of the syncs failed. Please retry."
+msgstr "En av synkroniseringarna misslyckades. Försök igen."
+
+#: src/Tool/ATESyncController.php:158
+#: src/Tool/DatabaseStringsController.php:386
+#: src/Tool/DatabaseStringsController.php:442
+#: src/Tool/DatabaseStringsController.php:516
+#: src/Tool/DatabaseStringsController.php:570
+#: src/Tool/FixLanguageDataController.php:53
+#: src/Tool/FixTranslationsController.php:55
+#: src/Tool/InternalLinksController.php:72
+msgid "Something went wrong. Please retry."
+msgstr "Något gick fel. Försök igen."
+
+#: src/Tool/DatabaseStringsController.php:75
+#: src/Tools/DbStringsTools.php:81
+msgid "Database & strings maintenance"
+msgstr "Underhåll av databas och strängar"
+
+#: src/Tool/DatabaseStringsController.php:78
+msgid "Direct operations on WPML's database tables and string-translation storage."
+msgstr "Direkta åtgärder på WPML:s databastabeller och lagring för strängöversättning."
+
+#: src/Tool/DatabaseStringsController.php:87
+msgid "These tools can permanently delete or corrupt translation data"
+msgstr "Dessa verktyg kan permanent radera eller skada översättningsdata"
+
+#. translators: %s renders the literal "Make a full database backup first" in bold.
+#: src/Tool/DatabaseStringsController.php:93
+#, php-format
+msgid "Only run when WPML Support has reviewed your situation and asked you to. %s WPML will not be able to recover translations lost here."
+msgstr "Kör endast när WPML-supporten har granskat din situation och bett dig göra det. %s WPML kommer inte att kunna återställa översättningar som går förlorade här."
+
+#: src/Tool/DatabaseStringsController.php:94
+msgid "Make a full database backup first."
+msgstr "Gör en fullständig databasbackup först."
+
+#: src/Tool/DatabaseStringsController.php:112
+#: src/Tools/DbStringsTools.php:89
+msgid "Database Tables Optimization"
+msgstr "Optimering av databastabeller"
+
+#. translators: Description of a Support tool on WPML → Support. %1$s, %2$s and %3$s: the names of three database tables, each shown in a code box. %4$s: a link, already wrapped in its tags, to the documentation for this tool.
+#: src/Tool/DatabaseStringsController.php:115
+#, php-format
+msgid "Compresses WPML's translation tables (%1$s, %2$s, %3$s). Applies only to sites created before WPML 4.8, and only while the tables still hold redundant data. %4$s"
+msgstr "Komprimerar WPML:s översättningstabeller (%1$s, %2$s, %3$s). Gäller endast webbplatser skapade före WPML 4.8, och endast så länge tabellerna fortfarande innehåller redundant data. %4$s"
+
+#. translators: Link on the Database Tables Optimization tool, opening the page that explains what the tool does.
+#: src/Tool/DatabaseStringsController.php:121
+msgid "Learn how this works"
+msgstr "Lär dig hur det fungerar"
+
+#: src/Tool/DatabaseStringsController.php:123
+msgid "Optimize translation tables"
+msgstr "Optimera översättningstabeller"
+
+#. translators: %s renders the literal ".mo" file extension.
+#: src/Tool/DatabaseStringsController.php:133
+#, php-format
+msgid "Drops the <b>String Translation</b> cache and re-indexes the strings tables. Applies only to sites originally translated before WPML 4.3, and only when every custom %s file is already generated."
+msgstr "Rensar cachen för <b>strängöversättning</b> och indexerar om strängtabellerna. Gäller endast webbplatser som ursprungligen översattes före WPML 4.3, och endast när varje anpassad %s-fil redan har genererats."
+
+#: src/Tool/DatabaseStringsController.php:138
+msgid "Clean up and optimize strings"
+msgstr "Rensa och optimera strängar"
+
+#: src/Tool/DatabaseStringsController.php:148
+#: src/Tools/DbStringsTools.php:91
+msgid "Remove ghost entries from translation tables"
+msgstr "Ta bort spökposter från översättningstabeller"
+
+#. translators: %s renders the literal `wp_icl_translations`.
+#: src/Tool/DatabaseStringsController.php:151
+#, php-format
+msgid "Deletes rows in %s that point to posts or terms that no longer exist. Only use when support has confirmed that orphaned rows are your actual problem."
+msgstr "Tar bort rader i %s som pekar på inlägg eller termer som inte längre finns. Använd endast när supporten har bekräftat att föräldralösa rader är ditt faktiska problem."
+
+#: src/Tool/DatabaseStringsController.php:154
+msgid "Remove ghost entries"
+msgstr "Ta bort spökposter"
+
+#: src/Tool/DatabaseStringsController.php:166
+#: src/Tools/DbStringsTools.php:92
+msgid "Show custom MO files pre-generation dialog"
+msgstr "Visa dialogrutan för förgenerering av anpassade MO-filer"
+
+#. translators: Message on WPML → Support. %1$s: the menu path "WPML → Translations → Strings", in bold, %2$s: the file extension ".mo" in a code box; it appears twice.
+#: src/Tool/DatabaseStringsController.php:172
+#, php-format
+msgid "This action prepares the custom %2$s files dialog to appear the next time you open %1$s. Use that dialog to choose which custom %2$s files to regenerate."
+msgstr "Denna åtgärd förbereder dialogrutan för anpassade %2$s-filer så att den visas nästa gång du öppnar %1$s. Använd den dialogrutan för att välja vilka anpassade %2$s-filer som ska genereras om."
+
+#: src/Tool/DatabaseStringsController.php:173
+msgid "WPML → Translations → Strings"
+msgstr "WPML → Översättningar → Strängar"
+
+#: src/Tool/DatabaseStringsController.php:183
+msgid "Show the dialog on the Strings tab"
+msgstr "Visa dialogrutan på fliken Strängar"
+
+#: src/Tool/DatabaseStringsController.php:191
+#: src/Tools/DbStringsTools.php:96
+msgid "Remove language suffixes from taxonomy names"
+msgstr "Ta bort språksuffix från taxonominamn"
+
+#: src/Tool/DatabaseStringsController.php:194
+msgid "Strips language-code suffixes from taxonomy term names. Appears after certain legacy migrations where WPML created taxonomy duplicates with language-coded names."
+msgstr "Tar bort språkkodssuffix från namn på taxonomitermer. Visas efter vissa äldre migreringar där WPML skapade taxonomidubbletter med språkkodade namn."
+
+#: src/Tool/DatabaseStringsController.php:199
+msgid "No taxonomy terms with language suffixes were detected."
+msgstr "Inga taxonomitermer med språksuffix upptäcktes."
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: the name a category or tag had before. Noun phrase, not a verb.
+#: src/Tool/DatabaseStringsController.php:207
+msgid "Old name"
+msgstr "Gammalt namn"
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: the name that category or tag has now. Noun phrase, not a verb.
+#: src/Tool/DatabaseStringsController.php:208
+msgid "Updated name"
+msgstr "Uppdaterat namn"
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: which categories or tags the change touches.
+#: src/Tool/DatabaseStringsController.php:209
+msgid "Affected taxonomies"
+msgstr "Berörda taxonomier"
+
+#: src/Tool/DatabaseStringsController.php:234
+msgid "Update term names"
+msgstr "Uppdatera termnamn"
+
+#: src/Tool/DatabaseStringsController.php:246
+msgid "Scans WPML's string-translation tables for inconsistencies — duplicate string IDs, broken context links, mismatched languages — and reports what it finds. Read-only: nothing is changed until you act on the report."
+msgstr "Skannar WPML:s tabeller för strängöversättning efter inkonsekvenser — dubbla sträng-ID:n, trasiga kontextlänkar, felaktiga språk — och rapporterar vad den hittar. Skrivskyddad: ingenting ändras förrän du agerar på rapporten."
+
+#. translators: Link text on WPML → Support that starts a database check. Verb phrase, imperative.
+#: src/Tool/DatabaseStringsController.php:249
+msgid "Run check"
+msgstr "Kör kontroll"
+
+#: src/Tool/DatabaseStringsController.php:256
+#: src/Tool/DatabaseStringsController.php:263
+#: src/Tools/DbStringsTools.php:94
+msgid "Fix element_type collation"
+msgstr "Fixa sortering för element_type"
+
+#. translators: Description of a Support tool on WPML → Support. %1$s: the name of a database column, in a code box, %2$s: the name of a database table, in a code box. "Illegal mix of collations" is a database error message and stays in English.
+#: src/Tool/DatabaseStringsController.php:259
+#, php-format
+msgid "Aligns the collation of the %1$s column in %2$s with the rest of the database. Mismatched collation here causes \"Illegal mix of collations\" errors when WPML joins translation rows with WordPress posts or terms."
+msgstr "Justerar sorteringen (collation) för kolumnen %1$s i %2$s så att den matchar resten av databasen. Felaktig sortering här orsakar “Illegal mix of collations”-fel när WPML sammanfogar översättningsrader med WordPress-inlägg eller termer."
+
+#: src/Tool/DatabaseStringsController.php:273
+#: src/Tool/DatabaseStringsController.php:275
+#: src/Tools/DbStringsTools.php:95
+msgid "Fix WPML tables collation"
+msgstr "Fixa sortering för WPML-tabeller"
+
+#: src/Tool/DatabaseStringsController.php:274
+msgid "Converts every WPML table to match the collation of WordPress's core tables. Use when string searches return wrong results, or when joins between WPML tables and WordPress tables raise collation errors. Broader than \"Fix element_type collation\" — touches all WPML tables, not just one column."
+msgstr "Konverterar varje WPML-tabell för att matcha sorteringen i WordPress kärntabeller. Använd när strängsökningar ger fel resultat, eller när kopplingar mellan WPML-tabeller och WordPress-tabeller ger sorteringsfel. Mer omfattande än “Fixa sortering för element_type” — rör alla WPML-tabeller, inte bara en kolumn."
+
+#: src/Tool/DatabaseStringsController.php:287
+#: src/Tool/DatabaseStringsController.php:315
+#: src/Tools/DbStringsTools.php:97
+msgid "Fix tp_id field"
+msgstr "Fixa fältet tp_id"
+
+#. translators: %s is the literal `tp_id`.
+#: src/Tool/DatabaseStringsController.php:293
+#, php-format
+msgid "Repairs the %s column on the listed translation jobs and resets each job's status to in-progress. After running it, manually re-sync the translation status and download the translations for the affected jobs."
+msgstr "Reparerar kolumnen %s på de listade översättningsjobben och återställer varje jobbs status till pågående. Efter att ha kört det, synkronisera manuellt om översättningsstatusen och ladda ner översättningarna för de berörda jobben."
+
+#: src/Tool/DatabaseStringsController.php:300
+msgid "Translation job IDs (rid)"
+msgstr "ID:n för översättningsjobb (rid)"
+
+#: src/Tool/DatabaseStringsController.php:304
+msgid "Comma-separated list of remote job IDs."
+msgstr "Kommaseparerad lista över externa jobb-ID:n."
+
+#: src/Tool/DatabaseStringsController.php:419
+msgid "Enter at least one job ID."
+msgstr "Ange minst ett jobb-ID."
+
+#: src/Tool/DatabaseStringsController.php:440
+msgid "Done. Re-sync the affected jobs from Translation Management."
+msgstr "Klar. Synkronisera om de berörda jobben från översättningshanteringen."
+
+#: src/Tool/DatabaseStringsController.php:465
+msgid "Nothing to do — the tables were already optimized."
+msgstr "Ingenting att göra — tabellerna var redan optimerade."
+
+#. translators: %d is replaced client-side with the number of rows the Optimize translation tables button drained.
+#: src/Tool/DatabaseStringsController.php:466
+#, php-format
+msgid "Optimized %d row(s)."
+msgstr "Optimerade %d rad(er)."
+
+#: src/Tool/DatabaseStringsController.php:535
+msgid "Select at least one term."
+msgstr "Välj minst en term."
+
+#. translators: Status shown next to a button on WPML → Support while the change is being written.
+#: src/Tool/DatabaseStringsController.php:539
+msgid "Updating…"
+msgstr "Uppdaterar…"
+
+#: src/Tool/DatabaseStringsController.php:564
+msgid "All term names updated."
+msgstr "Alla termnamn har uppdaterats."
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished. Adjective, not the verb "to do".
+#: src/Tool/FixLanguageDataController.php:50
+msgid "Done"
+msgstr "Klar"
+
+#. translators: Status shown next to a button on WPML → Support while its action is running.
+#: src/Tool/FixLanguageDataController.php:55
+msgid "Running…"
+msgstr "Körs…"
+
+#: src/Tool/FixLanguageDataController.php:60
+#: src/Tools/FixToolsTools.php:147
+msgid "Fix language data"
+msgstr "Fixa språkdata"
+
+#: src/Tool/FixLanguageDataController.php:63
+msgid "Repair language-related fields on content. These tools are safe to run — they don't delete anything, they only fill in or align missing information."
+msgstr "Reparera språkrelaterade fält på innehåll. Dessa verktyg är säkra att köra — de tar inte bort någonting, de bara fyller i eller justerar saknad information."
+
+#. translators: Name of a Support tool section: its entry in the Support search list, its heading and its button label. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:73
+#: src/Tool/FixLanguageDataController.php:81
+#: src/Tools/FixToolsTools.php:134
+msgid "Set language information"
+msgstr "Ange språkinformation"
+
+#: src/Tool/FixLanguageDataController.php:76
+msgid "Assigns the site's default language to any content that was created without language metadata — typically content imported from another tool or added before WPML was active. Existing language assignments are preserved."
+msgstr "Tilldelar webbplatsens standardspråk till allt innehåll som skapats utan språkmetadata — vanligtvis innehåll som importerats från ett annat verktyg eller lagts till innan WPML var aktivt. Befintliga språktilldelningar bevaras."
+
+#: src/Tool/FixLanguageDataController.php:88
+msgid "Synchronize posts' taxonomies"
+msgstr "Synkronisera inläggens taxonomier"
+
+#: src/Tool/FixLanguageDataController.php:91
+msgid "Re-applies the original post's category and tag assignments to its translations. Fixes translations that are missing categories or tags after a migration."
+msgstr "Tillämpar originalinläggets kategori- och taggtilldelningar på dess översättningar igen. Fixar översättningar som saknar kategorier eller taggar efter en migrering."
+
+#: src/Tool/FixLanguageDataController.php:110
+msgid "No translatable post types"
+msgstr "Inga översättningsbara inläggstyper"
+
+#. translators: Button label on WPML → Support. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:116
+msgid "Synchronize taxonomies"
+msgstr "Synkronisera taxonomier"
+
+#: src/Tool/FixLanguageDataController.php:125
+#: src/Tools/FixToolsTools.php:136
+msgid "Fix terms count"
+msgstr "Fixa antal termer"
+
+#: src/Tool/FixLanguageDataController.php:128
+msgid "Recalculates the post counts shown next to categories, tags, and other taxonomy terms. Run this if the numbers in your taxonomy lists look wrong — for example, a category showing 0 posts when there are translated posts assigned to it."
+msgstr "Beräknar om antalet inlägg som visas bredvid kategorier, taggar och andra taxonomitermer. Kör detta om siffrorna i dina taxonomilistor ser fel ut — till exempel om en kategori visar 0 inlägg när det finns översatta inlägg tilldelade till den."
+
+#. translators: Button label on WPML → Support that counts the items in each category and tag again. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:133
+msgid "Recalculate counts"
+msgstr "Beräkna antal på nytt"
+
+#: src/Tool/FixLanguageDataController.php:140
+#: src/Tools/FixToolsTools.php:137
+msgid "Fix post type assignment"
+msgstr "Fixa tilldelning av inläggstyp"
+
+#: src/Tool/FixLanguageDataController.php:143
+msgid "Repairs translations whose post type doesn't match the original — for instance, a translated product saved as a regular post. Usually happens after importing content or switching how custom post types are registered."
+msgstr "Reparerar översättningar vars inläggstyp inte matchar originalet — till exempel en översatt produkt som sparats som ett vanligt inlägg. Händer vanligtvis efter import av innehåll eller vid byte av hur anpassade inläggstyper registreras."
+
+#: src/Tool/FixLanguageDataController.php:148
+msgid "Fix post types"
+msgstr "Fixa inläggstyper"
+
+#: src/Tool/FixLanguageDataController.php:336
+msgid "Languages without a country"
+msgstr "Språk utan land"
+
+#. translators: %d: number of languages with no country set.
+#: src/Tool/FixLanguageDataController.php:343
+#, php-format
+msgid "%d language is set up for a specific country but has none chosen."
+msgid_plural "%d languages are set up for a specific country but have none chosen."
+msgstr[0] "%d språk är inställt för ett specifikt land men har inget valt."
+msgstr[1] "%d språk är inställda för ett specifikt land men har inget valt."
+
+#. translators: Note on WPML → Support. %1$s: opening link tag, %2$s: closing link tag; together they turn "Settings → Languages" into a link. hreflang is an HTML attribute name and stays as it is.
+#: src/Tool/FixLanguageDataController.php:363
+#, php-format
+msgid "Nothing is broken and nothing needs doing: these languages work as they are. Choosing a country for one on the %1$sSettings → Languages%2$s page sets its hreflang tag to match, and offers to move its locale, flag and names with it."
+msgstr "Ingenting är trasigt och ingenting behöver göras: dessa språk fungerar som de är. Om du väljer ett land för ett språk på sidan %1$sInställningar → Språk%2$s ställs dess hreflang-tagg in för att matcha, och du erbjuds att flytta dess språkinställning, flagga och namn med det."
+
+#: src/Tool/FixLanguageDataController.php:417
+msgid "Languages set up for a different country"
+msgstr "Språk inställda för ett annat land"
+
+#. translators: %d: number of languages whose WordPress locale does not match their country.
+#: src/Tool/FixLanguageDataController.php:424
+#, php-format
+msgid "%d language's WordPress locale does not match the country it is set to."
+msgid_plural "%d languages' WordPress locales do not match the countries they are set to."
+msgstr[0] "WordPress-språkinställningen för %d språk matchar inte landet det är inställt på."
+msgstr[1] "WordPress-språkinställningarna för %d språk matchar inte länderna de är inställda på."
+
+#. translators: Follows a language's name on WPML → Support when the name stored in the database differs from the one the Languages page shows. %s: the name stored in the database.
+#: src/Tool/FixLanguageDataController.php:455
+#, php-format
+msgid "(saved as %s)"
+msgstr "(sparad som %s)"
+
+#. translators: End of the sentence "<language name> is set to <locale>, its country implies <locale>" on WPML → Support. "Its" is the language. %1$s: the WordPress locale saved for that language, %2$s: the locale its country would give.
+#: src/Tool/FixLanguageDataController.php:466
+#, php-format
+msgid "set to %1$s, its country implies %2$s"
+msgstr "inställd på %1$s, dess land antyder %2$s"
+
+#. translators: Note on WPML → Support. %1$s: opening link tag, %2$s: closing link tag; together they turn "Settings → Languages" into a link.
+#: src/Tool/FixLanguageDataController.php:479
+#, php-format
+msgid "Nothing is broken: WordPress keeps loading each language in the locale that is stored. You can change the locale on its own on the %1$sSettings → Languages%2$s page, without choosing the country again."
+msgstr "Ingenting är trasigt: WordPress fortsätter att ladda varje språk i den språkinställning som är lagrad. Du kan ändra språkinställningen separat på sidan %1$sInställningar → Språk%2$s, utan att välja land igen."
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support and the heading of its own screen. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:59
+#: src/Tools/FixToolsTools.php:160
+msgid "Fix translations"
+msgstr "Fixa översättningar"
+
+#: src/Tool/FixTranslationsController.php:62
+msgid "Resolve common translation-state problems — stuck statuses, missing categories, stale caches."
+msgstr "Lös vanliga problem med översättningsstatus — statusar som fastnat, saknade kategorier, föråldrade cacher."
+
+#: src/Tool/FixTranslationsController.php:68
+#: src/Tools/FixToolsTools.php:168
+msgid "Clear the cache in WPML"
+msgstr "Rensa cachen i WPML"
+
+#: src/Tool/FixTranslationsController.php:71
+msgid "Flushes WPML's internal cache. Often the first thing to try after migrations, plugin updates, or when something looks out of sync."
+msgstr "Rensar WPML:s interna cache. Ofta det första man bör prova efter migreringar, tilläggsuppdateringar eller när något ser ut att vara i otakt."
+
+#. translators: Status shown next to the Clear cache button on WPML → Support once the cache has been cleared.
+#: src/Tool/FixTranslationsController.php:75
+msgid "WPML's cache was cleared."
+msgstr "WPML:s cache har rensats."
+
+#. translators: Status shown next to the Clear cache button on WPML → Support when the cache could not be cleared.
+#: src/Tool/FixTranslationsController.php:76
+msgid "Could not clear the cache — please retry."
+msgstr "Kunde inte rensa cachen — försök igen."
+
+#. translators: Button label on WPML → Support. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:78
+msgid "Clear cache"
+msgstr "Rensa cache"
+
+#: src/Tool/FixTranslationsController.php:86
+#: src/Tools/FixToolsTools.php:169
+msgid "Retry stuck automatic translations"
+msgstr "Försök igen med automatiska översättningar som fastnat"
+
+#: src/Tool/FixTranslationsController.php:89
+msgid "Re-queues automatic translations that got stuck mid-process so they can finish. Use when an automatic translation has been pending for an unusually long time and hasn't completed."
+msgstr "Köar om automatiska översättningar som fastnat mitt i processen så att de kan slutföras. Använd när en automatisk översättning har varit väntande ovanligt länge och inte har slutförts."
+
+#: src/Tool/FixTranslationsController.php:95
+msgid "Retry stuck translations"
+msgstr "Försök igen med översättningar som fastnat"
+
+#: src/Tool/FixTranslationsController.php:103
+#: src/Tools/FixToolsTools.php:170
+msgid "Refresh Translation Services"
+msgstr "Uppdatera översättningstjänster"
+
+#. translators: %1$s and %2$s wrap a link to Settings → Translation Services.
+#: src/Tool/FixTranslationsController.php:109
+#, php-format
+msgid "Re-fetches the list of available translation services from WPML. Run this if a service you signed up for isn't appearing in %1$sSettings → Translation Services%2$s, or after enabling a new service in your WPML account."
+msgstr "Hämtar listan över tillgängliga översättningstjänster från WPML på nytt. Kör detta om en tjänst du registrerat dig för inte visas i %1$sInställningar → Översättningstjänster%2$s, eller efter att ha aktiverat en ny tjänst på ditt WPML-konto."
+
+#. translators: Button label on WPML → Support that fetches the list of translation services again. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:118
+msgid "Refresh services"
+msgstr "Uppdatera tjänster"
+
+#: src/Tool/FixTranslationsController.php:126
+#: src/Tools/FixToolsTools.php:171
+msgid "Update domain name in language switcher"
+msgstr "Uppdatera domännamn i språkväljaren"
+
+#: src/Tool/FixTranslationsController.php:129
+msgid "Rewrites the domain stored against each language in the language switcher to match the site's current home URL. Run this after a domain change or migration if the language switcher still points to the old domain."
+msgstr "Skriver om domänen som lagras för varje språk i språkväljaren för att matcha webbplatsens nuvarande hem-URL. Kör detta efter ett domänbyte eller migrering om språkväljaren fortfarande pekar på den gamla domänen."
+
+#. translators: Button label on WPML → Support that writes the site's current web address into the language switcher. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:135
+msgid "Update domain"
+msgstr "Uppdatera domän"
+
+#. translators: Name of a Support tool section: its entry in the Support search list and its heading. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:143
+#: src/Tools/FixToolsTools.php:173
+msgid "Assign translation status to duplicates"
+msgstr "Tilldela översättningsstatus till dubbletter"
+
+#: src/Tool/FixTranslationsController.php:146
+msgid "Marks WPML duplicates with a proper translation status so they appear to translation-management and automatic-translation tools. Run after bulk duplication."
+msgstr "Markerar WPML-dubbletter med en korrekt översättningsstatus så att de visas för verktyg för översättningshantering och automatisk översättning. Kör efter massduplicering."
+
+#. translators: Button label on WPML → Support that gives duplicated content a translation status. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:151
+msgid "Assign status"
+msgstr "Tilldela status"
+
+#: src/Tool/FixTranslationsController.php:159
+msgid "Enable other translation services"
+msgstr "Aktivera andra översättningstjänster"
+
+#: src/Tool/FixTranslationsController.php:162
+msgid "Temporarily ignores the preferred translation service configured in your WPML.org account so you can choose another provider. You can refresh the account preference below."
+msgstr "Ignorerar tillfälligt den föredragna översättningstjänst som konfigurerats på ditt WPML.org-konto så att du kan välja en annan leverantör. Du kan uppdatera kontopreferensen nedan."
+
+#: src/Tool/FixTranslationsController.php:167
+msgid "Enable other services"
+msgstr "Aktivera andra tjänster"
+
+#: src/Tool/FixTranslationsController.php:175
+#: src/Tools/FixToolsTools.php:174
+msgid "Refresh preferred translation service"
+msgstr "Uppdatera föredragen översättningstjänst"
+
+#: src/Tool/FixTranslationsController.php:178
+msgid "Fetches the preferred translation service configured in your WPML.org account and applies it to this site again."
+msgstr "Hämtar den föredragna översättningstjänst som konfigurerats på ditt WPML.org-konto och tillämpar den på denna webbplats igen."
+
+#: src/Tool/FixTranslationsController.php:183
+msgid "Refresh preferred service"
+msgstr "Uppdatera föredragen tjänst"
+
+#. translators: Name of a Support tool section: its entry in the Support search list, its heading and its button label. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:191
+#: src/Tool/FixTranslationsController.php:220
+#: src/Tools/FixToolsTools.php:176
+msgid "Reset professional translation state"
+msgstr "Återställ status för professionell översättning"
+
+#: src/Tool/FixTranslationsController.php:194
+msgid "Clears ongoing professional-translation jobs on this site and re-enables sending content to translation. Use this if your translation service stopped working or you want to cancel every in-flight job at once."
+msgstr "Rensar pågående professionella översättningsjobb på denna webbplats och aktiverar sändning av innehåll till översättning igen. Använd detta om din översättningstjänst slutat fungera eller om du vill avbryta alla pågående jobb på en gång."
+
+#: src/Tool/FixTranslationsController.php:204
+msgid "This stops every translation job currently in progress"
+msgstr "Detta stoppar alla översättningsjobb som för närvarande pågår"
+
+#: src/Tool/FixTranslationsController.php:207
+msgid "Work already completed and delivered is kept. Jobs that are in-flight with a translator or service will be cancelled and won't be charged. You'll need to resend them if you still want those translations."
+msgstr "Arbete som redan är slutfört och levererat behålls. Jobb som pågår hos en översättare eller tjänst kommer att avbrytas och debiteras inte. Du måste skicka dem igen om du fortfarande vill ha dessa översättningar."
+
+#. translators: Status shown on WPML → Support while the tool reads the site's pages and posts.
+#: src/Tool/InternalLinksController.php:66
+msgid "Scanning posts…"
+msgstr "Skannar inlägg…"
+
+#. translators: Status shown on WPML → Support while the tool reads the site's texts.
+#: src/Tool/InternalLinksController.php:68
+msgid "Scanning strings…"
+msgstr "Skannar strängar…"
+
+#. translators: %s is the number of links that were rewired.
+#: src/Tool/InternalLinksController.php:70
+#, php-format
+msgid "Done — %s legacy links rewired. Your internal links are now in sync."
+msgstr "Klar — %s äldre länkar har kopplats om. Dina interna länkar är nu synkroniserade."
+
+#: src/Tool/InternalLinksController.php:71
+msgid "Done. Your internal links are now in sync."
+msgstr "Klar. Dina interna länkar är nu synkroniserade."
+
+#: src/Tool/InternalLinksController.php:76
+#: src/Tools/ResetTools.php:64
+msgid "Update internal links"
+msgstr "Uppdatera interna länkar"
+
+#: src/Tool/InternalLinksController.php:79
+msgid "Some posts created before WPML 4.7 still need their internal links rewired to their translated versions. Run once to scan and fix those legacy posts. Newer posts have their links adjusted automatically — this action only applies to sites that carried content over from older WPML versions."
+msgstr "Vissa inlägg som skapats före WPML 4.7 behöver fortfarande få sina interna länkar omkopplade till sina översatta versioner. Kör en gång för att skanna och fixa dessa äldre inlägg. Nyare inlägg får sina länkar justerade automatiskt — denna åtgärd gäller endast webbplatser som har med sig innehåll från äldre WPML-versioner."
+
+#: src/Tool/InternalLinksController.php:88
+msgid "Your internal links are already in sync."
+msgstr "Dina interna länkar är redan synkroniserade."
+
+#. translators: %s is the URL of the Sticky Links plugin documentation.
+#: src/Tool/InternalLinksController.php:94
+#, php-format
+msgid "WPML keeps internal links updated automatically as you translate content. If you also want to switch language URL formats without breaking links, the %s add-on handles that case."
+msgstr "WPML håller interna länkar uppdaterade automatiskt när du översätter innehåll. Om du även vill byta format för språk-URL:er utan att bryta länkar, hanterar tillägget %s det fallet."
+
+#. translators: Link text on WPML → Support naming the Sticky Links add-on. Product name: keep it as it is.
+#: src/Tool/InternalLinksController.php:96
+msgid "Sticky Links"
+msgstr "Sticky links"
+
+#: src/Tool/InternalLinksController.php:106
+msgid "Adjust legacy internal links"
+msgstr "Justera äldre interna länkar"
+
+#: src/Tool/InternalLinksController.php:109
+msgid "Scans posts that still need link adjustments from before the automatic-tracking change in WPML 4.7. After this completes, the section disappears — it only runs once per site."
+msgstr "Skannar inlägg som fortfarande behöver länkjusteringar från tiden före ändringen med automatisk spårning i WPML 4.7. När detta är klart försvinner avsnittet — det körs bara en gång per webbplats."
+
+#: src/Tool/InternalLinksController.php:115
+msgid "Scan now and adjust links"
+msgstr "Skanna nu och justera länkar"
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support and the heading of its own screen. A package is a group of texts from one source, such as a form or a block.
+#: src/Tool/PackagesController.php:36
+#: src/Tools/DbStringsTools.php:104
+msgid "Package management"
+msgstr "Pakethantering"
+
+#: src/Tool/PackagesController.php:39
+msgid "A \"package\" is a bundle of strings that another plugin hands to WPML so they can be translated — a Gravity Form's field labels, a Gutenberg block's preset text, a Toolset custom-post-type's admin labels, a page builder's shortcode strings. Packages are created and kept in sync automatically by the plugins that own them; you normally don't need to open this page."
+msgstr "Ett “paket” är en samling strängar som ett annat tillägg lämnar över till WPML så att de kan översättas — fältetiketter i ett Gravity Form, förinställd text i ett Gutenberg-block, administratörsetiketter för en anpassad inläggstyp i Toolset, strängar för kortkoder i en sidbyggare. Paket skapas och hålls synkroniserade automatiskt av de tillägg som äger dem; du behöver normalt inte öppna den här sidan."
+
+#: src/Tool/PackagesController.php:42
+msgid "Come here only when a supporter is investigating a specific string that is not showing up for translation, or asks you to remove an orphaned package left over after a plugin was uninstalled. Deleting or re-registering a package here is a recovery action, not configuration."
+msgstr "Gå hit endast när en supportmedarbetare undersöker en specifik sträng som inte visas för översättning, eller ber dig ta bort ett föräldralöst paket som blivit kvar efter att ett tillägg avinstallerats. Att radera eller registrera om ett paket här är en återställningsåtgärd, inte en konfiguration."
+
+#: src/Tool/PackagesController.php:51
+msgid "Deleting or editing packages here can break translations on your site"
+msgstr "Att radera eller redigera paket här kan förstöra översättningar på din webbplats"
+
+#: src/Tool/PackagesController.php:54
+msgid "These packages are created and maintained by the plugins they belong to. Manual changes here can orphan strings and remove translations from forms, blocks, and templates. Only make changes when WPML Support asks you to."
+msgstr "Dessa paket skapas och underhålls av de tillägg de tillhör. Manuella ändringar här kan göra strängar föräldralösa och ta bort översättningar från formulär, block och mallar. Gör endast ändringar när WPML-supporten ber dig om det."
+
+#. translators: Message on WPML → Support. A package is a group of texts from one source, such as a form or a block. Keep the <b> tags around the plugin name.
+#: src/Tool/PackagesController.php:76
+msgid "Package management requires the WPML String Translation plugin to be active."
+msgstr "Pakethantering kräver att insticksprogrammet WPML String Translation är aktivt."
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support, the heading of its own screen, and its button label. Verb phrase, imperative (reset WPML on this site).
+#: src/Tool/ResetController.php:44
+#: src/Tool/ResetController.php:97
+#: src/Tools/ResetTools.php:101
+msgid "Reset WPML"
+msgstr "Återställ WPML"
+
+#: src/Tool/ResetController.php:47
+msgid "Last-resort recovery. This permanently deletes data and cannot be undone. Make a full database backup before running it."
+msgstr "Sista utvägen för återställning. Detta raderar data permanent och kan inte ångras. Gör en fullständig databasbackup innan du kör det."
+
+#: src/Tool/ResetController.php:54
+#: src/Tools/ResetTools.php:109
+msgid "Reset WPML entirely"
+msgstr "Återställ WPML helt"
+
+#: src/Tool/ResetController.php:57
+msgid "Deletes every WPML table, removes all language assignments on your content, and deactivates the plugin. Your multilingual site returns to a single-language WordPress install."
+msgstr "Raderar varje WPML-tabell, tar bort alla språktilldelningar på ditt innehåll och inaktiverar tillägget. Din flerspråkiga webbplats återgår till en WordPress-installation med ett enda språk."
+
+#: src/Tool/ResetController.php:67
+msgid "This isn't a toy button"
+msgstr "Det här är ingen leksaksknapp"
+
+#. translators: Warning on WPML → Support above the reset button. "It" is the reset.
+#: src/Tool/ResetController.php:70
+msgid "It will completely reset WPML and permanently delete all language information from your site. Translated content stays in your WordPress database but loses its connection to other translations and to its language. You'll need to reinstall WPML and rebuild your language setup from scratch. There's no undo."
+msgstr "Det kommer att helt återställa WPML och permanent radera all språkinformation från din webbplats. Översatt innehåll finns kvar i din WordPress-databas men förlorar sin koppling till andra översättningar och till sitt språk. Du kommer att behöva installera om WPML och bygga upp din språkkonfiguration från början. Det går inte att ångra."
+
+#. translators: Label of the confirmation checkbox on WPML → Support. "This" is resetting WPML. Written in the first person, as the user saying it.
+#: src/Tool/ResetController.php:80
+msgid "I understand this will permanently delete all of WPML's language data"
+msgstr "Jag förstår att detta permanent kommer att radera all språkdata i WPML"
+
+#. translators: %s is the literal phrase the user must type, wrapped in a span.
+#: src/Tool/ResetController.php:87
+#, php-format
+msgid "Type %s to confirm"
+msgstr "Skriv %s för att bekräfta"
+
+#: src/Tool/ResetController.php:143
+msgid "You do not have permission to reset WPML."
+msgstr "Du har inte behörighet att återställa WPML."
+
+#. translators: Shown while a dialog or a panel is still fetching what it has to show.
+#: src/Tool/UrlResolutionCacheSection.php:58
+msgid "Loading…"
+msgstr "Laddar…"
+
+#. translators: Status shown on WPML → Support while the address cache is being built again.
+#: src/Tool/UrlResolutionCacheSection.php:62
+msgid "Rebuilding…"
+msgstr "Bygger om…"
+
+#: src/Tool/UrlResolutionCacheSection.php:63
+msgid "Clear and rebuild cache"
+msgstr "Rensa och bygg om cache"
+
+#: src/Tool/UrlResolutionCacheSection.php:64
+msgid "Clear and rebuild the URL resolution cache for this site? Links may temporarily stay in their source language while the cache rebuilds."
+msgstr "Rensa och bygg om cachen för URL-upplösning för denna webbplats? Länkar kan tillfälligt visas på sitt källspråk medan cachen byggs om."
+
+#: src/Tool/UrlResolutionCacheSection.php:65
+msgid "The URL resolution cache request failed."
+msgstr "Begäran om cache för URL-upplösning misslyckades."
+
+#: src/Tool/UrlResolutionCacheSection.php:66
+msgid "The URL resolution cache rebuild is complete."
+msgstr "Ombyggnaden av cachen för URL-upplösning är klar."
+
+#: src/Tool/UrlResolutionCacheSection.php:67
+msgid "Preparing the cache rebuild…"
+msgstr "Förbereder ombyggnad av cachen…"
+
+#. translators: Row label on the address-cache block of WPML → Support: which round of the cache the numbers below belong to.
+#: src/Tool/UrlResolutionCacheSection.php:69
+msgid "Generation"
+msgstr "Generation"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache has worked out. Adjective describing them, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:71
+msgid "Resolved"
+msgstr "Upplösta"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache has not worked out yet. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:73
+msgid "Unresolved"
+msgstr "Ej upplösta"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses still waiting to be processed. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:75
+msgid "Pending"
+msgstr "Väntande"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache could not process. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:77
+msgid "Failed"
+msgstr "Misslyckade"
+
+#: src/Tool/UrlResolutionCacheSection.php:78
+msgid "Oldest pending item"
+msgstr "Äldsta väntande objekt"
+
+#: src/Tool/UrlResolutionCacheSection.php:79
+msgid "Last worker run"
+msgstr "Senaste körning av worker"
+
+#: src/Tool/UrlResolutionCacheSection.php:80
+msgid "WP-Cron is disabled. Keep this page open to process cache batches, or configure a system cron runner."
+msgstr "WP-Cron är inaktiverat. Håll den här sidan öppen för att bearbeta cache-batcher, eller konfigurera en system-cron."
+
+#: src/Tool/UrlResolutionCacheSection.php:81
+msgid "URL resolution cache processing appears to be stalled."
+msgstr "Bearbetningen av cachen för URL-upplösning verkar ha stannat."
+
+#. translators: Message on WPML → Support. "It" is the database table.
+#: src/Tool/UrlResolutionCacheSection.php:83
+msgid "The URL resolution cache table is missing. It is created automatically on the next admin or front-end request."
+msgstr "Tabellen för URL-upplösningscache saknas. Den skapas automatiskt vid nästa begäran i admin eller frontend."
+
+#: src/Tool/UrlResolutionCacheSection.php:84
+msgid "Last worker error"
+msgstr "Senaste worker-fel"
+
+#. translators: An em dash shown in place of a value on WPML → Support when there is nothing to show. Leave it as it is.
+#: src/Tool/UrlResolutionCacheSection.php:86
+msgid "—"
+msgstr "—"
+
+#: src/Tool/UrlResolutionCacheSection.php:91
+msgid "Clear URL translations cache"
+msgstr "Rensa cache för URL-översättningar"
+
+#: src/Tool/UrlResolutionCacheSection.php:94
+msgid "WPML caches how individual front-end URLs resolve to translated content. Rebuild it after routing or translation changes if links still use an older result."
+msgstr "WPML cachar hur enskilda front-end-URL:er matchas mot översatt innehåll. Återställ den efter ändringar i dirigering eller översättning om länkar fortfarande använder ett äldre resultat."
+
+#. translators: %s is the site name followed by its numeric ID.
+#: src/Tool/UrlResolutionCacheSection.php:100
+#, php-format
+msgid "Showing %s. Each site in a multisite network keeps its own cache."
+msgstr "Visar %s. Varje webbplats i ett multisite-nätverk har sin egen cache."
+
+#: src/Tool/WcmlFixTranslationsController.php:25
+#: src/Tools/ResetTools.php:79
+msgid "Fix WCML translations"
+msgstr "Fixa WCML-översättningar"
+
+#: src/Tool/WcmlFixTranslationsController.php:29
+msgid "Bulk repair tools for WooCommerce Multilingual that fill in missing data on translations or register missing items for translation. Tick the boxes you want to run, then submit once."
+msgstr "Verktyg för massreparation av WooCommerce Multilingual som fyller i saknad data i översättningar eller registrerar saknade objekt för översättning. Markera de rutor du vill köra och skicka sedan in en gång."
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:32
+#: src/Tools/ResetTools.php:115
+msgid "WCML translation maintenance"
+msgstr "Underhåll av WCML-översättningar"
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:36
+msgid "Advanced repair tools for the WCML translation relationships. Only run these when WPML Support has asked you to — they rewrite the variation-translation link tables and delete unused custom fields from product translations."
+msgstr "Avancerade reparationsverktyg för WCML:s översättningsrelationer. Kör endast dessa när WPML Support har bett dig om det — de skriver om länk-tabellerna för variationsöversättningar och tar bort oanvända anpassade fält från produktöversättningar."
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:48
+msgid "These tools rewrite translation data and can hide existing variations"
+msgstr "Dessa verktyg skriver om översättningsdata och kan dölja befintliga variationer"
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:52
+msgid "Make a full database backup before running them. Only check the boxes WPML Support has named, then press \"Run the selected tools\"."
+msgstr "Gör en fullständig databasbackup innan du kör dem. Markera endast de rutor som WPML Support har angett och tryck sedan på ”Kör valda verktyg”."
+
+#: src/Tools/DbStringsTools.php:82
+msgid "Optimize tables, clean up strings, remove ghost entries, regenerate MO files"
+msgstr "Optimera tabeller, rensa strängar, ta bort spökposter, generera om MO-filer"
+
+#: src/Tools/DbStringsTools.php:105
+msgid "String packages from Gravity Forms, Gutenberg blocks, Toolset, etc."
+msgstr "Strängpaket från Gravity Forms, Gutenberg-block, Toolset, etc."
+
+#: src/Tools/DbStringsTools.php:112
+msgid "Browse string-translation packages"
+msgstr "Bläddra i paket för strängöversättning"
+
+#: src/Tools/DbStringsTools.php:113
+msgid "Re-register packages"
+msgstr "Registrera om paket"
+
+#: src/Tools/FixToolsTools.php:129
+msgid "Assign language to content, repair language data, sync taxonomies and rebuild the URL cache"
+msgstr "Tilldela språk till innehåll, reparera språkdata, synka taxonomier och återställ URL-cachen"
+
+#: src/Tools/FixToolsTools.php:130
+msgid "Assign language to content, repair missing language codes, sync taxonomies"
+msgstr "Tilldela språk till innehåll, reparera saknade språkkoder, synka taxonomier"
+
+#: src/Tools/FixToolsTools.php:135
+msgid "Synchronize posts taxonomies"
+msgstr "Synkronisera taxonomier för inlägg"
+
+#: src/Tools/FixToolsTools.php:140
+msgid "Check URL resolution cache status"
+msgstr "Kontrollera status för URL-matchningscache"
+
+#: src/Tools/FixToolsTools.php:141
+msgid "Clear and rebuild the URL resolution cache"
+msgstr "Rensa och återställ URL-matchningscachen"
+
+#: src/Tools/FixToolsTools.php:142
+msgid "Fix front-end links pointing at the wrong language"
+msgstr "Fixa front-end-länkar som pekar på fel språk"
+
+#: src/Tools/FixToolsTools.php:161
+msgid "Repair duplicate statuses, refresh pending jobs, clear cache, reset translation service"
+msgstr "Reparera dubblettstatusar, uppdatera väntande jobb, rensa cache, återställ översättningstjänst"
+
+#: src/Tools/ResetTools.php:65
+msgid "Rewire internal links on legacy pre-4.7 posts that still need adjustment"
+msgstr "Koppla om interna länkar på gamla inlägg från före 4.7 som fortfarande behöver justeras"
+
+#: src/Tools/ResetTools.php:73
+msgid "Adjust legacy pre-4.7 internal links"
+msgstr "Justera interna länkar från före 4.7"
+
+#: src/Tools/ResetTools.php:80
+msgid "Sync product variations, galleries, taxonomies and stock; register missing reviews; create missing attribute and product-type translations"
+msgstr "Synka produktvariationer, gallerier, taxonomier och lager; registrera saknade recensioner; skapa saknade översättningar för attribut och produkttyper"
+
+#: src/Tools/ResetTools.php:89
+msgid "Synchronize product variations"
+msgstr "Synkronisera produktvariationer"
+
+#: src/Tools/ResetTools.php:90
+msgid "Synchronize products image galleries"
+msgstr "Synkronisera bildgallerier för produkter"
+
+#: src/Tools/ResetTools.php:91
+msgid "Synchronize category metadata"
+msgstr "Synkronisera metadata för kategorier"
+
+#: src/Tools/ResetTools.php:92
+msgid "Synchronize stock for products and variations"
+msgstr "Synkronisera lager för produkter och variationer"
+
+#: src/Tools/ResetTools.php:93
+msgid "Create missing product attribute translations"
+msgstr "Skapa saknade översättningar för produktattribut"
+
+#: src/Tools/ResetTools.php:94
+msgid "Allow translation of missing product reviews"
+msgstr "Tillåt översättning av saknade produktrecensioner"
+
+#: src/Tools/ResetTools.php:102
+msgid "Reset WPML entirely — last-resort recovery"
+msgstr "Återställ WPML helt — sista utvägen för återställning"
+
+#: src/Tools/ResetTools.php:116
+msgid "Fix WPML's variation-translation relationship tables; permanently delete unused custom fields from product translations"
+msgstr "Fixa WPML:s tabeller för variationsöversättningsrelationer; ta bort oanvända anpassade fält permanent från produktöversättningar"
+
+#: src/Tools/ResetTools.php:125
+msgid "Fix variation-translation relationships"
+msgstr "Fixa relationer för variationsöversättning"
+
+#: src/Tools/ResetTools.php:126
+msgid "Remove unused custom fields from product translations"
+msgstr "Ta bort oanvända anpassade fält från produktöversättningar"
+
+#: src/Tools/TmateTools.php:94
+msgid "Synchronize with the Advanced Translation Editor"
+msgstr "Synkronisera med Advanced Translation Editor"
+
+#: src/Tools/TmateTools.php:95
+msgid "Re-sync job IDs and translator/manager assignments with the ATE server"
+msgstr "Synka om jobb-ID:n och tilldelningar av översättare/hanterare med ATE-servern"
+
+#: src/Tools/TmateTools.php:105
+msgid "Sync local job IDs with ATE"
+msgstr "Synka lokala jobb-ID:n med ATE"
+
+#: src/Tools/TmateTools.php:106
+msgid "Sync translators and managers with ATE"
+msgstr "Synka översättare och hanterare med ATE"

@@ -1,0 +1,1114 @@
+# Copyright (C) 2026 OnTheGoSystems
+# This file is distributed under the same license as the WPML Troubleshooting plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WPML Troubleshooting 5.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpml-troubleshooting\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-15T09:32:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wpml-troubleshooting\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Plugin Name of the plugin
+#: plugin.php
+msgid "WPML Troubleshooting"
+msgstr "WPML 문제 해결"
+
+#. Plugin URI of the plugin
+#: plugin.php
+msgid "https://wpml.org/"
+msgstr "https://wpml.org/"
+
+#. Description of the plugin
+#: plugin.php
+msgid "The repair tools for a WPML site, as a plugin of their own | <a href=\"https://wpml.org/troubleshooting/troubleshooting-tools/\">Documentation</a>"
+msgstr "WPML 사이트용 복구 도구(개별 플러그인 형태) | <a href=\"https://wpml.org/troubleshooting/troubleshooting-tools/\">문서</a>"
+
+#. Author of the plugin
+#: plugin.php
+msgid "OnTheGoSystems"
+msgstr "OnTheGoSystems"
+
+#. Author URI of the plugin
+#: plugin.php
+msgid "http://www.onthegosystems.com/"
+msgstr "http://www.onthegosystems.com/"
+
+#: plugin.php:86
+msgid "Please activate WPML Multilingual CMS to have WPML Troubleshooting working."
+msgstr "WPML 문제 해결 기능을 사용하려면 WPML Multilingual CMS를 활성화하십시오."
+
+#: plugin.php:99
+msgid "WPML Troubleshooting needs WPML 5.0.0 or newer. Please update WPML first."
+msgstr "WPML 문제 해결을 사용하려면 WPML 5.0.0 이상 버전이 필요합니다. 먼저 WPML을 업데이트하십시오."
+
+#. translators: Error message returned when a request from the browser cannot be trusted and is turned away.
+#: src/Ajax/RepairTypeAssignmentsAjaxController.php:39
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:80
+msgid "Invalid request!"
+msgstr "잘못된 요청입니다!"
+
+#: src/Endpoints/SingleUrlCache/Endpoint.php:33
+msgid "You do not have permission to manage troubleshooting tools."
+msgstr "문제 해결 도구를 관리할 권한이 없습니다."
+
+#. translators: Error message returned when a request from the browser cannot be trusted and is turned away.
+#: src/Engine/WPML_Troubleshoot_Action.php:31
+msgid "Invalid nonce."
+msgstr "잘못된 nonce입니다."
+
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:29
+msgid "Some parameters are missing for this request."
+msgstr "이 요청에 필요한 일부 파라미터가 누락되었습니다."
+
+#. translators: Progress message on the Troubleshooting screen. %d: the number of the group of items being worked through.
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:45
+#, php-format
+msgid "Running now batch #%d"
+msgstr "현재 배치 #%d 실행 중"
+
+#. translators: Message shown when a repair on the Troubleshooting screen has finished. %1$d: how many posts were worked through, %2$s: the name of the content type.
+#: src/Engine/WPML_Troubleshoot_Sync_Posts_Taxonomies.php:53
+#, php-format
+msgid "Completed: %1$d posts were processed for \"%2$s\"."
+msgstr "완료: “%2$s”에 대해 %1$d개의 포스트가 처리되었습니다."
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:41
+msgid "Token is not defined"
+msgstr "토큰이 정의되지 않았습니다"
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:45
+msgid "ICanLocalize.com is already active and authorized"
+msgstr "ICanLocalize.com이 이미 활성화되어 있으며 인증되었습니다"
+
+#. translators: Message shown after a translation service was set up and can be used.
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:66
+msgid "Service activated."
+msgstr "서비스가 활성화되었습니다."
+
+#: src/Integration/ICLToATEMigration/Endpoints/AuthenticateICL.php:72
+msgid "The authentication didn't work. Please make sure you entered your details correctly and try again."
+msgstr "인증에 실패했습니다. 세부 정보를 올바르게 입력했는지 확인하고 다시 시도하십시오."
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/GetFromICL.php:34
+msgid "Error happened! Please try again."
+msgstr "오류가 발생했습니다! 다시 시도하십시오."
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/Save.php:92
+msgid "There was an error when saving the following translators:"
+msgstr "다음 번역가를 저장하는 중 오류가 발생했습니다:"
+
+#: src/Integration/ICLToATEMigration/Endpoints/Translators/Save.php:96
+msgid "The translators were saved successfully."
+msgstr "번역가가 성공적으로 저장되었습니다."
+
+#: src/Integration/StringTranslation/BackendHooks.php:33
+msgid "Show custom MO Files Pre-generation dialog box"
+msgstr "사용자 정의 MO 파일 사전 생성 대화 상자 표시"
+
+#: src/Integration/StringTranslation/BackendHooks.php:40
+#: src/Tool/DatabaseStringsController.php:129
+#: src/Tools/DbStringsTools.php:90
+msgid "Cleanup and optimize string tables"
+msgstr "문자열 테이블 정리 및 최적화"
+
+#: src/Integration/StringTranslation/BackendHooks.php:41
+msgid "Cleanup and optimization completed!"
+msgstr "정리 및 최적화가 완료되었습니다!"
+
+#: src/Integration/StringTranslation/BackendHooks.php:46
+#: src/Tool/DatabaseStringsController.php:243
+#: src/Tools/DbStringsTools.php:93
+msgid "Check for string issues"
+msgstr "문자열 문제 확인"
+
+#. translators: Name of the WPML Support screen: the admin menu item, the page heading, and the back-link that returns to it. Noun (help from the WPML support team), not the verb "to support".
+#: src/Integration/StringTranslation/StringTroubleshootingMenuAlias.php:106
+msgid "Support"
+msgstr "지원"
+
+#. translators: Answer returned when a job on the Troubleshooting screen went through.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-clear-ts.php:37
+msgid "Ok!"
+msgstr "확인!"
+
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-clear-ts.php:39
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:102
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:112
+msgid "You can't do that!"
+msgstr "그렇게 할 수 없습니다!"
+
+#. translators: Question asked before the work sent to a translation service is dropped. %1$s: the name of that service.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:81
+#, php-format
+msgid "Are you sure you want to reset the %1$s translation process?"
+msgstr "%1$s 번역 프로세스를 재설정하시겠습니까?"
+
+#. translators: Message shown after the work sent to a translation service was dropped. %1$s: the name of that service.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:184
+#, php-format
+msgid "The translation process with %1$s was reset."
+msgstr "%1$s와의 번역 프로세스가 재설정되었습니다."
+
+#. translators: Message shown after the site was disconnected from a translation service. %1$s: the name of that service, in both places. "the translators tab" is a tab of the Translation Management screen.
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:187
+#, php-format
+msgid "Your site was successfully disconnected from %1$s. Go to the translators tab to connect a new %1$s account or use a different translation service."
+msgstr "사이트가 %1$s에서 성공적으로 연결 해제되었습니다. 번역가 탭으로 이동하여 새 %1$s 계정을 연결하거나 다른 번역 서비스를 사용하십시오."
+
+#: src/Integration/TranslationManagement/class-wpml-tm-troubleshooting-reset-pro-trans-config.php:189
+msgid "PRO translation has been reset."
+msgstr "전문 번역이 재설정되었습니다."
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:18
+msgid "Reset preferred translation service"
+msgstr "선호하는 번역 서비스 재설정"
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:19
+msgid "Reset and fetch  local preferred translation service to use Preferred Translation Service configured on WPML.org account."
+msgstr "로컬 선호 번역 서비스를 재설정하고 가져와서 WPML.org 계정에 구성된 선호 번역 서비스를 사용합니다."
+
+#: src/Integration/TranslationManagement/ResetPreferredTranslationService.php:20
+msgid "Reset & Fetch"
+msgstr "재설정 및 가져오기"
+
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:36
+msgid "Synchronize local job ids with ATE jobs"
+msgstr "로컬 작업 ID를 ATE 작업과 동기화"
+
+#: src/Integration/TranslationManagement/SynchronizeSourceIdOfATEJobs/TriggerSynchronization.php:44
+msgid "Synchronize local job ids with their ATE counterparts. You will have to refresh a few times any admin page to accomplish the process."
+msgstr "로컬 작업 ID를 해당 ATE 작업 ID와 동기화합니다. 프로세스를 완료하려면 관리자 페이지를 몇 번 새로 고침해야 합니다."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:38
+msgid "No translation job IDs were provided."
+msgstr "제공된 번역 작업 ID가 없습니다."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:62
+msgid "No matching remote translation jobs were found for the provided job IDs."
+msgstr "제공된 작업 ID에 대해 일치하는 원격 번역 작업을 찾을 수 없습니다."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:84
+msgid "Invalid request: missing job IDs or the security check failed."
+msgstr "잘못된 요청: 작업 ID가 누락되었거나 보안 확인에 실패했습니다."
+
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:98
+msgid "Fix WPML Translation Jobs \"tp_id\" field"
+msgstr "WPML 번역 작업 “tp_id” 필드 수정"
+
+#. translators: Explanation under a tool on the Troubleshooting screen. "It" is that tool. "tp_id" and "rid" are field names and stay as they are; "in progress" is the wording of a translation state.
+#: src/Integration/TranslationManagement/WPML_TM_Troubleshooting_Fix_Translation_Jobs_TP_ID.php:100
+msgid "Fixes the \"tp_id\" field of WPML ranslation jobs and set the status to \"in progress\" (it requires manual action to re-sync translation status + download translations). It accepts comma separated values of translation job IDs (rid)."
+msgstr "WPML 번역 작업의 “tp_id” 필드를 수정하고 상태를 “in progress”로 설정합니다(번역 상태 재동기화 및 번역 다운로드를 위해 수동 작업이 필요함). 쉼표로 구분된 번역 작업 ID(rid) 값을 허용합니다."
+
+#: src/Tool/ATESyncController.php:41
+msgid "Synchronize with the <b>Advanced Translation Editor</b>"
+msgstr "<b>고급 번역 에디터</b>와 동기화"
+
+#: src/Tool/ATESyncController.php:44
+msgid "Re-align local records with the state on the <b>Advanced Translation Editor</b> server."
+msgstr "로컬 레코드를 <b>고급 번역 에디터</b> 서버의 상태와 다시 맞춥니다."
+
+#. translators: Warning above a group of tools on WPML → Support. "These" are the tools below it.
+#: src/Tool/ATESyncController.php:53
+msgid "Only run these when WPML Support asks you to"
+msgstr "WPML 지원팀에서 요청한 경우에만 실행하십시오"
+
+#: src/Tool/ATESyncController.php:56
+msgid "These tools push local data to overwrite the ATE server's view. Running them at the wrong time can unassign translators, reset job ownership, or duplicate jobs."
+msgstr "이 도구들은 로컬 데이터를 푸시하여 ATE 서버의 정보를 덮어씁니다. 잘못된 시점에 실행하면 번역가 할당이 취소되거나, 작업 소유권이 재설정되거나, 작업이 복제될 수 있습니다."
+
+#: src/Tool/ATESyncController.php:64
+msgid "Synchronize local job IDs with ATE"
+msgstr "로컬 작업 ID를 ATE와 동기화"
+
+#: src/Tool/ATESyncController.php:67
+msgid "Reconciles the job IDs in your local database with the IDs on the ATE server when the two have drifted apart. Use to unblock jobs that appear stuck or can't be opened in the editor."
+msgstr "로컬 데이터베이스의 작업 ID와 ATE 서버의 ID가 서로 어긋난 경우 이를 일치시킵니다. 중단된 것처럼 보이거나 에디터에서 열 수 없는 작업을 해결할 때 사용하십시오."
+
+#: src/Tool/ATESyncController.php:73
+#: src/Tool/ATESyncController.php:98
+#: src/Tool/DatabaseStringsController.php:310
+#: src/Tool/DatabaseStringsController.php:607
+#: src/Tool/FixTranslationsController.php:213
+msgid "I understand and want to proceed"
+msgstr "내용을 이해했으며 계속 진행하겠습니다"
+
+#: src/Tool/ATESyncController.php:81
+msgid "Synchronize job IDs"
+msgstr "작업 ID 동기화"
+
+#: src/Tool/ATESyncController.php:89
+msgid "Synchronize translators and translation managers with ATE"
+msgstr "번역가 및 번역 관리자를 ATE와 동기화"
+
+#: src/Tool/ATESyncController.php:92
+msgid "Re-pushes your current translator and translation-manager assignments to the ATE server. Use when translators are missing from the ATE-side assignment list, or are assigned to jobs they should not see."
+msgstr "현재 번역가 및 번역 관리자 할당 정보를 ATE 서버로 다시 푸시합니다. ATE 측 할당 목록에서 번역가가 누락되었거나, 보지 않아야 할 작업에 할당된 경우에 사용하십시오."
+
+#: src/Tool/ATESyncController.php:106
+msgid "Synchronize translators and managers"
+msgstr "번역가 및 관리자 동기화"
+
+#. translators: Status shown next to a button on WPML → Support while its action is running.
+#: src/Tool/ATESyncController.php:145
+#: src/Tool/DatabaseStringsController.php:378
+#: src/Tool/DatabaseStringsController.php:423
+#: src/Tool/DatabaseStringsController.php:497
+#: src/Tool/FixLanguageDataController.php:52
+#: src/Tool/FixTranslationsController.php:54
+#: src/Tool/UrlResolutionCacheSection.php:60
+msgid "Working…"
+msgstr "작업 중…"
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished.
+#: src/Tool/ATESyncController.php:152
+#: src/Tool/DatabaseStringsController.php:382
+#: src/Tool/DatabaseStringsController.php:566
+#: src/Tool/FixTranslationsController.php:52
+msgid "Done."
+msgstr "완료."
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished.
+#: src/Tool/ATESyncController.php:153
+msgid "One of the syncs failed. Please retry."
+msgstr "동기화 중 하나가 실패했습니다. 다시 시도하십시오."
+
+#: src/Tool/ATESyncController.php:158
+#: src/Tool/DatabaseStringsController.php:386
+#: src/Tool/DatabaseStringsController.php:442
+#: src/Tool/DatabaseStringsController.php:516
+#: src/Tool/DatabaseStringsController.php:570
+#: src/Tool/FixLanguageDataController.php:53
+#: src/Tool/FixTranslationsController.php:55
+#: src/Tool/InternalLinksController.php:72
+msgid "Something went wrong. Please retry."
+msgstr "문제가 발생했습니다. 다시 시도하십시오."
+
+#: src/Tool/DatabaseStringsController.php:75
+#: src/Tools/DbStringsTools.php:81
+msgid "Database & strings maintenance"
+msgstr "데이터베이스 및 문자열 유지 관리"
+
+#: src/Tool/DatabaseStringsController.php:78
+msgid "Direct operations on WPML's database tables and string-translation storage."
+msgstr "WPML의 데이터베이스 테이블 및 문자열 번역 저장소에 대한 직접 작업입니다."
+
+#: src/Tool/DatabaseStringsController.php:87
+msgid "These tools can permanently delete or corrupt translation data"
+msgstr "이 도구들은 번역 데이터를 영구적으로 삭제하거나 손상시킬 수 있습니다"
+
+#. translators: %s renders the literal "Make a full database backup first" in bold.
+#: src/Tool/DatabaseStringsController.php:93
+#, php-format
+msgid "Only run when WPML Support has reviewed your situation and asked you to. %s WPML will not be able to recover translations lost here."
+msgstr "WPML 지원팀에서 상황을 검토하고 요청한 경우에만 실행하십시오. %s 여기서 손실된 번역은 WPML에서 복구할 수 없습니다."
+
+#: src/Tool/DatabaseStringsController.php:94
+msgid "Make a full database backup first."
+msgstr "먼저 데이터베이스 전체 백업을 수행하십시오."
+
+#: src/Tool/DatabaseStringsController.php:112
+#: src/Tools/DbStringsTools.php:89
+msgid "Database Tables Optimization"
+msgstr "데이터베이스 테이블 최적화"
+
+#. translators: Description of a Support tool on WPML → Support. %1$s, %2$s and %3$s: the names of three database tables, each shown in a code box. %4$s: a link, already wrapped in its tags, to the documentation for this tool.
+#: src/Tool/DatabaseStringsController.php:115
+#, php-format
+msgid "Compresses WPML's translation tables (%1$s, %2$s, %3$s). Applies only to sites created before WPML 4.8, and only while the tables still hold redundant data. %4$s"
+msgstr "WPML의 번역 테이블(%1$s, %2$s, %3$s)을 압축합니다. WPML 4.8 이전에 생성된 사이트에서 테이블에 여전히 중복 데이터가 있는 경우에만 적용됩니다. %4$s"
+
+#. translators: Link on the Database Tables Optimization tool, opening the page that explains what the tool does.
+#: src/Tool/DatabaseStringsController.php:121
+msgid "Learn how this works"
+msgstr "작동 방식 알아보기"
+
+#: src/Tool/DatabaseStringsController.php:123
+msgid "Optimize translation tables"
+msgstr "번역 테이블 최적화"
+
+#. translators: %s renders the literal ".mo" file extension.
+#: src/Tool/DatabaseStringsController.php:133
+#, php-format
+msgid "Drops the <b>String Translation</b> cache and re-indexes the strings tables. Applies only to sites originally translated before WPML 4.3, and only when every custom %s file is already generated."
+msgstr "<b>문자열 번역</b> 캐시를 삭제하고 문자열 테이블을 재색인합니다. 원래 WPML 4.3 이전에 번역된 사이트에서 모든 사용자 정의 %s 파일이 이미 생성된 경우에만 적용됩니다."
+
+#: src/Tool/DatabaseStringsController.php:138
+msgid "Clean up and optimize strings"
+msgstr "문자열 정리 및 최적화"
+
+#: src/Tool/DatabaseStringsController.php:148
+#: src/Tools/DbStringsTools.php:91
+msgid "Remove ghost entries from translation tables"
+msgstr "번역 테이블에서 고스트 항목 제거"
+
+#. translators: %s renders the literal `wp_icl_translations`.
+#: src/Tool/DatabaseStringsController.php:151
+#, php-format
+msgid "Deletes rows in %s that point to posts or terms that no longer exist. Only use when support has confirmed that orphaned rows are your actual problem."
+msgstr "더 이상 존재하지 않는 포스트나 용어를 가리키는 %s의 행을 삭제합니다. 지원팀에서 고아 행(orphaned rows)이 실제 문제임을 확인한 경우에만 사용하십시오."
+
+#: src/Tool/DatabaseStringsController.php:154
+msgid "Remove ghost entries"
+msgstr "고스트 항목 제거"
+
+#: src/Tool/DatabaseStringsController.php:166
+#: src/Tools/DbStringsTools.php:92
+msgid "Show custom MO files pre-generation dialog"
+msgstr "사용자 정의 MO 파일 사전 생성 대화 상자 표시"
+
+#. translators: Message on WPML → Support. %1$s: the menu path "WPML → Translations → Strings", in bold, %2$s: the file extension ".mo" in a code box; it appears twice.
+#: src/Tool/DatabaseStringsController.php:172
+#, php-format
+msgid "This action prepares the custom %2$s files dialog to appear the next time you open %1$s. Use that dialog to choose which custom %2$s files to regenerate."
+msgstr "이 작업은 다음에 %1$s을(를) 열 때 사용자 정의 %2$s 파일 대화 상자가 나타나도록 준비합니다. 해당 대화 상자를 사용하여 재생성할 사용자 정의 %2$s 파일을 선택하십시오."
+
+#: src/Tool/DatabaseStringsController.php:173
+msgid "WPML → Translations → Strings"
+msgstr "WPML → 번역 → 문자열"
+
+#: src/Tool/DatabaseStringsController.php:183
+msgid "Show the dialog on the Strings tab"
+msgstr "문자열 탭에 대화 상자 표시"
+
+#: src/Tool/DatabaseStringsController.php:191
+#: src/Tools/DbStringsTools.php:96
+msgid "Remove language suffixes from taxonomy names"
+msgstr "분류 체계 이름에서 언어 접미사 제거"
+
+#: src/Tool/DatabaseStringsController.php:194
+msgid "Strips language-code suffixes from taxonomy term names. Appears after certain legacy migrations where WPML created taxonomy duplicates with language-coded names."
+msgstr "분류 체계 용어 이름에서 언어 코드 접미사를 제거합니다. WPML이 언어 코드가 포함된 이름으로 분류 체계 복제본을 생성했던 특정 레거시 마이그레이션 후에 나타납니다."
+
+#: src/Tool/DatabaseStringsController.php:199
+msgid "No taxonomy terms with language suffixes were detected."
+msgstr "언어 접미사가 있는 분류 체계 용어가 감지되지 않았습니다."
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: the name a category or tag had before. Noun phrase, not a verb.
+#: src/Tool/DatabaseStringsController.php:207
+msgid "Old name"
+msgstr "이전 이름"
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: the name that category or tag has now. Noun phrase, not a verb.
+#: src/Tool/DatabaseStringsController.php:208
+msgid "Updated name"
+msgstr "업데이트된 이름"
+
+#. translators: Column heading in the renamed-terms table on WPML → Support: which categories or tags the change touches.
+#: src/Tool/DatabaseStringsController.php:209
+msgid "Affected taxonomies"
+msgstr "영향을 받는 분류 체계"
+
+#: src/Tool/DatabaseStringsController.php:234
+msgid "Update term names"
+msgstr "용어 이름 업데이트"
+
+#: src/Tool/DatabaseStringsController.php:246
+msgid "Scans WPML's string-translation tables for inconsistencies — duplicate string IDs, broken context links, mismatched languages — and reports what it finds. Read-only: nothing is changed until you act on the report."
+msgstr "WPML의 문자열 번역 테이블에서 중복 문자열 ID, 손상된 컨텍스트 링크, 일치하지 않는 언어 등의 불일치 사항을 스캔하고 결과를 보고합니다. 읽기 전용이며, 보고서에 따라 조치를 취하기 전까지는 아무것도 변경되지 않습니다."
+
+#. translators: Link text on WPML → Support that starts a database check. Verb phrase, imperative.
+#: src/Tool/DatabaseStringsController.php:249
+msgid "Run check"
+msgstr "검사 실행"
+
+#: src/Tool/DatabaseStringsController.php:256
+#: src/Tool/DatabaseStringsController.php:263
+#: src/Tools/DbStringsTools.php:94
+msgid "Fix element_type collation"
+msgstr "element_type 콜레이션 수정"
+
+#. translators: Description of a Support tool on WPML → Support. %1$s: the name of a database column, in a code box, %2$s: the name of a database table, in a code box. "Illegal mix of collations" is a database error message and stays in English.
+#: src/Tool/DatabaseStringsController.php:259
+#, php-format
+msgid "Aligns the collation of the %1$s column in %2$s with the rest of the database. Mismatched collation here causes \"Illegal mix of collations\" errors when WPML joins translation rows with WordPress posts or terms."
+msgstr "%2$s에 있는 %1$s 열의 콜레이션을 데이터베이스의 나머지 부분과 맞춥니다. 여기서 콜레이션이 일치하지 않으면 WPML이 번역 행을 WordPress 포스트 또는 용어와 결합할 때 “Illegal mix of collations” 오류가 발생합니다."
+
+#: src/Tool/DatabaseStringsController.php:273
+#: src/Tool/DatabaseStringsController.php:275
+#: src/Tools/DbStringsTools.php:95
+msgid "Fix WPML tables collation"
+msgstr "WPML 테이블 콜레이션 수정"
+
+#: src/Tool/DatabaseStringsController.php:274
+msgid "Converts every WPML table to match the collation of WordPress's core tables. Use when string searches return wrong results, or when joins between WPML tables and WordPress tables raise collation errors. Broader than \"Fix element_type collation\" — touches all WPML tables, not just one column."
+msgstr "모든 WPML 테이블을 WordPress 코어 테이블의 콜레이션과 일치하도록 변환합니다. 문자열 검색 결과가 잘못 나오거나 WPML 테이블과 WordPress 테이블 간의 조인 시 콜레이션 오류가 발생할 때 사용하십시오. “element_type 콜레이션 수정”보다 범위가 넓으며, 단일 열이 아닌 모든 WPML 테이블에 영향을 미칩니다."
+
+#: src/Tool/DatabaseStringsController.php:287
+#: src/Tool/DatabaseStringsController.php:315
+#: src/Tools/DbStringsTools.php:97
+msgid "Fix tp_id field"
+msgstr "“tp_id” 필드 수정"
+
+#. translators: %s is the literal `tp_id`.
+#: src/Tool/DatabaseStringsController.php:293
+#, php-format
+msgid "Repairs the %s column on the listed translation jobs and resets each job's status to in-progress. After running it, manually re-sync the translation status and download the translations for the affected jobs."
+msgstr "나열된 번역 작업의 %s 열을 복구하고 각 작업의 상태를 “in-progress”로 재설정합니다. 실행 후에는 수동으로 번역 상태를 재동기화하고 영향을 받은 작업의 번역을 다운로드하십시오."
+
+#: src/Tool/DatabaseStringsController.php:300
+msgid "Translation job IDs (rid)"
+msgstr "번역 작업 ID (rid)"
+
+#: src/Tool/DatabaseStringsController.php:304
+msgid "Comma-separated list of remote job IDs."
+msgstr "쉼표로 구분된 원격 작업 ID 목록입니다."
+
+#: src/Tool/DatabaseStringsController.php:419
+msgid "Enter at least one job ID."
+msgstr "최소 하나 이상의 작업 ID를 입력하십시오."
+
+#: src/Tool/DatabaseStringsController.php:440
+msgid "Done. Re-sync the affected jobs from Translation Management."
+msgstr "완료되었습니다. 번역 관리에서 영향을 받은 작업을 재동기화하십시오."
+
+#: src/Tool/DatabaseStringsController.php:465
+msgid "Nothing to do — the tables were already optimized."
+msgstr "수행할 작업이 없습니다. 테이블이 이미 최적화되어 있습니다."
+
+#. translators: %d is replaced client-side with the number of rows the Optimize translation tables button drained.
+#: src/Tool/DatabaseStringsController.php:466
+#, php-format
+msgid "Optimized %d row(s)."
+msgstr "%d개의 행이 최적화되었습니다."
+
+#: src/Tool/DatabaseStringsController.php:535
+msgid "Select at least one term."
+msgstr "최소 하나 이상의 용어를 선택하십시오."
+
+#. translators: Status shown next to a button on WPML → Support while the change is being written.
+#: src/Tool/DatabaseStringsController.php:539
+msgid "Updating…"
+msgstr "업데이트 중…"
+
+#: src/Tool/DatabaseStringsController.php:564
+msgid "All term names updated."
+msgstr "모든 용어 이름이 업데이트되었습니다."
+
+#. translators: Status shown next to a button on WPML → Support once its action has finished. Adjective, not the verb "to do".
+#: src/Tool/FixLanguageDataController.php:50
+msgid "Done"
+msgstr "완료"
+
+#. translators: Status shown next to a button on WPML → Support while its action is running.
+#: src/Tool/FixLanguageDataController.php:55
+msgid "Running…"
+msgstr "실행 중…"
+
+#: src/Tool/FixLanguageDataController.php:60
+#: src/Tools/FixToolsTools.php:147
+msgid "Fix language data"
+msgstr "언어 데이터 수정"
+
+#: src/Tool/FixLanguageDataController.php:63
+msgid "Repair language-related fields on content. These tools are safe to run — they don't delete anything, they only fill in or align missing information."
+msgstr "콘텐츠의 언어 관련 필드를 복구합니다. 이 도구들은 아무것도 삭제하지 않고 누락된 정보를 채우거나 정렬만 하므로 실행해도 안전합니다."
+
+#. translators: Name of a Support tool section: its entry in the Support search list, its heading and its button label. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:73
+#: src/Tool/FixLanguageDataController.php:81
+#: src/Tools/FixToolsTools.php:134
+msgid "Set language information"
+msgstr "언어 정보 설정"
+
+#: src/Tool/FixLanguageDataController.php:76
+msgid "Assigns the site's default language to any content that was created without language metadata — typically content imported from another tool or added before WPML was active. Existing language assignments are preserved."
+msgstr "언어 메타데이터 없이 생성된 모든 콘텐츠(일반적으로 다른 도구에서 가져왔거나 WPML이 활성화되기 전에 추가된 콘텐츠)에 사이트의 기본 언어를 할당합니다. 기존 언어 할당은 유지됩니다."
+
+#: src/Tool/FixLanguageDataController.php:88
+msgid "Synchronize posts' taxonomies"
+msgstr "포스트의 분류 체계 동기화"
+
+#: src/Tool/FixLanguageDataController.php:91
+msgid "Re-applies the original post's category and tag assignments to its translations. Fixes translations that are missing categories or tags after a migration."
+msgstr "원본 포스트의 카테고리 및 태그 할당을 해당 번역본에 다시 적용합니다. 마이그레이션 후 카테고리나 태그가 누락된 번역본을 수정합니다."
+
+#: src/Tool/FixLanguageDataController.php:110
+msgid "No translatable post types"
+msgstr "번역 가능한 포스트 유형 없음"
+
+#. translators: Button label on WPML → Support. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:116
+msgid "Synchronize taxonomies"
+msgstr "분류 체계 동기화"
+
+#: src/Tool/FixLanguageDataController.php:125
+#: src/Tools/FixToolsTools.php:136
+msgid "Fix terms count"
+msgstr "용어 수 수정"
+
+#: src/Tool/FixLanguageDataController.php:128
+msgid "Recalculates the post counts shown next to categories, tags, and other taxonomy terms. Run this if the numbers in your taxonomy lists look wrong — for example, a category showing 0 posts when there are translated posts assigned to it."
+msgstr "카테고리, 태그 및 기타 분류 체계 용어 옆에 표시되는 포스트 수를 다시 계산합니다. 분류 목록의 숫자가 잘못된 경우(예: 할당된 번역 포스트가 있는데 카테고리에 포스트가 0개로 표시되는 경우) 이 기능을 실행하십시오."
+
+#. translators: Button label on WPML → Support that counts the items in each category and tag again. Verb phrase, imperative.
+#: src/Tool/FixLanguageDataController.php:133
+msgid "Recalculate counts"
+msgstr "개수 다시 계산"
+
+#: src/Tool/FixLanguageDataController.php:140
+#: src/Tools/FixToolsTools.php:137
+msgid "Fix post type assignment"
+msgstr "포스트 유형 할당 수정"
+
+#: src/Tool/FixLanguageDataController.php:143
+msgid "Repairs translations whose post type doesn't match the original — for instance, a translated product saved as a regular post. Usually happens after importing content or switching how custom post types are registered."
+msgstr "포스트 유형이 원본과 일치하지 않는 번역본(예: 일반 포스트로 저장된 번역된 상품)을 복구합니다. 주로 콘텐츠를 가져오거나 사용자 정의 포스트 유형 등록 방식을 변경한 후에 발생합니다."
+
+#: src/Tool/FixLanguageDataController.php:148
+msgid "Fix post types"
+msgstr "포스트 유형 수정"
+
+#: src/Tool/FixLanguageDataController.php:336
+msgid "Languages without a country"
+msgstr "국가가 지정되지 않은 언어"
+
+#. translators: %d: number of languages with no country set.
+#: src/Tool/FixLanguageDataController.php:343
+#, php-format
+msgid "%d language is set up for a specific country but has none chosen."
+msgid_plural "%d languages are set up for a specific country but have none chosen."
+msgstr[0] "%d개의 언어가 특정 국가용으로 설정되었으나 선택된 국가가 없습니다."
+
+#. translators: Note on WPML → Support. %1$s: opening link tag, %2$s: closing link tag; together they turn "Settings → Languages" into a link. hreflang is an HTML attribute name and stays as it is.
+#: src/Tool/FixLanguageDataController.php:363
+#, php-format
+msgid "Nothing is broken and nothing needs doing: these languages work as they are. Choosing a country for one on the %1$sSettings → Languages%2$s page sets its hreflang tag to match, and offers to move its locale, flag and names with it."
+msgstr "손상된 부분은 없으며 조치가 필요하지 않습니다. 이 언어들은 현재 상태 그대로 작동합니다. %1$s설정 → 언어%2$s 페이지에서 국가를 선택하면 해당 hreflang 태그가 일치하도록 설정되며, 로캘, 국기 및 이름을 함께 이동할 수 있습니다."
+
+#: src/Tool/FixLanguageDataController.php:417
+msgid "Languages set up for a different country"
+msgstr "다른 국가로 설정된 언어"
+
+#. translators: %d: number of languages whose WordPress locale does not match their country.
+#: src/Tool/FixLanguageDataController.php:424
+#, php-format
+msgid "%d language's WordPress locale does not match the country it is set to."
+msgid_plural "%d languages' WordPress locales do not match the countries they are set to."
+msgstr[0] "%d개 언어의 WordPress 로캘이 설정된 국가와 일치하지 않습니다."
+
+#. translators: Follows a language's name on WPML → Support when the name stored in the database differs from the one the Languages page shows. %s: the name stored in the database.
+#: src/Tool/FixLanguageDataController.php:455
+#, php-format
+msgid "(saved as %s)"
+msgstr "(%s(으)로 저장됨)"
+
+#. translators: End of the sentence "<language name> is set to <locale>, its country implies <locale>" on WPML → Support. "Its" is the language. %1$s: the WordPress locale saved for that language, %2$s: the locale its country would give.
+#: src/Tool/FixLanguageDataController.php:466
+#, php-format
+msgid "set to %1$s, its country implies %2$s"
+msgstr "%1$s(으)로 설정됨, 해당 국가는 %2$s을(를) 의미함"
+
+#. translators: Note on WPML → Support. %1$s: opening link tag, %2$s: closing link tag; together they turn "Settings → Languages" into a link.
+#: src/Tool/FixLanguageDataController.php:479
+#, php-format
+msgid "Nothing is broken: WordPress keeps loading each language in the locale that is stored. You can change the locale on its own on the %1$sSettings → Languages%2$s page, without choosing the country again."
+msgstr "손상된 부분은 없습니다. WordPress는 저장된 로캘로 각 언어를 계속 로드합니다. 국가를 다시 선택하지 않고도 %1$s설정 → 언어%2$s 페이지에서 로캘만 별도로 변경할 수 있습니다."
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support and the heading of its own screen. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:59
+#: src/Tools/FixToolsTools.php:160
+msgid "Fix translations"
+msgstr "번역 수정"
+
+#: src/Tool/FixTranslationsController.php:62
+msgid "Resolve common translation-state problems — stuck statuses, missing categories, stale caches."
+msgstr "중단된 상태, 누락된 카테고리, 오래된 캐시 등 일반적인 번역 상태 문제를 해결합니다."
+
+#: src/Tool/FixTranslationsController.php:68
+#: src/Tools/FixToolsTools.php:168
+msgid "Clear the cache in WPML"
+msgstr "WPML 캐시 지우기"
+
+#: src/Tool/FixTranslationsController.php:71
+msgid "Flushes WPML's internal cache. Often the first thing to try after migrations, plugin updates, or when something looks out of sync."
+msgstr "WPML의 내부 캐시를 비웁니다. 마이그레이션, 플러그인 업데이트 후 또는 동기화가 맞지 않아 보일 때 가장 먼저 시도해 볼 수 있는 작업입니다."
+
+#. translators: Status shown next to the Clear cache button on WPML → Support once the cache has been cleared.
+#: src/Tool/FixTranslationsController.php:75
+msgid "WPML's cache was cleared."
+msgstr "WPML 캐시가 삭제되었습니다."
+
+#. translators: Status shown next to the Clear cache button on WPML → Support when the cache could not be cleared.
+#: src/Tool/FixTranslationsController.php:76
+msgid "Could not clear the cache — please retry."
+msgstr "캐시를 삭제할 수 없습니다. 다시 시도하십시오."
+
+#. translators: Button label on WPML → Support. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:78
+msgid "Clear cache"
+msgstr "캐시 지우기"
+
+#: src/Tool/FixTranslationsController.php:86
+#: src/Tools/FixToolsTools.php:169
+msgid "Retry stuck automatic translations"
+msgstr "중단된 자동 번역 다시 시도"
+
+#: src/Tool/FixTranslationsController.php:89
+msgid "Re-queues automatic translations that got stuck mid-process so they can finish. Use when an automatic translation has been pending for an unusually long time and hasn't completed."
+msgstr "프로세스 중간에 중단된 자동 번역을 다시 대기열에 추가하여 완료될 수 있도록 합니다. 자동 번역이 비정상적으로 오랫동안 대기 중이며 완료되지 않을 때 사용하십시오."
+
+#: src/Tool/FixTranslationsController.php:95
+msgid "Retry stuck translations"
+msgstr "중단된 번역 다시 시도"
+
+#: src/Tool/FixTranslationsController.php:103
+#: src/Tools/FixToolsTools.php:170
+msgid "Refresh Translation Services"
+msgstr "번역 서비스 새로 고침"
+
+#. translators: %1$s and %2$s wrap a link to Settings → Translation Services.
+#: src/Tool/FixTranslationsController.php:109
+#, php-format
+msgid "Re-fetches the list of available translation services from WPML. Run this if a service you signed up for isn't appearing in %1$sSettings → Translation Services%2$s, or after enabling a new service in your WPML account."
+msgstr "WPML에서 사용 가능한 번역 서비스 목록을 다시 가져옵니다. 가입한 서비스가 %1$s설정 → 번역 서비스%2$s에 나타나지 않거나, WPML 계정에서 새 서비스를 활성화한 후에 실행하십시오."
+
+#. translators: Button label on WPML → Support that fetches the list of translation services again. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:118
+msgid "Refresh services"
+msgstr "서비스 새로 고침"
+
+#: src/Tool/FixTranslationsController.php:126
+#: src/Tools/FixToolsTools.php:171
+msgid "Update domain name in language switcher"
+msgstr "언어 전환기의 도메인 이름 업데이트"
+
+#: src/Tool/FixTranslationsController.php:129
+msgid "Rewrites the domain stored against each language in the language switcher to match the site's current home URL. Run this after a domain change or migration if the language switcher still points to the old domain."
+msgstr "언어 전환기에 각 언어별로 저장된 도메인을 사이트의 현재 홈 URL과 일치하도록 다시 씁니다. 도메인 변경 또는 마이그레이션 후에도 언어 전환기가 여전히 이전 도메인을 가리키는 경우 실행하십시오."
+
+#. translators: Button label on WPML → Support that writes the site's current web address into the language switcher. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:135
+msgid "Update domain"
+msgstr "도메인 업데이트"
+
+#. translators: Name of a Support tool section: its entry in the Support search list and its heading. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:143
+#: src/Tools/FixToolsTools.php:173
+msgid "Assign translation status to duplicates"
+msgstr "복제본에 번역 상태 할당"
+
+#: src/Tool/FixTranslationsController.php:146
+msgid "Marks WPML duplicates with a proper translation status so they appear to translation-management and automatic-translation tools. Run after bulk duplication."
+msgstr "WPML 복제본에 적절한 번역 상태를 표시하여 번역 관리 및 자동 번역 도구에 나타나도록 합니다. 대량 복제 후에 실행하십시오."
+
+#. translators: Button label on WPML → Support that gives duplicated content a translation status. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:151
+msgid "Assign status"
+msgstr "상태 할당"
+
+#: src/Tool/FixTranslationsController.php:159
+msgid "Enable other translation services"
+msgstr "기타 번역 서비스 활성화"
+
+#: src/Tool/FixTranslationsController.php:162
+msgid "Temporarily ignores the preferred translation service configured in your WPML.org account so you can choose another provider. You can refresh the account preference below."
+msgstr "WPML.org 계정에 구성된 선호 번역 서비스를 일시적으로 무시하여 다른 제공업체를 선택할 수 있도록 합니다. 아래에서 계정 기본 설정을 새로 고칠 수 있습니다."
+
+#: src/Tool/FixTranslationsController.php:167
+msgid "Enable other services"
+msgstr "기타 서비스 활성화"
+
+#: src/Tool/FixTranslationsController.php:175
+#: src/Tools/FixToolsTools.php:174
+msgid "Refresh preferred translation service"
+msgstr "선호하는 번역 서비스 새로 고침"
+
+#: src/Tool/FixTranslationsController.php:178
+msgid "Fetches the preferred translation service configured in your WPML.org account and applies it to this site again."
+msgstr "WPML.org 계정에 구성된 선호 번역 서비스를 가져와 이 사이트에 다시 적용합니다."
+
+#: src/Tool/FixTranslationsController.php:183
+msgid "Refresh preferred service"
+msgstr "선호 서비스 새로 고침"
+
+#. translators: Name of a Support tool section: its entry in the Support search list, its heading and its button label. Verb phrase, imperative.
+#: src/Tool/FixTranslationsController.php:191
+#: src/Tool/FixTranslationsController.php:220
+#: src/Tools/FixToolsTools.php:176
+msgid "Reset professional translation state"
+msgstr "전문 번역 상태 재설정"
+
+#: src/Tool/FixTranslationsController.php:194
+msgid "Clears ongoing professional-translation jobs on this site and re-enables sending content to translation. Use this if your translation service stopped working or you want to cancel every in-flight job at once."
+msgstr "이 사이트에서 진행 중인 전문 번역 작업을 지우고 콘텐츠 번역 전송을 다시 활성화합니다. 번역 서비스가 작동을 멈췄거나 진행 중인 모든 작업을 한 번에 취소하려는 경우에 사용하십시오."
+
+#: src/Tool/FixTranslationsController.php:204
+msgid "This stops every translation job currently in progress"
+msgstr "현재 진행 중인 모든 번역 작업이 중단됩니다"
+
+#: src/Tool/FixTranslationsController.php:207
+msgid "Work already completed and delivered is kept. Jobs that are in-flight with a translator or service will be cancelled and won't be charged. You'll need to resend them if you still want those translations."
+msgstr "이미 완료되어 전달된 작업은 유지됩니다. 번역가나 서비스에서 진행 중인 작업은 취소되며 비용이 청구되지 않습니다. 해당 번역이 여전히 필요한 경우 다시 전송해야 합니다."
+
+#. translators: Status shown on WPML → Support while the tool reads the site's pages and posts.
+#: src/Tool/InternalLinksController.php:66
+msgid "Scanning posts…"
+msgstr "포스트 스캔 중…"
+
+#. translators: Status shown on WPML → Support while the tool reads the site's texts.
+#: src/Tool/InternalLinksController.php:68
+msgid "Scanning strings…"
+msgstr "문자열 스캔 중…"
+
+#. translators: %s is the number of links that were rewired.
+#: src/Tool/InternalLinksController.php:70
+#, php-format
+msgid "Done — %s legacy links rewired. Your internal links are now in sync."
+msgstr "완료 — %s개의 레거시 링크가 다시 연결되었습니다. 이제 내부 링크가 동기화되었습니다."
+
+#: src/Tool/InternalLinksController.php:71
+msgid "Done. Your internal links are now in sync."
+msgstr "완료되었습니다. 이제 내부 링크가 동기화되었습니다."
+
+#: src/Tool/InternalLinksController.php:76
+#: src/Tools/ResetTools.php:64
+msgid "Update internal links"
+msgstr "내부 링크 업데이트"
+
+#: src/Tool/InternalLinksController.php:79
+msgid "Some posts created before WPML 4.7 still need their internal links rewired to their translated versions. Run once to scan and fix those legacy posts. Newer posts have their links adjusted automatically — this action only applies to sites that carried content over from older WPML versions."
+msgstr "WPML 4.7 이전에 생성된 일부 포스트는 내부 링크를 번역된 버전으로 다시 연결해야 합니다. 이러한 레거시 포스트를 스캔하고 수정하려면 한 번 실행하십시오. 최신 포스트는 링크가 자동으로 조정됩니다. 이 작업은 이전 WPML 버전에서 콘텐츠를 가져온 사이트에만 적용됩니다."
+
+#: src/Tool/InternalLinksController.php:88
+msgid "Your internal links are already in sync."
+msgstr "내부 링크가 이미 동기화되어 있습니다."
+
+#. translators: %s is the URL of the Sticky Links plugin documentation.
+#: src/Tool/InternalLinksController.php:94
+#, php-format
+msgid "WPML keeps internal links updated automatically as you translate content. If you also want to switch language URL formats without breaking links, the %s add-on handles that case."
+msgstr "WPML은 콘텐츠를 번역할 때 내부 링크를 자동으로 업데이트된 상태로 유지합니다. 링크를 깨뜨리지 않고 언어 URL 형식을 변경하려는 경우 %s 애드온이 해당 케이스를 처리합니다."
+
+#. translators: Link text on WPML → Support naming the Sticky Links add-on. Product name: keep it as it is.
+#: src/Tool/InternalLinksController.php:96
+msgid "Sticky Links"
+msgstr "Sticky Links"
+
+#: src/Tool/InternalLinksController.php:106
+msgid "Adjust legacy internal links"
+msgstr "레거시 내부 링크 조정"
+
+#: src/Tool/InternalLinksController.php:109
+msgid "Scans posts that still need link adjustments from before the automatic-tracking change in WPML 4.7. After this completes, the section disappears — it only runs once per site."
+msgstr "WPML 4.7의 자동 추적 변경 이전부터 링크 조정이 필요한 포스트를 스캔합니다. 이 작업이 완료되면 해당 섹션은 사라지며, 사이트당 한 번만 실행됩니다."
+
+#: src/Tool/InternalLinksController.php:115
+msgid "Scan now and adjust links"
+msgstr "지금 스캔 및 링크 조정"
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support and the heading of its own screen. A package is a group of texts from one source, such as a form or a block.
+#: src/Tool/PackagesController.php:36
+#: src/Tools/DbStringsTools.php:104
+msgid "Package management"
+msgstr "패키지 관리"
+
+#: src/Tool/PackagesController.php:39
+msgid "A \"package\" is a bundle of strings that another plugin hands to WPML so they can be translated — a Gravity Form's field labels, a Gutenberg block's preset text, a Toolset custom-post-type's admin labels, a page builder's shortcode strings. Packages are created and kept in sync automatically by the plugins that own them; you normally don't need to open this page."
+msgstr "“패키지”는 다른 플러그인이 번역을 위해 WPML에 전달하는 문자열 묶음입니다(예: Gravity Form의 필드 레이블, Gutenberg 블록의 사전 설정 텍스트, Toolset 사용자 정의 포스트 유형의 관리자 레이블, 페이지 빌더의 단축 코드 문자열 등). 패키지는 해당 소유 플러그인에 의해 자동으로 생성되고 동기화되므로 평소에는 이 페이지를 열 필요가 없습니다."
+
+#: src/Tool/PackagesController.php:42
+msgid "Come here only when a supporter is investigating a specific string that is not showing up for translation, or asks you to remove an orphaned package left over after a plugin was uninstalled. Deleting or re-registering a package here is a recovery action, not configuration."
+msgstr "지원 담당자가 번역에 나타나지 않는 특정 문자열을 조사 중이거나, 플러그인 삭제 후 남겨진 고아 패키지를 제거하라고 요청한 경우에만 이 페이지를 사용하십시오. 여기서 패키지를 삭제하거나 재등록하는 것은 구성 설정이 아닌 복구 작업입니다."
+
+#: src/Tool/PackagesController.php:51
+msgid "Deleting or editing packages here can break translations on your site"
+msgstr "여기서 패키지를 삭제하거나 편집하면 사이트의 번역이 깨질 수 있습니다"
+
+#: src/Tool/PackagesController.php:54
+msgid "These packages are created and maintained by the plugins they belong to. Manual changes here can orphan strings and remove translations from forms, blocks, and templates. Only make changes when WPML Support asks you to."
+msgstr "이 패키지들은 해당 플러그인에 의해 생성되고 유지 관리됩니다. 여기서 수동으로 변경하면 문자열이 고립되거나 양식, 블록 및 템플릿에서 번역이 제거될 수 있습니다. WPML 지원팀에서 요청한 경우에만 변경하십시오."
+
+#. translators: Message on WPML → Support. A package is a group of texts from one source, such as a form or a block. Keep the <b> tags around the plugin name.
+#: src/Tool/PackagesController.php:76
+msgid "Package management requires the WPML String Translation plugin to be active."
+msgstr "패키지 관리를 사용하려면 WPML String Translation 플러그인이 활성화되어 있어야 합니다."
+
+#. translators: Name of a Support tool: its entry in the tool list on WPML → Support, the heading of its own screen, and its button label. Verb phrase, imperative (reset WPML on this site).
+#: src/Tool/ResetController.php:44
+#: src/Tool/ResetController.php:97
+#: src/Tools/ResetTools.php:101
+msgid "Reset WPML"
+msgstr "WPML 재설정"
+
+#: src/Tool/ResetController.php:47
+msgid "Last-resort recovery. This permanently deletes data and cannot be undone. Make a full database backup before running it."
+msgstr "최후의 수단인 복구 방법입니다. 이 작업은 데이터를 영구적으로 삭제하며 취소할 수 없습니다. 실행하기 전에 데이터베이스 전체 백업을 수행하십시오."
+
+#: src/Tool/ResetController.php:54
+#: src/Tools/ResetTools.php:109
+msgid "Reset WPML entirely"
+msgstr "WPML 전체 재설정"
+
+#: src/Tool/ResetController.php:57
+msgid "Deletes every WPML table, removes all language assignments on your content, and deactivates the plugin. Your multilingual site returns to a single-language WordPress install."
+msgstr "모든 WPML 테이블을 삭제하고, 콘텐츠의 모든 언어 할당을 제거하며, 플러그인을 비활성화합니다. 다국어 사이트가 단일 언어 WordPress 설치 상태로 돌아갑니다."
+
+#: src/Tool/ResetController.php:67
+msgid "This isn't a toy button"
+msgstr "이것은 장난으로 누르는 버튼이 아닙니다"
+
+#. translators: Warning on WPML → Support above the reset button. "It" is the reset.
+#: src/Tool/ResetController.php:70
+msgid "It will completely reset WPML and permanently delete all language information from your site. Translated content stays in your WordPress database but loses its connection to other translations and to its language. You'll need to reinstall WPML and rebuild your language setup from scratch. There's no undo."
+msgstr "WPML을 완전히 재설정하고 사이트의 모든 언어 정보를 영구적으로 삭제합니다. 번역된 콘텐츠는 WordPress 데이터베이스에 남아 있지만 다른 번역 및 해당 언어와의 연결이 끊어집니다. WPML을 다시 설치하고 언어 설정을 처음부터 다시 구축해야 합니다. 실행 취소는 불가능합니다."
+
+#. translators: Label of the confirmation checkbox on WPML → Support. "This" is resetting WPML. Written in the first person, as the user saying it.
+#: src/Tool/ResetController.php:80
+msgid "I understand this will permanently delete all of WPML's language data"
+msgstr "이 작업으로 WPML의 모든 언어 데이터가 영구적으로 삭제됨을 이해합니다"
+
+#. translators: %s is the literal phrase the user must type, wrapped in a span.
+#: src/Tool/ResetController.php:87
+#, php-format
+msgid "Type %s to confirm"
+msgstr "확인을 위해 %s을(를) 입력하십시오"
+
+#: src/Tool/ResetController.php:143
+msgid "You do not have permission to reset WPML."
+msgstr "WPML을 재설정할 권한이 없습니다."
+
+#. translators: Shown while a dialog or a panel is still fetching what it has to show.
+#: src/Tool/UrlResolutionCacheSection.php:58
+msgid "Loading…"
+msgstr "로드 중…"
+
+#. translators: Status shown on WPML → Support while the address cache is being built again.
+#: src/Tool/UrlResolutionCacheSection.php:62
+msgid "Rebuilding…"
+msgstr "재구축 중…"
+
+#: src/Tool/UrlResolutionCacheSection.php:63
+msgid "Clear and rebuild cache"
+msgstr "캐시 삭제 및 재구축"
+
+#: src/Tool/UrlResolutionCacheSection.php:64
+msgid "Clear and rebuild the URL resolution cache for this site? Links may temporarily stay in their source language while the cache rebuilds."
+msgstr "이 사이트의 URL 확인 캐시를 삭제하고 재구축하시겠습니까? 캐시가 재구축되는 동안 링크가 일시적으로 원본 언어로 유지될 수 있습니다."
+
+#: src/Tool/UrlResolutionCacheSection.php:65
+msgid "The URL resolution cache request failed."
+msgstr "URL 확인 캐시 요청이 실패했습니다."
+
+#: src/Tool/UrlResolutionCacheSection.php:66
+msgid "The URL resolution cache rebuild is complete."
+msgstr "URL 확인 캐시 재구축이 완료되었습니다."
+
+#: src/Tool/UrlResolutionCacheSection.php:67
+msgid "Preparing the cache rebuild…"
+msgstr "캐시 재구축 준비 중…"
+
+#. translators: Row label on the address-cache block of WPML → Support: which round of the cache the numbers below belong to.
+#: src/Tool/UrlResolutionCacheSection.php:69
+msgid "Generation"
+msgstr "생성"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache has worked out. Adjective describing them, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:71
+msgid "Resolved"
+msgstr "해결됨"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache has not worked out yet. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:73
+msgid "Unresolved"
+msgstr "해결되지 않음"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses still waiting to be processed. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:75
+msgid "Pending"
+msgstr "대기 중"
+
+#. translators: Heading of a count on the address-cache block of WPML → Support: the addresses the cache could not process. Adjective, not a verb.
+#: src/Tool/UrlResolutionCacheSection.php:77
+msgid "Failed"
+msgstr "실패"
+
+#: src/Tool/UrlResolutionCacheSection.php:78
+msgid "Oldest pending item"
+msgstr "가장 오래된 대기 항목"
+
+#: src/Tool/UrlResolutionCacheSection.php:79
+msgid "Last worker run"
+msgstr "마지막 워커 실행"
+
+#: src/Tool/UrlResolutionCacheSection.php:80
+msgid "WP-Cron is disabled. Keep this page open to process cache batches, or configure a system cron runner."
+msgstr "WP-Cron이 비활성화되어 있습니다. 캐시 배치를 처리하려면 이 페이지를 열어 두거나 시스템 크론 러너를 구성하십시오."
+
+#: src/Tool/UrlResolutionCacheSection.php:81
+msgid "URL resolution cache processing appears to be stalled."
+msgstr "URL 확인 캐시 처리가 중단된 것으로 보입니다."
+
+#. translators: Message on WPML → Support. "It" is the database table.
+#: src/Tool/UrlResolutionCacheSection.php:83
+msgid "The URL resolution cache table is missing. It is created automatically on the next admin or front-end request."
+msgstr "URL 확인 캐시 테이블이 없습니다. 다음 관리자 또는 프런트엔드 요청 시 자동으로 생성됩니다."
+
+#: src/Tool/UrlResolutionCacheSection.php:84
+msgid "Last worker error"
+msgstr "마지막 워커 오류"
+
+#. translators: An em dash shown in place of a value on WPML → Support when there is nothing to show. Leave it as it is.
+#: src/Tool/UrlResolutionCacheSection.php:86
+msgid "—"
+msgstr "—"
+
+#: src/Tool/UrlResolutionCacheSection.php:91
+msgid "Clear URL translations cache"
+msgstr "URL 번역 캐시 지우기"
+
+#: src/Tool/UrlResolutionCacheSection.php:94
+msgid "WPML caches how individual front-end URLs resolve to translated content. Rebuild it after routing or translation changes if links still use an older result."
+msgstr "WPML은 개별 프런트엔드 URL이 번역된 콘텐츠로 확인되는 방식을 캐시합니다. 라우팅 또는 번역 변경 후에도 링크가 여전히 이전 결과를 사용하는 경우 이를 재구축하십시오."
+
+#. translators: %s is the site name followed by its numeric ID.
+#: src/Tool/UrlResolutionCacheSection.php:100
+#, php-format
+msgid "Showing %s. Each site in a multisite network keeps its own cache."
+msgstr "%s 표시 중. 멀티사이트 네트워크의 각 사이트는 자체 캐시를 유지합니다."
+
+#: src/Tool/WcmlFixTranslationsController.php:25
+#: src/Tools/ResetTools.php:79
+msgid "Fix WCML translations"
+msgstr "WCML 번역 수정"
+
+#: src/Tool/WcmlFixTranslationsController.php:29
+msgid "Bulk repair tools for WooCommerce Multilingual that fill in missing data on translations or register missing items for translation. Tick the boxes you want to run, then submit once."
+msgstr "WooCommerce Multilingual을 위한 대량 복구 도구로, 번역에서 누락된 데이터를 채우거나 번역을 위해 누락된 항목을 등록합니다. 실행하려는 항목의 확인란을 선택한 다음 한 번 제출하십시오."
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:32
+#: src/Tools/ResetTools.php:115
+msgid "WCML translation maintenance"
+msgstr "WCML 번역 유지 관리"
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:36
+msgid "Advanced repair tools for the WCML translation relationships. Only run these when WPML Support has asked you to — they rewrite the variation-translation link tables and delete unused custom fields from product translations."
+msgstr "WCML 번역 관계를 위한 고급 복구 도구입니다. WPML 지원팀에서 요청한 경우에만 실행하십시오. 이 도구는 변형-번역 링크 테이블을 다시 작성하고 제품 번역에서 사용하지 않는 사용자 정의 필드를 삭제합니다."
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:48
+msgid "These tools rewrite translation data and can hide existing variations"
+msgstr "이 도구는 번역 데이터를 다시 작성하며 기존 변형을 숨길 수 있습니다"
+
+#: src/Tool/WcmlTranslationMaintenanceController.php:52
+msgid "Make a full database backup before running them. Only check the boxes WPML Support has named, then press \"Run the selected tools\"."
+msgstr "실행하기 전에 전체 데이터베이스 백업을 만드십시오. WPML 지원팀에서 지정한 확인란만 선택한 다음 “선택한 도구 실행”을 누르십시오."
+
+#: src/Tools/DbStringsTools.php:82
+msgid "Optimize tables, clean up strings, remove ghost entries, regenerate MO files"
+msgstr "테이블 최적화, 문자열 정리, 고스트 항목 제거, MO 파일 재생성"
+
+#: src/Tools/DbStringsTools.php:105
+msgid "String packages from Gravity Forms, Gutenberg blocks, Toolset, etc."
+msgstr "Gravity Forms, Gutenberg 블록, Toolset 등의 문자열 패키지"
+
+#: src/Tools/DbStringsTools.php:112
+msgid "Browse string-translation packages"
+msgstr "문자열 번역 패키지 찾아보기"
+
+#: src/Tools/DbStringsTools.php:113
+msgid "Re-register packages"
+msgstr "패키지 재등록"
+
+#: src/Tools/FixToolsTools.php:129
+msgid "Assign language to content, repair language data, sync taxonomies and rebuild the URL cache"
+msgstr "콘텐츠에 언어 할당, 언어 데이터 복구, 분류 체계 동기화 및 URL 캐시 재구축"
+
+#: src/Tools/FixToolsTools.php:130
+msgid "Assign language to content, repair missing language codes, sync taxonomies"
+msgstr "콘텐츠에 언어 할당, 누락된 언어 코드 복구, 분류 체계 동기화"
+
+#: src/Tools/FixToolsTools.php:135
+msgid "Synchronize posts taxonomies"
+msgstr "포스트 분류 체계 동기화"
+
+#: src/Tools/FixToolsTools.php:140
+msgid "Check URL resolution cache status"
+msgstr "URL 확인 캐시 상태 확인"
+
+#: src/Tools/FixToolsTools.php:141
+msgid "Clear and rebuild the URL resolution cache"
+msgstr "URL 확인 캐시 지우기 및 재구축"
+
+#: src/Tools/FixToolsTools.php:142
+msgid "Fix front-end links pointing at the wrong language"
+msgstr "잘못된 언어를 가리키는 프런트엔드 링크 수정"
+
+#: src/Tools/FixToolsTools.php:161
+msgid "Repair duplicate statuses, refresh pending jobs, clear cache, reset translation service"
+msgstr "중복 상태 복구, 대기 중인 작업 새로고침, 캐시 지우기, 번역 서비스 재설정"
+
+#: src/Tools/ResetTools.php:65
+msgid "Rewire internal links on legacy pre-4.7 posts that still need adjustment"
+msgstr "여전히 조정이 필요한 레거시 4.7 이전 포스트의 내부 링크 재연결"
+
+#: src/Tools/ResetTools.php:73
+msgid "Adjust legacy pre-4.7 internal links"
+msgstr "레거시 4.7 이전 내부 링크 조정"
+
+#: src/Tools/ResetTools.php:80
+msgid "Sync product variations, galleries, taxonomies and stock; register missing reviews; create missing attribute and product-type translations"
+msgstr "제품 변형, 갤러리, 분류 체계 및 재고 동기화, 누락된 리뷰 등록, 누락된 속성 및 제품 유형 번역 생성"
+
+#: src/Tools/ResetTools.php:89
+msgid "Synchronize product variations"
+msgstr "제품 변형 동기화"
+
+#: src/Tools/ResetTools.php:90
+msgid "Synchronize products image galleries"
+msgstr "제품 이미지 갤러리 동기화"
+
+#: src/Tools/ResetTools.php:91
+msgid "Synchronize category metadata"
+msgstr "카테고리 메타데이터 동기화"
+
+#: src/Tools/ResetTools.php:92
+msgid "Synchronize stock for products and variations"
+msgstr "제품 및 변형 재고 동기화"
+
+#: src/Tools/ResetTools.php:93
+msgid "Create missing product attribute translations"
+msgstr "누락된 제품 속성 번역 생성"
+
+#: src/Tools/ResetTools.php:94
+msgid "Allow translation of missing product reviews"
+msgstr "누락된 제품 리뷰 번역 허용"
+
+#: src/Tools/ResetTools.php:102
+msgid "Reset WPML entirely — last-resort recovery"
+msgstr "WPML 전체 재설정 — 최후의 수단 복구"
+
+#: src/Tools/ResetTools.php:116
+msgid "Fix WPML's variation-translation relationship tables; permanently delete unused custom fields from product translations"
+msgstr "WPML의 변형-번역 관계 테이블 수정, 제품 번역에서 사용하지 않는 사용자 정의 필드 영구 삭제"
+
+#: src/Tools/ResetTools.php:125
+msgid "Fix variation-translation relationships"
+msgstr "변형-번역 관계 수정"
+
+#: src/Tools/ResetTools.php:126
+msgid "Remove unused custom fields from product translations"
+msgstr "제품 번역에서 사용하지 않는 사용자 정의 필드 제거"
+
+#: src/Tools/TmateTools.php:94
+msgid "Synchronize with the Advanced Translation Editor"
+msgstr "고급 번역 에디터와 동기화"
+
+#: src/Tools/TmateTools.php:95
+msgid "Re-sync job IDs and translator/manager assignments with the ATE server"
+msgstr "작업 ID 및 번역가/관리자 할당을 ATE 서버와 다시 동기화"
+
+#: src/Tools/TmateTools.php:105
+msgid "Sync local job IDs with ATE"
+msgstr "로컬 작업 ID를 ATE와 동기화"
+
+#: src/Tools/TmateTools.php:106
+msgid "Sync translators and managers with ATE"
+msgstr "번역가 및 관리자를 ATE와 동기화"
