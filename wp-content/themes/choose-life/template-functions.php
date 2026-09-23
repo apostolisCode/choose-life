@@ -141,6 +141,9 @@ if ( ! function_exists( 'theme_scripts' ) ) {
 		if ( is_page_template( 'templates/checkout.php' ) ) {
 			wp_enqueue_script( 'checkout', "$theme_dir/assets/js/checkout.js", ['jquery', 'vendors'], theme_asset_version( 'js/checkout.js' ), true );
 		}
+		if ( is_page_template( 'templates/donation.php' ) ) {
+			wp_enqueue_script( 'donation', "$theme_dir/assets/js/donation.js", ['jquery', 'vendors'], theme_asset_version( 'js/donation.js' ), true );
+		}
 	}
 }
 

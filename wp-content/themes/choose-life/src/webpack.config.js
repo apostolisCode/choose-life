@@ -55,6 +55,9 @@ const config = {
 		},
 		checkout: {
 			import: `${srcPaths.js}/checkout.js`
+		},
+		donation: {
+			import: `${srcPaths.js}/donation.js`
 		}
 	},
 	output: {

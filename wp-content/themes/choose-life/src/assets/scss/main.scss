@@ -31,6 +31,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import './elements/buttons';
 @import './elements/forms';
 @import './elements/donation-amounts';
+@import './elements/layout';
 /*
 * Component styles
 */
@@ -40,3 +41,4 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 * Templates styles
 */
 @import './elements/templates/my-account/index';
+@import './elements/templates/donation';

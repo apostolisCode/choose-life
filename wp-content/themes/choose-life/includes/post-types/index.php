@@ -82,6 +82,60 @@ function cptui_register_my_cpts() {
 	];
 
 	register_post_type( "subscriptions", $args );
+
+	/**
+	 * Post Type: FAQs (question = title, answer = content).
+	 * Shown on the FAQ page (templates/faq.php) and picked per page elsewhere.
+	 */
+
+	$labels = [
+		"name"          => esc_html__( "FAQs", "choose-life" ),
+		"singular_name" => esc_html__( "FAQ", "choose-life" ),
+		"add_new_item"  => esc_html__( "Add question", "choose-life" ),
+		"edit_item"     => esc_html__( "Edit question", "choose-life" ),
+	];
+
+	$args = [
+		"label"               => esc_html__( "FAQs", "choose-life" ),
+		"labels"              => $labels,
+		"public"              => false,
+		"publicly_queryable"  => false,
+		"show_ui"             => true,
+		"show_in_rest"        => false,
+		"has_archive"         => false,
+		"show_in_menu"        => true,
+		"show_in_nav_menus"   => false,
+		"exclude_from_search" => true,
+		"capability_type"     => "post",
+		"map_meta_cap"        => true,
+		"hierarchical"        => false,
+		"rewrite"             => false,
+		"query_var"           => false,
+		"menu_icon"           => "dashicons-editor-help",
+		"supports"            => [ "title", "editor", "page-attributes" ],
+		"taxonomies"          => [ "faq_category" ],
+	];
+
+	register_post_type( "faq", $args );
+
+	/**
+	 * Taxonomy: FAQ categories (the tabs of the FAQ page).
+	 */
+
+	register_taxonomy( "faq_category", [ "faq" ], [
+		"labels"            => [
+			"name"          => esc_html__( "FAQ categories", "choose-life" ),
+			"singular_name" => esc_html__( "FAQ category", "choose-life" ),
+		],
+		"public"            => false,
+		"show_ui"           => true,
+		"show_admin_column" => true,
+		"show_in_nav_menus" => false,
+		"show_in_rest"      => false,
+		"hierarchical"      => true,
+		"rewrite"           => false,
+		"query_var"         => false,
+	] );
 }
 
 add_action( 'init', 'cptui_register_my_cpts' );

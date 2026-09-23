@@ -1,0 +1,35 @@
+/* =========================================
+		Page layout helpers (2026 redesign)
+		Used by the page templates (donation, faq, …)
+   ========================================= */
+
+$page_gutter: clamp(16px, 4.8vw, 92px);
+
+@mixin page-width($max: 1457px) {
+	width: calc(100% - 2 * #{$page_gutter});
+	max-width: $max;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@mixin display-title {
+	margin: 0;
+	font-family: $manrope_font;
+	font-size: 76px;
+	line-height: 82px;
+	font-weight: 700;
+	letter-spacing: -1.9px;
+	color: $c_dark;
+
+	@include media-breakpoint-down(xl) {
+		font-size: 56px;
+		line-height: 62px;
+		letter-spacing: -1.4px;
+	}
+
+	@include media-breakpoint-down(md) {
+		font-size: 40px;
+		line-height: 46px;
+		letter-spacing: -1px;
+	}
+}

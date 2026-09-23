@@ -3,3 +3,5 @@ import 'lazysizes/plugins/bgset/ls.bgset.js';
 import 'lazysizes';
 import './scripts/vue/my-account-links/index';
 import './scripts/site-header';
+import './scripts/instagram-feed';
+import './scripts/animations';
