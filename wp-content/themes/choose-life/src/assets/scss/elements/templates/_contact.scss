@@ -1,0 +1,321 @@
+/* =========================================
+		Contact page (templates/contact.php)
+		Form fields: elements/cf7-contact.php (Contact Form 7)
+   ========================================= */
+
+.contact-page {
+	overflow-x: hidden;
+	font-family: $manrope_font;
+	color: $c_dark;
+
+	&__header {
+		@include page-width(1454px);
+		display: flex;
+		align-items: flex-start;
+		gap: 64px;
+		padding-top: 176px;
+	}
+
+	&__title {
+		@include display-title;
+		flex: 1 1 0;
+		min-width: 0;
+		max-width: 960px;
+
+		@include media-breakpoint-up(xxl) {
+			font-size: 84px;
+			line-height: 84px;
+			letter-spacing: -2.1px;
+		}
+	}
+
+	&__intro {
+		flex: 1 1 0;
+		min-width: 0;
+		margin: 0;
+		font-size: 26px;
+		line-height: 36px;
+		color: #0A0A0A;
+	}
+
+	&__card {
+		@include page-width(1454px);
+		position: relative;
+		isolation: isolate;
+		margin-top: 96px;
+		padding: 60px 24px;
+		border-radius: 60px;
+
+		// the card itself, drawn above the red one
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			border-radius: inherit;
+			background-color: $c_offwhite;
+		}
+	}
+
+	// red card behind the form, tilts out on scroll (animations/contact-card.js)
+	&__card-back {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		border-radius: inherit;
+		background-color: $c_main;
+	}
+
+	&__form {
+		max-width: 946px;
+		margin: 0 auto;
+	}
+
+	.instagram-feed {
+		padding-top: 145px;
+	}
+
+	@include media-breakpoint-down(xl) {
+		&__header {
+			flex-direction: column;
+			gap: 24px;
+			padding-top: 96px;
+		}
+
+		&__title,
+		&__intro {
+			flex: none;
+			width: 100%;
+		}
+
+		&__intro {
+			max-width: 760px;
+			font-size: 22px;
+			line-height: 32px;
+		}
+
+		&__card {
+			margin-top: 64px;
+			padding: 48px 24px;
+			border-radius: 40px;
+		}
+
+		.instagram-feed {
+			padding-top: 96px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		&__header {
+			padding-top: 56px;
+		}
+
+		&__intro {
+			font-size: 18px;
+			line-height: 27px;
+		}
+
+		&__card {
+			margin-top: 40px;
+			padding: 32px 20px;
+			border-radius: 32px;
+		}
+	}
+}
+
+.contact-form {
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 24px 20px;
+	}
+
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		min-width: 0;
+
+		&--wide {
+			grid-column: 1 / -1;
+			margin-top: 24px;
+		}
+	}
+
+	&__label {
+		margin: 0;
+		font-size: 16px;
+		line-height: 25.6px;
+		color: $c_dark;
+	}
+
+	&__input {
+		display: block;
+		width: 100%;
+		padding: 20px 28px;
+		border: 1px solid $c_dark;
+		border-radius: 32px;
+		background-color: $c_white;
+		font-family: $manrope_font;
+		font-size: 16px;
+		line-height: 25.6px;
+		color: $c_dark;
+		transition: border-color 300ms ease, box-shadow 300ms ease;
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba($c_dark, .12);
+		}
+
+		&--select {
+			appearance: none;
+			padding-right: 60px;
+			background: $c_white url('#{$p_svg}checkout/chevron-down.svg') no-repeat right 24px center / 20px 20px;
+			cursor: pointer;
+		}
+
+		&--textarea {
+			height: 208px;
+			min-height: 120px;
+			resize: vertical;
+		}
+
+		&.wpcf7-not-valid {
+			border-color: $c_main;
+
+			&:focus {
+				box-shadow: 0 0 0 3px rgba($c_main, .15);
+			}
+		}
+	}
+
+	&__consent {
+		margin-top: 28px;
+		font-size: 16px;
+		line-height: 25.6px;
+
+		.wpcf7-list-item {
+			margin: 0;
+		}
+
+		label {
+			display: flex;
+			align-items: flex-start;
+			gap: 13px;
+			cursor: pointer;
+		}
+
+		input[type="checkbox"] {
+			flex: 0 0 20px;
+			width: 20px;
+			height: 20px;
+			margin: 2px 0 0;
+			border: 1px solid #767676;
+			border-radius: 2.5px;
+			background: $c_white no-repeat center / 16px 16px;
+			appearance: none;
+			cursor: pointer;
+			transition: background-color 200ms ease, border-color 200ms ease;
+
+			&:checked {
+				border-color: $c_main;
+				background-color: $c_main;
+				background-image: url('#{$p_svg}checkout/check.svg');
+			}
+
+			&:focus-visible {
+				outline: 2px solid $c_dark;
+				outline-offset: 2px;
+			}
+		}
+
+		a {
+			color: $c_main;
+			text-decoration: underline;
+		}
+	}
+
+	&__submit {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px;
+		padding-top: 28px;
+
+		.cl-btn--lg {
+			padding: 21.25px 40px 22px;
+		}
+
+		.wpcf7-spinner {
+			margin: 0;
+		}
+	}
+
+	// CF7 wraps every control in a span
+	.wpcf7-form-control-wrap {
+		display: block;
+	}
+
+	.wpcf7-not-valid-tip {
+		margin-top: 6px;
+		padding-left: 28px;
+		font-size: 14px;
+		line-height: 18px;
+		color: $c_main;
+	}
+
+	&__consent .wpcf7-not-valid-tip {
+		padding-left: 33px;
+	}
+
+	@include media-breakpoint-down(md) {
+		&__grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 20px;
+		}
+
+		&__field--wide {
+			margin-top: 0;
+		}
+
+		&__input {
+			padding: 14px 22px;
+			border-radius: 26px;
+		}
+
+		&__consent {
+			margin-top: 24px;
+			font-size: 14px;
+			line-height: 22px;
+		}
+
+		&__submit .cl-btn--lg {
+			padding: 16px 32px;
+			font-size: 18px;
+			line-height: 24px;
+		}
+	}
+}
+
+// CF7 status message under the form
+.contact-page .wpcf7 form .wpcf7-response-output {
+	margin: 24px 0 0;
+	padding: 14px 20px;
+	border: 1px solid $c_dark;
+	border-radius: 20px;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.contact-page .wpcf7 form.invalid .wpcf7-response-output,
+.contact-page .wpcf7 form.unaccepted .wpcf7-response-output,
+.contact-page .wpcf7 form.failed .wpcf7-response-output,
+.contact-page .wpcf7 form.spam .wpcf7-response-output {
+	border-color: $c_main;
+	color: $c_main;
+}
+
+.contact-page .wpcf7 form.sent .wpcf7-response-output {
+	border-color: #146C43;
+	color: #146C43;
+}

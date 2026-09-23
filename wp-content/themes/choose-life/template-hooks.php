@@ -111,6 +111,40 @@ add_filter( 'script_loader_src', 'remove_version_from_style_js' );
 
 add_filter( 'acf/settings/enable_post_types', '__return_false' );
 
+// CF7 form markup comes from theme templates (elements/cf7-*.php): no auto <p>/<br>
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
+// CF7 [select data:countries] (Listo plugin): Listo has no Greek translation, so
+// name its countries in the site language via intl, sorted, with Greece first.
+add_filter( 'wpcf7_form_tag_data_option', function ( $data, $options ) {
+	if ( ! in_array( 'countries', (array) $options, true ) || ! is_array( $data ) || ! class_exists( 'Locale' ) || ! function_exists( 'listo' ) ) {
+		return $data;
+	}
+
+	$locale  = get_locale();
+	$a3_to_a2 = array_flip( array_map( 'strtolower', listo( 'countries_a2a3' ) ?: [] ) );
+
+	$countries = [];
+	foreach ( $data as $a3 => $name ) {
+		$a2 = $a3_to_a2[ $a3 ] ?? '';
+		$localized = $a2 ? Locale::getDisplayRegion( '-' . strtoupper( $a2 ), $locale ) : '';
+		// intl echoes the code back when it doesn't know the region
+		$countries[ $a3 ] = $localized && strcasecmp( $localized, $a2 ) !== 0 ? $localized : $name;
+	}
+
+	if ( class_exists( 'Collator' ) ) {
+		( new Collator( $locale ) )->asort( $countries );
+	} else {
+		asort( $countries );
+	}
+
+	if ( isset( $countries['grc'] ) ) {
+		$countries = [ 'grc' => $countries['grc'] ] + $countries;
+	}
+
+	return $countries;
+}, 20, 2 );
+
 // The front-end (checkout / my account) talks to admin-ajax.php, where WordPress
 // would answer in the logged-in user's profile language. Answer the theme's
 // cl_* actions in the site language instead, like the pages themselves.
