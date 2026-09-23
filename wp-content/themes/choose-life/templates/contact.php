@@ -19,8 +19,8 @@ $form_id = get_field( 'contact_form' );
         </header>
 
 		<?php if ( $form_id && function_exists( 'wpcf7_contact_form' ) ) : ?>
-            <section class="contact-page__card" data-contact-card>
-                <span class="contact-page__card-back" aria-hidden="true"></span>
+            <section class="contact-page__card" data-tilt-card>
+                <span class="contact-page__card-back" data-tilt-card-back aria-hidden="true"></span>
                 <div class="contact-page__form">
 					<?php echo do_shortcode( sprintf( '[contact-form-7 id="%d"]', (int) $form_id ) ); ?>
                 </div>
