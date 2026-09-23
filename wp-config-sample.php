@@ -1,102 +1,89 @@
 <?php
 /**
- * The base configuration for WordPress
+ * Οι βασικές ρυθμίσεις για to WordPress
  *
- * The wp-config.php creation script uses this file during the installation.
- * You don't have to use the website, you can copy this file to "wp-config.php"
- * and fill in the values.
+ * Το wp-config.php χρησιμοποιείται από τη δέσμη ενεργειών κατά τη
+ * διαδικασία εγκατάστασης. Δεν χρειάζεται να χρησιμοποιήσετε τον ιστότοπο, μπορείτε
+ * να αντιγράψετε αυτό το αρχείο ως "wp-config.php" και να συμπληρώσετε τις παραμέτρους.
  *
- * This file contains the following configurations:
+ * Αυτό το αρχείο περιέχει τις ακόλουθες ρυθμίσεις:
  *
- * * Database settings
- * * Secret keys
- * * Database table prefix
+ * * MySQL ρυθμίσεις
+ * * Κλειδιά ασφαλείας
+ * * Πρόθεμα πινάκων βάσης δεδομένων
  * * ABSPATH
  *
- * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
+ * @link https://codex.wordpress.org/Editing_wp-config.php
  *
  * @package WordPress
  */
 
-// ** Database settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'database_name_here' );
+// ** MySQL ρυθμίσεις - Μπορείτε να λάβετε αυτές τις πληροφορίες από τον φιλοξενητή σας ** //
+/** Το όνομα της βάσης δεδομένων του WordPress */
+define('DB_NAME', 'database_name_here');
 
-/** Database username */
-define( 'DB_USER', 'username_here' );
+/** Ψευδώνυμο χρήσης MySQL */
+define('DB_USER', 'username_here');
 
-/** Database password */
-define( 'DB_PASSWORD', 'password_here' );
+/** Συνθηματικό βάσης δεδομένων MySQL */
+define('DB_PASSWORD', 'password_here');
 
-/** Database hostname */
-define( 'DB_HOST', 'localhost' );
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
 
-/** Database charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8mb4' );
+/** Charset της βάσηςη δεδομένων που θα χρησιμοποιηθεί στη δημιουργία των πινάκων. */
+define('DB_CHARSET', 'utf8');
 
-/** The database collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+/** Τύπος Collate της βάσης δεδομένων. Μην το αλλάζετε αν έχετε αμφιβολίες. */
+define('DB_COLLATE', '');
 
 /**#@+
- * Authentication unique keys and salts.
+ * Μοναδικά κλειδιά πιστοποίησης και Salts.
  *
- * Change these to different unique phrases! You can generate these using
- * the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
- *
- * You can change these at any point in time to invalidate all existing cookies.
- * This will force all users to have to log in again.
+ * Αλλάξτε τα σε διαφορετικά μοναδικές φράσεις!
+ * Μπορείτε να δημιουργήσετε χρησιμοποιώντας {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
+ * Μπορείτε να τα αλλάξετε οποτεδήποτε για να ακυρώσετε τα υπάρχοντα cookies. Θα υποχρεώσει όλους χρήστες να επανασυνδεθούν.
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+define('AUTH_SALT',        'put your unique phrase here');
+define('SECURE_AUTH_SALT', 'put your unique phrase here');
+define('LOGGED_IN_SALT',   'put your unique phrase here');
+define('NONCE_SALT',       'put your unique phrase here');
 
 /**#@-*/
 
 /**
- * WordPress database table prefix.
+ * Πρόθεμα Πίνακα Βάσης Δεδομένων του WordPress.
  *
- * You can have multiple installations in one database if you give each
- * a unique prefix. Only numbers, letters, and underscores please!
- *
- * At the installation time, database tables are created with the specified prefix.
- * Changing this value after WordPress is installed will make your site think
- * it has not been installed.
- *
- * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#table-prefix
+ * Μπορείτε να έχετε πολλαπλές εγκαταστάσεις σε μια βάση δεδομένων αν δώσετε σε κάθε μία
+ * ένα μοναδικό πρόθεμα. Μόνο αριθμοί, γράμματα και κάτω παύλα παρακαλούμε!
  */
 $table_prefix = 'wp_';
 
 /**
- * For developers: WordPress debugging mode.
+ * Για προγραμματιστές: Κατάσταση Αποσφαλμάτωσης WordPress (Debugging Mode).
  *
- * Change this to true to enable the display of notices during development.
- * It is strongly recommended that plugin and theme developers use WP_DEBUG
- * in their development environments.
+ * Αλλάξτε το σε true για να ενεργοποιήσετε την εμφάνισης ειδοποιήσεων για τη διαδικασία ανάπτυξης.
+ * Η χρήση WP_DEBUG προτείνεται για τους δημιουργούς προσθέτων και θεμάτων
+ * στο περιβάλλον ανάπτυξης τους.
  *
- * For information on other constants that can be used for debugging,
- * visit the documentation.
+ * Για πληροφορίες για άλλες σταθερές που μπορούν να χρησιμοποιηθούν για αποσφαλμάτωση,
+ * επισκεφθείτε το Codex.
  *
- * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
+ * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define( 'WP_DEBUG', false );
+define('WP_DEBUG', false);
 
-/* Add any custom values between this line and the "stop editing" line. */
+/* Αυτό είναι όλο, σταματήστε γράφετε! Χαρούμενο blogging. */
 
+/** Η απόλυτη διαδρομή τον κατάλογο του WordPress. */
+if ( !defined('ABSPATH') )
+	define('ABSPATH', dirname(__FILE__) . '/');
 
-
-/* That's all, stop editing! Happy publishing. */
-
-/** Absolute path to the WordPress directory. */
-if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
-}
-
-/** Sets up WordPress vars and included files. */
-require_once ABSPATH . 'wp-settings.php';
+/** Ορίζει τις μεταβλητές και τα περιλαμβανόμενα αρχεία WordPress. */
+require_once(ABSPATH . 'wp-settings.php');
