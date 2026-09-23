@@ -60,6 +60,9 @@ const config = {
 	output: {
 		path: path.resolve(__dirname, outputPath),
 		filename: 'js/[name].js',
+		// lazy-loaded route chunks get a content hash, so a deploy never mixes
+		// a cached old chunk with a new entry file
+		chunkFilename: 'js/[name].[contenthash:8].js',
 		clean: true,
 		assetModuleFilename: 'resources/[hash][ext][query]'
 	},
@@ -80,6 +83,7 @@ const config = {
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'css/[name].css',
+			chunkFilename: 'css/[name].[contenthash:8].css',
 		}),
 		new VueLoaderPlugin(),
 		new webpack.DefinePlugin(vueFlags)

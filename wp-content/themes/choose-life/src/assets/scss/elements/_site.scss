@@ -14,7 +14,18 @@
 	font-size: 16px;
 	color: $c_body;
 	font-family: $base_font;
-	padding-top: 93px;
+	background-color: $c_beige;
+}
+
+// Vertical rhythm of the account / checkout pages (header → content → footer CTA)
+.cl-page {
+	padding-top: 80px;
+	padding-bottom: 147px;
+
+	@include media-breakpoint-down(lg) {
+		padding-top: 48px;
+		padding-bottom: 64px;
+	}
 }
 
 a {

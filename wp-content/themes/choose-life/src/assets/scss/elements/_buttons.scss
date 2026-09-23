@@ -1,3 +1,88 @@
 .btn {
 	text-decoration: none !important;
 }
+/* =========================================
+		Pill buttons (2026 redesign)
+   ========================================= */
+
+.cl-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 16.5px 24px;
+	border: 1.5px solid transparent;
+	border-radius: 999px;
+	background: none;
+	font-family: $manrope_font;
+	font-size: 18px;
+	line-height: 24px;
+	font-weight: 700;
+	text-align: center;
+	text-decoration: none !important;
+	cursor: pointer;
+	transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease;
+
+	&:disabled {
+		opacity: .65;
+		cursor: default;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $c_dark;
+		outline-offset: 3px;
+	}
+
+	&--primary {
+		background-color: $c_main;
+		border-color: $c_main;
+		color: $c_white;
+		&:hover:not(:disabled) {
+			background-color: darken($c_main, 8%);
+			border-color: darken($c_main, 8%);
+			color: $c_white;
+		}
+	}
+
+	&--outline {
+		border-color: $c_dark;
+		color: $c_dark;
+		&:hover:not(:disabled) {
+			background-color: $c_dark;
+			color: $c_white;
+		}
+	}
+
+	&--sm {
+		padding: 14px 24px;
+		border-width: 0;
+		white-space: nowrap;
+	}
+
+	&--lg {
+		padding: 17px 30px;
+		border-width: 0;
+		font-size: 22px;
+		line-height: 35.2px;
+		white-space: nowrap;
+	}
+
+	&--block {
+		width: 100%;
+	}
+}
+
+// "← Back" link above a step's content
+.cl-back {
+	display: inline-flex;
+	gap: 8px;
+	font-family: $manrope_font;
+	font-size: 16px;
+	line-height: 22px;
+	font-weight: 700;
+	color: $c_dark;
+	&:hover {
+		color: $c_main;
+		text-decoration: none;
+	}
+}

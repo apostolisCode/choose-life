@@ -3,23 +3,24 @@
  * Header Lang Switcher
  * Element
  *
+ * Links to the other active WPML language(s), using
+ * assets/svg/layout/flag-{code}.svg when available.
  */
 if ( function_exists( 'icl_object_id' ) ) :
 	$langs = apply_filters( 'wpml_active_languages', null, 'skip_missing=0&orderby=code' );
-	usort( $langs, function ( $a, $b ) {
-		if ( $a['active'] === $b['active'] ) {
-			return 0;
-		}
-
-		return ( $a['active'] > $b['active'] ) ? - 1 : 1;
+	$langs = array_filter( (array) $langs, function ( $lang ) {
+		return ! $lang['active'];
 	} );
-	$active_lang = array_shift( $langs );
 	if ( count( $langs ) > 0 ) :
 		?>
-        <div class="lang">
+        <div class="lang-switcher">
 			<?php
 			foreach ( $langs as $lang ) {
-				echo sprintf( '<a href="%s" title="%s" lang="%s" hreflang="%s">%s</a>', esc_attr( $lang['url'] ), esc_attr( $lang['translated_name'] ), esc_attr( $lang['language_code'] ), esc_attr( $lang['language_code'] ), CRL_Utils::get_upper( $lang['language_code'] ) );
+				$flag = "assets/svg/layout/flag-{$lang['language_code']}.svg";
+				$label = file_exists( get_template_directory() . "/$flag" )
+					? sprintf( '<img src="%s" width="24.565" height="24.565" alt="%s"/>', esc_url( get_template_directory_uri() . "/$flag" ), esc_attr( $lang['translated_name'] ) )
+					: CRL_Utils::get_upper( $lang['language_code'] );
+				echo sprintf( '<a href="%s" title="%s" lang="%s" hreflang="%s" class="lang-switcher__link">%s</a>', esc_attr( $lang['url'] ), esc_attr( $lang['translated_name'] ), esc_attr( $lang['language_code'] ), esc_attr( $lang['language_code'] ), $label );
 			}
 			?>
         </div>
