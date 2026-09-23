@@ -58,6 +58,9 @@ const config = {
 		},
 		donation: {
 			import: `${srcPaths.js}/donation.js`
+		},
+		volunteer: {
+			import: `${srcPaths.js}/volunteer.js`
 		}
 	},
 	output: {
@@ -149,6 +152,13 @@ const config = {
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
+				// three.js only for the lazy journeys globe, never in the shared vendors bundle
+				three: {
+					test: /[\\/]node_modules[\\/]three[\\/]/,
+					name: 'three',
+					chunks: 'async',
+					priority: 10
+				},
 				vendor: {
 					test: /[\\/]node_modules[\\/]/,
 					name: 'vendors',

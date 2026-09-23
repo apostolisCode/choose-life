@@ -79,6 +79,13 @@ They share `vue/api/index.js` (axios wrapper; `axiosPublic` vs `axiosPrivate` wh
 
 All translatable strings use the `'choose-life'` text domain.
 
+## Journeys globe (volunteer page)
+
+`templates/volunteer.php` shows the `journey` posts (donor → hospital → patient; hospitals are the `journey_hospital` taxonomy with coordinates as ACF term fields) on a WebGL globe. `Inc_Journeys` resolves every point to a name + lat/lng, falling back to the country's label point from `data/countries.json` (Natural Earth, public domain) when no coordinates are set. The list and details panel are server-rendered (`elements/sections/journeys-globe.php`); `scripts/journeys/index.js` adds filters and the tour, and lazy-loads `scripts/journeys/globe.js` (three.js, its own async `three` chunk — never in `vendors`) near the viewport.
+
+- Textures in `src/assets/img/globe/` are pre-baked equirectangular images (mask = R land / G borders+coasts, city lights, relief) from NASA Black Marble / Blue Marble and Natural Earth; 2k load first, 4k on large screens, and the `earth-detail-*` pair (Europe/Mediterranean, lng −12…48, lat 28…62 — `DETAIL_BOUNDS` in `globe.js`) only when a route zooms there.
+- In wp-admin, the journey / hospital lat-lng fields get an OpenStreetMap picker (`scripts/admin/coords-picker.js`, Leaflet copied to `assets/vendor/leaflet` by webpack and enqueued only on those screens).
+
 ## Conventions & gotchas
 
 - The site runs in a **subdirectory**; `.htaccess` uses `RewriteBase /choose-life-donations/`. Hardcoded `installationUrl` in `webpack.config.js` also assumes this path.

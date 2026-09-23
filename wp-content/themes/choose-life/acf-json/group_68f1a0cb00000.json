@@ -1,0 +1,335 @@
+{
+    "key": "group_68f1a0cb00000",
+    "title": "Journey",
+    "fields": [
+        {
+            "key": "field_68f1a0cb00001",
+            "label": "Donor",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68f1a0cb00002",
+            "label": "Donor city",
+            "name": "donor_city",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Where the donor comes from, e.g. Έδεσσα.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cb00003",
+            "label": "Donor country",
+            "name": "donor_country",
+            "aria-label": "",
+            "type": "country",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "GR",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "layout": "vertical",
+            "ajax": 0,
+            "placeholder": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb00004",
+            "label": "Latitude",
+            "name": "donor_lat",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional. Exact point of the donor city (e.g. 40.6401). Empty: the centre of the country.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -90,
+            "max": 90,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb00005",
+            "label": "Longitude",
+            "name": "donor_lng",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional (e.g. 22.9444).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -180,
+            "max": 180,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb00006",
+            "label": "Donation",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68f1a0cb00007",
+            "label": "Hospital of donation",
+            "name": "hospital",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Where the donation took place; the sample travels from here to the patient. Add hospitals (with their coordinates) under Journeys of hope → Hospitals.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "journey_hospital",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "bidirectional": 0,
+            "multiple": 0,
+            "allow_in_bindings": 0,
+            "bidirectional_target": [],
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb00008",
+            "label": "Patient",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68f1a0cb00009",
+            "label": "Patient city",
+            "name": "patient_city",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional, e.g. Αθήνα. Empty: only the country is shown.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cb0000a",
+            "label": "Patient country",
+            "name": "patient_country",
+            "aria-label": "",
+            "type": "country",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "GR",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "layout": "vertical",
+            "ajax": 0,
+            "placeholder": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb0000b",
+            "label": "Latitude",
+            "name": "patient_lat",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional. Exact point of the patient city (e.g. 40.6401). Empty: the centre of the country.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -90,
+            "max": 90,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb0000c",
+            "label": "Longitude",
+            "name": "patient_lng",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional (e.g. 22.9444).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -180,
+            "max": 180,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cb0000d",
+            "label": "Story",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68f1a0cb0000e",
+            "label": "Story",
+            "name": "story",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional text shown on the globe panel, under the journey details.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "",
+            "wpml_cf_preferences": 2
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "journey"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790173838,
+    "acfml_field_group_mode": "translation"
+}

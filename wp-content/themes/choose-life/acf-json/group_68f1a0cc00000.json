@@ -1,0 +1,120 @@
+{
+    "key": "group_68f1a0cc00000",
+    "title": "Hospital",
+    "fields": [
+        {
+            "key": "field_68f1a0cc00001",
+            "label": "City",
+            "name": "hospital_city",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "e.g. Θεσσαλονίκη",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cc00002",
+            "label": "Country",
+            "name": "hospital_country",
+            "aria-label": "",
+            "type": "country",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "GR",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "layout": "vertical",
+            "ajax": 0,
+            "placeholder": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cc00003",
+            "label": "Latitude",
+            "name": "hospital_lat",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional. Exact point of the hospital (e.g. 40.6401). Empty: the centre of the country.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -90,
+            "max": 90,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cc00004",
+            "label": "Longitude",
+            "name": "hospital_lng",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Optional (e.g. 22.9444).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": -180,
+            "max": 180,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "any",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "journey_hospital"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790173838,
+    "acfml_field_group_mode": "translation"
+}
