@@ -26,6 +26,7 @@ Webpack entry points (`src/webpack.config.js`) → output bundles in `assets/js/
 - `admin` — wp-admin assets
 - `my-account` — the My Account Vue SPA
 - `checkout` — the checkout/donation Vue SPA
+- `donation` — the amount picker of the donation page template (`templates/donation.php`), reusing the checkout `DonationAmounts` component
 - `vendors` — split chunk of `node_modules`
 
 `jQuery` and `Vue` are treated as webpack externals (expected on `window`). SCSS partials in `src/assets/scss/config/`, the bootstrap functions/variables/mixins, and `helpers/mixins/_list.scss` are auto-injected into every `.scss` file via `sass-resources-loader` — don't re-import them.
@@ -69,7 +70,7 @@ Two Vue 3 SPAs (Pinia + vue-router, hash-mode) live in `src/assets/js/scripts/vu
 - **`checkout/`** — donation checkout flow (Start → Login/Register → Payment → Complete).
 - **`my-account/`** — logged-in account area (Account, Donations, Reset Password).
 
-They share `vue/api/index.js` (axios wrapper; `axiosPublic` vs `axiosPrivate` which injects the JWT `Authorization` header), `vue/stores/` (`user`, `ui`), and `vue/helpers/`. They mount only on the matching page templates (`templates/checkout.php`, `templates/my-account.php`) — see `theme_scripts()` for the conditional enqueue.
+They share `vue/api/index.js` (axios wrapper; `axiosPublic` vs `axiosPrivate` which injects the JWT `Authorization` header), `vue/stores/` (`user`, `ui`), and `vue/helpers/`. The login / register / reset-password UI is shared too, in `vue/shared/auth/` (`AuthLayout`, `LoginForm`, `RegisterForm`, `ResetPassword`, `OrDivider`); each app's pages are thin wrappers that set the texts, the redirect route and the extra links (checkout adds the stepper and "continue as guest"). They mount only on the matching page templates (`templates/checkout.php`, `templates/my-account.php`) — see `theme_scripts()` for the conditional enqueue.
 
 ### PHP → JS data bridge
 
@@ -81,6 +82,7 @@ All translatable strings use the `'choose-life'` text domain.
 ## Conventions & gotchas
 
 - The site runs in a **subdirectory**; `.htaccess` uses `RewriteBase /choose-life-donations/`. Hardcoded `installationUrl` in `webpack.config.js` also assumes this path.
-- `wp-config.php`, `.htaccess`, `wp-content/uploads/`, and debug logs are git-ignored. The theme's `src/node_modules/` is committed in this repo (it shows up in searches) — ignore it when grepping; scope searches to `wp-content/themes/choose-life/` excluding `src/node_modules`.
+- `wp-config.php`, `.htaccess`, `wp-content/uploads/`, and debug logs are git-ignored. The theme's `src/node_modules/` and the built `assets/` are git-ignored but live on disk (they show up in searches) — ignore them when grepping; scope searches to `wp-content/themes/choose-life/` excluding `src/node_modules`.
+- Contact Form 7 forms get their markup from theme files `elements/cf7-*.php` (plugin "Contact Form 7: Template Support", header comment `CF7-Template: <name>`, form type "Template" in the CF7 editor). Field names there must match the mail tags in the form's Mail tab. CF7 auto-`<p>` is disabled in `template-hooks.php`.
 - Use `write_log( $data )` (defined in `template-functions.php`) for debugging — it writes to `wp-content/site-debug.log`.
 - `template-hooks.php` deliberately strips WP defaults: oEmbed, XML-RPC, emojis, generator version, query-string versions on assets, and block-library CSS.
