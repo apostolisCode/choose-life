@@ -1,0 +1,45 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "zh_CN"
+         },
+         "WPML reconnected to the translation server.": [
+            "WPML 已重新连接到翻译服务器。"
+         ],
+         "WPML cannot access our server at %s. Please check that your hosting isn't blocking this access.": [
+            "WPML 无法访问位于 %s 的服务器。请检查您的主机是否阻止了此访问。"
+         ],
+         "WPML cannot access our server. Please check that your hosting isn't blocking this access.": [
+            "WPML 无法访问我们的服务器。请检查您的主机是否阻止了此访问。"
+         ],
+         "Retry": [
+            "重试"
+         ],
+         "Need help? Contact WPML support": [
+            "需要帮助？联系 WPML 支持"
+         ],
+         "Retrying again in %d s…": [
+            "将在 %d 秒后重试…"
+         ],
+         "If it keeps failing, quote this code to WPML support: %s": [
+            "如果持续失败，请向 WPML 支持提供此代码：%s"
+         ],
+         "Copy this into your support message:": [
+            "将此内容复制到您的支持消息中："
+         ],
+         "Hide for 24 h": [
+            "隐藏 24 小时"
+         ],
+         "WPML can't reach our translation server. Retrying in %d s…": [
+            "WPML 无法连接到我们的翻译服务器。将在 %d 秒后重试…"
+         ],
+         "Retry now": [
+            "立即重试"
+         ]
+      }
+   }
+}

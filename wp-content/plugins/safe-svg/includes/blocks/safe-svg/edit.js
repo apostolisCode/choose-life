@@ -3,7 +3,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { ReactSVG } from 'react-svg'
 import classnames from 'classnames';
 
 /**
@@ -13,7 +12,12 @@ import { __ } from '@wordpress/i18n';
 import {
 	Placeholder,
 	PanelBody,
+	Dropdown,
+	Notice,
+	ToolbarButton,
+	TextControl,
 } from '@wordpress/components';
+import { link } from '@wordpress/icons';
 import {
 	useBlockProps,
 	BlockControls,
@@ -22,8 +26,41 @@ import {
 	__experimentalImageSizeControl as ImageSizeControl,
 	MediaReplaceFlow,
 	MediaPlaceholder,
+	LinkControl,
 	getColorClassName,
 } from '@wordpress/block-editor';
+
+/**
+ * Internal dependencies
+ */
+import InlineSvg from './inline-svg';
+import useSanitizedSvg from './use-sanitized-svg';
+
+/**
+ * Explain why an SVG could not be shown.
+ *
+ * @param {string} code The error code from the REST response.
+ * @return {string} A message for the block editor.
+ */
+const errorMessage = (code) => {
+	switch (code) {
+		case 'rest_forbidden':
+		case 'safe_svg_invalid_attachment':
+		case 'safe_svg_not_svg':
+		case 'safe_svg_unreadable':
+			return __(
+				'This SVG is not available to you. Pick another from the media library.',
+				'safe-svg'
+			);
+		case 'safe_svg_sanitize_failed':
+			return __(
+				'This SVG could not be sanitized, so it has not been displayed.',
+				'safe-svg'
+			);
+		default:
+			return __('This SVG could not be loaded. Please try again.', 'safe-svg');
+	}
+};
 
 /**
  * Edit component.
@@ -31,7 +68,7 @@ import {
  *
  * @param {Object}   props                      The block props.
  * @param {Object}   props.attributes           Block attributes.
- * @param {Object}   props.attributes.svgURL    SVG URL.
+ * @param {Object}   props.attributes.svgURL    SVG URL. Legacy: stored for back compat, never read.
  * @param {boolean}  props.attributes.alignment Alignment of the SVG.
  * @param {string}   props.className            Class name for the block.
  * @param {Function} props.setAttributes        Sets the value for block attributes.
@@ -41,7 +78,6 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 
 	const {
 		contentPostType,
-		svgURL,
 		type,
 		imageID,
 		imageSizes,
@@ -51,7 +87,15 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 		dimensionWidth,
 		dimensionHeight,
 		textColor,
+		href,
+		linkTarget,
+		nofollow,
+		sponsored,
+		linkLabel,
 	} = attributes;
+
+	// Get the markup and URL from the attachment ID.
+	const { markup, url: mediaURL, error } = useSanitizedSvg(imageID);
 
 	const blockProps = useBlockProps(
 		{
@@ -158,7 +202,7 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 
 	return (
 		<>
-			{svgURL &&
+			{!!imageID &&
 				<>
 					<InspectorControls>
 						<PanelBody
@@ -186,16 +230,85 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 					<BlockControls>
 						<MediaReplaceFlow
 							mediaId={imageID}
-							mediaURL={svgURL}
+							mediaURL={mediaURL}
 							allowedTypes={ALLOWED_MEDIA_TYPES}
 							accept={ALLOWED_MEDIA_TYPES}
 							onSelect={onSelectImage}
 							onError={onError} />
+						<Dropdown
+							className="safe-svg-link-dropdown"
+							renderToggle={({ isOpen, onToggle }) => (
+								<ToolbarButton
+									icon={link}
+									label={__('Link', 'safe-svg')}
+									onClick={onToggle}
+									aria-expanded={isOpen}
+								/>
+							)}
+							renderContent={({ onClose }) => (
+								<div className="block-editor-link-control">
+									<LinkControl
+										value={{
+											url: href,
+											opensInNewTab: linkTarget === '_blank',
+											nofollow: !!nofollow,
+											sponsored: !!sponsored,
+										}}
+										onChange={(linkSettings) => {
+											setAttributes({
+												href: linkSettings.url,
+												linkTarget: linkSettings.opensInNewTab ? '_blank' : '',
+												nofollow: !!linkSettings.nofollow,
+												sponsored: !!linkSettings.sponsored,
+											});
+										}}
+										onRemove={() => {
+											setAttributes({
+												href: '',
+												linkTarget: '',
+												nofollow: false,
+												sponsored: false,
+											});
+										}}
+										settings={[
+											{
+												id: 'opensInNewTab',
+												title: __(
+													'Open in new tab',
+													'safe-svg'
+												),
+											},
+											{
+												id: 'nofollow',
+												title: __(
+													'Add rel="nofollow"',
+													'safe-svg'
+												),
+											},
+											{
+												id: 'sponsored',
+												title: __(
+													'Add rel="sponsored"',
+													'safe-svg'
+												),
+											},
+										]}
+										onClose={onClose}
+									/>
+									<TextControl
+										label={__('Link Label (aria-label)', 'safe-svg')}
+										value={linkLabel}
+										onChange={(value) => setAttributes({ linkLabel: value })}
+										help={__('Provides an accessible label for screen readers.', 'safe-svg')}
+									/>
+								</div>
+							)}
+						/>
 					</BlockControls>
 				</>
 			}
 
-			{!svgURL &&
+			{!imageID &&
 				<MediaPlaceholder
 					onSelect={onSelectImage}
 					allowedTypes={ALLOWED_MEDIA_TYPES}
@@ -208,7 +321,15 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 				/>
 			}
 
-			{svgURL &&
+			{!!imageID && !!error &&
+				<div {...containerBlockProps}>
+					<Notice status="warning" isDismissible={false}>
+						{errorMessage(error)}
+					</Notice>
+				</div>
+			}
+
+			{!!imageID && !error &&
 				<div {...containerBlockProps}>
 					<div
 						style={style}
@@ -217,9 +338,10 @@ const SafeSvgBlockEdit = ({ attributes, setAttributes }) => {
 							getColorClassName('color', textColor) || ''
 						)}
 					>
-						<ReactSVG src={svgURL} beforeInjection={(svg) => {
-							svg.setAttribute('style', `width: ${dimensionWidth}px; height: ${dimensionHeight}px;`);
-						}} />
+						<InlineSvg
+							markup={markup}
+							width={dimensionWidth}
+							height={dimensionHeight} />
 					</div>
 				</div>
 			}
@@ -250,6 +372,11 @@ SafeSvgBlockEdit.propTypes = {
 		dimensionWidth: PropTypes.number,
 		dimensionHeight: PropTypes.number,
 		imageSizes: PropTypes.object,
+		href: PropTypes.string,
+		linkTarget: PropTypes.string,
+		nofollow: PropTypes.bool,
+		sponsored: PropTypes.bool,
+		linkLabel: PropTypes.string,
 	}).isRequired,
 	className: PropTypes.string,
 	clientId: PropTypes.string,

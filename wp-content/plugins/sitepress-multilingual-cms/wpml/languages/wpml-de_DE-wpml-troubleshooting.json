@@ -1,0 +1,54 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n != 1);",
+            "lang": "de_DE"
+         },
+         "Alias Domain": [
+            "Alias-Domain"
+         ],
+         "Current alias domains:": [
+            "Aktuelle Alias-Domains:"
+         ],
+         "This will remove all registered alias domains. If you are accessing this site through an alias domain, the migration banner will appear again.": [
+            "Dies wird alle registrierten Alias-Domains entfernen. Wenn du auf diese Website über eine Alias-Domain zugreifst, wird das Migrations-Banner erneut angezeigt."
+         ],
+         "Something went wrong. Please try again.": [
+            "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+         ],
+         "Resetting...": [
+            "Wird zurückgesetzt..."
+         ],
+         "Reset alias domains": [
+            "Alias-Domains zurücksetzen"
+         ],
+         "Register a different URL that points to this same WordPress installation. WPML will use the current site URL for API communication with AMS.": [
+            "Registriere eine andere URL, die auf dieselbe WordPress-Installation verweist. WPML wird die aktuelle Website-URL für die API-Kommunikation mit AMS verwenden."
+         ],
+         "Alias domain URL:": [
+            "Alias-Domain-URL:"
+         ],
+         "Registering...": [
+            "Wird registriert..."
+         ],
+         "Register alias domain": [
+            "Alias-Domain registrieren"
+         ],
+         "PostHog Integration": [
+            "PostHog-Integration"
+         ],
+         "PostHog is running on your site": [
+            "PostHog läuft auf deiner Website"
+         ],
+         "Enable PostHog to help us improve our product": [
+            "Aktiviere PostHog, um uns zu helfen, unser Produkt zu verbessern"
+         ],
+         "your PostHog session ID is: ": [
+            "Deine PostHog-Sitzungs-ID lautet: "
+         ]
+      }
+   }
+}

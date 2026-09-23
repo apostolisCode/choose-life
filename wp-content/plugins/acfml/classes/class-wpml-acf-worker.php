@@ -1,78 +1,279 @@
 <?php
 
+use ACFML\FilteredAcfFieldReferenceTrait;
 use WPML\API\Sanitize;
+use WPML\FP\Obj;
 
 class WPML_ACF_Worker implements \IWPML_Backend_Action, \IWPML_Frontend_Action, \IWPML_DIC_Action {
-	const TP_APPLY_TRANSLATIONS_ROUTE = '/tp/apply-translations';
 
-	/**
-	 * @var WPML_ACF_Duplicated_Post
-	 */
-	private $duplicated_post;
+	use FilteredAcfFieldReferenceTrait;
 
-	/**
-	 * WPML_ACF_Worker constructor.
-	 *
-	 * @param WPML_ACF_Duplicated_Post $duplicated_post
-	 */
-	public function __construct( WPML_ACF_Duplicated_Post $duplicated_post ) {
-		$this->duplicated_post = $duplicated_post;
+	const META_TYPE_POST = 'post';
+	const META_TYPE_TERM = 'term';
+
+	const METADATA_CONTEXT_POST_FIELD = 'custom_field';
+	const METADATA_CONTEXT_TERM_FIELD = 'term_field';
+
+	const SUSPEND_COPY_TIME_CONVERSION_FOR_FIELD_TYPES = [ 'link', 'url' ];
+
+	private $fieldResolver;
+
+	private $referenceRepository;
+
+	private $sourceMetadataSnapshots = [];
+
+	private $referenceMetadataCopyDecisions = [];
+
+	private $registeredFields = [];
+
+	public function __construct( \ACFML\Field\Resolver $fieldResolver, \ACFML\Field\ReferenceRepository $referenceRepository ) {
+		$this->fieldResolver       = $fieldResolver;
+		$this->referenceRepository = $referenceRepository;
 	}
 
-	/**
-	 * Registers WP hooks.
-	 */
 	public function add_hooks() {
-		add_filter( 'wpml_duplicate_generic_string', [ $this, 'duplicate_post_meta' ], 10, 3 );
+		add_filter( 'wpml_duplicate_generic_string', [ $this, 'translateMetaValue' ], 10, 3 );
 		add_filter( 'wpml_sync_parent_for_post_type', [ $this, 'sync_parent_for_post_type' ], 10, 2 );
-		add_action( 'wpml_after_copy_custom_field', [ $this, 'after_copy_custom_field' ], 10, 3 );
+		add_action( 'wpml_after_copy_custom_field', [ $this, 'after_copy_custom_field' ], 10, 4 );
+		add_action( 'wpml_after_copy_term_field', [ $this, 'after_copy_term_field' ], 10, 3 );
+		add_filter( 'wpml_apply_translated_term_meta', [ $this, 'storeReferenceForTranslatedTermMeta' ], 10, 5 );
+		add_action( 'added_post_meta', [ $this, 'invalidatePostMetadataSnapshot' ], 10, 2 );
+		add_action( 'updated_post_meta', [ $this, 'invalidatePostMetadataSnapshot' ], 10, 2 );
+		add_action( 'deleted_post_meta', [ $this, 'invalidatePostMetadataSnapshot' ], 10, 2 );
+		add_action( 'wpml_after_batch_copy_custom_fields', [ $this, 'afterBatchCopyCustomFields' ], 10, 4 );
+		add_filter( 'wpml_sync_custom_fields_batch_writer_is_safe_callback', [ $this, 'isBatchWriterCallbackSafe' ], 10, 3 );
 	}
 
-	/**
-	 * When custom field has been copied, adjusts its values to represent translated objects.
-	 *
-	 * @param int    $post_id_from The ID of the original post.
-	 * @param int    $post_id_to   The ID of translated post.
-	 * @param string $meta_key     The meta key of copied custom field.
-	 */
-	public function after_copy_custom_field( $post_id_from, $post_id_to, $meta_key ) {
-		$field = acf_get_field( $meta_key );
-		if ( $field ) {
-			$meta_value  = get_post_meta( $post_id_to, $meta_key, true );
-			$target_lang = $this->get_target_lang( $post_id_to );
-			if ( $target_lang ) {
-				$meta_data            = $this->prepare_metadata( $meta_value, $meta_key, $post_id_from, $post_id_to );
-				$meta_value_converted = $this->duplicate_post_meta( $meta_value, $target_lang, $meta_data );
-				if ( $meta_value !== $meta_value_converted ) {
-					update_post_meta( $post_id_to, $meta_key, $meta_value_converted, $meta_value );
+	public function invalidatePostMetadataSnapshot( $unusedMetaId, $postId ) {
+		$scope = $this->getSourceMetadataScope( self::META_TYPE_POST, $postId );
+
+		unset( $this->sourceMetadataSnapshots[ $scope ], $this->referenceMetadataCopyDecisions[ $scope ] );
+	}
+
+	public function afterBatchCopyCustomFields( $unusedPostIdFrom, $postIdTo, array $unusedMetaKeys, array $details = [] ) {
+		$this->invalidatePostMetadataSnapshot( 0, $postIdTo );
+		$this->referenceRepository->applyBatch( self::META_TYPE_POST, $postIdTo, $details );
+	}
+
+	public function isBatchWriterCallbackSafe( $isSafe, $hookName, $callback ) {
+		if ( true === $isSafe || ! is_array( $callback ) ) {
+			return $isSafe;
+		}
+
+		if (
+			'wpml_after_copy_custom_field' === $hookName
+			&& [ $this, 'after_copy_custom_field' ] === $callback
+		) {
+			return true;
+		}
+
+		return in_array( $hookName, [ 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ], true )
+			&& [ $this, 'invalidatePostMetadataSnapshot' ] === $callback;
+	}
+
+	public function after_copy_custom_field( $post_id_from, $post_id_to, $meta_key, $values_after = null ) {
+		if ( $this->isConfirmedAcfReferenceMetadataCopy( $post_id_from, $meta_key, $values_after ) ) {
+			return;
+		}
+
+		$this->afterCopyObjectField( $post_id_from, $post_id_to, $meta_key, self::META_TYPE_POST, get_post_type( $post_id_to ), $values_after );
+	}
+
+	private function isConfirmedAcfReferenceMetadataCopy( $postIdFrom, $metaKey, $valuesAfter ) {
+		if (
+			! is_string( $metaKey )
+			|| strlen( $metaKey ) < 2
+			|| '_' !== $metaKey[0]
+			|| ! is_array( $valuesAfter )
+			|| 1 !== count( $valuesAfter )
+		) {
+			return false;
+		}
+
+		$destinationValues = array_values( $valuesAfter );
+		$rawReference      = $destinationValues[0];
+		if ( ! is_string( $rawReference ) || '' === $rawReference || 0 !== strpos( $rawReference, 'field_' ) ) {
+			return false;
+		}
+
+		$scope       = $this->getSourceMetadataScope( self::META_TYPE_POST, $postIdFrom );
+		$decisionKey = strlen( $metaKey ) . ':' . $metaKey . $rawReference;
+		if ( isset( $this->referenceMetadataCopyDecisions[ $scope ] )
+			&& array_key_exists( $decisionKey, $this->referenceMetadataCopyDecisions[ $scope ] )
+		) {
+			return $this->referenceMetadataCopyDecisions[ $scope ][ $decisionKey ];
+		}
+
+		$sourceMetadata = $this->getSourceMetadataSnapshot( self::META_TYPE_POST, $postIdFrom, $scope );
+		$valueMetaKey   = substr( $metaKey, 1 );
+		$sourceValues   = isset( $sourceMetadata[ $metaKey ] ) && is_array( $sourceMetadata[ $metaKey ] )
+			? array_values( $sourceMetadata[ $metaKey ] )
+			: [];
+
+		$isReferenceMetadata = array_key_exists( $valueMetaKey, $sourceMetadata )
+			&& 1 === count( $sourceValues )
+			&& $rawReference === $sourceValues[0]
+			&& ! array_key_exists( '_' . $metaKey, $sourceMetadata );
+
+		if ( $isReferenceMetadata ) {
+			$field               = $this->getRegisteredAcfField( $rawReference );
+			$isReferenceMetadata = false !== $field && $this->fieldNameMatchesMetaKey( $field, $valueMetaKey );
+		}
+
+		$this->referenceMetadataCopyDecisions[ $scope ][ $decisionKey ] = $isReferenceMetadata;
+
+		return $isReferenceMetadata;
+	}
+
+	private function getSourceMetadataScope( $metaType, $objectId ) {
+		return get_current_blog_id() . ':' . $metaType . ':' . (string) $objectId;
+	}
+
+	private function getSourceMetadataSnapshot( $metaType, $objectId, $scope ) {
+		if ( ! array_key_exists( $scope, $this->sourceMetadataSnapshots ) ) {
+			$metadata                                = get_metadata( $metaType, $objectId );
+			$this->sourceMetadataSnapshots[ $scope ] = is_array( $metadata ) ? $metadata : [];
+		}
+
+		return $this->sourceMetadataSnapshots[ $scope ];
+	}
+
+	private function getRegisteredAcfField( $reference ) {
+		if ( ! is_string( $reference ) || '' === $reference || 0 !== strpos( $reference, 'field_' ) ) {
+			return false;
+		}
+
+		$cacheKey = get_current_blog_id() . ':' . $reference;
+		if ( ! array_key_exists( $cacheKey, $this->registeredFields ) ) {
+			$field = false;
+			if ( function_exists( 'acf_get_field' ) ) {
+				$field = acf_get_field( $reference );
+				if ( ! $this->isExactAcfFieldReference( $field, $reference ) ) {
+					$normalizedReference = $this->normalizeAcfFieldReference( $reference );
+					$field               = $normalizedReference !== $reference ? acf_get_field( $normalizedReference ) : false;
+					$reference           = $normalizedReference;
 				}
 			}
+
+			$this->registeredFields[ $cacheKey ] = $this->isExactAcfFieldReference( $field, $reference ) ? $field : false;
+		}
+
+		return $this->registeredFields[ $cacheKey ];
+	}
+
+	private function isExactAcfFieldReference( $field, $reference ) {
+		return is_array( $field ) && isset( $field['key'] ) && $reference === $field['key'];
+	}
+
+	private function fieldNameMatchesMetaKey( array $field, $metaKey ) {
+		$fieldName = isset( $field['name'] ) && is_string( $field['name'] ) ? $field['name'] : '';
+		if ( '' === $fieldName ) {
+			return false;
+		}
+
+		if ( $fieldName === $metaKey ) {
+			return true;
+		}
+
+		$suffix = '_' . $fieldName;
+
+		return strlen( $metaKey ) > strlen( $suffix ) && substr( $metaKey, -strlen( $suffix ) ) === $suffix;
+	}
+
+	public function after_copy_term_field( $term_id_from, $term_id_to, $meta_key ) {
+		$term = get_term( $term_id_to );
+		if ( ! $term instanceof \WP_Term ) {
+			return;
+		}
+		$this->afterCopyObjectField( \WPML_ACF_Term_Id::normalizeId( $term_id_from ), $term_id_to, $meta_key, self::META_TYPE_TERM, $term->taxonomy );
+	}
+
+	public function storeReferenceForTranslatedTermMeta( $handled, $termId, $metaKey, $unusedValue, $context ) {
+		$sourceTermId = (int) Obj::prop( 'sourceTermId', $context );
+		if ( ! $sourceTermId ) {
+			return $handled;
+		}
+
+		$field     = $this->getFieldObjectWithFilteredReference( $metaKey, \WPML_ACF_Term_Id::normalizeId( $sourceTermId ), false, false ) ?: [];
+		$reference = $field['key'] ?? '';
+
+		if ( $reference ) {
+			$this->referenceRepository->storeIfMissing( self::META_TYPE_TERM, $termId, '_' . $metaKey, $reference );
+		}
+
+		return $handled;
+	}
+
+	private function afterCopyObjectField( $objectFromId, $objectToId, $metaKey, $metaType, $objectType, $valuesAfter = null ) {
+		if ( is_array( $valuesAfter ) ) {
+			$metaValue = count( $valuesAfter ) ? maybe_unserialize( $valuesAfter[0] ) : '';
+		} else {
+			$metaValue = get_metadata( $metaType, $objectToId, $metaKey, true );
+		}
+
+		if ( $this->hasNothingToConvert( $metaValue ) ) {
+			return;
+		}
+
+		$field = $this->getFieldObjectWithFilteredReference( $metaKey, $objectFromId, false, false );
+		if ( ! $field ) {
+			return;
+		}
+
+		$reference = Obj::prop( 'key', $field );
+		if ( $reference ) {
+			$this->referenceRepository->storeIfMissing( $metaType, $objectToId, '_' . $metaKey, $reference );
+		}
+
+		$targetLang = $this->getTargetLang( $objectToId, $objectType );
+		if ( ! $targetLang ) {
+			return;
+		}
+
+		$metaValueConverted = $this->convertMetaValue( $metaValue, $metaKey, Obj::prop( 'type', $field ), $metaType, $objectFromId, $objectToId, $targetLang );
+
+		if ( $metaValue !== $metaValueConverted ) {
+			update_metadata( $metaType, $objectToId, $metaKey, $metaValueConverted, $metaValue );
 		}
 	}
 
-	/**
-	 * Synchronizes ACF field value during the post duplicate process.
-	 *
-	 * @param mixed  $meta_value  ACF value being copied.
-	 * @param string $target_lang The target language.
-	 * @param array  $meta_data   Meta data of the value.
-	 *
-	 * @return mixed
-	 */
-	public function duplicate_post_meta( $meta_value, $target_lang, $meta_data ) {
-		$processed_data = new WPML_ACF_Processed_Data( $meta_value, $target_lang, $meta_data );
-		return $this->convertMetaValue( $processed_data );
+
+	private function hasNothingToConvert( $metaValue ) {
+		return '' === $metaValue || null === $metaValue || '0' === $metaValue;
 	}
 
-	/**
-	 * Converts IDs and stuff inside ACF field value.
-	 *
-	 * @param WPML_ACF_Processed_Data $processedData The data being processed.
-	 *
-	 * @return mixed
-	 */
-	private function convertMetaValue( WPML_ACF_Processed_Data $processedData ) {
-		$field = $this->duplicated_post->resolve_field( $processedData );
+	public function convertMetaValue( $metaValue, $metaKey, $fieldType, $metaType, $objectFromId, $objectToId, $targetLang ) {
+		$metaData = $this->prepareMetaData( $metaValue, $metaKey, $fieldType, $metaType, $objectFromId, $objectToId );
+		return $this->translateMetaValue( $metaValue, $targetLang, $metaData );
+	}
+
+	private function prepareMetaData( $metaValue, $metaKey, $fieldType, $metaType, $objectFromId, $objectToId ) {
+		$isSerialized = is_serialized( $metaValue );
+		$idKey        = sprintf( '%s_id', $metaType );
+		$masterIdKey  = sprintf( 'master_%s_id', $metaType );
+		return [
+			'context'       => self::META_TYPE_TERM === $metaType ? self::METADATA_CONTEXT_TERM_FIELD : self::METADATA_CONTEXT_POST_FIELD,
+			'attribute'     => 'value',
+			'key'           => $metaKey,
+			'type'          => $fieldType,
+			'is_serialized' => $isSerialized,
+			$idKey          => $objectToId,
+			$masterIdKey    => $objectFromId,
+		];
+	}
+
+	public function translateMetaValue( $metaValue, $targetLang, $metaData ) {
+		$processedData = new WPML_ACF_Processed_Data( $metaValue, $targetLang, $metaData );
+		return $this->resolveMetaValue( $processedData );
+	}
+
+	private function resolveMetaValue( WPML_ACF_Processed_Data $processedData ) {
+		$field = $this->fieldResolver->run( $processedData );
+
+		if ( in_array( $field->field_type(), self::SUSPEND_COPY_TIME_CONVERSION_FOR_FIELD_TYPES, true ) ) {
+			return $processedData->meta_value;
+		}
+
 		return $field->convert_ids();
 	}
 
@@ -84,77 +285,11 @@ class WPML_ACF_Worker implements \IWPML_Backend_Action, \IWPML_Frontend_Action, 
 		return $sync;
 	}
 
-	/**
-	 * Prepares metadata to has the same format as used in \WPML_Post_Duplication::duplicate_custom_fields.
-	 *
-	 * @see \WPML_Post_Duplication::duplicate_custom_fields
-	 *
-	 * @param string     $meta_value   The meta value of processed custom field.
-	 * @param string     $meta_key     The meta key of processed custom field.
-	 * @param int|string $post_id_from The ID of original post or .
-	 * @param int|string $post_id_to   The ID of translated post.
-	 *
-	 * @return array The metadata.
-	 */
-	public function prepare_metadata( $meta_value, $meta_key, $post_id_from, $post_id_to ) {
-		$is_serialized = is_serialized( $meta_value );
-		return [
-			'context'        => 'custom_field',
-			'attribute'      => 'value',
-			'key'            => $meta_key,
-			'is_serialized'  => $is_serialized,
-			'post_id'        => $post_id_to,
-			'master_post_id' => $post_id_from,
-		];
+	private function getTargetLang( $target_object_id, $target_object_type ) {
+		return apply_filters( 'wpml_element_language_code', null, [
+			'element_id'   => $target_object_id,
+			'element_type' => $target_object_type,
+		] );
 	}
 
-	/**
-	 * Returns target language code.
-	 *
-	 * First tries to take it from wpml_element_langauge_code, if it fails check if language code is stored in the
-	 * $_POST data (as it happens when post is translated as part of translation job on CTE).
-	 *
-	 * @param int $target_post_id The ID the translated post.
-	 *
-	 * @return mixed|void|null The language code or null.
-	 */
-	private function get_target_lang( $target_post_id ) {
-		$targetLang = $this->getTargetLangFromTranslationJob();
-		if ( ! $targetLang ) {
-			$args['element_id']   = $target_post_id;
-			$args['element_type'] = get_post_type( $target_post_id );
-			$targetLang           = apply_filters( 'wpml_element_language_code', null, $args );
-		}
-		return $targetLang;
-	}
-
-	/**
-	 * Get target language from POST data sent during trabnslation job in CTE/ATE.
-	 *
-	 * @return false|string
-	 */
-	private function getTargetLangFromTranslationJob() {
-		if ( isset( $_POST['trid'], $_POST['lang'] ) && ( $this->isCTEjobAction() || $this->isApplyingTranslations() ) ) {
-			return Sanitize::stringProp( 'lang', $_POST );
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if this is request during saving translation job from CTE.
-	 *
-	 * @return bool
-	 */
-	private function isCTEjobAction() {
-		return isset( $_POST['action'] ) && 'wpml_save_job_ajax' === $_POST['action'] && wp_verify_nonce( $_POST['_icl_nonce'], 'wpml_save_job_nonce' );
-	}
-
-	/**
-	 * Checks if this is request during saving translation job from ATE or translation service.
-	 *
-	 * @return bool
-	 */
-	private function isApplyingTranslations() {
-		return isset( $_SERVER['REQUEST_URI'] ) && false !== stripos( $_SERVER['REQUEST_URI'], self::TP_APPLY_TRANSLATIONS_ROUTE );
-	}
 }

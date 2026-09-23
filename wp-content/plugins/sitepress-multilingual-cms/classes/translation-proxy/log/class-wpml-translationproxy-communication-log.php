@@ -52,11 +52,6 @@ class WPML_TranslationProxy_Communication_Log {
 		return $this->sitepress->get_setting( 'tp-com-logging', true );
 	}
 
-	/**
-	 * @param string|array|stdClass $params
-	 *
-	 * @return array|stdClass
-	 */
 	public function sanitize_data( $params ) {
 		$sanitized_params = $params;
 
@@ -73,12 +68,6 @@ class WPML_TranslationProxy_Communication_Log {
 		return $sanitized_params;
 	}
 
-	/**
-	 * @param string                $key
-	 * @param string|array|stdClass $item
-	 *
-	 * @return string|array|stdClass
-	 */
 	private function sanitize_data_item( $key, $item ) {
 		if ( is_array( $item ) || is_object( $item ) ) {
 			$item = $this->sanitize_data( $item );
@@ -91,11 +80,6 @@ class WPML_TranslationProxy_Communication_Log {
 		return $item;
 	}
 
-	/**
-	 * @param $url
-	 *
-	 * @return mixed
-	 */
 	public function sanitize_url( $url ) {
 		$original_url_parsed = (string) wpml_parse_url( $url, PHP_URL_QUERY );
 		parse_str( $original_url_parsed, $original_query_vars );
@@ -111,13 +95,14 @@ class WPML_TranslationProxy_Communication_Log {
 	}
 
 	public function add_com_log_link() {
-		$url = esc_attr( 'admin.php?page=' . WPML_TM_FOLDER . '/menu/main.php&sm=com-log' );
+		$url = esc_attr( 'admin.php?page=' . WPML_PLUGIN_FOLDER . '/menu/support.php&tool=communication-log' );
 		?>
 				  <?php
 					printf(
+						/* translators: Line on the Support screen. %1$s: a line break, %2$s: the address of the communication log screen, filling the link tag that is already in the text. */
 						__(
 							'For retrieving debug information for communication between your%1$s site and the translation system, use the <a href="%2$s">communication log</a> page.',
-							'wpml-translation-management'
+							'sitepress'
 						),
 						'<br>',
 						$url
@@ -156,11 +141,6 @@ class WPML_TranslationProxy_Communication_Log {
 		update_option( 'wpml_tp_com_log', $log, false );
 	}
 
-	/**
-	 * @param mixed $item
-	 *
-	 * @return bool
-	 */
 	private function is_json( $item ) {
 		return is_string( $item ) && json_decode( $item ) && json_last_error() === JSON_ERROR_NONE;
 	}

@@ -2,39 +2,41 @@
 
 namespace WPML\TM\ATE\Hooks;
 
-use WPML\TM\ATE\ReturnedJobsQueue;
+use WPML\TM\API\Jobs;
+use WPML\TM\ATE\ReturnToken;
 
 class ReturnedJobActions implements \IWPML_Action {
-	/** @var callable :: int->string->void */
-	private $addToQueue;
-
-	/** @var callable :: int->string->void */
-	private $remove_translation_duplicate_status;
-
-	/**
-	 * @param  callable $addToQueue
-	 * @param  callable $removeTranslationDuplicateStatus
-	 */
-	public function __construct( callable $addToQueue, callable $removeTranslationDuplicateStatus ) {
-		$this->addToQueue = $addToQueue;
-		$this->remove_translation_duplicate_status = $removeTranslationDuplicateStatus;
-	}
-
 
 	public function add_hooks() {
-		add_action( 'init', [ $this, 'addToQueue' ] );
+		add_action( 'init', [ $this, 'callActions' ] );
 	}
 
-	public function addToQueue() {
-		if ( isset( $_GET['ate_original_id'] ) ) {
-			$ateJobId = (int) $_GET['ate_original_id'];
+	public function callActions() {
+		if ( ! isset( $_GET[ ReturnToken::PARAM ] ) || ! is_string( $_GET[ ReturnToken::PARAM ] ) ) {
+			return;
+		}
+		if ( ! isset( $_GET['ate_original_id'] ) && ! isset( $_GET['ate_job_id'] ) ) {
+			return;
+		}
+		if ( isset( $_GET['action'] ) && ReturnCommand::ACTION === $_GET['action'] ) {
+			return;
+		}
 
-			if ( isset( $_GET['complete'] ) ) {
-				call_user_func( $this->addToQueue, $ateJobId, ReturnedJobsQueue::STATUS_COMPLETED );
-				call_user_func( $this->remove_translation_duplicate_status, $ateJobId );
-			} elseif ( isset( $_GET['back'] ) ) {
-				call_user_func( $this->addToQueue, $ateJobId, ReturnedJobsQueue::STATUS_BACK );
+		$forwarded = [];
+		foreach ( ReturnCommand::ATE_PARAMS as $param ) {
+			if ( isset( $_GET[ $param ] ) && is_scalar( $_GET[ $param ] ) ) {
+				$forwarded[ $param ] = rawurlencode( sanitize_text_field( wp_unslash( (string) $_GET[ $param ] ) ) );
 			}
 		}
+		$token = sanitize_text_field( wp_unslash( $_GET[ ReturnToken::PARAM ] ) );
+
+		$destination = remove_query_arg( array_merge( ReturnCommand::ATE_PARAMS, [ ReturnToken::PARAM ] ), Jobs::getCurrentUrl() );
+
+		$this->redirect( add_query_arg( $forwarded, ReturnCommand::url( $destination, $token ) ) );
+	}
+
+	protected function redirect( $url ) {
+		wp_safe_redirect( $url, 302, 'WPML' );
+		exit;
 	}
 }

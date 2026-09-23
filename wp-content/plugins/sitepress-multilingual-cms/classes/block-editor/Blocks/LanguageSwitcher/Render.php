@@ -15,10 +15,8 @@ class Render {
 	const BACKGROUND_CLASSNAMES_STRING = 'has-background has-%s-background-color';
 	const BACKGROUND_STYLE_STRING = 'background-color:%s;';
 
-	/** @var Parser */
 	private $parser;
 
-	/** @var Repository */
 	private $repository;
 
 	public function __construct( Parser $parser, Repository $repository ) {
@@ -26,17 +24,13 @@ class Render {
 		$this->repository = $repository;
 	}
 
-	/**
-	 * @param string $savedHTML
-	 * @param string $source_block
-	 * @param \WP_Block $parent_block
-	 *
-	 * @return string
-	 */
 	public function render_block( $blockAttrs, $savedHTML, $parentBlock ) {
 		$context                  = $parentBlock->context;
 		$languageSwitcherTemplate = $this->parser->parse( $blockAttrs, $savedHTML, $parentBlock, $context );
 
+		if ( null === $languageSwitcherTemplate ) {
+			return '';
+		}
 
 		$languageSwitcher = $this->repository->getCurrentLanguageSwitcher();
 
@@ -54,28 +48,38 @@ class Render {
 				$languageItem,
 				$languageSwitcherTemplate,
 				$parentBlock,
-				$context
+				$context,
+				$blockAttrs
 			);
 		}
+
+		$this->giveAriaStateHoldersARole( $languageSwitcherTemplate->getDOMXPath() );
 
 		return $this->getBodyHTML( $languageSwitcherTemplate->getDOMDocument() );
 	}
 
-	/**
-	 * @param LanguageItemTemplate $languageItemTemplate
-	 * @param string $XPathPrefix
-	 * @param LanguageItem $languageItem
-	 * @param LanguageSwitcherTemplate $languageSwitcherTemplate
-	 *
-	 * @return \DOMNode|null
-	 */
+	private function giveAriaStateHoldersARole( \DOMXPath $domXPath ) {
+		$holders = $domXPath->query( '//*[@aria-expanded or @aria-haspopup][not(@role)]' );
+
+		if ( ! $holders ) {
+			return;
+		}
+
+		foreach ( $holders as $holder ) {
+			if ( $holder instanceof \DOMElement && ! in_array( $holder->tagName, [ 'button', 'a' ], true ) ) {
+				$holder->setAttribute( 'role', 'button' );
+			}
+		}
+	}
+
 	private function createLanguageItemNode(
 		LanguageItemTemplate $languageItemTemplate,
 		$XPathPrefix,
 		LanguageItem $languageItem,
 		LanguageSwitcherTemplate $languageSwitcherTemplate,
 		$sourceBlock,
-		$context
+		$context,
+		$blockAttrs
 	) {
 		$template  = $languageItemTemplate->getTemplate();
 		$container = $languageItemTemplate->getContainer();
@@ -91,6 +95,9 @@ class Render {
 		if ( $linkQuery->length > 0 ) {
 			$link = $linkQuery->item( $linkQuery->length - 1 );
 			$link->setAttribute( 'href', $languageItem->getUrl() );
+			/* translators: Screen reader name of an item of the language switcher. %s: the name of the language it switches to. */
+			$ariaLabel = sprintf( __( 'Switch to %s', 'sitepress' ), $languageItem->getNativeName() );
+			$link->setAttribute( 'aria-label', $ariaLabel );
 			$textTarget = $link;
 		}
 
@@ -108,39 +115,60 @@ class Render {
 
 		$flagQuery = $languageSwitcherTemplate->getDOMXPath()->query( $XPathPrefix . '/' . Parser::PATH_ITEM_FLAG_URL );
 		if ( $flagQuery->length > 0 ) {
-			$flag = $flagQuery->item( $flagQuery->length - 1 );
+			$flag       = $flagQuery->item( $flagQuery->length - 1 );
+			$flagWidth  = ! empty( $blockAttrs['flagWidth'] ) ? $blockAttrs['flagWidth'] : 18;
+			$flagHeight = ! empty( $blockAttrs['flagHeight'] ) ? $blockAttrs['flagHeight'] : 12;
 
 			if ( $flag ) {
 				$flag->setAttribute( 'src', $languageItem->getFlagUrl() );
+				$flag->setAttribute( 'width', $flagWidth );
+				$flag->setAttribute( 'height', $flagHeight );
 			}
 		}
 
-		// Apply some classNames and Styles according to values in context if the current block is Navigation Language Switcher
-		// We use values from context to inherit them from the parent Navigation Block
+		if ( isset( $sourceBlock->attributes['layoutOpenOnClick'] ) ) {
+			$dropdownFirstItemQuery = $languageSwitcherTemplate->getDOMXPath()->query( $XPathPrefix . "/ancestor::li" );
+			if ( $dropdownFirstItemQuery->length > 0 ) {
+				$dpFirstItem = $dropdownFirstItemQuery->item( $dropdownFirstItemQuery->length - 1 );
+
+				if ( $dpFirstItem ) {
+					$dpFirstItem->setAttribute(
+						'onclick',
+						"(function(li){
+						var toggle = li.children[0];
+						if (toggle.getAttribute('aria-expanded') === 'true') {
+							if (li.wpmlLsClose) { li.wpmlLsClose(); } else { toggle.setAttribute('aria-expanded', 'false'); }
+							return;
+						}
+						toggle.setAttribute('aria-expanded', 'true');
+						var onDocumentClick = function(event){ if (!li.contains(event.target)) { li.wpmlLsClose(); } };
+						var onKeyDown = function(event){ if (event.key === 'Escape' || event.key === 'Esc') { li.wpmlLsClose(); toggle.focus(); } };
+						li.wpmlLsClose = function(){
+							toggle.setAttribute('aria-expanded', 'false');
+							document.removeEventListener('click', onDocumentClick);
+							document.removeEventListener('keydown', onKeyDown);
+							li.wpmlLsClose = null;
+						};
+						setTimeout(function(){ if (li.wpmlLsClose) { document.addEventListener('click', onDocumentClick); document.addEventListener('keydown', onKeyDown); } }, 0);
+					})(this);"
+					);
+				}
+			}
+		}
+
 		if ( $sourceBlock->name === LanguageSwitcher::BLOCK_NAVIGATION_LANGUAGE_SWITCHER ) {
-			// Apply specific logic only when the language item = current language item
 			if ( $XPathPrefix === Parser::PATH_CURRENT_LANGUAGE_ITEM ) {
 				$this->maybeApplyColorsForLanguageItems( $languageSwitcherTemplate, $XPathPrefix, $context, true );
 			}
 
-			// Apply specific logic only when the language item = secondary language item
 			if ( $XPathPrefix === Parser::PATH_LANGUAGE_ITEM ) {
 				$this->maybeApplyColorsForLanguageItems( $languageSwitcherTemplate, $XPathPrefix, $context, false );
 			}
 		}
 
-
 		return $newLanguageItem;
 	}
 
-	/**
-	 * @param LanguageSwitcherTemplate $languageSwitcherTemplate
-	 * @param string $XPathPrefix
-	 * @param array $context
-	 * @param bool $isCurrentLanguageItem
-	 *
-	 * @return void
-	 */
 	private function maybeApplyColorsForLanguageItems( $languageSwitcherTemplate, $XPathPrefix, $context, $isCurrentLanguageItem ) {
 		$langItemQuery     = $languageSwitcherTemplate->getDOMXPath()->query( $XPathPrefix );
 		$langItemSpanQuery = $languageSwitcherTemplate->getDOMXPath()->query( $XPathPrefix . "//span[@data-wpml='label']" );
@@ -159,13 +187,6 @@ class Render {
 		}
 	}
 
-	/**
-	 * @param \DOMNode $langItem
-	 * @param \DOMNode $langItemSpan
-	 * @param array $context
-	 *
-	 * @return void
-	 */
 	private function maybeApplyColorsForCurrentLanguageItem( $langItem, $langItemSpan, $context ) {
 		$namedTextColor        = Obj::propOr( null, 'textColor', $context );
 		$namedBackgroundColor  = Obj::propOr( null, 'backgroundColor', $context );
@@ -185,13 +206,6 @@ class Render {
 		}
 	}
 
-	/**
-	 * @param \DOMNode $langItem
-	 * @param \DOMNode $langItemSpan
-	 * @param array $context
-	 *
-	 * @return void
-	 */
 	private function maybeApplyColorsForLanguageItem( $langItem, $langItemSpan, $context ) {
 		$namedOverlayTextColor        = Obj::propOr( null, 'overlayTextColor', $context );
 		$namedOverlayBackgroundColor  = Obj::propOr( null, 'overlayBackgroundColor', $context );
@@ -211,33 +225,15 @@ class Render {
 		}
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 * @param string $attribute
-	 * @param string $value
-	 *
-	 * @return void
-	 */
 	private function appendAttributeValueToDOMElement( $element, $attribute, $value ) {
 		$currentElementAttributeValue = $this->getDOMElementCurrentAttributeValue( $element, $attribute );
 		$element->setAttribute( $attribute, $currentElementAttributeValue . $value );
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 * @param string $attribute
-	 *
-	 * @return string
-	 */
 	private function getDOMElementCurrentAttributeValue( $element, $attribute ) {
 		return $element->getAttribute( $attribute );
 	}
 
-	/**
-	 * @param \DOMDocument $DOMDocument
-	 *
-	 * @return string
-	 */
 	private function getBodyHTML( $DOMDocument ) {
 		$html = $DOMDocument->saveHTML();
 

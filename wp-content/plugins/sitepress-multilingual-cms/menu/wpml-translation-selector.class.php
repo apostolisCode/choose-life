@@ -23,6 +23,7 @@ class WPML_Translation_Selector extends WPML_SP_User {
 		if ( $selected_language !== $default_language && 'all' !== $current_language ) {
 			?>
 			<br/><br/>
+			<?php /* translators: Label in front of the dropdown that picks the original post this one is a translation of, on the post editing screen. The name of the original post follows it, so it ends without a full stop. */ ?>
 			<?php echo __( 'This is a translation of', 'sitepress' ); ?><br/>
 			<select name="icl_translation_of"
 					id="icl_translation_of"
@@ -35,6 +36,7 @@ class WPML_Translation_Selector extends WPML_SP_User {
 				<?php
 				if ( $trid ) {
 					?>
+						<?php /* translators: First option in the dropdown that picks the original post this one is a translation of: no post chosen. The dashes keep it apart from the post titles. */ ?>
 						<option value="none"><?php echo __( '--None--', 'sitepress' ); ?></option>
 						<?php
 						$src_term = $this->get_original_name_by_trid( $trid );
@@ -46,6 +48,7 @@ class WPML_Translation_Selector extends WPML_SP_User {
 						}
 				} else {
 					?>
+						<?php /* translators: First option in the dropdown that picks the original post this one is a translation of: no post chosen. The dashes keep it apart from the post titles. */ ?>
 						<option value="none" selected="selected"><?php echo __( '--None--', 'sitepress' ); ?></option>
 					<?php
 				}
@@ -81,35 +84,46 @@ class WPML_Translation_Selector extends WPML_SP_User {
 		);
 	}
 
-	/**
-	 * @param int $trid
-	 * @return null|object
-	 */
 	private function get_original_name_by_trid( $trid ) {
 		global $wpdb;
 
-		$src_snippet = $this->source_language_code ? $wpdb->prepare(
-			' AND language_code = %s LIMIT 1',
-			$this->source_language_code
-		) : '';
-
-		$all_translations = $wpdb->get_results(
-			$wpdb->prepare(
-				" SELECT t.name, i.element_id as ttid, i.language_code
-                  FROM {$wpdb->terms} t
-                  JOIN {$wpdb->term_taxonomy} tt
-                    ON t.term_id = tt.term_id
-                  JOIN {$wpdb->prefix}icl_translations i
-                    ON i.element_type = CONCAT('tax_', tt.taxonomy)
-                      AND i.element_id = tt.term_taxonomy_id
-                  WHERE i.trid = %d
-                    AND i.element_id != %d
-                  {$src_snippet}",
-				$trid,
-				$this->element_id
-			)
-		);
-		$res              = null;
+		if ( $this->source_language_code ) {
+			$all_translations = $wpdb->get_results(
+				$wpdb->prepare(
+					" SELECT t.name, i.element_id as ttid, i.language_code
+					FROM {$wpdb->terms} t
+					JOIN {$wpdb->term_taxonomy} tt
+						ON t.term_id = tt.term_id
+					JOIN {$wpdb->prefix}icl_translations i
+						ON i.element_type = CONCAT('tax_', tt.taxonomy)
+							AND i.element_id = tt.term_taxonomy_id
+					WHERE i.trid = %d
+						AND i.element_id != %d
+						AND language_code = %s
+					LIMIT 1",
+					$trid,
+					$this->element_id,
+					$this->source_language_code
+				)
+			);
+		} else {
+			$all_translations = $wpdb->get_results(
+				$wpdb->prepare(
+					" SELECT t.name, i.element_id as ttid, i.language_code
+					FROM {$wpdb->terms} t
+					JOIN {$wpdb->term_taxonomy} tt
+						ON t.term_id = tt.term_id
+					JOIN {$wpdb->prefix}icl_translations i
+						ON i.element_type = CONCAT('tax_', tt.taxonomy)
+							AND i.element_id = tt.term_taxonomy_id
+					WHERE i.trid = %d
+						AND i.element_id != %d",
+					$trid,
+					$this->element_id
+				)
+			);
+		}
+		$res = null;
 		foreach ( $all_translations as $translation ) {
 			$res = $res === null ? $translation : $res;
 			if ( $translation->language_code === $this->default_language_code ) {

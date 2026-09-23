@@ -82,17 +82,23 @@ add_filter( 'acf/format_value', __NAMESPACE__ . '\populate_auto_inline_editing_v
 /**
  * Applies inline editing attributes to dom elements if they contain field values.
  *
- * @param string        $path       The path to the render template for this block.
- * @param array         $block      The block data.
- * @param string        $content    The block content.
- * @param boolean       $is_preview Whether we are in the block editor or not.
- * @param integer       $post_id    The current post being edited or viewed.
- * @param WP_Block|null $wp_block   The block instance (since WP 5.5).
- * @param array         $context    The block context array.
+ * @param string  $path       The path to the render template for this block.
+ * @param array   $block      The block data.
+ * @param boolean $is_preview Whether we are in the block editor or not.
  * @return string
  */
-function apply_inline_editing_attributes_to_render_template( $path, $block, $content, $is_preview, $post_id, $wp_block, $context ): string {
+function apply_inline_editing_attributes_to_render_template( $path, $block, $is_preview ): string {
 	global $acf_fields_used_in_block_render_template, $acf_blocks_doing_auto_inline_editing;
+
+	// Don't apply autoInlineEditing if the current PHP doesn't include DOMDocument or DOMXPath.
+	if ( ! class_exists( 'DOMDocument' ) || ! class_exists( 'DOMXPath' ) ) {
+		ob_start();
+		include $path;
+		return ob_get_clean();
+	}
+
+	$allowed_contenteditable_field_types = get_allowed_contenteditable_fields();
+	$non_auto_inline_editing_fields      = get_non_auto_inline_editing_fields();
 
 	$acf_fields_used_in_block_render_template = array();
 
@@ -100,60 +106,9 @@ function apply_inline_editing_attributes_to_render_template( $path, $block, $con
 
 	ob_start();
 	include $path;
-	$html = ob_get_clean();
+	$html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head>' . ob_get_clean();
 
 	$acf_blocks_doing_auto_inline_editing = false;
-
-	return apply_inline_editing_attributes_to_html_string( $html, $block );
-}
-
-/**
- * Applies inline editing attributes to dom elements if they contain field values.
- *
- * @param string        $render_callback The callback function that renders the block preview/output.
- * @param array         $block           The block data.
- * @param string        $content         The block content.
- * @param boolean       $is_preview      Whether we are in the block editor or not.
- * @param integer       $post_id         The current post being edited or viewed.
- * @param WP_Block|null $wp_block        The block instance (since WP 5.5).
- * @param array         $context         The block context array.
- * @return string
- */
-function apply_inline_editing_attributes_to_render_callback( $render_callback, $block, $content, $is_preview, $post_id, $wp_block, $context ): string {
-	global $acf_fields_used_in_block_render_template, $acf_blocks_doing_auto_inline_editing;
-
-	$acf_fields_used_in_block_render_template = array();
-
-	$acf_blocks_doing_auto_inline_editing = true;
-
-	ob_start();
-	call_user_func( $render_callback, $block, $content, $is_preview, $post_id, $wp_block, $context );
-	$html = ob_get_clean();
-
-	$acf_blocks_doing_auto_inline_editing = false;
-
-	return apply_inline_editing_attributes_to_html_string( $html, $block );
-}
-
-/**
- * Applies inline editing attributes to dom elements if they contain field values.
- *
- * @param string $html_string The HTML string being processed.
- * @param array  $block       The block data.
- * @return string
- */
-function apply_inline_editing_attributes_to_html_string( $html_string, $block ): string {
-	global $acf_fields_used_in_block_render_template;
-
-	// Don't apply autoInlineEditing if the current PHP doesn't include DOMDocument or DOMXPath.
-	if ( ! class_exists( 'DOMDocument' ) || ! class_exists( 'DOMXPath' ) ) {
-		return $html_string;
-	}
-
-	$allowed_contenteditable_field_types = get_allowed_contenteditable_fields();
-	$non_auto_inline_editing_fields      = get_non_auto_inline_editing_fields();
-
-	$html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head>' . $html_string;
 
 	// Load the HTML into DOMDocument
 	$dom = new \DOMDocument();
@@ -249,7 +204,7 @@ function apply_inline_editing_attributes_to_html_string( $html_string, $block ):
 
 		// If the value for this field matches the field slug, remove it.
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName
-		if ( strpos( $top_level_text, 'acf_auto_inline_editing_field_name_' ) === 0 ) {
+		if ( str_starts_with( $top_level_text, 'acf_auto_inline_editing_field_name_' ) ) {
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName
 			$element->textContent = '';
 		}

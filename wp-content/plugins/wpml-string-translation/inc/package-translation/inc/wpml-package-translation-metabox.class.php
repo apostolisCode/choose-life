@@ -7,15 +7,11 @@ class WPML_Package_Translation_Metabox {
 	private $dashboard_link;
 	private $strings_link;
 	private $default_language;
-	/** @var array<string, mixed> */
 	private $main_container_attributes;
 	private $show_description;
 	private $show_link;
 	private $show_status;
 	private $show_title;
-	/**
-	 * @var array<string, mixed>
-	 */
 	private $status_container_attributes;
 	private $status_container_attributes_html;
 	private $status_container_tag;
@@ -24,32 +20,12 @@ class WPML_Package_Translation_Metabox {
 
 	public $metabox_data;
 
-	/**
-	 * @var SitePress
-	 */
 	private $sitepress;
 	private $translation_statuses;
-	/**
-	 * @var wpdb
-	 */
 	private $wpdb;
-	/**
-	 * @var \WPML_Package
-	 */
 	private $package;
-	/**
-	 * @var string
-	 */
 	private $package_language;
 
-	/**
-	 * WPML_Package_Translation_Metabox constructor.
-	 *
-	 * @param stdClass|WPML_Package|array|int $package
-	 * @param \wpdb                           $wpdb
-	 * @param \SitePress                      $sitepress
-	 * @param array<string,mixed>             $args
-	 */
 	public function __construct( $package, $wpdb, $sitepress, $args = array() ) {
 
 		$this->wpdb      = $wpdb;
@@ -73,16 +49,20 @@ class WPML_Package_Translation_Metabox {
 		$this->package_language = $this->package->get_package_language();
 		$this->package_language = $this->package_language ? $this->package_language : $this->default_language;
 
+		/* translators: Title of the WPML box on the editing screen of an item whose texts WPML translates as a package. */
 		$this->metabox_data['title'] = __( 'WPML Translation', 'wpml-string-translation' );
 		if ( $this->is_package_language_active() ) {
 			$this->metabox_data['translate_title'] = __( 'Send to translation', 'wpml-string-translation' );
 		} else {
+			/* translators: Link in the WPML box on the editing screen that opens the String Translation page for this item. Verb, imperative. */
 			$this->metabox_data['translate_title'] = __( 'Translate strings', 'wpml-string-translation' );
 		}
 
 		if ( $this->got_package() ) {
+			/* translators: Label above the per-language translation states in the WPML box on the editing screen. */
 			$this->metabox_data['statuses_title'] = __( 'Translation status:', 'wpml-string-translation' );
 			$this->init_translation_statuses();
+			/* translators: Line in the WPML box on the editing screen. %1$s: what sort of item it is, for example "widget" or "form". %2$s: a dropdown for picking the language it was written in. */
 			$this->metabox_data['package_language_title'] = sprintf( __( 'Language of this %1$s is %2$s', 'wpml-string-translation' ), $this->package->kind, $this->get_lang_selector() );
 		} else {
 			$this->metabox_data['package_language_title'] = '';
@@ -296,11 +276,6 @@ class WPML_Package_Translation_Metabox {
 		return $ok;
 	}
 
-	/**
-	 * @param array<string,mixed> $attributes
-	 *
-	 * @return string
-	 */
 	private function attributes_to_string( $attributes ) {
 		$result = '';
 		foreach ( $attributes as $key => $value ) {
@@ -331,9 +306,6 @@ class WPML_Package_Translation_Metabox {
 		return $result;
 	}
 
-	/**
-	 * @param array<string,string|array<string,mixed> > $args
-	 */
 	private function parse_arguments( $args ) {
 		$default_args = array(
 			'show_title'                  => true,
@@ -356,10 +328,8 @@ class WPML_Package_Translation_Metabox {
 		$this->title_tag                   = $args['title_tag'];
 		$this->status_container_tag        = $args['status_container_tag'];
 		$this->status_element_tag          = $args['status_element_tag'];
-		/** @var array<string, mixed> $main_container_attributes */
 		$main_container_attributes = $args['main_container_attributes'];
 		$this->main_container_attributes   = $main_container_attributes;
-		/** @var array<string, mixed> $status_container_attributes */
 		$status_container_attributes = $args['status_container_attributes'];
 		$this->status_container_attributes = $status_container_attributes;
 
@@ -367,9 +337,6 @@ class WPML_Package_Translation_Metabox {
 		$this->status_container_attributes_html = $this->attributes_to_string( $this->status_container_attributes );
 	}
 
-	/**
-	 * @return bool
-	 */
 	private function got_package() {
 		return $this->package && $this->package->ID;
 	}
@@ -378,12 +345,13 @@ class WPML_Package_Translation_Metabox {
 		$post_translations = $this->get_post_translations();
 		$status            = array();
 		foreach ( $post_translations as $language => $translation ) {
-			$res_query   = "SELECT status as status_code, needs_update FROM {$this->wpdb->prefix}icl_translation_status WHERE translation_id=%d";
-			$res_args    = array( $translation->translation_id );
-			/** @var string $res_prepare */
-			$res_prepare = $this->wpdb->prepare( $res_query, $res_args );
-			/** @var \stdClass $res */
-			$res = $this->wpdb->get_row( $res_prepare );
+			$wpdb = $this->wpdb;
+			$res = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT status as status_code, needs_update FROM {$wpdb->prefix}icl_translation_status WHERE translation_id=%d",
+					$translation->translation_id
+				)
+			);
 			if ( $res ) {
 				$res->status = $res->status_code;
 				switch ( $res->status ) {
@@ -391,15 +359,18 @@ class WPML_Package_Translation_Metabox {
 						$res->status = __( 'Waiting for translator', 'wpml-string-translation' );
 						break;
 					case ICL_TM_IN_PROGRESS:
+						/* translators: Status value in the WPML box on the editing screen: the translation has been started but is not finished. */
 						$res->status = __( 'In progress', 'wpml-string-translation' );
 						break;
 					case ICL_TM_NEEDS_UPDATE:
 						$res->status = '';
 						break;
 					case ICL_TM_COMPLETE:
+						/* translators: Status value in the WPML box on the editing screen: the translation is finished. Adjective, not an instruction to complete something. */
 						$res->status = __( 'Complete', 'wpml-string-translation' );
 						break;
 					default:
+						/* translators: Status value on the String Translation and Packages pages: the text has no translation yet. */
 						$res->status = __( 'Not translated', 'wpml-string-translation' );
 						break;
 				}
@@ -408,6 +379,7 @@ class WPML_Package_Translation_Metabox {
 					if ( $res->status ) {
 						$res->status .= ' - ';
 					}
+					/* translators: Status value in the WPML box on the editing screen: the original changed, so the translation has to be brought up to date. */
 					$res->status .= __( 'Needs update', 'wpml-string-translation' );
 				}
 				$status[ $language ] = $res;
@@ -436,12 +408,8 @@ class WPML_Package_Translation_Metabox {
 		if ( isset( $this->translation_statuses[ $language_data['code'] ] ) ) {
 			$status_value = $this->translation_statuses[ $language_data['code'] ]->status;
 		} else {
-			$tm = new WPML_Package_TM( $this->package );
-			if ( $tm->is_in_basket( $language_data['code'] ) ) {
-				$status_value = __( 'In translation basket', 'wpml-string-translation' );
-			} else {
-				$status_value = __( 'Not translated', 'wpml-string-translation' );
-			}
+			/* translators: Status value on the String Translation and Packages pages: the text has no translation yet. */
+			$status_value = __( 'Not translated', 'wpml-string-translation' );
 		}
 
 		return $status_value;

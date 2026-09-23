@@ -4,11 +4,14 @@ namespace WPML\TM\ATE\Review;
 
 use WPML\Ajax\IHandler;
 use WPML\Collect\Support\Collection;
+use WPML\Core\Component\Translation\Application\Service\AutomaticJobsCancellation\ReleaseLedger;
+use WPML\Core\Component\Translation\Application\Service\AutomaticJobsCancellation\ReleaseSummary;
 use WPML\FP\Cast;
 use WPML\FP\Fns;
 use WPML\FP\Obj;
 use WPML\FP\Relation;
 use WPML\LIB\WP\Post;
+use WPML\LIB\WP\User;
 use WPML\TM\API\Job\Map;
 use WPML\TM\API\Jobs;
 use function WPML\FP\pipe;
@@ -19,22 +22,43 @@ class Cancel implements IHandler {
 		$jobIds       = $data->get( 'jobsIds' );
 		$deleteDrafts = $data->get( 'deleteDrafts' );
 
+		$getJob = function ( $jobId ) {
+			return Jobs::get( $jobId ) ?: TermJob::get( (int) $jobId );
+		};
+
 		$reviewJobs = wpml_collect( $jobIds )
-			->map( Jobs::get() )
+			->map( $getJob )
 			->filter( ReviewStatus::doesJobNeedReview() );
 
+		if ( ! User::canManageTranslations() ) {
+			$reviewJobs = $reviewJobs->filter( function ( $job ) {
+				return (int) Obj::prop( 'translator_id', $job ) === get_current_user_id();
+			} );
+		}
+
 		if ( $reviewJobs->count() ) {
+			$releaseMark = ReleaseLedger::instance()->mark();
+
 			$reviewJobs->map( Obj::prop( 'job_id' ) )
 			           ->map( Jobs::clearReviewStatus() );
 
 			if ( $deleteDrafts ) {
-				$this->deleteDrafts( $reviewJobs );
+				$postJobs = $reviewJobs->reject( [ TermJob::class, 'isTermJob' ] );
+				if ( $postJobs->count() ) {
+					$this->deleteDrafts( $postJobs );
+				}
 			}
 
-			return $reviewJobs->pluck( 'job_id' )->map( Cast::toInt() );
+			return [
+				'jobIds'  => $reviewJobs->pluck( 'job_id' )->map( Cast::toInt() )->values()->toArray(),
+				'release' => ReleaseLedger::instance()->summaryFrom( $releaseMark )->toArray(),
+			];
 		}
 
-		return [];
+		return [
+			'jobIds'  => [],
+			'release' => ( new ReleaseSummary() )->toArray(),
+		];
 	}
 
 	private function deleteDrafts( Collection $reviewJobs ) {

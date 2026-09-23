@@ -15,25 +15,13 @@ class MissingMOFile {
 	const OPTION_GROUP = 'ST-MO';
 	const OPTION_NAME  = 'missing-mo-processed';
 
-	/**
-	 * @var Builder
-	 */
 	private $builder;
-	/**
-	 * @var StringsRetrieve
-	 */
 	private $stringsRetrieve;
-	/**
-	 * @var \WPML_Language_Records
-	 */
 	private $languageRecords;
-	/**
-	 * @var OptionManager
-	 */
 	private $optionManager;
 
 	public function __construct(
-		\WP_Filesystem_Direct $filesystem,
+		\WP_Filesystem_Base $filesystem,
 		Builder $builder,
 		StringsRetrieveMOOriginals $stringsRetrieve,
 		\WPML_Language_Records $languageRecords,
@@ -47,10 +35,6 @@ class MissingMOFile {
 		$this->optionManager   = $optionManager;
 	}
 
-	/**
-	 * @param string $generateMoPath
-	 * @param string $domain
-	 */
 	public function run( $generateMoPath, $domain ) {
 		$processed = $this->getProcessed();
 		if ( ! $processed->contains( basename( $generateMoPath ) ) && $this->maybeCreateSubdir() ) {
@@ -68,6 +52,7 @@ class MissingMOFile {
 
 				$chmod = defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
 				$this->filesystem->put_contents( $generateMoPath, $fileContents, $chmod );
+				do_action( 'wpml_st_translation_file_updated', $generateMoPath, $domain, $locale );
 			}
 			$processed->push( $generateMoPath );
 			$this->optionManager->set( self::OPTION_GROUP, self::OPTION_NAME, $processed->toArray() );
@@ -82,9 +67,6 @@ class MissingMOFile {
 		return WP_LANG_DIR . LoadMissingMOFiles::MISSING_MO_FILES_DIR;
 	}
 
-	/**
-	 * @return \WPML\Collect\Support\Collection
-	 */
 	private function getProcessed() {
 		return wpml_collect( $this->optionManager->get( self::OPTION_GROUP, self::OPTION_NAME, [] ) )
 			->map( function ( $path ) {

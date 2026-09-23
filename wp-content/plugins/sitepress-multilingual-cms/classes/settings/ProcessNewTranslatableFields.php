@@ -5,7 +5,6 @@ namespace WPML\TM\Settings;
 use WPML\Collect\Support\Collection;
 use WPML\Core\BackgroundTask\Command\UpdateBackgroundTask;
 use WPML\Core\BackgroundTask\Model\BackgroundTask;
-use WPML\Core\BackgroundTask\Repository\BackgroundTaskRepository;
 use WPML\BackgroundTask\AbstractTaskEndpoint;
 use WPML\Core\BackgroundTask\Service\BackgroundTaskService;
 use WPML\Element\API\PostTranslations;
@@ -14,27 +13,18 @@ use WPML\Setup\Option;
 use WPML\TM\AutomaticTranslation\Actions\Actions as AutotranslateActions;
 
 class ProcessNewTranslatableFields extends AbstractTaskEndpoint {
-	const LOCK_TIME         = 5;
-	const MAX_RETRIES       = 10;
-	const DESCRIPTION       = 'Updating affected posts for changes in translatable fields %s.';
-	const POSTS_PER_REQUEST = 10;
+	const LOCK_TIME              = 5;
+	const MAX_RETRIES            = 10;
+	const DESCRIPTION            = 'Updating affected posts for changes in translatable fields %s.';
+	const POSTS_PER_REQUEST      = 10;
+	const UNKNOWN_TOTAL_SENTINEL = 1;
 
-	/** @var \wpdb */
 	private $wpdb;
 
-	/** @var \WPML_TM_Post_Actions $postActions */
 	private $postActions;
 
-	/** @var AutotranslateActions $autotranslateActions */
 	private $autotranslateActions;
 
-	/**
-	 * @param \wpdb                         $wpdb
-	 * @param \WPML_TM_Post_Actions         $postActions
-	 * @param AutotranslateActions          $autotranslateActions
-	 * @param UpdateBackgroundTask          $updateBackgroundTask
-	 * @param BackgroundTaskService      $backgroundTaskService
-	 */
 	public function __construct(
 		\wpdb $wpdb,
 		\WPML_TM_Post_Actions $postActions,
@@ -50,24 +40,23 @@ class ProcessNewTranslatableFields extends AbstractTaskEndpoint {
 	}
 
 	public function runBackgroundTask( BackgroundTask $task ) {
-		$payload = $task->getPayload();
+		$payload         = $task->getPayload();
 		$fieldsToProcess = Obj::propOr( [], 'newFields', $payload );
-		$page = Obj::propOr( 1, 'page', $payload );
-		$postIds = $this->getPosts( $fieldsToProcess, $page );
+		$lastPostId      = (int) Obj::propOr( 0, 'lastPostId', $payload );
+		$postIds         = $this->getPosts( $fieldsToProcess, $lastPostId );
+		$task->setTotalCount( 0 );
 
 		if ( count( $postIds ) > 0 ) {
-
 			$this->updateNeedsUpdate( $postIds );
-			$payload['page'] = $page + 1;
+			$payload['lastPostId'] = (int) max( $postIds );
 			$task->setPayload( $payload );
 			$task->addCompletedCount( count( $postIds ) );
-			$task->setRetryCount(0 );
-			if ( $task->getCompletedCount() >= $task->getTotalCount() ) {
-				$task->finish();
-			}
+			$task->setRetryCount( 0 );
 		} else {
+			$task->setTotalCount( $task->getCompletedCount() );
 			$task->finish();
 		}
+
 		return $task;
 	}
 
@@ -79,66 +68,41 @@ class ProcessNewTranslatableFields extends AbstractTaskEndpoint {
 	}
 
 	public function getTotalRecords( Collection $data ) {
-		return $this->getPostsCount( $data->all()['newFields'] );
+		return self::UNKNOWN_TOTAL_SENTINEL;
 	}
 
-	/**
-	 * @param array $fields
-	 * @param int $page
-	 *
-	 * @return array
-	 */
-	private function getPosts( array $fields, $page ) {
+	private function getPosts( array $fields, $lastPostId ) {
 		if ( empty( $fields ) ) {
 			return [];
 		}
-		$fieldsIn = wpml_prepare_in( $fields, '%s' );
+		$wpdb = $this->wpdb;
 
-		return $this->wpdb->get_col(
-			$this->wpdb->prepare(
-				"SELECT DISTINCT post_id
-						FROM {$this->wpdb->prefix}postmeta
-						WHERE meta_key IN ({$fieldsIn})
-						ORDER BY post_id ASC
-						LIMIT %d OFFSET %d",
-				self::POSTS_PER_REQUEST,
-				($page-1)*self::POSTS_PER_REQUEST
+		return $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT pm.post_id
+						FROM {$wpdb->postmeta} AS pm
+						INNER JOIN {$wpdb->posts} AS p
+							ON p.ID = pm.post_id
+						WHERE pm.meta_key IN (" . implode( ', ', array_fill( 0, count( $fields ), '%s' ) ) . ")
+							AND pm.post_id > %d
+						ORDER BY pm.post_id ASC
+						LIMIT %d",
+				array_merge( $fields, [ $lastPostId, self::POSTS_PER_REQUEST ] )
 			)
 		);
 	}
 
-	/**
-	 * @param array $fields
-	 *
-	 * @return int
-	 */
-	private function getPostsCount( array $fields ) {
-		if ( empty( $fields ) ) {
-			return 0;
-		}
-		$fields_in = wpml_prepare_in( $fields, '%s' );
-
-		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		return (int) $this->wpdb->get_var(
-			"SELECT COUNT(DISTINCT(post_id))
-					FROM {$this->wpdb->prefix}postmeta
-					WHERE meta_key IN ({$fields_in}) AND meta_key <> ''"
-		);
+	private function isTranslateEverythingActive() {
+		return \WPML_TM_ATE_Status::is_enabled_and_activated()
+			&& Option::shouldTranslateEverything();
 	}
 
-	/**
-	 * @param array $postIds
-	 */
-	private function updateNeedsUpdate( array $postIds ) {
+	public function updateNeedsUpdate( array $postIds ) {
 		foreach ( $postIds as $postId ) {
 			$translations = PostTranslations::getIfOriginal( $postId );
 			$updater      = $this->postActions->get_translation_statuses_updater( $postId, $translations );
 			$needsUpdate  = $updater();
-			if (
-				$needsUpdate
-				&& \WPML_TM_ATE_Status::is_enabled_and_activated()
-				&& Option::shouldTranslateEverything()
-			) {
+			if ( $needsUpdate && $this->isTranslateEverythingActive() ) {
 				$this->autotranslateActions->sendToTranslation( $postId );
 			}
 		}

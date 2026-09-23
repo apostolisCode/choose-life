@@ -1,8 +1,10 @@
 <?php
 
 use WPML\Collect\Support\Collection;
+use WPML\Convert\Ids;
 use WPML\FP\Either;
 use \WPML\FP\Obj;
+use \WPML\ST\AdminTexts\TranslateNestedIds;
 use function WPML\Container\make;
 use function \WPML\FP\partial;
 use function \WPML\FP\invoke;
@@ -11,41 +13,36 @@ use function \WPML\FP\flip;
 class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	const DOMAIN_NAME_PREFIX = 'admin_texts_';
 
-	/** @var array $cache - A cache for each option translation */
 	private $cache = [];
 
-	/** @var array $option_names - The option names from Admin texts settings */
-	private $option_names = [];
+	private $cache_with_ids = [];
 
-	/** @var  TranslationManagement $tm_instance */
+	private $option_names;
+
+	private $option_names_with_ids;
+
 	private $tm_instance;
 
-	/** @var  WPML_String_Translation $st_instance */
 	private $st_instance;
 
-	/** @var bool $lock */
+	private $translate_nested_ids;
+
 	private $lock = false;
 
-	/** @var array - A cache for each option value in the original language to allow restore after it was translated. */
-	private $cache_option_values_in_def_lang_by_id = [];
+	private $stored_before_update = [];
 
-	/**
-	 * @param TranslationManagement   $tm_instance
-	 * @param WPML_String_Translation $st_instance
-	 */
 	public function __construct( &$tm_instance, &$st_instance ) {
 		add_action( 'plugins_loaded', [ $this, 'icl_st_set_admin_options_filters' ], 10 );
+		add_action( 'plugins_loaded', [ $this, 'set_admin_options_ids_filters' ], 10 );
 		add_filter( 'wpml_unfiltered_admin_string', flip( [ $this, 'get_option_without_filtering' ] ), 10, 2 );
 		add_action( 'wpml_st_force_translate_admin_options', [ $this, 'force_translate_admin_options' ] );
+		add_action( 'wpml_language_has_switched', [ $this, 'clear_language_caches' ] );
 		$this->tm_instance = &$tm_instance;
 		$this->st_instance = &$st_instance;
+		global $sitepress;
+		$this->translate_nested_ids = new TranslateNestedIds( $sitepress );
 	}
 
-	/**
-	 * @param mixed $value
-	 *
-	 * @return array|mixed|object
-	 */
 	private static function object_to_array( $value ) {
 		return is_object( $value ) ? object_to_array( $value ) : $value;
 	}
@@ -53,6 +50,10 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	public function icl_register_admin_options( $array, $key = '', $option = array() ) {
 		$option = self::object_to_array( $option );
 		foreach ( $array as $k => $v ) {
+			if ( '' === $key && $this->is_blacklisted( $k ) ) {
+				continue;
+			}
+
 			$option = $key === '' ? array( $k => maybe_unserialize( $this->get_option_without_filtering( $k ) ) ) : $option;
 			if ( is_array( $v ) ) {
 				$this->icl_register_admin_options( $v, $key . '[' . $k . ']', $option[ $k ] );
@@ -69,12 +70,13 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 					foreach ( $opt_keys as $opt ) {
 						$vals = array( $opt => $vals );
 					}
+
 					update_option(
-						'_icl_admin_option_names',
-						array_merge_recursive( (array) get_option( '_icl_admin_option_names' ), $vals ),
+						self::TRANSLATABLE_NAMES_SETTING,
+						array_replace_recursive( (array) get_option( self::TRANSLATABLE_NAMES_SETTING ), $vals ),
 						'no'
 					);
-					$this->option_names = [];
+					$this->clearOptionNames();
 				}
 			}
 		}
@@ -84,11 +86,6 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		return $this->getModel( $this->getOptions() );
 	}
 
-	/**
-	 * @param Collection $options
-	 *
-	 * @return Collection
-	 */
 	public function getModel( Collection $options ) {
 		$stringNamesPerContext = $this->getStringNamesPerContext();
 
@@ -106,12 +103,6 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	}
 
 
-	/**
-	 * @param Collection $flattened
-	 * @param array      $item
-	 *
-	 * @return Collection
-	 */
 	public function flattenModelItems( Collection $flattened, array $item ) {
 		if ( empty( $item ) ) {
 			return $flattened;
@@ -126,15 +117,6 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		return $flattened->push( $item );
 	}
 
-	/**
-	 * @param  callable $isRegistered  - string -> string -> bool.
-	 * @param  mixed    $value
-	 * @param  string   $name
-	 * @param  string   $key
-	 * @param  array    $stack
-	 *
-	 * @return array
-	 */
 	public function getItemModel( callable $isRegistered, $value, $name, $key = '', $stack = [] ) {
 		$sub_key = $this->getSubKey( $key, $name );
 
@@ -208,58 +190,114 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 			->map( 'maybe_unserialize' );
 	}
 
+	private function shouldFilterOption( $optionKey ) {
+		global $wp_customize;
+		if ( $wp_customize instanceof \WP_Customize_Manager ) {
+			return false;
+		}
+
+		if ( apply_filters( 'wpml_skip_admin_options_filters', false, $optionKey ) ) {
+			return false;
+		}
+
+		if ( ! is_admin() ) {
+			return true;
+		}
+
+		if ( wpml_is_ajax() ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public function icl_st_set_admin_options_filters() {
 		$option_names = $this->getOptionNames();
-
-		$isAdmin = is_admin() && ! wpml_is_ajax();
 
 		foreach ( $option_names as $option_key => $option ) {
 			if ( $this->is_blacklisted( $option_key ) ) {
 				unset( $option_names[ $option_key ] );
-				update_option( '_icl_admin_option_names', $option_names, 'no' );
-			} elseif ( $option_key !== 'theme' && $option_key !== 'plugin' ) { // theme and plugin are an obsolete format before 3.2.
-				/**
-				 * We don't want to translate admin strings in admin panel because it causes a lot of confusion
-				 * when a value is displayed inside the form input.
-				 */
-				if ( ! $isAdmin ) {
-					$this->add_filter_for( $option_key );
-				}
-				add_action( 'update_option_' . $option_key, array( $this, 'on_update_original_value' ), 10, 3 );
+				update_option( self::TRANSLATABLE_NAMES_SETTING, $option_names, 'no' );
+				continue;
+			}
+			if ( 'theme' === $option_key || 'plugin' === $option_key ) {
+				continue;
+			}
+			if ( $this->shouldFilterOption( $option_key ) ) {
+				$this->add_filter_for( $option_key );
+			}
+			add_action( 'update_option_' . $option_key, array( $this, 'on_update_original_value' ), 10, 3 );
+		}
+	}
+
+	public function set_admin_options_ids_filters() {
+		$option_names = $this->getOptionNamesWithIds();
+
+		foreach ( $option_names as $option_key => $option_settings ) {
+			if ( $this->is_blacklisted( $option_key ) ) {
+				unset( $option_names[ $option_key ] );
+				update_option( self::TRANSLATABLE_ID_NAMES_SETTING, $option_names, 'no' );
+				continue;
+			}
+			if ( 'theme' === $option_key || 'plugin' === $option_key ) {
+				continue;
+			}
+			if ( $this->shouldFilterOption( $option_key ) ) {
+				$this->add_ids_filter_for( $option_key );
 			}
 		}
 	}
 
-	/**
-	 * @param array $options
-	 */
 	public function force_translate_admin_options( $options ) {
 		wpml_collect( $options )->each( [ $this, 'add_filter_for' ] );
 	}
 
-	/**
-	 * @param string $option
-	 */
 	public function add_filter_for( $option ) {
 		add_filter( 'option_' . $option, [ $this, 'icl_st_translate_admin_string' ] );
+		add_filter( 'pre_update_option_' . $option, [ $this, 'keepUntouchedValues' ], 10, 3 );
 	}
 
-	public function icl_st_translate_admin_string( $option_value, $key = '', $name = '', $root_level = true ) {
+	public function keepUntouchedValues( $value, $old_value, $option ) {
+		$stored = maybe_unserialize( $this->get_option_without_filtering( $option ) );
+		$value  = $this->restoreUntouched( $value, $old_value, $stored );
+
+		if ( $value === $stored ) {
+			return $old_value;
+		}
+
+		$this->stored_before_update[ $option ] = $stored;
+
+		return $value;
+	}
+
+	private function restoreUntouched( $value, $read, $stored ) {
+		if ( is_array( $value ) && is_array( $read ) && is_array( $stored ) ) {
+			foreach ( $value as $key => $item ) {
+				if ( array_key_exists( $key, $read ) && array_key_exists( $key, $stored ) ) {
+					$value[ $key ] = $this->restoreUntouched( $item, $read[ $key ], $stored[ $key ] );
+				}
+			}
+
+			return $value;
+		}
+
+		return $value === $read ? $stored : $value;
+	}
+
+	public function add_ids_filter_for( $option ) {
+		add_filter( 'option_' . $option, [ $this, 'translate_ids_in_admin_string' ], 11, 2 );
+	}
+
+	public function icl_st_translate_admin_string( $option_value, $key = '', $name = '', $root_level = true, $lang = null ) {
 		if ( $root_level && $this->lock ) {
 			return $option_value;
 		}
 
-		if ( $root_level && is_array( $option_value ) ) {
-			foreach ( $option_value as $id => $value ) {
-				$this->cache_option_values_in_def_lang_by_id[ $id ] = $value;
-			}
-		}
-
 		$this->lock = true;
 
-		$lang        = $this->st_instance->get_current_string_language( $name );
 		$option_name = substr( current_filter(), 7 );
 		$name        = $name === '' ? $option_name : $name;
+		$lang        = $lang ?: $this->st_instance->get_current_string_language( $name );
 		$blog_id     = get_current_blog_id();
 
 		if ( isset( $this->cache[ $blog_id ][ $lang ][ $name ] ) ) {
@@ -269,15 +307,15 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		}
 
 		$is_serialized = is_serialized( $option_value );
-		$option_value  = $is_serialized ? unserialize( $option_value ) : $option_value; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
+		$option_value  = $is_serialized ? unserialize( $option_value ) : $option_value;
 
 		if ( is_array( $option_value ) || is_object( $option_value ) ) {
-			$option_value = $this->translate_multiple( $option_value, $key, $name );
+			$option_value = $this->translate_multiple( $option_value, $key, $name, $lang );
 		} else {
-			$option_value = $this->translate_single( $option_value, $key, $name, $option_name );
+			$option_value = $this->translate_single( $option_value, $key, $name, $option_name, $lang );
 		}
 
-		$option_value = $is_serialized ? serialize( $option_value ) : $option_value; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
+		$option_value = $is_serialized ? serialize( $option_value ) : $option_value;
 
 		if ( $root_level ) {
 			$this->lock                                = false;
@@ -287,12 +325,36 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		return $option_value;
 	}
 
-	/**
-	 * @param string $key - string like '[key1][key2]'.
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
+	public function translate_ids_in_admin_string( $option_value, $option_name ) {
+		$option_names = $this->getOptionNamesWithIds();
+		if ( ! array_key_exists( $option_name, $option_names ) ) {
+			return $option_value;
+		}
+
+		$blog_id = get_current_blog_id();
+
+		if ( isset( $this->cache_with_ids[ $blog_id ][ $option_name ] ) ) {
+			return $this->cache_with_ids[ $blog_id ][ $option_name ];
+		}
+
+		$is_serialized = is_serialized( $option_value );
+		$option_value  = $is_serialized ? unserialize( $option_value ) : $option_value;
+		$option_paths  = $option_names[ $option_name ];
+
+		foreach ( $option_paths as $path_and_object_data ) {
+			$type         = Obj::propOr( TranslateNestedIds::TYPE_POST_IDS, 'type', $path_and_object_data );
+			$slug         = Obj::propOr( Ids::ANY_POST, 'slug', $path_and_object_data );
+			$path         = explode( '>', Obj::propOr( '', 'path', $path_and_object_data ) );
+			$option_value = $this->translate_nested_ids->convertByPath( $option_value, $path, $type, $slug );
+		}
+
+		$option_value = $is_serialized ? serialize( $option_value ) : $option_value;
+
+		$this->cache_with_ids[ $blog_id ][ $option_name ] = $option_value;
+
+		return $option_value;
+	}
+
 	private function isAdminText( $key, $name ) {
 
 		return null !== Either::of( $this->getSubKey( $key, $name ) )
@@ -301,24 +363,17 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 							  ->getOrElse( null );
 	}
 
-	/**
-	 * Signature: getKeys :: string [key1][key2][name] => Collection [key1, key2, name].
-	 *
-	 * @param string $option
-	 *
-	 * @return Collection
-	 */
 	public static function getKeysParts( $option ) {
 		return wpml_collect( self::findKeys( $option ) );
 	}
 
-	/**
-	 * @param string $string
-	 *
-	 * @return array
-	 */
 	private static function findKeys( $string ) {
 		return array_filter( explode( '][', preg_replace( '/^\[(.*)\]$/', '$1', $string ) ), 'strlen' );
+	}
+
+	public function clear_language_caches() {
+		$this->cache          = [];
+		$this->cache_with_ids = [];
 	}
 
 	public function clear_cache_for_option( $option_name ) {
@@ -332,29 +387,10 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		}
 	}
 
-	/**
-	 * @param string|array $old_value
-	 * @param string|array $value
-	 * @param string       $option_name
-	 * @param string       $name
-	 * @param string       $sub_key
-	 */
 	public function on_update_original_value( $old_value, $value, $option_name, $name = '', $sub_key = '' ) {
-		// We receive translated $old_value here after add_filter_for execution so need to restore $old_value in the default language.
-		if ( '' === $sub_key ) {
-			if ( is_array( $old_value ) && is_array( $value ) && count( $old_value ) === count( $value ) ) {
-				foreach ( $value as $option_id => $option_value ) {
-					if ( ! array_key_exists( $option_id, $this->cache_option_values_in_def_lang_by_id ) ) {
-						continue;
-					}
-
-					foreach ( $old_value as $old_option_id => &$old_option_value ) {
-						if ( $old_option_id === $option_id ) {
-							$old_option_value = $this->cache_option_values_in_def_lang_by_id[ $option_id ];
-						}
-					}
-				}
-			}
+		if ( '' === $sub_key && array_key_exists( $option_name, $this->stored_before_update ) ) {
+			$old_value = $this->stored_before_update[ $option_name ];
+			unset( $this->stored_before_update[ $option_name ] );
 		}
 
 		$name = $name ? $name : $option_name;
@@ -394,25 +430,13 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 			->each( $migrate );
 	}
 
-	/**
-	 * Returns a function to lazy load the migration
-	 *
-	 * @return Closure
-	 */
 	public static function get_migrator() {
 		return function () {
 			wpml_st_load_admin_texts()->migrate_original_values();
 		};
 	}
 
-	/**
-	 * @param mixed  $option_value
-	 * @param string $key
-	 * @param string $name
-	 *
-	 * @return array|mixed
-	 */
-	private function translate_multiple( $option_value, $key, $name ) {
+	private function translate_multiple( $option_value, $key, $name, $lang = null ) {
 		$subKey = $this->getSubKey( $key, $name );
 
 		foreach ( $option_value as $k => &$value ) {
@@ -420,35 +444,33 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 				$value,
 				$subKey,
 				$k,
-				false
+				false,
+				$lang
 			);
 		}
 
 		return $option_value;
 	}
 
-	/**
-	 * @param string $option_value
-	 * @param string $key
-	 * @param string $name
-	 * @param string $option_name
-	 *
-	 * @return string
-	 */
-	private function translate_single( $option_value, $key, $name, $option_name ) {
+	private function translate_single( $option_value, $key, $name, $option_name, $lang = null ) {
 		if ( $option_value !== '' && $this->isAdminText( $key, $name ) ) {
-			$option_value = icl_translate( self::DOMAIN_NAME_PREFIX . $option_name, $key . $name, $option_value );
+			$has_translation = null;
+			$option_value    = icl_translate(
+				self::DOMAIN_NAME_PREFIX . $option_name,
+				$key . $name,
+				$option_value,
+				false,
+				$has_translation,
+				$lang
+			);
 		}
 
 		return $option_value;
 	}
 
-	/**
-	 * @return array
-	 */
 	private function getOptionNames() {
-		if ( empty( $this->option_names ) ) {
-			$this->option_names = get_option( '_icl_admin_option_names' );
+		if ( null === $this->option_names ) {
+			$this->option_names = get_option( self::TRANSLATABLE_NAMES_SETTING );
 			if ( ! is_array( $this->option_names ) ) {
 				$this->option_names = [];
 			}
@@ -457,34 +479,29 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		return $this->option_names;
 	}
 
-	/**
-	 * Signature: getSubKeys :: string [key1][key2] -> string name => string [key1][key2][name]
-	 *
-	 * @param string $key - [key1][key2].
-	 * @param string $name
-	 *
-	 * @return string
-	 */
+	private function clearOptionNames() {
+		$this->option_names = null;
+	}
+
+	private function getOptionNamesWithIds() {
+		if ( null === $this->option_names_with_ids ) {
+			$this->option_names_with_ids = get_option( self::TRANSLATABLE_ID_NAMES_SETTING, [] );
+			if ( ! is_array( $this->option_names_with_ids ) ) {
+				$this->option_names_with_ids = [];
+			}
+		}
+
+		return $this->option_names_with_ids;
+	}
+
 	private function getSubKey( $key, $name ) {
 		return $key . '[' . $name . ']';
 	}
 
-	/**
-	 * Signature: getSubKeys :: string [key1][key2] -> string name => string [key1][key2]name
-	 *
-	 * @param string $key
-	 * @param string $name
-	 *
-	 * @return string
-	 */
 	private function getDBStringName( $key, $name ) {
 		return $key . $name;
 	}
 
-	/**
-	 * @return Collection
-	 * @throws \WPML\Auryn\InjectionException - Throws an exception in case of errors.
-	 */
 	private function getStringNamesPerContext() {
 		$strings = make( WPML_ST_DB_Mappers_Strings::class )
 			->get_all_by_context( self::DOMAIN_NAME_PREFIX . '%' );
@@ -494,11 +511,6 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 			->map( invoke( 'pluck' )->with( 'name' ) );
 	}
 
-	/**
-	 * @param mixed $value
-	 *
-	 * @return bool
-	 */
 	private function isMultiValue( $value ) {
 		return is_array( $value ) ||
 			   ( is_object( $value ) && '__PHP_Incomplete_Class' !== get_class( $value ) );

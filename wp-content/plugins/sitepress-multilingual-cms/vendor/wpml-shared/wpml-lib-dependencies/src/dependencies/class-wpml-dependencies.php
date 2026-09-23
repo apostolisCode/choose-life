@@ -1,20 +1,12 @@
 <?php
-/*
-Module Name: WPML Dependency Check Module
-Description: This is not a plugin! This module must be included in other plugins (WPML and add-ons) to handle compatibility checks
-Author: OnTheGoSystems
-Author URI: http://www.onthegosystems.com/
-Version: 2.1
-*/
 
-/** @noinspection PhpUndefinedClassInspection */
 class WPML_Dependencies {
 	protected static $instance;
-	private $admin_notice;
+	protected $admin_notice;
 	private $current_product;
 	private $current_version = array();
 	private $expected_versions = array();
-	private $installed_plugins = array();
+	protected $installed_plugins = array();
 	private $invalid_plugins = array();
 	private $valid_plugins = array();
 	private $validation_results = array();
@@ -22,14 +14,14 @@ class WPML_Dependencies {
 	public $data_key             = 'wpml_dependencies:';
 	public $needs_validation_key = 'wpml_dependencies:needs_validation';
 
-	private function __construct() {
+	protected function __construct() {
 		if ( null === self::$instance ) {
 			$this->remove_old_admin_notices();
 			$this->init_hooks();
 		}
 	}
 
-	private function collect_data() {
+	protected function collect_data() {
 		$active_plugins = wp_get_active_and_valid_plugins();
 		$this->init_bundle( $active_plugins );
 		foreach ( $active_plugins as $plugin ) {
@@ -45,7 +37,7 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function init_hooks() {
+	protected function init_hooks() {
 		add_action( 'init', array( $this, 'init_plugins_action' ) );
 		add_action( 'extra_plugin_headers', array( $this, 'extra_plugin_headers_action' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices_action' ) );
@@ -73,16 +65,16 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function reset_validation() {
+	protected function reset_validation() {
 		update_option( $this->needs_validation_key, true );
 		$this->validate_plugins();
 	}
 
-	private function flag_as_validated() {
+	protected function flag_as_validated() {
 		update_option( $this->needs_validation_key, false );
 	}
 
-	private function needs_validation() {
+	protected function needs_validation() {
 		return get_option( $this->needs_validation_key );
 	}
 
@@ -93,19 +85,19 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function is_doing_ajax_cron_or_xmlrpc() {
+	protected function is_doing_ajax_cron_or_xmlrpc() {
 		return ( $this->is_doing_ajax() || $this->is_doing_cron() || $this->is_doing_xmlrpc() );
 	}
 
-	private function is_doing_ajax() {
+	protected function is_doing_ajax() {
 		return ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 	}
 
-	private function is_doing_cron() {
+	protected function is_doing_cron() {
 		return ( defined( 'DOING_CRON' ) && DOING_CRON );
 	}
 
-	private function is_doing_xmlrpc() {
+	protected function is_doing_xmlrpc() {
 		return ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST );
 	}
 
@@ -117,9 +109,6 @@ class WPML_Dependencies {
 		return array_merge( $new_extra_header, (array) $extra_headers );
 	}
 
-	/**
-	 * @return WPML_Dependencies
-	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new WPML_Dependencies();
@@ -133,17 +122,55 @@ class WPML_Dependencies {
 	}
 
 	public function init_plugins_action() {
-		if ( $this->needs_validation() && is_admin() && ! $this->is_doing_ajax_cron_or_xmlrpc() ) {
+		if ( ! is_admin() || $this->is_doing_ajax_cron_or_xmlrpc() ) {
+			return;
+		}
+
+		if ( $this->bundle_fingerprint_changed() ) {
+			$this->request_validation();
+		}
+
+		if ( $this->needs_validation() ) {
 			$this->init_plugins();
 			$this->validate_plugins();
 			$this->flag_as_validated();
 		}
 	}
 
-	private function init_plugins() {
+	protected function request_validation() {
+		update_option( $this->needs_validation_key, true );
+	}
+
+	protected function bundle_fingerprint_changed() {
+		return (string) get_option( $this->data_key . 'fingerprint', '' ) !== $this->bundle_fingerprint();
+	}
+
+	protected function bundle_fingerprint() {
+		$pairs = array();
+		foreach ( wp_get_active_and_valid_plugins() as $plugin_file ) {
+			if ( ! $this->is_bundle_member( $plugin_file ) ) {
+				continue;
+			}
+			$pairs[] = basename( dirname( $plugin_file ) ) . '=' . $this->file_stamp( $plugin_file );
+		}
+		sort( $pairs );
+
+		return md5( implode( '|', $pairs ) );
+	}
+
+	protected function is_bundle_member( $plugin_file ) {
+		return file_exists( dirname( $plugin_file ) . '/wpml-dependencies.json' );
+	}
+
+	protected function file_stamp( $plugin_file ) {
+		$stamp = @filemtime( $plugin_file );
+
+		return false === $stamp ? 'missing' : (string) $stamp;
+	}
+
+	protected function init_plugins() {
 		if ( ! $this->installed_plugins ) {
 			if ( ! function_exists( 'get_plugin_data' ) ) {
-				/** @noinspection PhpIncludeInspection */
 				include_once ABSPATH . '/wp-admin/includes/plugin.php';
 			}
 			if ( function_exists( 'get_plugin_data' ) ) {
@@ -151,10 +178,10 @@ class WPML_Dependencies {
 			}
 		}
 		update_option( $this->data_key . 'installed_plugins', $this->installed_plugins );
+		update_option( $this->data_key . 'fingerprint', $this->bundle_fingerprint() );
 	}
 
-	private function init_bundle( array $active_plugins ) {
-
+	protected function init_bundle( array $active_plugins ) {
 		foreach ( $active_plugins as $plugin_file ) {
 			$filename = dirname( $plugin_file ) . '/wpml-dependencies.json';
 			if ( file_exists( $filename ) ) {
@@ -165,7 +192,7 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function add_installed_plugin( $plugin ) {
+	protected function add_installed_plugin( $plugin ) {
 		$data       = get_plugin_data( $plugin );
 		$plugin_dir = realpath( dirname( $plugin ) );
 
@@ -180,7 +207,7 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function set_expected_versions( array $bundle ) {
+	protected function set_expected_versions( array $bundle ) {
 		foreach ( $bundle as $plugin => $version ) {
 			if ( ! array_key_exists( $plugin, $this->expected_versions ) ) {
 				$this->expected_versions[ $plugin ] = $version;
@@ -192,7 +219,7 @@ class WPML_Dependencies {
 		}
 	}
 
-	private function guess_plugin_slug( $plugin_data, $plugin_folder ) {
+	protected function guess_plugin_slug( $plugin_data, $plugin_folder ) {
 		$plugin_slug = null;
 		$plugin_slug = $plugin_folder;
 		if ( array_key_exists( 'Plugin Slug', $plugin_data ) && $plugin_data['Plugin Slug'] ) {
@@ -202,7 +229,7 @@ class WPML_Dependencies {
 		return $plugin_slug;
 	}
 
-	private function validate_plugins() {
+	protected function validate_plugins() {
 		$validation_results = $this->get_plugins_validation();
 
 		$this->valid_plugins   = array();
@@ -233,7 +260,7 @@ class WPML_Dependencies {
 		return $this->validation_results;
 	}
 
-	private function is_valid_plugin( $product = false ) {
+	protected function is_valid_plugin( $product = false ) {
 		$result = false;
 
 		if ( ! $product ) {
@@ -276,7 +303,7 @@ class WPML_Dependencies {
 		return $result;
 	}
 
-	private function maybe_init_admin_notice() {
+	protected function maybe_init_admin_notice() {
 		$this->admin_notice      = null;
 		$this->installed_plugins = get_option( $this->data_key . 'installed_plugins', [] );
 		$this->invalid_plugins   = get_option( $this->data_key . 'invalid_plugins', [] );
@@ -290,11 +317,24 @@ class WPML_Dependencies {
 			$notice_paragraphs[] = $this->get_invalid_plugins_report_list();
 			$notice_paragraphs[] = $this->get_invalid_plugins_report_footer();
 
+			$notice_paragraphs = $this->filter_notice_paragraphs( $notice_paragraphs );
+
 			$this->admin_notice = '<div class="error wpml-admin-notice">';
 			$this->admin_notice .= '<h3>' . __( 'WPML Update is Incomplete', 'sitepress' ) . '</h3>';
 			$this->admin_notice .= '<p>' . implode( '</p><p>', $notice_paragraphs ) . '</p>';
 			$this->admin_notice .= '</div>';
 		}
+	}
+
+	protected function filter_notice_paragraphs( array $notice_paragraphs ) {
+		$filtered = apply_filters(
+			'wpml_dependencies_update_incomplete_notice_paragraphs',
+			$notice_paragraphs,
+			$this->invalid_plugins,
+			$this->expected_versions
+		);
+
+		return is_array( $filtered ) && $filtered ? $filtered : $notice_paragraphs;
 	}
 
 	public function has_invalid_plugins() {
@@ -340,7 +380,7 @@ class WPML_Dependencies {
 	}
 
 	private function get_invalid_plugins_report_footer() {
-		$wpml_org_url = '<a href="https://wpml.org/account/" title="WPML.org account">' . __( 'WPML.org account', 'sitepress' ) . '</a>';
+		$wpml_org_url = '<a href="https://app.wpml.org/account/downloads" title="WPML.org account">' . __( 'WPML.org account', 'sitepress' ) . '</a>';
 
 		$notice_paragraph = __( 'Your site will not work as it should in this configuration', 'sitepress' );
 		$notice_paragraph .= ' ';

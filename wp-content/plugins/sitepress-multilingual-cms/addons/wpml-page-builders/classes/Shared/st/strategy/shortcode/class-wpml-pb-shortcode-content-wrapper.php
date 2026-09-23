@@ -9,27 +9,18 @@ use function WPML\FP\pipe;
 
 class WPML_PB_Shortcode_Content_Wrapper {
 
-	const WRAPPER_SHORTCODE_NAME  = 'wpml_string_wrapper';
+	const WRAPPER_SHORTCODE_NAME = 'wpml_string_wrapper';
 
-	/** @var string $content */
 	private $content;
 
-	/** @var array $valid_shortcodes */
 	private $valid_shortcodes;
 
-	/** @var array $shortcodes */
 	private $shortcodes = array();
 
-	/** @var array $content_array */
 	private $content_array;
 
-	/** @var array $insert_wrapper */
 	private $insert_wrapper = array();
 
-	/**
-	 * @param string $content
-	 * @param array  $valid_shortcodes
-	 */
 	public function __construct( $content, array $valid_shortcodes ) {
 		$this->content          = $content;
 		$this->valid_shortcodes = $valid_shortcodes;
@@ -43,9 +34,6 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		return $this->content;
 	}
 
-	/**
-	 * This is a multibyte safe version of `str_split`
-	 */
 	private function split_content() {
 		$length = mb_strlen( $this->content );
 
@@ -69,16 +57,11 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		}
 	}
 
-	/**
-	 * @param int $open_bracket_position
-	 *
-	 * @return int
-	 */
 	private function parse_shortcode( $open_bracket_position ) {
 		$shortcode_name         = $this->get_shortcode_name( $open_bracket_position );
 		$close_bracket_position = $this->get_shortcode_end( $open_bracket_position, $shortcode_name );
 		$is_closing             = isset( $this->content_array[ $open_bracket_position + 1 ] )
-		                          && '/' === $this->content_array[ $open_bracket_position + 1 ];
+			&& '/' === $this->content_array[ $open_bracket_position + 1 ];
 
 		if ( ! in_array( $shortcode_name, $this->valid_shortcodes, true ) ) {
 			return $close_bracket_position;
@@ -105,10 +88,6 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		return $close_bracket_position;
 	}
 
-	/**
-	 * @param int $start
-	 * @param int $end
-	 */
 	private function remove_nested_shortcodes_between( $start, $end ) {
 		foreach ( $this->shortcodes as $key => $shortcode ) {
 
@@ -133,21 +112,15 @@ class WPML_PB_Shortcode_Content_Wrapper {
 
 		$max_content_char_position = mb_strlen( $this->content ) - 1;
 
-		// For unwrapped text closing the content.
 		if ( $next_unwrapped_text_start < $max_content_char_position ) {
 			$this->set_wrapper_positions( $next_unwrapped_text_start, $max_content_char_position );
 		}
 	}
 
-	/**
-	 * @param int $start
-	 * @param int $end
-	 */
 	private function set_wrapper_positions( $start, $end ) {
 		$raw_chunk = mb_substr( $this->content, $start, $end - $start );
 
 		if ( '' === trim( $raw_chunk ) ) {
-			// the chunk is an empty string, we don't need to wrap it.
 			return;
 		}
 
@@ -158,12 +131,6 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		$this->insert_wrapper[ $unwrapped_text_end ] = '[/' . self::WRAPPER_SHORTCODE_NAME . ']';
 	}
 
-	/**
-	 * @param int    $position
-	 * @param string $type
-	 *
-	 * @return int
-	 */
 	private function get_wrapper_insert_position( $position, $type ) {
 		if ( 'close' === $type ) {
 			$increment = - 1;
@@ -184,11 +151,6 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		return $position;
 	}
 
-	/**
-	 * @param int $open_bracket_position
-	 *
-	 * @return string
-	 */
 	private function get_shortcode_name( $open_bracket_position ) {
 		$char_position = $open_bracket_position + 1;
 		$name          = '';
@@ -206,34 +168,27 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		return $name;
 	}
 
-	/**
-	 * @param int    $open_bracket_position
-	 * @param string $shortcode_name
-	 *
-	 * @return int
-	 */
 	private function get_shortcode_end( $open_bracket_position, $shortcode_name ) {
 		$char_position = $open_bracket_position + mb_strlen( $shortcode_name );
-		$is_in_quotes  = false;
+
+		$is_in_single_quotes = false;
+		$is_in_double_quotes = false;
 
 		while ( isset( $this->content_array[ $char_position ] )
-				&& ( ']' !== $this->content_array[ $char_position ] || $is_in_quotes )
+				&& ( ']' !== $this->content_array[ $char_position ] || $is_in_single_quotes || $is_in_double_quotes )
 		) {
-			if ( in_array( $this->content_array[ $char_position ], array( '"', "'" ), true ) ) {
-				$is_in_quotes = ! $is_in_quotes;
+			if ( ! $is_in_single_quotes && '"' === $this->content_array[ $char_position ] ) {
+				$is_in_double_quotes = ! $is_in_double_quotes;
+			} elseif ( ! $is_in_double_quotes && "'" === $this->content_array[ $char_position ] ) {
+				$is_in_single_quotes = ! $is_in_single_quotes;
 			}
 
-			$char_position++;
+			$char_position ++;
 		}
 
 		return $char_position;
 	}
 
-	/**
-	 * @param string $shortcode_name
-	 *
-	 * @return int|null
-	 */
 	private function find_last_opened_shortcode( $shortcode_name ) {
 		$last_matching_index = null;
 
@@ -258,12 +213,6 @@ class WPML_PB_Shortcode_Content_Wrapper {
 		}
 	}
 
-	/**
-	 * @param string $content
-	 * @param array  $shortcodes
-	 *
-	 * @return string
-	 */
 	public static function maybeWrap( $content, array $shortcodes ) {
 		$containsOneShortcode = pipe( Str::match( '/' . get_shortcode_regex( $shortcodes ) . '/s' ), Logic::isEmpty(), Logic::not() );
 
@@ -275,39 +224,21 @@ class WPML_PB_Shortcode_Content_Wrapper {
 			->getOrElse( $content );
 	}
 
-	/**
-	 * This will flag some regular text not wrapped in a shortcode.
-	 * e.g. "[foo] Some text not wrapped [bar]"
-	 *
-	 * @param string $content
-	 *
-	 * @return bool
-	 */
 	public static function isStrippedContentDifferent( $content ) {
 		$content_with_stripped_shortcode = preg_replace( '/\[([\S]*)[^\]]*\][\s\S]*\[\/(\1)\]|\[[^\]]*\]/', '', $content );
 		$content_with_stripped_shortcode = trim( $content_with_stripped_shortcode );
 		return ! empty( $content_with_stripped_shortcode ) && trim( $content ) !== $content_with_stripped_shortcode;
 	}
 
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
 	public static function wrap( $content ) {
 		return '[' . self::WRAPPER_SHORTCODE_NAME . ']' . $content . '[/' . self::WRAPPER_SHORTCODE_NAME . ']';
 	}
 
-	/**
-	 * @param string $content
-	 *
-	 * @return string
-	 */
 	public static function unwrap( $content ) {
 		return str_replace(
 			[
 				'[' . self::WRAPPER_SHORTCODE_NAME . ']',
-				'[/' . self::WRAPPER_SHORTCODE_NAME . ']'
+				'[/' . self::WRAPPER_SHORTCODE_NAME . ']',
 			],
 			'',
 			$content

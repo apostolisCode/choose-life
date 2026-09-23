@@ -2,16 +2,10 @@
 
 class WPML_Lang_URL_Validator {
 
-	/** @var  SitePress $sitepress */
 	private $sitepress;
 
-	/** @var WPML_URL_Converter $wpml_url_converter */
 	private $url_converter;
 
-	/**
-	 * @param WPML_URL_Converter $wpml_url_converter
-	 * @param SitePress          $sitepress
-	 */
 	public function __construct( WPML_URL_Converter $wpml_url_converter, SitePress $sitepress ) {
 		$this->sitepress     = $sitepress;
 		$this->url_converter = $wpml_url_converter;
@@ -27,10 +21,16 @@ class WPML_Lang_URL_Validator {
 		$def_lang      = $this->sitepress->get_language_details( $def_lang_code );
 		$output        = '<span class="explanation-text">(';
 
+		if ( $def_lang ) {
+			$output .= sprintf(
+				'%s - %s, ',
+				trailingslashit( $this->get_sample_url( $root ? $def_lang_code : '' ) ),
+				esc_html( $def_lang['display_name'] )
+			);
+		}
+
 		$output .= sprintf(
-			'%s - %s, %s - %s',
-			trailingslashit( $this->get_sample_url( $root ? $def_lang_code : '' ) ),
-			esc_html( $def_lang['display_name'] ),
+			'%s - %s',
 			trailingslashit( $this->get_sample_url( $sample_lang_code ) ),
 			esc_html( $sample_lang['display_name'] )
 		);
@@ -42,6 +42,18 @@ class WPML_Lang_URL_Validator {
 	private function get_sample_url( $sample_lang_code ) {
 		$abs_home = $this->url_converter->get_abs_home();
 
-		return untrailingslashit( trailingslashit( $abs_home ) . $sample_lang_code );
+		return untrailingslashit( trailingslashit( $abs_home ) . self::url_code( $sample_lang_code ) );
+	}
+
+	private static function url_code( $code ) {
+		$code = (string) $code;
+
+		if ( '' === $code || ! class_exists( '\WPML\Language\ActiveLanguagesReadModel' ) ) {
+			return $code;
+		}
+
+		$map = \WPML\Language\ActiveLanguagesReadModel::urlCodeMap();
+
+		return isset( $map[ $code ] ) ? (string) $map[ $code ] : $code;
 	}
 }

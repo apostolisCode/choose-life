@@ -1,0 +1,45 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "vi"
+         },
+         "WPML reconnected to the translation server.": [
+            "WPML đã kết nối lại với máy chủ dịch thuật."
+         ],
+         "WPML cannot access our server at %s. Please check that your hosting isn't blocking this access.": [
+            "WPML không thể truy cập máy chủ của chúng tôi tại %s. Vui lòng kiểm tra xem dịch vụ lưu trữ của bạn có đang chặn quyền truy cập này không."
+         ],
+         "WPML cannot access our server. Please check that your hosting isn't blocking this access.": [
+            "WPML không thể truy cập máy chủ của chúng tôi. Vui lòng kiểm tra xem dịch vụ lưu trữ của bạn có đang chặn quyền truy cập này không."
+         ],
+         "Retry": [
+            "Thử lại"
+         ],
+         "Need help? Contact WPML support": [
+            "Bạn cần trợ giúp? Liên hệ với bộ phận hỗ trợ WPML"
+         ],
+         "Retrying again in %d s…": [
+            "Đang thử lại sau %d giây…"
+         ],
+         "If it keeps failing, quote this code to WPML support: %s": [
+            "Nếu vẫn tiếp tục thất bại, hãy gửi mã này cho bộ phận hỗ trợ WPML: %s"
+         ],
+         "Copy this into your support message:": [
+            "Sao chép nội dung này vào tin nhắn hỗ trợ của bạn:"
+         ],
+         "Hide for 24 h": [
+            "Ẩn trong 24 giờ"
+         ],
+         "WPML can't reach our translation server. Retrying in %d s…": [
+            "WPML không thể kết nối với máy chủ dịch thuật của chúng tôi. Đang thử lại sau %d giây…"
+         ],
+         "Retry now": [
+            "Thử lại ngay"
+         ]
+      }
+   }
+}

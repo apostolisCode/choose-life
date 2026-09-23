@@ -8,20 +8,12 @@ use WPML\ST\TranslationFile\EntryQueries;
 
 class Model {
 
-	/**
-	 * @param Collection $files_to_scan
-	 * @param int        $domains_to_pre_generate_count
-	 * @param bool       $is_st_page
-	 * @param bool       $is_network_admin
-	 *
-	 * @return \Closure
-	 */
 	public static function provider(
 		Collection $files_to_scan,
 		$domains_to_pre_generate_count,
 		$is_st_page,
 		$is_network_admin
-	) {
+	) { 
 		return function () use ( $files_to_scan, $domains_to_pre_generate_count, $is_st_page ) {
 			return [
 				'files_to_scan'                 => [
@@ -40,12 +32,6 @@ class Model {
 		};
 	}
 
-	/**
-	 * @param Collection $files_to_scan
-	 * @param string     $type
-	 *
-	 * @return array
-	 */
 	private static function filterFilesByType( Collection $files_to_scan, $type ) {
 		return $files_to_scan->filter( EntryQueries::isType( $type ) )
 		                     ->map( EntryQueries::getResourceName() )

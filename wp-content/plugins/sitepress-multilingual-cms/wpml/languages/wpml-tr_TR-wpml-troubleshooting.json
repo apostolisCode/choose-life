@@ -1,0 +1,54 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "tr_TR"
+         },
+         "Alias Domain": [
+            "Takma alan adı"
+         ],
+         "Current alias domains:": [
+            "Mevcut takma alan adları:"
+         ],
+         "This will remove all registered alias domains. If you are accessing this site through an alias domain, the migration banner will appear again.": [
+            "Bu işlem kayıtlı tüm takma alan adlarını kaldıracaktır. Bu siteye bir takma alan adı üzerinden erişiyorsanız taşıma başlığı tekrar görünecektir."
+         ],
+         "Something went wrong. Please try again.": [
+            "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+         ],
+         "Resetting...": [
+            "Sıfırlanıyor..."
+         ],
+         "Reset alias domains": [
+            "Takma alan adlarını sıfırla"
+         ],
+         "Register a different URL that points to this same WordPress installation. WPML will use the current site URL for API communication with AMS.": [
+            "Bu WordPress kurulumuna işaret eden farklı bir URL kaydedin. WPML, AMS ile API iletişimi için mevcut site URL'sini kullanacaktır."
+         ],
+         "Alias domain URL:": [
+            "Takma alan adı URL'si:"
+         ],
+         "Registering...": [
+            "Kaydediliyor..."
+         ],
+         "Register alias domain": [
+            "Takma alan adını kaydet"
+         ],
+         "PostHog Integration": [
+            "PostHog entegrasyonu"
+         ],
+         "PostHog is running on your site": [
+            "PostHog sitenizde çalışıyor"
+         ],
+         "Enable PostHog to help us improve our product": [
+            "Ürünümüzü geliştirmemize yardımcı olmak için PostHog'u etkinleştirin"
+         ],
+         "your PostHog session ID is: ": [
+            "PostHog oturum kimliğiniz: "
+         ]
+      }
+   }
+}

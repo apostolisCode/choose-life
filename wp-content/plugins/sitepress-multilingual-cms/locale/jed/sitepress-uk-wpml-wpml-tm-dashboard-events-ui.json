@@ -1,0 +1,15 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "uk"
+         },
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "Сервіс автоматичного перекладу WPML не прийняв цей запит (відповідь: %d). Зачекайте хвилину та спробуйте ще раз, а якщо проблема не зникне, зверніться до служби підтримки WPML."
+         ]
+      }
+   }
+}

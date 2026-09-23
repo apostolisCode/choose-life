@@ -3,79 +3,128 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "X-Generator: babel-plugin-makepot\n"
 
-#: src/js/components/translate-everything/ConfirmNewTranslatablePostTypeDialog.js:23
-msgid ""
-"You can choose which posts to translate from the <strong>Translation "
-"Management Dashboard</strong>."
-msgstr ""
-
-#: src/js/components/translate-everything/ConfirmNewTranslatablePostTypeDialog.js:57
-msgid "Yes, translate <b>existing</b> and <b>future</b> content automatically"
-msgstr ""
-
-#: src/js/components/translate-everything/ConfirmNewTranslatablePostTypeDialog.js:72
-msgid "Yes, but only translate <b>future</b> content automatically"
-msgstr ""
-
-#: src/js/components/translate-everything/ConfirmNewTranslatablePostTypeDialog.js:73
-msgid "Yes, translate <b>future</b> content automatically"
-msgstr ""
-
-#: src/js/components/translate-everything/ConfirmNewTranslatablePostTypeDialog.js:85
-msgid "No, I want to translate some of these posts, but not all"
-msgstr ""
-
-#: src/js/settings/UI/TranslationMethod.js:54
+#: src/js/settings/UI/TranslationMethod.js:47
 msgid ""
 "You must use the Advanced Translation Editor if you want to translate your "
 "content automatically."
 msgstr ""
 
-#: src/js/settings/UI/Troubleshooting.js:26
+#: src/js/settings/UI/Troubleshooting.js:29
 msgid "Synchronize translators and translation managers with ATE"
 msgstr ""
 
-#: src/js/settings/UI/Troubleshooting.js:36
+#: src/js/settings/UI/Troubleshooting.js:42
+#. Hint under an error on the troubleshooting page. %1$s: opening link tag, %2$s: closing link tag; the words between them become the link.
 msgid ""
 "Please try again in a few minutes. If the problem persists, please contact "
-"%sWPML support%s."
+"%1$sWPML support%2$s."
 msgstr ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:103
-msgid "Are you OK with paying for this?"
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:134
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:223
+msgid "Are you sure you want to change the translation option?"
 msgstr ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:105
-msgid "Cancel"
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:135
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:226
+msgid "No, go back"
 msgstr ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:106
-msgid "Make translatable"
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:136
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:225
+#. Label of the button that confirms the change in a settings dialog; verb, imperative.
+msgid "Yes, continue"
 msgstr ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:119
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:141
+#. Line in the dialog that confirms changing how a custom field is translated, shown when the number of affected pages is not known.
+msgid ""
+"Once saved, WPML will automatically send affected posts to translation. "
+"This may use additional translation words."
+msgstr ""
+
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:144
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:208
+msgid "Are you OK with this?"
+msgstr ""
+
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:153
+#: src/js/settings/components/ConfirmNewTranslatablePostType.js:66
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:217
+#. Button label that saves what was entered in the form or dialog; verb, imperative.
 msgid "Save"
 msgstr ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:88
-msgid "Please confirm this translation setting"
-msgstr ""
-
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:91
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:34
+#. Line in the dialog that confirms changing how a custom field is translated. %d: the number of pages and posts affected.
 msgid ""
-"Your site is set to translate all content automatically. When you make "
-"<PostTypesNames /> translatable, WPML will automatically translate the %1$d "
-"existing item."
+"This change affects %d post. Once saved, WPML will update the translation "
+"status of this post. This can take up to 1 minute."
 msgid_plural ""
-"Your site is set to translate all content automatically. When you make "
-"<PostTypesNames /> translatable, WPML will automatically translate the %1$d "
-"existing items."
+"This change affects %d posts. Once saved, WPML will update the translation "
+"status of these posts. This can take up to 1 minute."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/js/settings/components/ConfirmNewTranslatablePostType.js:97
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:45
+#. Line in the dialog that confirms changing how a custom field is translated. %1$d: the number of pages and posts affected, %2$d: the number of hours it may take.
 msgid ""
-"Your site is set to translate all content automatically. When you make "
-"<PostTypesNames /> translatable, WPML will automatically translate all "
-"future content."
+"This change affects %1$d post. Once saved, WPML will update the translation "
+"status of this post. This can take up to %2$d hours."
+msgid_plural ""
+"This change affects %1$d posts. Once saved, WPML will update the "
+"translation status of these posts. This can take up to %2$d hours."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/js/settings/components/ConfirmCustomFieldTranslationPreference.js:58
+#. Line in the dialog that confirms changing how a custom field is translated. %1$d: the number of pages and posts affected, %2$d: the number of minutes it may take.
+msgid ""
+"This change affects %1$d post. Once saved, WPML will update the translation "
+"status of this post. This can take up to %2$d minutes."
+msgid_plural ""
+"This change affects %1$d posts. Once saved, WPML will update the "
+"translation status of these posts. This can take up to %2$d minutes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/js/settings/components/ConfirmNewTranslatablePostType.js:66
+#. Button label that works out what translating the newly enabled content will cost; verb, imperative.
+msgid "Calculate Costs"
+msgstr ""
+
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:102
+#. Line in the dialog that confirms making taxonomies translatable. %1$s: the number of terms, already written out as "5 terms"; %2$s: the number of languages, already written out as "3 languages".
+msgid "WPML will automatically translate %1$s into %2$s."
+msgstr ""
+
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:108
+msgid "Automatic translation uses translation words."
+msgstr ""
+
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:72
+#. How much content will be translated, used inside "WPML will automatically translate 5 terms into 3 languages." %d: the number of taxonomy terms, such as categories or tags.
+msgid "%d term"
+msgid_plural "%d terms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:78
+#. How many languages the content will be translated into, used inside "WPML will automatically translate 5 terms into 3 languages." %d: the number of languages.
+msgid "%d language"
+msgid_plural "%d languages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/js/settings/components/ConfirmNewTranslatableTaxonomy.js:96
+#. Line in the dialog that confirms making taxonomies translatable. %s: the names of those taxonomies, separated by commas.
+msgid "%s will be translated."
+msgstr ""
+
+#: src/js/shared/Request.js:39
+#. Shown when WPML's automatic translation service refused a request. %d: the HTTP status the service answered with.
+msgid ""
+"WPML's automatic translation service did not accept this request (it "
+"answered %d). Wait a minute and try again, and contact WPML support if it "
+"keeps happening."
 msgstr ""

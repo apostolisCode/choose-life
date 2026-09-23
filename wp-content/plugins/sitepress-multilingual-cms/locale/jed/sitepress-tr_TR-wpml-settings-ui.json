@@ -1,0 +1,74 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "tr_TR"
+         },
+         "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
+            "İçeriğinizi otomatik olarak çevirmek istiyorsanız Gelişmiş Çeviri Editörü'nü kullanmalısınız."
+         ],
+         "Synchronize translators and translation managers with ATE": [
+            "Çevirmenleri ve çeviri yöneticilerini ATE ile senkronize et"
+         ],
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "Lütfen birkaç dakika sonra tekrar deneyin. Sorun devam ederse lütfen %1$sWPML desteği%2$s ile iletişime geçin."
+         ],
+         "Are you sure you want to change the translation option?": [
+            "Çeviri seçeneğini değiştirmek istediğinizden emin misiniz?"
+         ],
+         "No, go back": [
+            "Hayır, geri dön"
+         ],
+         "Yes, continue": [
+            "Evet, devam et"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "Kaydedildikten sonra WPML, etkilenen yazıları otomatik olarak çeviriye gönderecektir. Bu, ek çeviri kelimeleri kullanabilir."
+         ],
+         "Are you OK with this?": [
+            "Bunu onaylıyor musunuz?"
+         ],
+         "Save": [
+            "Kaydet"
+         ],
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "Bu değişiklik %d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazının çeviri durumunu güncelleyecektir. Bu işlem 1 dakikaya kadar sürebilir.",
+            "Bu değişiklik %d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazıların çeviri durumunu güncelleyecektir. Bu işlem 1 dakikaya kadar sürebilir."
+         ],
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "Bu değişiklik %1$d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazının çeviri durumunu güncelleyecektir. Bu işlem %2$d saate kadar sürebilir.",
+            "Bu değişiklik %1$d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazıların çeviri durumunu güncelleyecektir. Bu işlem %2$d saate kadar sürebilir."
+         ],
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "Bu değişiklik %1$d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazının çeviri durumunu güncelleyecektir. Bu işlem %2$d dakikaya kadar sürebilir.",
+            "Bu değişiklik %1$d yazıyı etkiliyor. Kaydedildikten sonra WPML, bu yazıların çeviri durumunu güncelleyecektir. Bu işlem %2$d dakikaya kadar sürebilir."
+         ],
+         "Calculate Costs": [
+            "Maliyetleri hesapla"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML, %1$s öğesini otomatik olarak %2$s diline çevirecek."
+         ],
+         "Automatic translation uses translation words.": [
+            "Otomatik çeviri, çeviri kelimelerini kullanır."
+         ],
+         "%d term": [
+            "%d terim",
+            "%d terim"
+         ],
+         "%d language": [
+            "%d dil",
+            "%d dil"
+         ],
+         "%s will be translated.": [
+            "%s çevrilecek."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "WPML'nin otomatik çeviri servisi bu isteği kabul etmedi (%d yanıtını verdi). Bir dakika bekleyip tekrar deneyin; sorun devam ederse WPML destek ekibiyle iletişime geçin."
+         ]
+      }
+   }
+}

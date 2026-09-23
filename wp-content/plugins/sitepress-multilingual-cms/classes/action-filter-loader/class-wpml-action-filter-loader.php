@@ -1,34 +1,13 @@
 <?php
-/**
- * WPML_Action_Filter_Loader class file
- *
- * @package WPML\Core
- */
 
-/**
- * Class WPML_Action_Filter_Loader
- */
 class WPML_Action_Filter_Loader {
 
-	/**
-	 * Deferred actions
-	 *
-	 * @var  array $defered_actions
-	 */
 	private $defered_actions = array();
 
-	/**
-	 * Ajax action validation
-	 *
-	 * @var  WPML_AJAX_Action_Validation $ajax_action_validation
-	 */
 	private $ajax_action_validation;
 
-	/**
-	 * Load action filter
-	 *
-	 * @param string[] $loaders Action loaders.
-	 */
+	private $guarded_factories = array();
+
 	public function load( $loaders ) {
 
 		foreach ( $loaders as $loader ) {
@@ -41,9 +20,6 @@ class WPML_Action_Filter_Loader {
 			$cli      = $loader_type->is( 'cli' );
 			$dic      = $loader_type->is( 'dic' );
 
-			// Following logic will only be used for the case that
-			// $loader is a class-string.
-			/** @var class-string $loader */
 
 			if ( $backend && $frontend ) {
 				$this->load_factory_or_action( $loader, $dic );
@@ -54,25 +30,15 @@ class WPML_Action_Filter_Loader {
 			} elseif ( $ajax && wpml_is_ajax() ) {
 				$this->load_factory_or_action( $loader, $dic );
 			} elseif ( $rest ) {
-				$this->load_factory_or_action( $loader, $dic );
+				$this->load_guarded( $loader, $dic );
 			} elseif ( $cli && wpml_is_cli() ) {
 				$this->load_factory_or_action( $loader, $dic );
 			}
 		}
 	}
 
-	/**
-	 * Load factory
-	 *
-	 * @param class-string $loader Action loader.
-	 * @param bool         $use_dic
-	 */
 	private function load_factory_or_action( $loader, $use_dic ) {
-		if ( $use_dic ) {
-			$action_or_factory = WPML\Container\make( $loader );
-		} else {
-			$action_or_factory = new $loader();
-		}
+		$action_or_factory = $this->instantiate( $loader, $use_dic );
 
 		if ( $action_or_factory instanceof IWPML_Action ) {
 			$action_or_factory->add_hooks();
@@ -81,12 +47,38 @@ class WPML_Action_Filter_Loader {
 		}
 	}
 
-	/**
-	 * @param IWPML_Action_Loader_Factory $factory
-	 */
+	private function load_guarded( $loader, $use_dic ) {
+		if ( WPML_Lifecycle_Hook_Guard::is_allowed_loader( $loader ) ) {
+			$this->load_factory_or_action( $loader, $use_dic );
+
+			return;
+		}
+
+		$snapshot          = WPML_Lifecycle_Hook_Guard::snapshot();
+		$action_or_factory = $this->instantiate( $loader, $use_dic );
+
+		if ( $action_or_factory instanceof IWPML_Action ) {
+			$action_or_factory->add_hooks();
+		} elseif ( $action_or_factory instanceof IWPML_Action_Loader_Factory ) {
+			if ( $action_or_factory instanceof IWPML_Deferred_Action_Loader ) {
+				$this->guarded_factories[ spl_object_hash( $action_or_factory ) ] = $loader;
+			}
+			$this->load_factory( $action_or_factory );
+		}
+
+		WPML_Lifecycle_Hook_Guard::detach_added_since( $snapshot, $loader );
+	}
+
+	private function instantiate( $loader, $use_dic ) {
+		if ( $use_dic ) {
+			return WPML\Container\make( $loader );
+		}
+
+		return new $loader();
+	}
+
 	private function load_factory( IWPML_Action_Loader_Factory $factory ) {
 		if ( $factory instanceof WPML_AJAX_Base_Factory ) {
-			/** @var WPML_AJAX_Base_Factory $factory */
 			$factory->set_ajax_action_validation( $this->get_ajax_action_validation() );
 		}
 
@@ -97,11 +89,6 @@ class WPML_Action_Filter_Loader {
 		}
 	}
 
-	/**
-	 * Add deferred action
-	 *
-	 * @param IWPML_Deferred_Action_Loader $factory Action factory.
-	 */
 	private function add_deferred_action( IWPML_Deferred_Action_Loader $factory ) {
 		$action = $factory->get_load_action();
 		if ( ! isset( $this->defered_actions[ $action ] ) ) {
@@ -111,26 +98,21 @@ class WPML_Action_Filter_Loader {
 		$this->defered_actions[ $action ][] = $factory;
 	}
 
-	/**
-	 * Deferred action loader
-	 */
 	public function deferred_loader() {
 		$action = current_action();
 		foreach ( $this->defered_actions[ $action ] as $factory ) {
-			/**
-			 * Deferred action loader factory
-			 *
-			 * @var IWPML_Deferred_Action_Loader $factory
-			 */
+			$guarded_by = isset( $this->guarded_factories[ spl_object_hash( $factory ) ] ) ? $this->guarded_factories[ spl_object_hash( $factory ) ] : null;
+			if ( null === $guarded_by ) {
+				$this->run_factory( $factory );
+				continue;
+			}
+
+			$snapshot = WPML_Lifecycle_Hook_Guard::snapshot();
 			$this->run_factory( $factory );
+			WPML_Lifecycle_Hook_Guard::detach_added_since( $snapshot, $guarded_by );
 		}
 	}
 
-	/**
-	 * Get ajax action validation
-	 *
-	 * @return WPML_AJAX_Action_Validation
-	 */
 	private function get_ajax_action_validation() {
 		if ( ! $this->ajax_action_validation ) {
 			$this->ajax_action_validation = new WPML_AJAX_Action_Validation();
@@ -139,11 +121,6 @@ class WPML_Action_Filter_Loader {
 		return $this->ajax_action_validation;
 	}
 
-	/**
-	 * Run factory
-	 *
-	 * @param IWPML_Action_Loader_Factory $factory Action loader factory.
-	 */
 	private function run_factory( IWPML_Action_Loader_Factory $factory ) {
 		$load_handlers = $factory->create();
 

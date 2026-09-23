@@ -145,6 +145,9 @@ class Post_SMTP_Mobile {
                 return $class_name;
             }
         }
+        if ( class_exists( 'QRcode', false ) ) {
+            return null;
+        }
         if ( defined( 'QR_MODE_NUL' ) || class_exists( 'qrstr' ) ) {
             return null;
         }
@@ -155,8 +158,11 @@ class Post_SMTP_Mobile {
     /**
      * Generate QR code
      *
+     * Safely loads the bundled PHPQRCode library and avoids fatals if another
+     * plugin/theme has defined an incompatible QRcode class.
+     *
      * @since 2.7.0
-     * @version 1.0.0
+     * @version 1.1.0
      */
     public function generate_qr_code() {
 
@@ -166,18 +172,23 @@ class Post_SMTP_Mobile {
             return;
         }
 
-        $nonce = get_transient( 'post_smtp_auth_nonce' );
-		$authkey = $nonce ? $nonce : $this->generate_auth_key();
-		$site_title = get_bloginfo( 'name' );
+        $nonce      = get_transient( 'post_smtp_auth_nonce' );
+        $authkey    = $nonce ? $nonce : $this->generate_auth_key();
+        $site_title = get_bloginfo( 'name' );
+
         set_transient( 'post_smtp_auth_nonce', $authkey, 1800 );
+
         $endpoint = site_url( "?authkey={$authkey}&site_title={$site_title}" );
+
         ob_start();
         $qr_class::png( urlencode_deep( $endpoint ) );
         $result_qr_content_in_png = ob_get_contents();
         ob_end_clean();
-        // PHPQRCode change the content-type into image/png... we change it again into html
-        header("Content-type: text/html");
-        $this->qr_code =  base64_encode( $result_qr_content_in_png );
+
+        // PHPQRCode changes the content-type to image/png; restore HTML.
+        header( 'Content-type: text/html' );
+
+        $this->qr_code = base64_encode( $result_qr_content_in_png );
 
     }
 
@@ -188,18 +199,11 @@ class Post_SMTP_Mobile {
      * @version 1.0.0
      */
     private function generate_auth_key() {
-
-        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $chars .= '!@#$%^*()';
-        $chars .= '-_ []{}<>~`+,.;:/|';
-
-        $pass = array(); //remember to declare $pass as an array
-        $alphaLength = strlen( $chars ) - 1; //put the length -1 in cache
-        for ( $i = 0; $i < 32; $i++ ) {
-            $n = rand( 0, $alphaLength );
-            $pass[] = $chars[$n];
+        try {
+            return bin2hex( random_bytes( 16 ) );
+        } catch ( Exception $e ) {
+            return md5( uniqid( (string) mt_rand(), true ) );
         }
-        return implode( $pass ); //turn the array into a string
 
     }
 
@@ -267,15 +271,22 @@ class Post_SMTP_Mobile {
 						
 						foreach( $this->app_connected as $device ) {
 							
-							$url = admin_url( "admin.php?action=post_smtp_disconnect_app&auth_token={$device['fcm_token']}&ps_disconnect_app_nonce={$nonce}" );
+							$url = add_query_arg(
+								array(
+									'action' => 'post_smtp_disconnect_app',
+									'auth_token' => sanitize_text_field( (string) $device['fcm_token'] ),
+									'ps_disconnect_app_nonce' => $nonce,
+								),
+								admin_url( 'admin.php' )
+							);
 							$checked = $device['enable_notification'] == 1 ? 'checked="checked"' : '';
 							
-							echo  esc_html( $device['device'] ) . "<a href='{$url}' style='color: red'>Disconnect</a>";
+							echo esc_html( $device['device'] ) . "<a href='" . esc_url( $url ) . "' style='color: red'>Disconnect</a>";
 							echo '<br />';
 							echo sprintf(
 								'<label for="enable-app-notice">%s <input type="checkbox" id="enable-app-notice" name="postman_app_connection[%s]" %s /></label>',
 								__( 'Send failed email notification' ),
-								$device['fcm_token'],
+								esc_attr( $device['fcm_token'] ),
 								$checked
 							);
 							
@@ -361,7 +372,7 @@ class Post_SMTP_Mobile {
 		if( isset( $_GET['action'] ) && $_GET['action'] == 'post_smtp_disconnect_app' ) {
 			
 			$connected_devices = get_option( 'post_smtp_mobile_app_connection' );
-			$auth_token = $_GET['auth_token'];
+			$auth_token = isset( $_GET['auth_token'] ) ? sanitize_text_field( wp_unslash( $_GET['auth_token'] ) ) : '';
 			$server_url = get_option( 'post_smtp_server_url' );
 			
 			if( $connected_devices && isset( $connected_devices[$auth_token] ) ) {
@@ -405,6 +416,13 @@ class Post_SMTP_Mobile {
      * @version 1.0.0
      */
     public function dismiss_app_notice() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'Sorry, you are not allowed to perform this action.', 'post-smtp' ) );
+        }
+
+        if( ! isset( $_GET['_psnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_psnonce'] ) ), 'ps-dismiss-app-notice' ) ) {
+            wp_die( 'Security check' );
+        }
 
         if( isset( $_GET['action'] ) && $_GET['action'] === 'ps_dimiss_app_notice' ) {
 

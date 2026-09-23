@@ -3,28 +3,14 @@
 use WPML\FP\Str;
 
 class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Strategy {
-	/** @var bool */
 	private $use_directory_for_default_lang;
 
-	/** @var array copy of $sitepress->get_settings( 'urls' ) */
 	private $urls_settings;
 
-	/** @var string|bool */
 	private $root_url;
 
-	/** @var array map of wpml codes to custom codes*/
-	private $language_codes_map;
-	private $language_codes_reverse_map;
-
-	/** @var bool */
 	private $is_rest_request;
 
-	/**
-	 * @param bool   $use_directory_for_default_lang
-	 * @param string $default_language
-	 * @param array  $active_languages
-	 * @param array  $urls_settings
-	 */
 	public function __construct(
 		$use_directory_for_default_lang,
 		$default_language,
@@ -35,10 +21,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		$this->use_directory_for_default_lang = (bool) $use_directory_for_default_lang;
 		$this->urls_settings                  = $urls_settings;
 
-		$this->language_codes_map = array_combine( $active_languages, $active_languages );
-		$this->language_codes_map = apply_filters( 'wpml_language_codes_map', $this->language_codes_map );
-
-		$this->language_codes_reverse_map = array_flip( $this->language_codes_map );
 	}
 
 	public function add_hooks() {
@@ -50,18 +32,29 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 	}
 
 
-	/**
-	 * @param string $url
-	 *
-	 * @return string
-	 */
 	public function convertRestUrl( $url ) {
-		/** @var SitePress */
 		global $sitepress;
+
+		$language = $sitepress->get_current_language();
+
+		if ( ! in_array( $language, $this->active_languages, true ) ) {
+			return $url;
+		}
+
+		if ( $this->is_index_permalink_rest_url( $url ) ) {
+			$language = $this->get_language_of_current_dir( $language, '' );
+			$language = isset( $this->language_codes_map[ $language ] )
+				? $this->language_codes_map[ $language ]
+				: $language;
+
+			return $language && 'all' !== $language
+				? add_query_arg( 'lang', $language, $url )
+				: $url;
+		}
 
 		$matchTrailingSlash = $url[ strlen( $url ) - 1 ] === '/' ? 'trailingslashit' : 'untrailingslashit';
 
-		return $matchTrailingSlash( $this->convert_url_string( $url, $sitepress->get_current_language() ) );
+		return $matchTrailingSlash( $this->convert_url_string( $url, $language ) );
 	}
 
 	public function get_lang_from_url_string( $url ) {
@@ -83,13 +76,26 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return $language;
 	}
 
+	private function get_rest_url_prefix() {
+		$prefix = function_exists( 'rest_get_url_prefix' ) ? (string) rest_get_url_prefix() : '';
+		$prefix = trim( $prefix, '/' );
+
+		return '' === $prefix ? 'wp-json' : $prefix;
+	}
+
+	private function is_index_permalink_rest_url( $url ) {
+		$path      = (string) parse_url( $url, PHP_URL_PATH );
+		$rest_path = '/index.php/' . $this->get_rest_url_prefix();
+
+		return $rest_path === $path || false !== strpos( $path, $rest_path . '/' );
+	}
+
 	public function convert_url_string( $source_url, $code ) {
 		if ( $this->is_root_url( $source_url ) || $this->skip_convert_url_string( $source_url, $code ) ) {
 			return $source_url;
 		}
 
-		// We have no redirect rule for '/all/wp-json' ( only for '/lang/wp-json' ) so lets use the default one in all case.
-		if ( 'all' === $code && in_array( 'wp-json', explode( '/', $source_url ) ) ) {
+		if ( 'all' === $code && in_array( $this->get_rest_url_prefix(), explode( '/', $source_url ), true ) ) {
 			return $source_url;
 		}
 
@@ -102,8 +108,12 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		$code             = $this->get_language_of_current_dir( $code, '' );
 		$current_language = $this->get_language_of_current_dir( $current_language, '' );
 
-		$code             = isset( $this->language_codes_map[ $code ] ) ? $this->language_codes_map[ $code ] : $code;
-		$current_language = isset( $this->language_codes_map[ $current_language ] ) ? $this->language_codes_map[ $current_language ] : $current_language;
+		$code = null !== $code && isset( $this->language_codes_map[ $code ] )
+			? $this->language_codes_map[ $code ]
+			: $code;
+		$current_language = null !== $current_language && isset( $this->language_codes_map[ $current_language ] )
+			? $this->language_codes_map[ $current_language ]
+			: $current_language;
 
 		$source_url = str_replace(
 			[
@@ -121,15 +131,9 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 	}
 
 	public function convert_admin_url_string( $source_url, $lang ) {
-		return $source_url; // Admin strings should not be converted with language in directories
+		return $source_url;
 	}
 
-	/**
-	 * @param string $url
-	 * @param string $language
-	 *
-	 * @return string
-	 */
 	public function get_home_url_relative( $url, $language ) {
 		$language = $this->get_language_of_current_dir( $language, '' );
 		$language = isset( $this->language_codes_map[ $language ] ) ? $this->language_codes_map[ $language ] : $language;
@@ -137,7 +141,7 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		if ( $language ) {
 			$parts = parse_url( get_option( 'home' ) );
 			$path  = isset( $parts['path'] ) ? $parts['path'] : '';
-			$url   = preg_replace( '@^' . $path . '@', '', $url );
+			$url   = preg_replace( '@^' . preg_quote( $path, '@' ) . '@', '', $url );
 
 			return rtrim( $path, '/' ) . '/' . $language . $url;
 		} else {
@@ -149,13 +153,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return true;
 	}
 
-	/**
-	 * Will return true if root URL or child of root URL
-	 *
-	 * @param string $url
-	 *
-	 * @return bool
-	 */
 	private function is_root_url( $url ) {
 		$result = false;
 
@@ -173,9 +170,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return $result;
 	}
 
-	/**
-	 * @return string|false
-	 */
 	private function get_root_url() {
 		if ( null === $this->root_url ) {
 			$root_post = get_post( $this->urls_settings['root_page'] );
@@ -191,11 +185,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return $this->root_url;
 	}
 
-	/**
-	 * @param string $source_url
-	 *
-	 * @return string
-	 */
 	private function filter_source_url( $source_url ) {
 		if ( false === strpos( $source_url, '?' ) ) {
 			$source_url = trailingslashit( $source_url );
@@ -206,11 +195,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return $source_url;
 	}
 
-	/**
-	 * @param string $url
-	 *
-	 * @return string
-	 */
 	private function get_url_path( $url ) {
 		if ( strpos( $url, 'http://' ) === 0 || strpos( $url, 'https://' ) === 0 ) {
 			$url_path = wpml_parse_url( $url, PHP_URL_PATH );
@@ -227,11 +211,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return $url_path;
 	}
 
-	/**
-	 * @param string $url_path
-	 *
-	 * @return string
-	 */
 	private function extract_lang_from_url_path( $url_path ) {
 		$fragments = ! empty( $url_path ) ? array_filter( explode( '/', $url_path ) ) : [''];
 		$lang      = array_shift( $fragments );
@@ -242,12 +221,6 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 		return isset( $this->language_codes_reverse_map[ $lang ] ) ? $this->language_codes_reverse_map[ $lang ] : $lang;
 	}
 
-	/**
-	 * @param string      $language_code
-	 * @param null|string $value_if_default_language
-	 *
-	 * @return string|null
-	 */
 	private function get_language_of_current_dir( $language_code, $value_if_default_language = null ) {
 		if ( ! $this->use_directory_for_default_lang && $language_code === $this->default_language ) {
 			return $value_if_default_language;

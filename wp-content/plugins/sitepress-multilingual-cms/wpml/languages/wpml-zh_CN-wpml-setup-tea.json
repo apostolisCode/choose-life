@@ -1,0 +1,303 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "zh_CN"
+         },
+         "Error in updating since dates for types.": [
+            "更新类型的起始日期时出错。"
+         ],
+         "Error in fetching untranslated types count": [
+            "获取未翻译类型计数时出错"
+         ],
+         "Error persisting the offered type since dates.": [
+            "持久化提供的类型起始日期时出错。"
+         ],
+         "Error in updating since date for type.": [
+            "更新类型的起始日期时出错。"
+         ],
+         "Content to translate": [
+            "待翻译内容"
+         ],
+         "Content to Translate": [
+            "待翻译内容"
+         ],
+         "Content type": [
+            "内容类型"
+         ],
+         "Include": [
+            "包含"
+         ],
+         "These settings can be changed on the Translations dashboard.": [
+            "这些设置可以在翻译管理面板中更改。"
+         ],
+         "Items": [
+            "项目"
+         ],
+         "Word count": [
+            "字数统计"
+         ],
+         "Loading content to translate": [
+            "正在加载待翻译内容"
+         ],
+         "Words to translate": [
+            "待翻译字数"
+         ],
+         "Calculating… <s>less than 1 minute left.</s>": [
+            "正在计算… <s>剩余时间不到 1 分钟。</s>"
+         ],
+         "Calculating… <s>%d minute left.</s>": [
+            "正在计算… <s>剩余 %d 分钟。</s>"
+         ],
+         "Words needed to translate your existing content into the new languages: %s.": [
+            "将现有内容翻译为新语言所需的字数：%s。"
+         ],
+         "Words needed to translate your existing content into the new language.": [
+            "将现有内容翻译为新语言所需的字数。"
+         ],
+         "Based on the remaining untranslated content across all languages.": [
+            "基于所有语言中剩余的未翻译内容。"
+         ],
+         "Estimated from the selected source volume multiplied by the target languages.": [
+            "根据选定的源内容量乘以目标语言数量估算。"
+         ],
+         "%1$s source words × %2$s language": [
+            "%1$s 个源单词 × %2$s 种语言"
+         ],
+         "Already translated content": [
+            "已翻译的内容"
+         ],
+         "Words required:": [
+            "所需字数："
+         ],
+         "Words": [
+            "字数"
+         ],
+         "Documents you translated yourself stay exactly as you made them": [
+            "您自己翻译的文档将保持原样"
+         ],
+         "(%d document)": [
+            "（%d 个文档）"
+         ],
+         "View documents": [
+            "查看文档"
+         ],
+         "%1$d of %2$d language will be translated automatically": [
+            "%2$d 种语言中的 %1$d 种将自动翻译"
+         ],
+         "Translated to %d language": [
+            "已翻译为 %d 种语言"
+         ],
+         "Add/remove languages": [
+            "添加/删除语言"
+         ],
+         "Percentages show how much of your selected content is already translated in each language.": [
+            "百分比显示了您选择的内容在每种语言中已翻译的比例。"
+         ],
+         "Note: Content already translated into all languages is not included in this calculation.": [
+            "注意：已翻译成所有语言的内容不包含在此计算中。"
+         ],
+         "Same as default": [
+            "与默认语言相同"
+         ],
+         "Automatic translation isn't available between %1$s and %2$s because they're recognized as the same language.": [
+            "由于 %1$s 和 %2$s 被识别为同一种语言，因此它们之间无法进行自动翻译。"
+         ],
+         "Manual only": [
+            "仅手动"
+         ],
+         "%s has no automatic-translation support. You can translate this content manually.": [
+            "%s 不支持自动翻译。您可以手动翻译此内容。"
+         ],
+         "Adjusted word rate (%s)": [
+            "调整后的字数费率 (%s)"
+         ],
+         "This adjusted word rate applies to legacy translation engines.": [
+            "此调整后的字数费率适用于传统翻译引擎。"
+         ],
+         "Translation engine: <strong>%s</strong>": [
+            "翻译引擎：<strong>%s</strong>"
+         ],
+         "Legacy engine": [
+            "传统引擎"
+         ],
+         "Legacy pricing applied. %s is a legacy translation engine, not recommended for new sites and will be deprecated. Existing sites keep an adjusted word rate for it.": [
+            "已应用传统定价。%s 是传统翻译引擎，不推荐用于新站点，并且即将停用。现有站点将保留其调整后的字数费率。"
+         ],
+         "Switch to PTC": [
+            "切换到 PTC"
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Future updates are charged only for the words you add or change.": [
+            "这是目前翻译您现有内容所需的字数。它不包括由其他插件添加的一些文本（如表单或滑块），这些文本将在设置完成后进行统计。来自您的主题和插件的站点字符串也会在设置后统计，通常会增加几百个字。未来的更新仅针对您添加或更改的字数收费。"
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Pay once per page — edited words are charged again when you change a page.": [
+            "这是目前翻译您现有内容所需的字数。它不包括由其他插件添加的一些文本（如表单或滑块），这些文本将在设置完成后进行统计。来自您的主题和插件的站点字符串也会在设置后统计，通常会增加几百个字。每页仅需支付一次费用——当您更改页面时，编辑过的字数将再次计费。"
+         ],
+         "This is what translating your current content needs today. Future updates are charged only for the words you add or change.": [
+            "这是翻译您当前内容所需的字数。未来的更新仅针对您添加或更改的单词收费。"
+         ],
+         "This is what translating your current content needs today. Pay once per page — edited words are charged again when you change a page.": [
+            "这是翻译您当前内容所需的字数。每页只需支付一次——当您更改页面时，编辑过的单词将再次计费。"
+         ],
+         "Total items": [
+            "项目总数"
+         ],
+         "Total source words": [
+            "源语言总字数"
+         ],
+         "Previous": [
+            "上一页"
+         ],
+         "Next": [
+            "下一步"
+         ],
+         "Showing %1$d–%2$d of %3$d types.": [
+            "显示 %3$d 种类型中的第 %1$d–%2$d 种。"
+         ],
+         "All current %1$s are translated to all languages.<br>New %2$s or edits will be automatically translated.": [
+            "所有当前的 %1$s 已翻译成所有语言。<br>新的 %2$s 或编辑内容将被自动翻译。"
+         ],
+         "All %s": [
+            "所有 %s"
+         ],
+         "For translated types": [
+            "针对已翻译类型"
+         ],
+         "None": [
+            "无"
+         ],
+         "Since %s": [
+            "自 %s 起"
+         ],
+         "Since specific date": [
+            "自特定日期起"
+         ],
+         "<b>Pay-As-You-Go</b> activated": [
+            "<b>Pay-As-You-Go</b>已激活"
+         ],
+         "Prepaid words assigned": [
+            "已分配预付费字数"
+         ],
+         "Your site will be translated right after the setup.": [
+            "您的网站将在设置后立即进行翻译。"
+         ],
+         "You have %1$s prepaid words — %2$s more are needed.": [
+            "您有 %1$s 个预付费单词额度 —— 还需要 %2$s 个。"
+         ],
+         "%s words are needed to translate your site.": [
+            "翻译您的站点需要 %s 个单词。"
+         ],
+         "To start <b>Translate Everything Automatically</b>, activate <b>Pay-As-You-Go</b> or assign prepaid words.": [
+            "要开始<b>自动翻译所有内容</b>，请激活<b>Pay-As-You-Go</b>或分配预付费字数。"
+         ],
+         "Select payment method": [
+            "选择支付方式"
+         ],
+         "%1$sCheck pricing%2$s.": [
+            "%1$s查看定价%2$s。"
+         ],
+         "Lowest cost per word": [
+            "单字成本最低"
+         ],
+         "Pay only for what you use": [
+            "仅为您使用的部分付费"
+         ],
+         "Never run out. Translation never stops.": [
+            "永不耗尽。翻译永不停止。"
+         ],
+         "The first 500 words each month are free": [
+            "每月前 500 个单词免费"
+         ],
+         "Pay-As-You-Go": [
+            "Pay-As-You-Go"
+         ],
+         "Activate <b>Pay-As-You-Go</b> to translate automatically. You are billed for the words you use.": [
+            "激活<b>Pay-As-You-Go</b>以进行自动翻译。您将根据使用的字数付费。"
+         ],
+         "Activate <b>Pay-As-You-Go</b>": [
+            "激活<b>Pay-As-You-Go</b>"
+         ],
+         "Already using <b>Pay-As-You-Go</b> on another site?": [
+            "已经在另一个站点上使用<b>Pay-As-You-Go</b>？"
+         ],
+         "Connect this site to it": [
+            "将此站点连接到它"
+         ],
+         "Connect your sites to share translation memory, glossary and word quota.": [
+            "连接您的站点以共享翻译记忆库、术语表和字数配额。"
+         ],
+         "Learn more": [
+            "了解更多"
+         ],
+         "Copy your migration code:": [
+            "复制您的迁移代码："
+         ],
+         "Loading…": [
+            "正在加载…"
+         ],
+         "Copied!": [
+            "已复制！"
+         ],
+         "Log into a site with an active automatic translation account.": [
+            "登录具有活动自动翻译账户的站点。"
+         ],
+         "Go to \"WPML\" → \"Translation Dashboard\".": [
+            "前往“WPML” → “翻译仪表板”。"
+         ],
+         "In the \"Payment & Maintenance\" tab, go to \"Connected sites\".": [
+            "在“付款与维护”选项卡中，前往“已连接的站点”。"
+         ],
+         "Click \"Enter the connection key of another site\" to finish connecting your sites.": [
+            "点击“输入另一个站点的连接密钥”以完成站点连接。"
+         ],
+         "Refresh to assign words": [
+            "刷新以分配字数"
+         ],
+         "Assign words": [
+            "分配字数"
+         ],
+         "Buy and assign words": [
+            "购买并分配字数"
+         ],
+         "Buy a %1$sprepaid package%2$s with at least %3$s%4$s words%5$s and assign them to this site.": [
+            "购买至少包含 %3$s%4$s 个单词%5$s 的%1$s预付费包%2$s并将其分配给此站点。"
+         ],
+         "This amount will cover translation of all your current content.": [
+            "此金额将涵盖您当前所有内容的翻译。"
+         ],
+         "Assign at least %1$s%2$s words%3$s to this site to continue.": [
+            "为此站点分配至少 %1$s%2$s 个单词%3$s 以继续。"
+         ],
+         "Assign words from your WPML account and buy an additional %1$sprepaid package%2$s with at least %3$s%4$s words%5$s to cover the remaining amount.": [
+            "从您的 WPML 账户分配字数，并购买至少包含 %3$s%4$s 个单词%5$s 的额外%1$s预付费包%2$s以覆盖剩余金额。"
+         ],
+         "Prepaid words": [
+            "预付费字数"
+         ],
+         "There are %1$s%2$s available on your WPML account.%3$s": [
+            "您的 WPML 账户中有 %1$s%2$s 个可用单词。%3$s"
+         ],
+         "(Only the WPML account owner can do this.)": [
+            "（只有 WPML 账户所有者可以执行此操作。）"
+         ],
+         "Checking for new words...": [
+            "正在检查新字数..."
+         ],
+         "Still not enough words. Refresh again in %d seconds.": [
+            "字数仍然不足。请在 %d 秒后再次刷新。"
+         ],
+         "Already assigned?": [
+            "已经分配？"
+         ],
+         "Refresh": [
+            "刷新"
+         ],
+         "Close modal": [
+            "关闭模态框"
+         ]
+      }
+   }
+}

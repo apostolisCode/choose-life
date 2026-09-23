@@ -16,7 +16,7 @@ class MigrateToV2 implements Command {
 
 	const STATUS_FRESH            = 'fresh';
 	const STATUS_OLD              = 'old';
-	const STATUS_OLD_AND_NOTIFIED = 'notified'; // When the tooltip has been shown on a new field group.
+	const STATUS_OLD_AND_NOTIFIED = 'notified';
 
 	public static function run() {
 		Hooks::onAction( 'wp_loaded' )
@@ -36,19 +36,13 @@ class MigrateToV2 implements Command {
 			} );
 	}
 
-	/**
-	 * @return bool
-	 */
 	private static function hasGroupWithFieldPreferenceAndNoMode() {
-		// $hasNoGroupMode :: array -> bool
 		$hasNoGroupMode = Logic::complement( Obj::has( Mode::KEY ) );
 
-		// $hasOneFieldPreference :: array -> bool
 		$hasOneFieldPreference = function( $group ) {
 			return wpml_collect( acf_get_fields( $group ) )->first( Obj::has( 'wpml_cf_preferences' ) );
 		};
 
-		// $hasGroupRequirements :: array -> bool
 		$hasGroupRequirements = Logic::allPass( [
 			$hasNoGroupMode,
 			$hasOneFieldPreference,
@@ -57,12 +51,6 @@ class MigrateToV2 implements Command {
 		return (bool) wpml_collect( acf_get_field_groups() )->first( $hasGroupRequirements );
 	}
 
-	/**
-	 * We'll inform the user once about the new mode
-	 * when he creates a new field group on an old site.
-	 *
-	 * @return bool
-	 */
 	public static function needsNotification() {
 		if ( self::STATUS_OLD === Options::get( self::KEY ) ) {
 			Options::set( self::KEY, self::STATUS_OLD_AND_NOTIFIED );

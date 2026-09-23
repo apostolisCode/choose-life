@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Advanced Custom Fields Multilingual
- * Description: Adds compatibility between WPML and Advanced Custom Fields | <a href="https://wpml.org/documentation/related-projects/translate-sites-built-with-acf/?utm_source=plugin&utm_medium=gui&utm_campaign=acfml">Documentation</a>
+ * Description: Adds compatibility between WPML and Advanced Custom Fields | <a href="https://wpml.org/documentation/translating-your-contents/acf/?utm_source=plugin&utm_medium=gui&utm_campaign=acfml">Documentation</a>
  * Author: OnTheGoSystems
- * Plugin URI: https://wpml.org/
+ * Plugin URI: https://wpml.org/documentation/wpml-core-and-add-on-plugins/acfml/
  * Author URI: http://www.onthegosystems.com/
- * Version: 2.0.5
+ * Version: 5.0.0
  *
  * @package WPML\ACF
  */
@@ -27,22 +27,17 @@ function acfmlInit() {
 
 	require_once $vendorDir . '/autoload.php';
 
-	define( 'ACFML_VERSION', '2.0.5' );
+	define( 'ACFML_VERSION', '5.0.0' );
 	define( 'ACFML_PLUGIN_PATH', __DIR__ );
 	define( 'ACFML_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-	\WPML\Container\share( \ACFML\Container\Config::getSharedClasses() ); // @phpstan-ignore-line
+	\WPML\Container\share( \ACFML\Container\Config::getSharedClasses() );
 
 	$acfml = \WPML\Container\make( WPML_ACF::class );
 
-	if ( did_action( 'acf/init' ) ) {
-		$acfml->init_worker();
-	} else {
-		add_action( 'acf/init', [ $acfml, 'init_worker' ] );
-	}
+	add_action( 'acf/init', [ $acfml, 'init_worker' ], 1 );
 
 	add_action( 'admin_enqueue_scripts', function() {
-		wp_enqueue_script( 'acfml_js', plugin_dir_url( __FILE__ ) . 'assets/js/admin-script.js', array( 'jquery' ) );
 		wp_enqueue_style( 'acfml_css', plugin_dir_url( __FILE__ ) . 'assets/css/admin-style.css', [], ACFML_VERSION );
 	} );
 

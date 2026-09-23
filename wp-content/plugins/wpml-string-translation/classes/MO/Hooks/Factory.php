@@ -5,6 +5,7 @@ namespace WPML\ST\MO\Hooks;
 use IWPML_Action;
 use WPML\ST\DB\Mappers\DomainsRepository;
 use WPML\ST\MO\File\ManagerFactory;
+use WPML\ST\Storage\WpTransientPerLanguage;
 use WPML\ST\TranslationFile\Sync\FileSync;
 use WPML\ST\TranslationFile\UpdateHooksFactory;
 use WPML\ST\TranslationFile\Hooks;
@@ -12,12 +13,6 @@ use function WPML\Container\make;
 
 class Factory implements \IWPML_Backend_Action_Loader, \IWPML_Frontend_Action_Loader {
 
-	/**
-	 * Create hooks.
-	 *
-	 * @return IWPML_Action[]
-	 * @throws \WPML\Auryn\InjectionException Auryn Exception.
-	 */
 	public function create() {
 		$manager = ManagerFactory::create();
 
@@ -34,6 +29,9 @@ class Factory implements \IWPML_Backend_Action_Loader, \IWPML_Frontend_Action_Lo
 			make( LoadTextDomain::class, [ ':file_manager' => $manager ] ),
 			make( CustomTextDomains::class, [
 				':file_manager' => $manager,
+				':cache' => make( WpTransientPerLanguage::class, [
+					':id' => CustomTextDomains::CACHE_ID,
+				] ),
 				':syncMissingFile' => [ $moFileSync, 'syncFile' ],
 			] ),
 			make( LanguageSwitch::class ),
@@ -45,6 +43,7 @@ class Factory implements \IWPML_Backend_Action_Loader, \IWPML_Frontend_Action_Lo
 				':manager'               => $manager,
 				':getDomainsByStringIds' => DomainsRepository::getByStringIds(),
 			] ),
+			make( GetFilepathesForTranslationFiles::class ),
 		];
 	}
 }

@@ -1,0 +1,186 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "pl_PL"
+         },
+         "WPML detected that the alias domain feature was incorrectly configured and has been automatically reset. The alias domain feature is designed only for cases where two domains point to the same WordPress installation. See the details below for the current state of your site.": [
+            "WPML wykrył, że funkcja domen aliasów została nieprawidłowo skonfigurowana i została automatycznie zresetowana. Funkcja domen aliasów jest przeznaczona wyłącznie dla przypadków, w których dwie domeny wskazują na tę samą instalację WordPressa. Zapoznaj się z poniższymi szczegółami dotyczącymi obecnego stanu Twojej witryny."
+         ],
+         "Connect this site to the original?": [
+            "Połączyć tę witrynę z oryginałem?"
+         ],
+         "If you connect, this site will re-attach to ": [
+            "Jeśli się połączysz, ta witryna zostanie ponownie dołączona do "
+         ],
+         ". Specifically:": [
+            ". Konkretnie:"
+         ],
+         "share billing and translation words": [
+            "współdzielić rozliczenia i słowa tłumaczeniowe"
+         ],
+         " with the original site again. This site won’t need its own subscription or PAYG plan.": [
+            " z oryginalną witryną. Ta witryna nie będzie potrzebować własnej subskrypcji ani planu PAYG."
+         ],
+         "It will ": [
+            "Będzie ona "
+         ],
+         "regain access to the shared translation memory": [
+            "odzyskiwać dostęp do wspólnej pamięci tłumaczeniowej"
+         ],
+         ". New translations created on either site become reusable on the other.": [
+            ". Nowe tłumaczenia utworzone w dowolnej witrynie będzie można ponownie wykorzystać w drugiej."
+         ],
+         "The original site at ": [
+            "Oryginalna witryna pod adresem "
+         ],
+         " is not affected.": [
+            " pozostaje bez zmian."
+         ],
+         "Do you want to connect this site?": [
+            "Czy chcesz połączyć tę witrynę?"
+         ],
+         "No, keep independent": [
+            "Nie, zachowaj jako niezależną"
+         ],
+         "Connecting…": [
+            "Łączenie…"
+         ],
+         "Yes, connect": [
+            "Tak, połącz"
+         ],
+         "Site disconnected": [
+            "Witryna została odłączona"
+         ],
+         "Site copy connected": [
+            "Kopia witryny została połączona"
+         ],
+         "Register this site": [
+            "Zarejestruj tę witrynę"
+         ],
+         "Register this site copy": [
+            "Zarejestruj tę kopię witryny"
+         ],
+         "This site is now running from a new URL.": [
+            "Ta witryna działa teraz pod nowym adresem URL."
+         ],
+         "This site is now ": [
+            "Ta witryna jest teraz "
+         ],
+         "independent": [
+            "niezależna"
+         ],
+         ". It no longer shares billing, translation words, or translation memory with ": [
+            ". Nie współdzieli już rozliczeń, słów tłumaczeniowych ani pamięci tłumaczeniowej z "
+         ],
+         ". The original site is unaffected.": [
+            ". Oryginalna witryna pozostaje bez zmian."
+         ],
+         "This site is connected to your original at ": [
+            "Ta witryna jest połączona z oryginałem pod adresem "
+         ],
+         ". It shares the same ": [
+            ". Współdzieli te same "
+         ],
+         "billing, translation words, and translation memory": [
+            "rozliczenia, słowa tłumaczeniowe i pamięć tłumaczeniową"
+         ],
+         " — nothing changes there.": [
+            " — nic się tutaj nie zmienia."
+         ],
+         "Disconnect this site": [
+            "Odłącz tę witrynę"
+         ],
+         "Disconnect failed. Please try again later.": [
+            "Odłączanie nie powiodło się. Spróbuj ponownie później."
+         ],
+         "Disconnect this site from the original?": [
+            "Odłączyć tę witrynę od oryginału?"
+         ],
+         "If you disconnect, this site will become independent from ": [
+            "Jeśli ją odłączysz, ta witryna stanie się niezależna od "
+         ],
+         "stop sharing billing and translation words": [
+            "przestanie współdzielić rozliczenia i słowa tłumaczeniowe"
+         ],
+         " with the original site. This site will need its own subscription or PAYG plan to use automatic translation.": [
+            " z oryginalną witryną. Ta witryna będzie potrzebować własnej subskrypcji lub planu PAYG, aby korzystać z automatycznego tłumaczenia."
+         ],
+         "no longer access the shared translation memory": [
+            "nie będzie już mieć dostępu do wspólnej pamięci tłumaczeniowej"
+         ],
+         ". Existing translations stay on each site, but new translations won’t be shared.": [
+            ". Istniejące tłumaczenia pozostaną w każdej z witryn, ale nowe tłumaczenia nie będą współdzielone."
+         ],
+         "Do you want to disconnect this site?": [
+            "Czy chcesz odłączyć tę witrynę?"
+         ],
+         "No, keep connected": [
+            "Nie, zachowaj połączenie"
+         ],
+         "Disconnecting…": [
+            "Odłączanie…"
+         ],
+         "Yes, disconnect": [
+            "Tak, odłącz"
+         ],
+         "Dismiss this notice": [
+            "Odrzuć to powiadomienie"
+         ],
+         "This site is independent": [
+            "Ta witryna jest niezależna"
+         ],
+         "connected": [
+            "połączona"
+         ],
+         " to ": [
+            " z "
+         ],
+         ". It shares the same billing, translation words, and translation memory as the original site.": [
+            ". Współdzieli te same rozliczenia, słowa tłumaczeniowe i pamięć tłumaczeniową co oryginalna witryna."
+         ],
+         "This site is independent of ": [
+            "Ta witryna jest niezależna od "
+         ],
+         ". It does not share billing, translation words, or translation memory with the original site.": [
+            ". Nie współdzieli rozliczeń, słów tłumaczeniowych ani pamięci tłumaczeniowej z oryginalną witryną."
+         ],
+         "Connect this site to the original": [
+            "Połącz tę witrynę z oryginałem"
+         ],
+         "Connect failed. Please try again later.": [
+            "Połączenie nie powiodło się. Spróbuj ponownie później."
+         ],
+         "Because this site lives at a new URL, please register a new site key to keep using WPML features like automatic translation and plugin updates. Your existing content and translations are safe.": [
+            "Ponieważ ta witryna znajduje się pod nowym adresem URL, zarejestruj nowy klucz witryny, aby nadal korzystać z funkcji WPML, takich jak automatyczne tłumaczenie i aktualizacje wtyczek. Twoja istniejąca treść i tłumaczenia są bezpieczne."
+         ],
+         "Tip:": [
+            "Wskazówka:"
+         ],
+         "production and development sites have separate site key quotas, so getting a key for this copy won’t reduce what’s available for your production site.": [
+            "witryny produkcyjne i rozwojowe mają oddzielne limity kluczy witryny, więc uzyskanie klucza dla tej kopii nie zmniejszy puli dostępnej dla witryny produkcyjnej."
+         ],
+         "Get a key for this site": [
+            "Pobierz klucz dla tej witryny"
+         ],
+         "Site key:": [
+            "Klucz witryny:"
+         ],
+         "Enter your site key here": [
+            "Wprowadź tutaj klucz witryny"
+         ],
+         "Registering...": [
+            "Rejestrowanie..."
+         ],
+         "Register": [
+            "Zarejestruj"
+         ],
+         "Registration failed. Please try again.": [
+            "Rejestracja nie powiodła się. Spróbuj ponownie."
+         ]
+      }
+   }
+}

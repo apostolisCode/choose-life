@@ -8,8 +8,8 @@ class RegenerationInProgressNotice extends \WPML_Notice {
 	const GROUP = 'mo-files';
 
 	public function __construct() {
-		$text = "WPML is updating the .mo files with the translation for strings. This will take a few more moments. During this process, translation for strings is not displaying on the front-end. You can refresh this page in a minute to see if it's done.";
-		$text = __( $text, 'wpml-string-translation' );
+		/* translators: Notice shown while WPML is rebuilding the translation files. "This" is that rebuilding. */
+		$text = __( "WPML is updating the .mo files with the translation for strings. This will take a few more moments. During this process, translation for strings is not displaying on the front-end. You can refresh this page in a minute to see if it's done.", 'wpml-string-translation' );
 
 		parent::__construct( self::ID, $text, self::GROUP );
 

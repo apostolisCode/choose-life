@@ -3,53 +3,66 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages"
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "ja"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "<strong>Translation Management ダッシュボード</strong>から翻訳する投稿を選択できます。"
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            "はい、<b>既存</b>と<b>将来</b>のコンテンツを自動翻訳してください"
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            "はい、ただし<b>将来</b>のコンテンツのみ自動翻訳してください"
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            "はい、<b>将来</b>のコンテンツを自動翻訳してください"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "いいえ、投稿の一部は翻訳しますが、全ては翻訳しません"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "コンテンツを自動翻訳するには、アドバンス翻訳エディターを使用する必要があります。"
+            "コンテンツを自動的に翻訳するには、高度な翻訳エディタを使用する必要があります。"
          ],
          "Synchronize translators and translation managers with ATE": [
-            "ATEで翻訳者と翻訳マネジャーを同期"
+            "翻訳者と翻訳マネージャーを ATE と同期する"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "数分後に再度お試しください。問題が続くようなら、%sWPMLサポート%sにお問い合わせください。"
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "数分後にもう一度お試しください。問題が解決しない場合は、%1$sWPML サポート%2$sまでご連絡ください。"
          ],
-         "Are you OK with paying for this?": [
-            "この購入を続けますか？"
+         "Are you sure you want to change the translation option?": [
+            "翻訳オプションを変更してもよろしいですか？"
          ],
-         "Cancel": [
-            "キャンセル"
+         "No, go back": [
+            "いいえ、戻る"
          ],
-         "Make translatable": [
-            "翻訳可能にする"
+         "Yes, continue": [
+            "はい、続行する"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "保存すると、WPML は影響を受ける投稿を自動的に翻訳へ送信します。これには追加の翻訳単語が使用される場合があります。"
+         ],
+         "Are you OK with this?": [
+            "よろしいですか？"
          ],
          "Save": [
             "保存"
          ],
-         "Please confirm this translation setting": [
-            "この翻訳設定を確認してください"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "この変更は %d 件の投稿に影響します。保存すると、WPML はこれらの投稿の翻訳ステータスを更新します。これには最大 1 分かかることがあります。"
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "あなたのサイトは全てのコンテンツを自動翻訳するように設定されています。<PostTypesNames /> を翻訳可能にするとき、WPMLは %1$d 既存アイテムを自動翻訳します。",
-            "あなたのサイトは全てのコンテンツを自動翻訳するように設定されています。<PostTypesNames /> を翻訳可能にするとき、WPMLは %1$d 既存アイテムを自動翻訳します。"
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "この変更は %1$d 件の投稿に影響します。保存すると、WPML はこれらの投稿の翻訳ステータスを更新します。これには最大 %2$d 時間かかることがあります。"
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            "あなたのサイトは全てのコンテンツを自動翻訳するように設定されています。<PostTypesNames /> を翻訳可能にするとき、WPMLは将来の全てのアイテムを自動翻訳します。"
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "この変更は %1$d 件の投稿に影響します。保存すると、WPML はこれらの投稿の翻訳ステータスを更新します。これには最大 %2$d 分かかることがあります。"
+         ],
+         "Calculate Costs": [
+            "コストを計算する"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML は %1$s を %2$s に自動翻訳します。"
+         ],
+         "Automatic translation uses translation words.": [
+            "自動翻訳には翻訳単語を使用します。"
+         ],
+         "%d term": [
+            "%d 個のターム"
+         ],
+         "%d language": [
+            "%d 言語"
+         ],
+         "%s will be translated.": [
+            "%s が翻訳されます。"
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "WPMLの自動翻訳サービスはこのリクエストを受け付けませんでした（応答：%d）。しばらく待ってからもう一度お試しください。問題が解決しない場合は、WPMLのサポートにお問い合わせください。"
          ]
       }
    }

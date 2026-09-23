@@ -2,8 +2,10 @@
 
 use WPML\FP\Cast;
 use WPML\FP\Maybe;
+use WPML\TM\API\Jobs;
 use WPML\TM\ATE\JobRecords;
 use WPML\TM\ATE\API\RequestException;
+use WPML\TM\Jobs\JobLog;
 use function WPML\FP\pipe;
 use function WPML\FP\partialRight;
 use WPML\FP\Obj;
@@ -11,39 +13,22 @@ use WPML\FP\Logic;
 use WPML\FP\Fns;
 use function \WPML\FP\invoke;
 
-/**
- * @author OnTheGo Systems
- */
 class WPML_TM_ATE_Jobs {
 
-	/** @var JobRecords $records */
+	const SKIPPED_NOT_AWAITING_DELIVERY = null;
+
 	private $records;
 
-	/**
-	 * WPML_TM_ATE_Jobs constructor.
-	 *
-	 * @param JobRecords $records
-	 */
 	public function __construct( JobRecords $records ) {
 		$this->records = $records;
 	}
 
-	/**
-	 * @param int $wpml_job_id
-	 *
-	 * @return int
-	 */
 	public function get_ate_job_id( $wpml_job_id ) {
 		$wpml_job_id = (int) $wpml_job_id;
 
 		return $this->records->get_ate_job_id( $wpml_job_id );
 	}
 
-	/**
-	 * @param int $ate_job_id
-	 *
-	 * @return int|null
-	 */
 	public function get_wpml_job_id( $ate_job_id ) {
 		return Maybe::fromNullable( $ate_job_id )
 		            ->map( Cast::toInt() )
@@ -53,24 +38,17 @@ class WPML_TM_ATE_Jobs {
 		            ->getOrElse( null );
 	}
 
-	/**
-	 * @param int   $wpml_job_id
-	 * @param array $ate_job_data
-	 */
 	public function store( $wpml_job_id, $ate_job_data ) {
 		$this->records->store( (int) $wpml_job_id, $ate_job_data );
 	}
 
-	/**
-	 * @todo: Check possible duplicated code / We already have functionality to import XLIFF files from Translator's queue
-	 *
-	 * @param string $xliff
-	 *
-	 * @return bool|int
-	 * @throws RequestException The job could not be loaded.
-	 * @throws \Exception When the xliff cannot be applied to the job.
-	 */
-	public function apply( $xliff ) {
+	public function apply( $xliff, $expectedJobId = null ) {
+		if ( \WPML\TM\XLIFF\TaxonomyTermXliffReader::isTermXliff( $xliff ) ) {
+			global $wpdb, $sitepress;
+
+			return ( new \WPML\TM\ATE\TranslateEverything\TaxonomyTermJobApplier( $wpdb, $sitepress ) )->apply( $xliff, $expectedJobId );
+		}
+
 		$factory       = wpml_tm_load_job_factory();
 		$xliff_factory = new WPML_TM_Xliff_Reader_Factory( $factory );
 		$xliff_reader  = $xliff_factory->general_xliff_reader();
@@ -86,12 +64,40 @@ class WPML_TM_ATE_Jobs {
 		$job_data    = $this->filterJobData( $job_data );
 		$wpml_job_id = $job_data['job_id'];
 
+		if ( null !== $expectedJobId && (int) $wpml_job_id !== (int) $expectedJobId ) {
+			kses_init();
+
+			throw new \Exception(
+				sprintf(
+					'The delivered XLIFF declares job %d but the delivery was bound to job %d; nothing was applied.',
+					(int) $wpml_job_id,
+					(int) $expectedJobId
+				)
+			);
+		}
+
+		$blocking_status = $this->getStatusBlockingDelivery( $wpml_job_id );
+		if ( null !== $blocking_status ) {
+			kses_init();
+
+			JobLog::add(
+				'apply_skipped_not_awaiting_delivery',
+				[
+					'job_id' => (int) $wpml_job_id,
+					'status' => $blocking_status,
+				]
+			);
+
+			return self::SKIPPED_NOT_AWAITING_DELIVERY;
+		}
+
 		try {
 			$is_saved = wpml_tm_save_data( $job_data, false );
 		} catch ( Exception $e ) {
 			throw new Exception(
 				'The XLIFF file could not be applied to the content of the job ID: ' . $wpml_job_id,
-				$e->getCode()
+				$e->getCode(),
+				$e
 			);
 		}
 
@@ -100,27 +106,19 @@ class WPML_TM_ATE_Jobs {
 		return $is_saved ? $wpml_job_id : false;
 	}
 
+	private function getStatusBlockingDelivery( $wpml_job_id ) {
+		$status = Jobs::getStatus( (int) $wpml_job_id );
+
+		if ( null === $status ) {
+			return null;
+		}
+
+		$not_awaiting_delivery = [ ICL_TM_NOT_TRANSLATED, ICL_TM_ATE_CANCELLED ];
+
+		return in_array( $status, $not_awaiting_delivery, true ) ? $status : null;
+	}
+
 	private function filterJobData( $jobData ) {
-		/**
-		 * It lets modify $job_data, which is especially usefull when we want to alter `data` of field.
-		 *
-		 * @param array    $jobData              {
-		 *
-		 * @type int       $job_id
-		 * @type array fields {
-		 * @type string    $data                 Translated content
-		 * @type int       $finished
-		 * @type int       $tid
-		 * @type string    $field_type
-		 * @type string    $format
-		 *    }
-		 * @type int       $complete
-		 * }
-		 *
-		 * @param callable $getJobTargetLanguage The callback which expects $jobId as parameter
-		 *
-		 * @since 2.10.0
-		 */
 		$filteredJobData = apply_filters(
 			'wpml_tm_ate_job_data_from_xliff',
 			$jobData,
@@ -134,35 +132,20 @@ class WPML_TM_ATE_Jobs {
 		return $jobData;
 	}
 
-	/**
-	 * getJobTargetLanguage :: void → ( object → string|null )
-	 *
-	 * @return callable
-	 */
 	private function getJobTargetLanguage() {
-		// $getJobEntityById :: int -> \WPML_TM_Job_Entity|false
 		$getJobEntityById = partialRight( [
 			wpml_tm_get_jobs_repository(),
 			'get_job'
 		], \WPML_TM_Job_Entity::POST_TYPE );
-		// $getTargetLangIfEntityExists :: \WPML_TM_Job_Entity|false -> string|null
 		$getTargetLangIfEntityExists = Logic::ifElse( Fns::identity(), invoke( 'get_target_language' ), Fns::always( null ) );
 
 		return pipe( Obj::prop( 'rid' ), $getJobEntityById, $getTargetLangIfEntityExists );
 	}
 
-	/**
-	 * @param int $wpml_job_id
-	 *
-	 * @return bool
-	 */
 	public function is_editing_job( $wpml_job_id ) {
 		return $this->records->is_editing_job( $wpml_job_id );
 	}
 
-	/**
-	 * @param array $wpml_job_ids
-	 */
 	public function warm_cache( array $wpml_job_ids ) {
 		$this->records->warmCache( $wpml_job_ids );
 	}

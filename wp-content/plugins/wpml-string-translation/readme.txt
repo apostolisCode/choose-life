@@ -1,2 +1,2 @@
 === WPML String Translation ===
-Stable tag: 3.2.8
+Stable tag: 5.0.2

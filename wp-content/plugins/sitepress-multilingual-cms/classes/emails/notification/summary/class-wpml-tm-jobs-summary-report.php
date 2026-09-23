@@ -2,46 +2,20 @@
 
 class WPML_TM_Jobs_Summary_Report {
 
-	/**
-	 * @var WPML_Translation_Jobs_Collection
-	 */
 	private $jobs_collection;
 
-	/**
-	 * @var array
-	 */
 	private $jobs = array();
 
-	/**
-	 * @var WPML_TM_String
-	 */
-	private $string_counter;
-
-	/**
-	 * @var WPML_TM_Post
-	 */
-	private $post_counter;
-
-	/**
-	 * @var string
-	 */
 	private $type;
 
-	/**
-	 * @var WPML_Translation_Element_Factory
-	 */
 	private $element_factory;
 
 	public function __construct(
 		WPML_Translation_Jobs_Collection $jobs_collection,
-		WPML_TM_String $string_counter,
-		WPML_TM_Post $post_counter,
 		$type,
 		WPML_Translation_Element_Factory $element_factory
 	) {
 		$this->jobs_collection = $jobs_collection;
-		$this->string_counter  = $string_counter;
-		$this->post_counter    = $post_counter;
 		$this->type            = $type;
 		$this->element_factory = $element_factory;
 		$this->build_completed_jobs();
@@ -57,13 +31,18 @@ class WPML_TM_Jobs_Summary_Report {
 
 		foreach ( $jobs as $job ) {
 			$completed_date = $job instanceof WPML_Post_Translation_Job || $job instanceof WPML_Element_Translation_Job ? $job->get_completed_date() : '';
-			$out_of_period  = strtotime( $completed_date ) < strtotime( '-' . WPML_TM_Jobs_Summary::WEEKLY_SCHEDULE );
+
+			if ( ! $completed_date ) {
+				continue;
+			}
+
+			$out_of_period = strtotime( $completed_date ) < strtotime( '-' . WPML_TM_Jobs_Summary::WEEKLY_SCHEDULE );
 
 			if ( WPML_TM_Jobs_Summary::DAILY_REPORT === $this->type ) {
 				$out_of_period = strtotime( $completed_date ) < strtotime( '-' . WPML_TM_Jobs_Summary::DAILY_SCHEDULE );
 			}
 
-			if ( ! $completed_date || $out_of_period ) {
+			if ( $out_of_period ) {
 				continue;
 			}
 
@@ -116,16 +95,15 @@ class WPML_TM_Jobs_Summary_Report {
 			}
 
 			if ( 'String' === $job->get_type() ) {
-				$this->string_counter->set_id( $job->get_original_element_id() );
 				$number_of_strings ++;
-				$number_of_words_in_strings += $this->string_counter->get_words_count();
+				$number_of_words_in_strings += apply_filters( 'wpml_word_count_calculate_string', 0, $job->get_original_element_id() );
 			} else {
-				$this->post_counter->set_id( $job->get_original_element_id() );
 				$counters[ $manager_id ][ $lang_pair ]['number_of_pages'] += 1;
-				$counters[ $manager_id ][ $lang_pair ]['number_of_words'] += $this->post_counter->get_words_count();
+				$counters[ $manager_id ][ $lang_pair ]['number_of_words'] += apply_filters( 'wpml_word_count_calculate_post', 0, $job->get_original_element_id() );
 
 				$this->jobs[ $manager_id ][ WPML_TM_Jobs_Summary::JOBS_WAITING_KEY ][ $lang_pair ] = array(
-					'lang_pair'         => $job->get_source_language_code( true ) . ' ' . __( 'to', 'wpml-translation-management' ) . ' ' . $job->get_language_code( true ),
+					/* translators: Word between two language codes in the email WPML sends about translation work, as in "en to fr". It is used on its own between the two codes. */
+					'lang_pair'         => $job->get_source_language_code( true ) . ' ' . __( 'to', 'sitepress' ) . ' ' . $job->get_language_code( true ),
 					'number_of_strings' => $number_of_strings,
 					'number_of_words'   => $counters[ $manager_id ][ $lang_pair ]['number_of_words'] + $number_of_words_in_strings,
 					'number_of_pages'   => $counters[ $manager_id ][ $lang_pair ]['number_of_pages'],
@@ -134,27 +112,42 @@ class WPML_TM_Jobs_Summary_Report {
 		}
 	}
 
-	/**
-	 * @param WPML_Element_Translation_Job $job
-	 *
-	 * @return string
-	 */
 	private function get_translator_name( WPML_Element_Translation_Job $job ) {
-		$translator_name = $job->get_translation_service() ?
-			TranslationProxy::get_service_name( $job->get_translation_service() ) :
-			$job->get_translator_name();
+		$translation_service = $job->get_translation_service();
 
-		if ( 'local' === $job->get_translation_service() ) {
-			$user            = get_userdata( $job->get_translator_id() );
-			$translator_name = $user->display_name . ' (' . $user->user_login . ')';
+		if ( 'local' === $translation_service ) {
+			return $this->get_local_translator_name( $job );
 		}
 
-		return $translator_name;
+		return $translation_service
+			? TranslationProxy::get_service_name( $translation_service )
+			: $job->get_translator_name();
 	}
 
-	/**
-	 * @return array
-	 */
+	private function get_local_translator_name( WPML_Element_Translation_Job $job ) {
+		if ( $this->is_automatic( $job ) ) {
+			/* translators: Shown in place of the name of a translator when the translation was made by a machine. */
+			return __( 'Automatic translation', 'sitepress' );
+		}
+
+		$user = get_userdata( $job->get_translator_id() );
+
+		if ( ! $user ) {
+			/* translators: Shown in place of the name of a translator when it is not known who made the translation. */
+			return __( 'Unknown translator', 'sitepress' );
+		}
+
+		return $user->display_name . ' (' . $user->user_login . ')';
+	}
+
+	private function is_automatic( WPML_Element_Translation_Job $job ) {
+		$basic_data = $job->get_basic_data();
+
+		return is_object( $basic_data )
+		       && property_exists( $basic_data, 'automatic' )
+		       && (int) $basic_data->automatic === 1;
+	}
+
 	public function get_jobs() {
 		return $this->jobs;
 	}

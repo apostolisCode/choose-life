@@ -12,50 +12,48 @@ class Mode {
 
 	const TRANSLATION  = 'translation';
 	const LOCALIZATION = 'localization';
-	const ADVANCED     = 'advanced'; // We also use the term "Expert" for that mode.
+	const ADVANCED     = 'advanced';
 
-	const MIXED = 'mixed'; // Inconsistent modes attached to an entity.
+	const MIXED = 'mixed';
 
 	const ENTITY_POST     = 'post';
 	const ENTITY_TAXONOMY = 'taxonomy';
 	const ENTITY_OPTION   = 'option';
 
-	/**
-	 * If nothing is defined, it will default to "advanced".
-	 *
-	 * @param array|null $fieldGroup
-	 *
-	 * @return string|null
-	 */
 	public static function getMode( $fieldGroup ) {
 		return Obj::prop( self::KEY, $fieldGroup );
 	}
 
-	/**
-	 * @param string|null $mode
-	 * @param array|null  $fieldGroup
-	 *
-	 * @return bool
-	 */
+	public static function isConfigured( $fieldGroup ) {
+		$mode = self::getMode( $fieldGroup );
+
+		return is_string( $mode ) && '' !== $mode;
+	}
+
+	public static function getLabels() {
+		return [
+			/* translators: Name of the field group translation mode where each field's preference is set by hand. Noun used as a mode name. */
+			self::ADVANCED     => __( 'Expert', 'acfml' ),
+			/* translators: Name of the field group translation mode where the fields are sent for translation. */
+			self::TRANSLATION  => __( 'Same content in every language, translated', 'acfml' ),
+			/* translators: Name of the field group translation mode where every language keeps its own field values. */
+			self::LOCALIZATION => __( 'Each language has its own content', 'acfml' ),
+		];
+	}
+
+	public static function getLabel( $mode ) {
+		return Obj::propOr( '', $mode ?: self::ADVANCED, self::getLabels() );
+	}
+
 	private static function is( $mode, $fieldGroup ) {
 		return Relation::equals( $mode, self::getMode( $fieldGroup ) );
 	}
 
-	/**
-	 * @param array|null $fieldGroup
-	 *
-	 * @return bool
-	 */
 	public static function isAdvanced( $fieldGroup ) {
 		return self::is( self::ADVANCED, $fieldGroup )
 			|| self::is( null, $fieldGroup );
 	}
 
-	/**
-	 * @param string|null     $entityType
-	 *
-	 * @return string|null
-	 */
 	public static function getForFieldableEntity( $entityType = null, $id = null ) {
 		$filter = wpml_collect( [
 			self::ENTITY_POST     => [
@@ -76,11 +74,6 @@ class Mode {
 		return null;
 	}
 
-	/**
-	 * @param array  $fieldGroups
-	 *
-	 * @return string|null
-	 */
 	public static function getForFieldGroups( $fieldGroups ) {
 		if ( ! $fieldGroups ) {
 			return null;

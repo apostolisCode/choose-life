@@ -3,53 +3,76 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages"
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "ru_RU"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "Записи на перевод можно выбрать в <strong>Консоли управления переводами</strong>."
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            "Да, переводить <b>существующий</b> и <b>будущий</b> контент автоматически"
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            "Да, но переводить автоматически только <b>будущий</b> контент"
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            "Да, переводить <b>будущий</b> контент автоматически"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "Нет, я хочу перевести только отдельные записи, а не все"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "Если вы хотите переводить свой контент автоматически, следует использовать Расширенный редактор перевода."
+            "Вы должны использовать Расширенный редактор переводов, если хотите переводить свой контент автоматически."
          ],
          "Synchronize translators and translation managers with ATE": [
-            "Синхронизировать переводчиков и менеджеров переводческих проектов с РРП"
+            "Синхронизировать переводчиков и менеджеров переводов с ATE"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "Повторите попытку позже. В случае повторного возникновения проблемы обратитесь в %sслужбу поддержки WPML%s."
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "Повторите попытку через несколько минут. Если проблема не исчезнет, обратитесь в %1$sподдержку WPML%2$s."
          ],
-         "Are you OK with paying for this?": [
-            "Вы согласны заплатить за это?"
+         "Are you sure you want to change the translation option?": [
+            "Вы уверены, что хотите изменить параметр перевода?"
          ],
-         "Cancel": [
-            "Отмена"
+         "No, go back": [
+            "Нет, вернуться"
          ],
-         "Make translatable": [
-            "Подготовить к переводу"
+         "Yes, continue": [
+            "Да, продолжить"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "После сохранения WPML автоматически отправит затронутые записи на перевод. Для этого могут потребоваться дополнительные слова для перевода."
+         ],
+         "Are you OK with this?": [
+            "Вы согласны с этим?"
          ],
          "Save": [
             "Сохранить"
          ],
-         "Please confirm this translation setting": [
-            "Подтвердите настройку перевода"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "Это изменение затрагивает %d запись. После сохранения WPML обновит статус перевода этой записи. Это может занять до 1 минуты.",
+            "Это изменение затрагивает %d записи. После сохранения WPML обновит статус перевода этих записей. Это может занять до 1 минуты.",
+            "Это изменение затрагивает %d записей. После сохранения WPML обновит статус перевода этих записей. Это может занять до 1 минуты."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "В настройках вашего сайта задан автоматический перевод контента. Если вы сделаете <PostTypesNames /> пригодным к переводу, WPML будет автоматически переводить %1$d существующий материал.",
-            "В настройках вашего сайта задан автоматический перевод контента. Если вы сделаете <PostTypesNames /> пригодными к переводу, WPML будет автоматически переводить %1$d существующие материалы."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "Это изменение затрагивает %1$d запись. После сохранения WPML обновит статус перевода этой записи. Это может занять до %2$d часов.",
+            "Это изменение затрагивает %1$d записи. После сохранения WPML обновит статус перевода этих записей. Это может занять до %2$d часов.",
+            "Это изменение затрагивает %1$d записей. После сохранения WPML обновит статус перевода этих записей. Это может занять до %2$d часов."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            "В настройках вашего сайта задан автоматический перевод контента. Если вы сделаете <PostTypesNames /> пригодным к переводу, WPML будет автоматически переводить будущий контент."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "Это изменение затрагивает %1$d запись. После сохранения WPML обновит статус перевода этой записи. Это может занять до %2$d минут.",
+            "Это изменение затрагивает %1$d записи. После сохранения WPML обновит статус перевода этих записей. Это может занять до %2$d минут.",
+            "Это изменение затрагивает %1$d записей. После сохранения WPML обновит статус перевода этих записей. Это может занять до %2$d минут."
+         ],
+         "Calculate Costs": [
+            "Рассчитать стоимость"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML автоматически переведет %1$s на %2$s."
+         ],
+         "Automatic translation uses translation words.": [
+            "Автоматический перевод использует слова для перевода."
+         ],
+         "%d term": [
+            "%d элемент",
+            "%d элемента",
+            "%d элементов"
+         ],
+         "%d language": [
+            "%d язык",
+            "%d языка",
+            "%d языков"
+         ],
+         "%s will be translated.": [
+            "%s будут переведены."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "Сервис автоматического перевода WPML не принял этот запрос (код ответа: %d). Подождите минуту и попробуйте еще раз. Если проблема повторится, обратитесь в поддержку WPML."
          ]
       }
    }

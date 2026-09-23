@@ -1,0 +1,45 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "pl_PL"
+         },
+         "WPML reconnected to the translation server.": [
+            "WPML ponownie połączył się z serwerem tłumaczeń."
+         ],
+         "WPML cannot access our server at %s. Please check that your hosting isn't blocking this access.": [
+            "WPML nie może uzyskać dostępu do naszego serwera pod adresem %s. Sprawdź, czy Twój hosting nie blokuje tego dostępu."
+         ],
+         "WPML cannot access our server. Please check that your hosting isn't blocking this access.": [
+            "WPML nie może uzyskać dostępu do naszego serwera. Sprawdź, czy Twój hosting nie blokuje tego dostępu."
+         ],
+         "Retry": [
+            "Ponów"
+         ],
+         "Need help? Contact WPML support": [
+            "Potrzebujesz pomocy? Skontaktuj się z pomocą techniczną WPML"
+         ],
+         "Retrying again in %d s…": [
+            "Ponowna próba za %d s…"
+         ],
+         "If it keeps failing, quote this code to WPML support: %s": [
+            "Jeśli problem będzie się powtarzał, podaj ten kod pomocy technicznej WPML: %s"
+         ],
+         "Copy this into your support message:": [
+            "Skopiuj to do swojej wiadomości do pomocy technicznej:"
+         ],
+         "Hide for 24 h": [
+            "Ukryj na 24 h"
+         ],
+         "WPML can't reach our translation server. Retrying in %d s…": [
+            "WPML nie może połączyć się z naszym serwerem tłumaczeń. Ponowna próba za %d s…"
+         ],
+         "Retry now": [
+            "Ponów teraz"
+         ]
+      }
+   }
+}

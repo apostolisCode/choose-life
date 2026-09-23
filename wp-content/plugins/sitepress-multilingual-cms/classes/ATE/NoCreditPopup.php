@@ -10,37 +10,35 @@ use function WPML\Container\make;
 
 class NoCreditPopup {
 
-	/**
-	 * @return string
-	 */
 	public function getUrl() {
 		$baseUrl = make( \WPML_TM_ATE_AMS_Endpoints::class )->get_base_url( \WPML_TM_ATE_AMS_Endpoints::SERVICE_AMS );
 
 		return $baseUrl . '/mini_app/main.js';
 	}
 
-	/**
-	 * @return array
-	 */
-	public function getData( $ateJobIds = null ) {
+	public function getData() {
 		$registration_data = make( \WPML_TM_AMS_API::class )->get_registration_data();
 
+		$sitepress = make( \SitePress::class );
 		$data = [
 			'host'         => make( \WPML_TM_ATE_AMS_Endpoints::class )->get_base_url( \WPML_TM_ATE_AMS_Endpoints::SERVICE_AMS ),
-			'wpml_host'    => get_site_url(),
+			'wpml_host'    => \WPML_Default_Site_Url::get(),
 			'return_url'   => \WPML\TM\API\Jobs::getCurrentUrl(),
 			'secret_key'   => Obj::prop( 'secret', $registration_data ),
 			'shared_key'   => Obj::prop( 'shared', $registration_data ),
+			'site_key'     => esc_js($sitepress->get_sitekey()),
 			'website_uuid' => make( \WPML_TM_ATE_Authentication::class )->get_site_id(),
-			'ui_language'  => make( \SitePress::class )->get_user_admin_language( User::getCurrentId() ),
+			'ui_language'  => $sitepress->get_user_admin_language( User::getCurrentId() ),
 			'restNonce'    => wp_create_nonce( 'wp_rest' ),
 			'container'    => '#wpml-ate-console-container',
+			'wpml_home'    => esc_js( \WPML_Default_Site_Url::getHome() ),
 			'languages'    => $this->getLanguagesData(),
+			'dependencies' => [
+				'sitepress-multilingual-cms' => [
+					'version' => ICL_SITEPRESS_VERSION,
+				],
+			],
 		];
-
-		if ( $ateJobIds ) {
-			$data['job_list'] = $ateJobIds;
-		}
 
 		return $data;
 	}

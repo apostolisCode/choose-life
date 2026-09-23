@@ -14,12 +14,12 @@
 		}
 	],
 	"config": {
-		"optimize-autoloader": false,
-		"classmap-authoritative": false
+		"optimize-autoloader": true,
+		"classmap-authoritative": true
 	},
 	"scripts": {
 		"post-autoload-dump": [
-			"sed -i.bak '/InstalledVersions.php/d' vendor/composer/autoload_static.php && rm -f vendor/composer/autoload_static.php.bak"
+			"sed -i '' \"/InstalledVersions.php/d\" vendor/composer/autoload_static.php"
 		]
 	},
 	"require": {}

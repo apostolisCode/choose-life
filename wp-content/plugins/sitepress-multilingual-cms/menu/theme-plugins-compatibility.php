@@ -3,8 +3,9 @@
 
 	<p><?php _e( 'Configuration for compatibility between your active plugins and theme is updated automatically on daily basis.', 'sitepress' ); ?></p>
 	<div id="icl_theme_plugins_compatibility">
-		<p><?php printf( __( 'Last checked on %s', 'sitepress' ), '<span id="wpml_conf_upd">' . date( 'F j, Y H:i a', get_option( 'wpml_config_index_updated' ) ) . '</span>' ); ?></p>
+		<p><?php echo wp_kses_post( sprintf( /* translators: Line above the list of compatible themes and plugins. %s: the date the list was last brought up to date, in a tag of its own. */ __( 'Last checked on %s', 'sitepress' ), '<span id="wpml_conf_upd">' . date_i18n( /* translators: A date pattern, not words: the letters stand for parts of the date (month, day, year) as PHP writes them. Change only the order and the punctuation to suit your language; never translate the letters. */ __( 'F j, Y', 'sitepress' ), get_option( 'wpml_config_index_updated' ) ) . ' '. date_i18n( /* translators: A time pattern, not words: the letters stand for parts of the time (hour, minute, am/pm, time zone) as PHP writes them. Change only the order and the punctuation to suit your language; never translate the letters. */ __( 'g:i a T', 'sitepress' ), get_option( 'wpml_config_index_updated' ) ) . '</span>' ) ); ?></p>
 
+		<?php /* translators: Button label: fetch the list of compatible themes and plugins again. Verb, imperative, not the noun "an update". */ ?>
 		<input class="button" id="update_wpml_config" value="<?php echo __( 'Update', 'sitepress' ); ?>" type="button" style="float:left;"/>
 
 	</div>

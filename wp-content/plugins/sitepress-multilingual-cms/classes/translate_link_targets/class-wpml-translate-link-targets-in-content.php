@@ -1,19 +1,13 @@
 <?php
 
-/**
- * Class WPML_Translate_Link_Targets_In_Content
- *
- * @package wpml-tm
- */
 abstract class WPML_Translate_Link_Targets_In_Content extends WPML_WPDB_User {
 
 	protected $scanning_in_progress = false;
 	protected $content_to_fix;
 	protected $number_of_links_fixed;
-	/* var WPML_Pro_Translation	$pro_translation */
 	protected $pro_translation;
-	/** @var  WPML_Translate_Link_Target_Global_State $translate_link_target_global_state */
 	private $translate_link_target_global_state;
+	private $last_batch_was_full = false;
 
 	const MAX_TO_FIX_FOR_NEW_CONTENT = 10;
 
@@ -36,7 +30,10 @@ abstract class WPML_Translate_Link_Targets_In_Content extends WPML_WPDB_User {
 	private function do_new_content() {
 
 		if ( $this->pro_translation && ! $this->scanning_in_progress ) {
-			$number_needing_to_be_fixed = $this->get_number_to_be_fixed();
+			$number_needing_to_be_fixed = $this->get_number_to_be_fixed(
+				0,
+				self::MAX_TO_FIX_FOR_NEW_CONTENT + 1
+			);
 			$this->fix( 0, self::MAX_TO_FIX_FOR_NEW_CONTENT );
 			return $number_needing_to_be_fixed <= self::MAX_TO_FIX_FOR_NEW_CONTENT;
 		} else {
@@ -54,6 +51,7 @@ abstract class WPML_Translate_Link_Targets_In_Content extends WPML_WPDB_User {
 		$this->get_contents_with_links_needing_fix( $start, $count );
 		$last_content_processed      = 0;
 		$this->number_of_links_fixed = 0;
+		$this->last_batch_was_full = $count > 0 && count( $this->content_to_fix ) >= $count;
 
 		foreach ( $this->content_to_fix as $content ) {
 
@@ -66,8 +64,12 @@ abstract class WPML_Translate_Link_Targets_In_Content extends WPML_WPDB_User {
 		return $last_content_processed;
 	}
 
+	public function last_batch_was_full() {
+		return $this->last_batch_was_full;
+	}
+
 	abstract protected function get_contents_with_links_needing_fix( $start = 0, $count = 0 );
 	abstract protected function get_content_type();
-	abstract public function get_number_to_be_fixed( $start_id = 0 );
+	abstract public function get_number_to_be_fixed( $start_id = 0, $limit = 0 );
 
 }

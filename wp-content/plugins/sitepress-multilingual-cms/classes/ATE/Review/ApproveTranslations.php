@@ -14,21 +14,36 @@ use function WPML\Container\make;
 class ApproveTranslations implements IHandler {
 
 	public function run( Collection $data ) {
-		$jobIds = $data->get( 'jobsIds' );
+		$jobIds           = $data->get( 'jobsIds' );
+		$TranslatedPostId = function ( $arg ) {
+			if ( PackageJob::isPackageJob( $arg ) || TermJob::isTermJob( $arg ) ) {
+				return null;
+			}
+			return Jobs::getTranslatedPostId()( $arg );
+		};
+
+		$getJob = function ( $jobId ) {
+			return Jobs::get( $jobId ) ?: TermJob::get( (int) $jobId );
+		};
 
 		return wpml_collect( $jobIds )
-			->map( Jobs::get() )
+			->map( $getJob )
 			->filter( ReviewStatus::doesJobNeedReview() )
-			->map( Obj::addProp( 'translated_id', Jobs::getTranslatedPostId() ) )
-			->map( Obj::props( [ 'job_id', 'translated_id' ] ) )
-			->map( Lst::zipObj( [ 'jobId', 'postId' ] ) )
+			->map( Obj::addProp( 'translated_id', $TranslatedPostId ) )
+			->map( Obj::props( [ 'job_id', 'translated_id', 'element_type_prefix' ] ) )
+			->map( Lst::zipObj( [ 'jobId', 'postId', 'element_type_prefix' ] ) )
 			->map( 'wpml_collect' )
 			->map( [ make( AcceptTranslation::class ), 'run' ] )
-			->map( function ( Either $result ) {
-				$isJobApproved = Fns::isRight( $result );
-				$jobId         = $result->coalesce( Fns::identity(), Fns::identity() )->getOrElse( 0 );
+			->map(
+                function ( Either $result ) {
+                    $isJobApproved = Fns::isRight( $result );
+                    $jobId         = $result->coalesce( Fns::identity(), Fns::identity() )->getOrElse( 0 );
 
-				return [ 'jobId' => $jobId, 'status' => $isJobApproved ];
-			} );
+                    return [
+						'jobId'  => $jobId,
+						'status' => $isJobApproved,
+                    ];
+                }
+            );
 	}
 }

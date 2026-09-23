@@ -1,0 +1,33 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n != 1);",
+            "lang": "de_DE"
+         },
+         "Warning:": [
+            "Warnung:"
+         ],
+         "Edits you're about to make will be lost": [
+            "Die Änderungen, die du vornehmen willst, gehen verloren"
+         ],
+         "You are about to edit this translation using %s.": [
+            "Du bist dabei, diese Übersetzung mit %s zu bearbeiten."
+         ],
+         "Any changes you make will be lost the next time you send this page for translation.": [
+            "Alle Änderungen, die du vornimmst, gehen verloren, wenn du diese Seite das nächste Mal zur Übersetzung sendest."
+         ],
+         "Go back": [
+            "Zurück"
+         ],
+         "Edit in <b>Advanced Translation Editor</b>": [
+            "Im <b>Erweiterten Übersetzungs-Editor</b> bearbeiten"
+         ],
+         "Edit anyway (Not recommended)": [
+            "Trotzdem bearbeiten (nicht empfohlen)"
+         ]
+      }
+   }
+}

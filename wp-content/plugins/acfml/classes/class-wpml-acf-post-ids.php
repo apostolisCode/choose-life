@@ -1,28 +1,46 @@
 <?php
+
 class WPML_ACF_Post_Ids implements WPML_ACF_Convertable {
-	/** @var WPML_ACF_Post_Id[] $ids */
-	public function convert( WPML_ACF_Field $acf_field) {
 
-		$came_serialized = is_serialized($acf_field->meta_value);
+	public function convert( WPML_ACF_Field $acf_field ) {
+		return $this->convertSerializationLayer( $acf_field );
+	}
 
-		$ids_unpacked = (array) maybe_unserialize($acf_field->meta_value);
-		
-		$ids = array();
-		foreach ($ids_unpacked as $id) {
-			$ids[] = new WPML_ACF_Post_Id($id, $acf_field);
+	private function convertSerializationLayer( WPML_ACF_Field $acf_field ) {
+		$came_serialized = is_serialized( $acf_field->meta_value );
+
+		$mixedIds = $came_serialized
+			? maybe_unserialize( $acf_field->meta_value )
+			: $acf_field->meta_value;
+
+		$mixedTranslatedIds = $this->convertStringOrArrayOfStringsLayer( $mixedIds, $acf_field );
+
+		return $came_serialized
+			? serialize( $mixedTranslatedIds )
+			: $mixedTranslatedIds;
+	}
+
+	private function convertStringOrArrayOfStringsLayer( $mixedIds, WPML_ACF_Field $acf_field ) {
+
+		if ( is_array( $mixedIds ) ) {
+			return array_map( function ( $originalId ) use ( $acf_field ) {
+				return $this->convertOriginalIdToTranslationId( $originalId, $acf_field );
+			}, $mixedIds );
 		}
-		
-		$result = array_map(function($id) {return $id->convert()->id;}, $ids);
 
-		if (count($result) == 1 && !$came_serialized) {
-			return $result[0];
+		return $this->convertOriginalIdToTranslationId( $mixedIds, $acf_field );
+	}
+
+	private function convertOriginalIdToTranslationId( $originalId, WPML_ACF_Field $acf_field ) {
+		if( is_null( $originalId ) ) {
+			return null;
 		}
 
-		if ( $came_serialized ) {
-			$result = maybe_serialize( $result );
+		if ( ! is_numeric( $originalId ) ) {
+			return $originalId;
 		}
-		
-		return $result;
-		
+
+		return (string) ( new WPML_ACF_Post_Id( $originalId, $acf_field ) )
+			->convert()->id;
 	}
 }

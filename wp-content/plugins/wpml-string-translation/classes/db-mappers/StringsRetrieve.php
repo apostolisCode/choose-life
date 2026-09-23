@@ -3,31 +3,72 @@
 namespace WPML\ST\DB\Mappers;
 
 use \wpdb;
-use \WPML_DB_Chunk;
 
 class StringsRetrieve {
 
-	/** @var wpdb $wpdb */
+	const CONTEXT_WORDPRESS = 'WordPress';
+	const CONTEXT_DEFAULT   = 'default';
+
+	const PAGE_SIZE = 1000;
+
 	private $wpdb;
 
-	/** @var WPML_DB_Chunk $chunk_retrieve */
-	private $chunk_retrieve;
+	private $page_size;
 
-	public function __construct( wpdb $wpdb, WPML_DB_Chunk $chunk_retrieve ) {
-		$this->wpdb           = $wpdb;
-		$this->chunk_retrieve = $chunk_retrieve;
+	public function __construct( wpdb $wpdb, $page_size = self::PAGE_SIZE ) {
+		$this->wpdb      = $wpdb;
+		$this->page_size = max( 1, (int) $page_size );
 	}
 
-	/**
-	 * @param string $language
-	 * @param string $domain
-	 * @param bool   $modified_mo_only
-	 *
-	 * @return array
-	 */
 	public function get( $language, $domain, $modified_mo_only = false ) {
-		$args = [ $language, $language, $domain ];
+		$rows = $this->getDomainRows( $language, $domain, $modified_mo_only );
 
+		if ( self::CONTEXT_DEFAULT === strtolower( (string) $domain ) ) {
+			$rows = array_merge(
+				$rows,
+				array_values(
+					array_filter(
+						$this->getDomainRows( $language, self::CONTEXT_WORDPRESS, $modified_mo_only ),
+						[ self::class, 'isWordPressCoreRow' ]
+					)
+				)
+			);
+		}
+
+		return $rows;
+	}
+
+	public static function isWordPressCoreRow( array $row ) {
+		return isset( $row['name'], $row['original'] ) && md5( (string) $row['original'] ) === $row['name'];
+	}
+
+	private function getDomainRows( $language, $domain, $modified_mo_only ) {
+		$rows   = [];
+		$cursor = 0;
+
+		do {
+			$ids     = $this->getPageOfIds( $domain, $cursor );
+			$fetched = count( $ids );
+
+			if ( ! $fetched ) {
+				break;
+			}
+
+			$rows   = array_merge( $rows, $this->getRowsForIds( $ids, $language, $domain, $modified_mo_only ) );
+			$cursor = (int) end( $ids );
+		} while ( $fetched === $this->page_size );
+
+		return $rows;
+	}
+
+	private function getPageOfIds( $domain, $cursor ) {
+		$ids = $this->wpdb->get_col( $this->wpdb->prepare( "SELECT id FROM {$this->wpdb->prefix}icl_strings WHERE context = %s AND id > %d ORDER BY id LIMIT %d", $domain, (int) $cursor, $this->page_size ) );
+		$this->bailOnDbError();
+
+		return is_array( $ids ) ? array_map( 'intval', $ids ) : [];
+	}
+
+	private function getRowsForIds( array $ids, $language, $domain, $modified_mo_only ) {
 		$query = "
 			SELECT
 				s.id,
@@ -37,64 +78,37 @@ class StringsRetrieve {
 				st.mo_string AS mo_string,
 				s.value AS original,
 				s.gettext_context,
-				s.name
+				s.name,
+				s.context AS source_context
 			FROM {$this->wpdb->prefix}icl_strings s
-			" . $this->getStringTranslationJoin() . '
-			' . $this->getDomainWhere();
+			LEFT JOIN {$this->wpdb->prefix}icl_string_translations AS st
+				ON s.id = st.string_id
+					AND st.language = %s
+					AND s.language != %s
+			WHERE s.context = %s
+				AND s.id IN (" . wpml_prepare_in( $ids, '%d' ) . ')';
 
 		if ( $modified_mo_only ) {
 			$query .= $this->getModifiedMOOnlyWhere();
 		}
 
-		$total_strings = $this->get_number_of_strings_in_domain( $language, $domain, $modified_mo_only );
+		$query .= ' ORDER BY s.id';
 
-		return $this->chunk_retrieve->retrieve( $query, $args, $total_strings );
+		$rows = $this->wpdb->get_results( $this->wpdb->prepare( $query, $language, $language, $domain ), ARRAY_A );
+		$this->bailOnDbError();
+
+		return is_array( $rows ) ? $rows : [];
 	}
 
-	/**
-	 * @param string $language
-	 * @param string $domain
-	 * @param bool   $modified_mo_only
-	 *
-	 * @return int
-	 */
-	private function get_number_of_strings_in_domain( $language, $domain, $modified_mo_only ) {
-		$tables = "SELECT COUNT(s.id) FROM {$this->wpdb->prefix}icl_strings AS s";
-
-		/** @var string $where */
-		/** @phpstan-ignore-next-line */
-		$where  = $this->wpdb->prepare( $this->getDomainWhere(), [ $domain ] );
-
-		if ( $modified_mo_only ) {
-			/** @var string $sql */
-			/** @phpstan-ignore-next-line */
-			$sql = $this->wpdb->prepare( $this->getStringTranslationJoin(), [ $language, $language ] );
-			$tables .= $sql;
-			$where  .= $this->getModifiedMOOnlyWhere();
-		}
-
-		return (int) $this->wpdb->get_var( $tables . $where );
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getStringTranslationJoin() {
-		return " LEFT JOIN {$this->wpdb->prefix}icl_string_translations AS st
-					ON s.id = st.string_id
-						AND st.language = %s
-						AND s.language != %s";
-	}
-
-	/** @return string */
-	private function getDomainWhere() {
-		return ' WHERE UPPER(context) = UPPER(%s)';
-	}
-
-	/** @return string */
 	private function getModifiedMOOnlyWhere() {
 		return ' AND st.status IN (' .
 			   wpml_prepare_in( [ ICL_TM_COMPLETE, ICL_TM_NEEDS_UPDATE ], '%d' ) .
 			   ') AND st.value IS NOT NULL';
+	}
+
+	private function bailOnDbError() {
+		if ( isset( $this->wpdb->last_error ) && $this->wpdb->last_error ) {
+			throw new \RuntimeException( 'icl_strings retrieval failed: ' . $this->wpdb->last_error );
+		}
 	}
 }

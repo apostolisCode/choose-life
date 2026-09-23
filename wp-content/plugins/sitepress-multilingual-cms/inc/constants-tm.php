@@ -1,6 +1,8 @@
 <?php
 
-define( 'WPML_TM_FOLDER', 'tm' );
+if ( ! defined( 'WPML_TM_FOLDER' ) ) {
+	define( 'WPML_TM_FOLDER', 'tm' );
+}
 
 define( 'WPML_TM_URL', plugins_url( '', dirname( __FILE__ ) ) );
 
@@ -44,4 +46,4 @@ if ( ! defined( 'JSON_UNESCAPED_SLASHES' ) ) {
 }
 
 global $asian_languages;
-$asian_languages = array( 'ja', 'ko', 'zh-hans', 'zh-hant', 'mn', 'ne', 'hi', 'pa', 'ta', 'th' );
+$asian_languages = array( 'ja', 'ko', 'zh-hans', 'zh-hant', 'zh-cn', 'zh-tw', 'zh-hk', 'zh-mo', 'zh-sg', 'mn', 'ne', 'hi', 'pa', 'ta', 'th' );

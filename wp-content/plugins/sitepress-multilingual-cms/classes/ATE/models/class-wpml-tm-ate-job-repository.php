@@ -1,22 +1,24 @@
 <?php
 
 use function WPML\FP\invoke;
+use WPML\TM\ATE\Jobs;
 
 class WPML_TM_ATE_Job_Repository {
 
-	/** @var WPML_TM_Jobs_Repository */
 	private $job_repository;
 
-	public function __construct( WPML_TM_Jobs_Repository $job_repository ) {
+	private $ateJobs;
+
+	public function __construct( WPML_TM_Jobs_Repository $job_repository, Jobs $ateJobs ) {
 		$this->job_repository  = $job_repository;
+		$this->ateJobs         = $ateJobs;
 	}
 
-	/**
-	 * @param bool $includeManualAndLongstandingJobs
-	 *
-	 * @return WPML_TM_Jobs_Collection
-	 */
-	public function get_jobs_to_sync( $includeManualAndLongstandingJobs = true ) {
+	public function get_jobs_to_sync( $includeManualAndLongstandingJobs = true, $onlyIds = false ) {
+		if ( $onlyIds ) {
+			return $this->ateJobs->getATEJobIdsToSync( $includeManualAndLongstandingJobs );
+		}
+
 		$searchParams = $this->getSearchParamsPrototype();
 		$searchParams->set_status( [ ICL_TM_WAITING_FOR_TRANSLATOR, ICL_TM_IN_PROGRESS ] );
 
@@ -28,18 +30,14 @@ class WPML_TM_ATE_Job_Repository {
 			->filter( invoke( 'is_ate_job' ) );
 	}
 
-	/**
-	 * @param array $ateJobIds
-	 *
-	 * @return bool
-	 */
+	public function get_jobs_to_sync_with_element_ids( $includeManualAndLongstandingJobs = true ): array {
+		return $this->ateJobs->getATEJobIdsToSyncWithElementIds( $includeManualAndLongstandingJobs );
+	}
+
 	public function increment_ate_sync_count( array $ateJobIds ) {
 		return $this->job_repository->increment_ate_sync_count( $ateJobIds );
 	}
 
-	/**
-	 * @return WPML_TM_Jobs_Collection
-	 */
 	public function get_jobs_to_retry() {
 		$searchParams = $this->getSearchParamsPrototype();
 		$searchParams->set_status( [ ICL_TM_ATE_NEEDS_RETRY ] );
@@ -49,9 +47,6 @@ class WPML_TM_ATE_Job_Repository {
 			->filter( invoke( 'is_ate_job' ) );
 	}
 
-	/**
-	 * @return WPML_TM_Jobs_Search_Params
-	 */
 	private function getSearchParamsPrototype() {
 		$searchParams = new WPML_TM_Jobs_Search_Params();
 		$searchParams->set_scope( WPML_TM_Jobs_Search_Params::SCOPE_LOCAL );

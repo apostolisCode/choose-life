@@ -11,7 +11,7 @@ class WPML_ACF_Requirements {
 	public function missing_wpml_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php _e( 'ACFML is enabled but not effective. It requires WPML in order to work.', 'acfml' ); ?></p>
+			<p><?php /* translators: Admin notice shown when the plugin is active but WPML is not; "It" is this plugin. */ esc_html_e( 'ACFML is enabled but not effective. It requires WPML in order to work.', 'acfml' ); ?></p>
 		</div>
 		<?php
 	}

@@ -957,10 +957,6 @@ if ( ! class_exists( 'acf_field_clone' ) ) :
 				die();
 			}
 
-			if ( ! acf_current_user_can_admin() ) {
-				die();
-			}
-
 			// disable field to allow clone fields to appear selectable
 			acf_disable_filter( 'clone' );
 

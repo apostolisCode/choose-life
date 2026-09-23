@@ -1,19 +1,7 @@
 <?php
 
-/**
- * Class WPML_Nav_Menu_Actions
- *
- * @package    wpml-core
- * @subpackage taxonomy-term-translation
- */
 class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 
-	/**
-	 * @param SitePress             $sitepress
-	 * @param wpdb                  $wpdb
-	 * @param WPML_Post_Translation $post_translations
-	 * @param WPML_Term_Translation $term_translations
-	 */
 	public function __construct( &$sitepress, &$wpdb, &$post_translations, &$term_translations ) {
 		parent::__construct( $sitepress, $wpdb, $post_translations, $term_translations );
 		add_action( 'wp_delete_nav_menu', array( $this, 'wp_delete_nav_menu' ) );
@@ -28,9 +16,11 @@ class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 	}
 
 	public function wp_delete_nav_menu( $id ) {
-		$menu_id_tt = $this->wpdb->get_var(
-			$this->wpdb->prepare(
-				"SELECT term_taxonomy_id FROM {$this->wpdb->term_taxonomy} WHERE term_id=%d AND taxonomy='nav_menu'",
+		$wpdb = $this->wpdb;
+
+		$menu_id_tt = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id=%d AND taxonomy='nav_menu'",
 				$id
 			)
 		);
@@ -42,20 +32,22 @@ class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 		);
 		do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'before_delete' ) ) );
 
-		$q          = "DELETE FROM {$this->wpdb->prefix}icl_translations WHERE element_id=%d AND element_type='tax_nav_menu' LIMIT 1";
-		$q_prepared = $this->wpdb->prepare( $q, $menu_id_tt );
-		$this->wpdb->query( $q_prepared );
+		$wpdb->query(
+			$wpdb->prepare( "DELETE FROM {$wpdb->prefix}icl_translations WHERE element_id=%d AND element_type='tax_nav_menu' LIMIT 1", $menu_id_tt )
+		);
 
 		do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'after_delete' ) ) );
 	}
 
 	function wp_update_nav_menu( $menu_id, $menu_data = null ) {
+		$wpdb = $this->wpdb;
+
 		if ( $menu_data ) {
 			$trid          = $this->get_trid_from_post_data();
 			$language_code = $this->get_save_lang( $menu_id );
-			$menu_id_tt    = $this->wpdb->get_var(
-				$this->wpdb->prepare(
-					"SELECT term_taxonomy_id FROM {$this->wpdb->term_taxonomy} WHERE term_id=%d AND taxonomy='nav_menu' LIMIT 1",
+			$menu_id_tt    = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id=%d AND taxonomy='nav_menu' LIMIT 1",
 					$menu_id
 				)
 			);
@@ -83,12 +75,18 @@ class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 
 		$language_code = isset( $language_code_item ) && $language_code_item
 			? $language_code_item : ( $menu_lang ? $menu_lang : $this->sitepress->get_current_language() );
-		$this->sitepress->set_element_language_details( $menu_item_db_id, 'post_nav_menu_item', $trid, $language_code );
+		$sitepress = $this->sitepress;
+		WPML_Set_Language::run_exempt_core_flow(
+			function () use ( $sitepress, $menu_item_db_id, $trid, $language_code ) {
+				$sitepress->set_element_language_details( $menu_item_db_id, 'post_nav_menu_item', $trid, $language_code );
+			}
+		);
 	}
 
 	public function wp_delete_nav_menu_item( $menu_item_id ) {
 		$post = get_post( $menu_item_id );
 		if ( ! empty( $post->post_type ) && $post->post_type == 'nav_menu_item' ) {
+			$wpdb = $this->wpdb;
 
 			$update_args = array(
 				'element_id'   => $menu_item_id,
@@ -98,9 +96,9 @@ class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 
 			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'before_delete' ) ) );
 
-			$q          = "DELETE FROM {$this->wpdb->prefix}icl_translations WHERE element_id=%d AND element_type='post_nav_menu_item' LIMIT 1";
-			$q_prepared = $this->wpdb->prepare( $q, $menu_item_id );
-			$this->wpdb->query( $q_prepared );
+			$wpdb->query(
+				$wpdb->prepare( "DELETE FROM {$wpdb->prefix}icl_translations WHERE element_id=%d AND element_type='post_nav_menu_item' LIMIT 1", $menu_item_id )
+			);
 
 			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'after_delete' ) ) );
 		}
@@ -160,9 +158,6 @@ class WPML_Nav_Menu_Actions extends WPML_Full_Translation_API {
 		return $language_code;
 	}
 
-	/**
-	 * @return bool|int|mixed|null|string
-	 */
 	private function get_trid_from_post_data() {
 		$trid = null;
 		if ( ! empty( $_POST['icl_translation_of'] ) && $_POST['icl_translation_of'] !== 'none' ) {

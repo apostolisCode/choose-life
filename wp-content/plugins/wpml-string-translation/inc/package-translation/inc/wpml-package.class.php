@@ -1,5 +1,5 @@
 <?php
-
+#[\AllowDynamicProperties]
 class WPML_Package {
 
 	const CACHE_GROUP = 'WPML_Package';
@@ -17,21 +17,12 @@ class WPML_Package {
 	public $name;
 	public $translation_element_type;
 	public $post_id;
+	public $translator_note;
 
 	private $element_type_prefix;
 
-	/**
-	 * This gives a context to determine what's really
-	 * required to load. When set to `true`, we skip
-	 * some useless DB queries in the constructor.
-	 *
-	 * @var bool
-	 */
 	private $translate_only = false;
 
-	/**
-	 * @param stdClass|WPML_Package|array|int|WP_Post $data_item
-	 */
 	function __construct( $data_item ) {
 		$this->element_type_prefix = 'package';
 		$this->view_link           = '';
@@ -57,9 +48,10 @@ class WPML_Package {
 	private function init_from_id( $id, $output = OBJECT ) {
 		global $wpdb;
 
-		$packages_query    = "SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE id=%s";
-		$packages_prepared = $wpdb->prepare( $packages_query, $id );
-		$package           = $wpdb->get_row( $packages_prepared, $output );
+		$package = $wpdb->get_row(
+			$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE id = %s", $id ),
+			$output
+		);
 
 		return $package;
 	}
@@ -137,11 +129,6 @@ class WPML_Package {
 		}
 	}
 
-	/**
-	 * @param bool $refresh
-	 *
-	 * @return mixed
-	 */
 	public function get_package_strings( $refresh = false ) {
 		global $wpdb;
 		$package_id = $this->ID;
@@ -154,13 +141,15 @@ class WPML_Package {
 
 			$results = $cache->get( $cache_key, $found );
 			if ( ! $found || $refresh ) {
-				$results_query   = "
-					SELECT id, name, value, wrap_tag, type, title
-					FROM {$wpdb->prefix}icl_strings
-					WHERE string_package_id=%d
-					ORDER BY location, id ASC";
-				$results_prepare = $wpdb->prepare( $results_query, $package_id );
-				$results         = $wpdb->get_results( $results_prepare );
+				$results = $wpdb->get_results(
+					$wpdb->prepare(
+						"SELECT id, name, value, wrap_tag, type, title
+						 FROM {$wpdb->prefix}icl_strings
+						 WHERE string_package_id = %d
+						 ORDER BY location, id ASC",
+						$package_id
+					)
+				);
 
 				$cache->set( $cache_key, $results );
 			}
@@ -173,24 +162,21 @@ class WPML_Package {
 		global $wpdb;
 		$package_id = $this->ID;
 		if ( $package_id ) {
-			$update_query   = "UPDATE {$wpdb->prefix}icl_strings SET language=%s WHERE string_package_id=%d";
-			$update_prepare = $wpdb->prepare( $update_query, $language_code, $package_id );
-			$wpdb->query( $update_prepare );
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE {$wpdb->prefix}icl_strings SET language = %s WHERE string_package_id = %d",
+					$language_code,
+					$package_id
+				)
+			);
 
-			// Action called after string is updated.
 			do_action( 'wpml_st_string_updated' );
 		}
 
 	}
 
-	/**
-	 * @param \stdClass $result
-	 *
-	 * @return string
-	 */
 	private function get_package_string_name_from_st_name( $result ) {
 
-		// package string name is the same as the string name.
 		return $result->name;
 	}
 
@@ -266,12 +252,6 @@ class WPML_Package {
 		return $string_name;
 	}
 
-	/**
-	 * @param string $string_value
-	 * @param string $sanitized_string_name
-	 *
-	 * @return string|mixed
-	 */
 	function translate_string( $string_value, $sanitized_string_name ) {
 		if ( $this->translate_only || $this->get_package_id() ) {
 			$sanitized_string_name = $this->sanitize_string_name( $sanitized_string_name );
@@ -299,14 +279,6 @@ class WPML_Package {
 			'name'    => $string_name,
 		);
 
-		/**
-		 * @param int|null $default
-		 * @param array    $string_data {
-		 *
-		 * @type string    $context
-		 * @type string    $name        Optional
-		 *                           }
-		 */
 		$string_id = apply_filters( 'wpml_string_id', null, $string_data );
 
 		if ( ! $string_id ) {
@@ -342,9 +314,9 @@ class WPML_Package {
 
 		if ( $package_id ) {
 			foreach ( $translations as $string_name => $languages ) {
-				$string_id_query   = "SELECT id FROM {$wpdb->prefix}icl_strings WHERE name='%s'";
-				$string_id_prepare = $wpdb->prepare( $string_id_query, $string_name );
-				$string_id         = $wpdb->get_var( $string_id_prepare );
+				$string_id = $wpdb->get_var(
+					$wpdb->prepare( "SELECT id FROM {$wpdb->prefix}icl_strings WHERE name = %s", $string_name )
+				);
 				foreach ( $languages as $language_code => $language_data ) {
 					icl_add_string_translation( $string_id, $language_code, $language_data['value'], $language_data['status'] );
 				}
@@ -394,10 +366,9 @@ class WPML_Package {
 		if ( $this->has_id() ) {
 			global $wpdb;
 
-			$package_query    = "SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE ID=%d";
-			$package_prepared = $wpdb->prepare( $package_query, array( $this->ID ) );
-
-			$result = $wpdb->get_row( $package_prepared );
+			$result = $wpdb->get_row(
+				$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE ID = %d", array( $this->ID ) )
+			);
 		}
 
 		return $result;
@@ -412,11 +383,12 @@ class WPML_Package {
 
 		$result = $cache->get( $cache_key, $found );
 		if ( ! $found ) {
-
-			$package_query    = "SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE kind_slug=%s AND name=%s";
-			$package_prepared = $wpdb->prepare( $package_query, array( $this->kind_slug, $this->name ) );
-
-			$result = $wpdb->get_row( $package_prepared );
+			$result = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT * FROM {$wpdb->prefix}icl_string_packages WHERE kind_slug = %s AND name = %s",
+					array( $this->kind_slug, $this->name )
+				)
+			);
 
 			if ( $result ) {
 				$cache->set( $cache_key, $result );
@@ -439,18 +411,14 @@ class WPML_Package {
 		if ( $this->has_id() ) {
 			global $wpdb;
 
-			$package_query    = "SELECT ID FROM {$wpdb->prefix}icl_string_packages WHERE ID=%d";
-			$package_prepared = $wpdb->prepare( $package_query, array( $this->ID ) );
-
-			$result = $wpdb->get_var( $package_prepared );
+			$result = $wpdb->get_var(
+				$wpdb->prepare( "SELECT ID FROM {$wpdb->prefix}icl_string_packages WHERE ID = %d", array( $this->ID ) )
+			);
 		}
 
 		return $result;
 	}
 
-	/**
-	 * @return bool|mixed
-	 */
 	protected function package_exists() {
 		$existing_package = false;
 		if ( $this->has_id() ) {
@@ -462,16 +430,10 @@ class WPML_Package {
 		return $existing_package;
 	}
 
-	/**
-	 * @return bool
-	 */
 	private function has_id() {
 		return isset( $this->ID ) && $this->ID;
 	}
 
-	/**
-	 * @param \stdClass $package
-	 */
 	private function object_to_package( $package ) {
 		$this->ID        = $package->ID;
 		$this->kind_slug = $package->kind_slug;
@@ -485,9 +447,12 @@ class WPML_Package {
 	private function get_kind_from_slug() {
 		global $wpdb;
 		if ( $this->kind_slug ) {
-			$kinds_query    = "SELECT kind FROM {$wpdb->prefix}icl_string_packages WHERE kind_slug=%s GROUP BY kind";
-			$kinds_prepared = $wpdb->prepare( $kinds_query, $this->kind_slug );
-			$kinds          = $wpdb->get_col( $kinds_prepared );
+			$kinds = $wpdb->get_col(
+				$wpdb->prepare(
+					"SELECT kind FROM {$wpdb->prefix}icl_string_packages WHERE kind_slug = %s GROUP BY kind",
+					$this->kind_slug
+				)
+			);
 			if ( count( $kinds ) > 1 ) {
 				throw new WPML_Package_Exception( 'error', 'Package contains multiple kinds' );
 			}
@@ -511,9 +476,6 @@ class WPML_Package {
 		return 'package_' . $this->kind_slug;
 	}
 
-	/**
-	 * @return string|null
-	 */
 	public function get_package_language() {
 		global $sitepress;
 
@@ -537,7 +499,6 @@ class WPML_Package {
 	}
 
 	public function are_all_strings_included( $strings ) {
-		// check to see if all the strings in this package are present in $strings
 		$package_strings = $this->get_package_strings();
 		if ( is_array( $package_strings ) ) {
 			foreach ( $package_strings as $string ) {

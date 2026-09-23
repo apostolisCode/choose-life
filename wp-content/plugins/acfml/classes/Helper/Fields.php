@@ -7,17 +7,11 @@ use WPML\FP\Obj;
 
 class Fields {
 
-	/**
-	 * @param array    $fields
-	 * @param callable $transformField
-	 * @param callable $transformLayout
-	 * @param string   $fieldBasePattern
-	 *
-	 * @return array
-	 */
+	const WRAPPER_FIELDS = [ 'repeater', 'flexible_content' ];
+
 	public static function iterate( $fields, $transformField, $transformLayout, $fieldBasePattern = '' ) {
 		foreach ( $fields as &$field ) {
-			$fieldPattern = $fieldBasePattern . $field['name'];
+			$fieldPattern = $fieldBasePattern . preg_quote( $field['name'] );
 			$field        = $transformField( $field, $fieldPattern );
 
 			if ( isset( $field['sub_fields'] ) ) {
@@ -39,15 +33,38 @@ class Fields {
 		return $fields;
 	}
 
-	/**
-	 * @param array  $fields Array of fields.
-	 * @param string $type   Field type.
-	 *
-	 * @return bool
-	 */
+	public static function getFresh( array $fieldGroup ): array {
+		self::evictFromStore( acf_get_store( 'fields' ), $fieldGroup['ID'] );
+
+		return acf_get_fields( $fieldGroup );
+	}
+
+	private static function evictFromStore( $store, $parentId ) {
+		foreach ( acf_get_raw_fields( $parentId ) as $field ) {
+			$store->remove( $field['key'] );
+			self::evictFromStore( $store, $field['ID'] );
+		}
+	}
+
 	public static function containsType( $fields, $type ) {
 		$isType = Relation::propEq( 'type', $type );
 		return (bool) wpml_collect( $fields )
 			->first( $isType );
+	}
+
+	public static function isWrapper( $field ) {
+		return in_array(
+			Obj::prop( 'type', $field ),
+			self::WRAPPER_FIELDS,
+			true
+		);
+	}
+
+	public static function isWrapperOrGroup( $field ) {
+		return in_array(
+			Obj::prop( 'type', $field ),
+			array_merge( [ 'group' ], self::WRAPPER_FIELDS ),
+			true
+		);
 	}
 }

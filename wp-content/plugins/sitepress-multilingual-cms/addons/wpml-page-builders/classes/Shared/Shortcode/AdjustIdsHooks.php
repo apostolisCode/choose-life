@@ -12,9 +12,6 @@ use function WPML\FP\spreadArgs;
 
 class AdjustIdsHooks implements \IWPML_Frontend_Action, \IWPML_DIC_Action {
 
-	/**
-	 * @var WPML_PB_Config_Import_Shortcode $config
-	 */
 	private $config;
 
 	public function __construct( WPML_PB_Config_Import_Shortcode $config ) {
@@ -26,14 +23,6 @@ class AdjustIdsHooks implements \IWPML_Frontend_Action, \IWPML_DIC_Action {
 			->then( spreadArgs( Fns::withoutRecursion( Fns::identity(), [ $this, 'convertAttributeIds' ] ) ) );
 	}
 
-	/**
-	 * @param false|string $bool
-	 * @param string       $tag
-	 * @param array        $attr
-	 * @param array        $m
-	 *
-	 * @return false|string
-	 */
 	public function convertAttributeIds( $bool, $tag, $attr, $m ) {
 		$tagConfig = $this->getConfig( $tag );
 
@@ -45,7 +34,7 @@ class AdjustIdsHooks implements \IWPML_Frontend_Action, \IWPML_DIC_Action {
 			foreach ( $tagConfig as $attribute => $type ) {
 				$convertTypeIds = $convert( $type );
 
-				$m = preg_replace_callback( '/(' . $attribute . '=[\"\']{1})([^\"\']+)/', $convertTypeIds, $m );
+				$m = preg_replace_callback( '/(' . preg_quote( $attribute, '/' ) . '=[\"\']{1})([^\"\']+)/', $convertTypeIds, $m );
 			}
 
 			return do_shortcode_tag( $m );
@@ -54,11 +43,6 @@ class AdjustIdsHooks implements \IWPML_Frontend_Action, \IWPML_DIC_Action {
 		return $bool;
 	}
 
-	/**
-	 * @param string $tag
-	 *
-	 * @return array|null
-	 */
 	private function getConfig( $tag ) {
 		return Obj::prop( $tag, $this->config->get_id_settings() );
 	}

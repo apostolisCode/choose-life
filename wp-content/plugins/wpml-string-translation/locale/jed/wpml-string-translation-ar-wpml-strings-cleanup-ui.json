@@ -1,0 +1,57 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);",
+            "lang": "ar"
+         },
+         "Clean up the <b>String Translation</b> table by removing untranslated strings by domain.": [
+            "نظّف جدول <b>ترجمة النصوص</b> عن طريق إزالة النصوص غير المترجمة حسب النطاق."
+         ],
+         "Remove strings by domain": [
+            "إزالة النصوص حسب النطاق"
+         ],
+         "Remove strings": [
+            "إزالة النصوص"
+         ],
+         "Cancel": [
+            "إلغاء"
+         ],
+         "Remove": [
+            "إزالة"
+         ],
+         "The <b>String Translation</b> table currently contains strings from the domains listed below. If you do not plan to translate strings from a particular domain, select it below to remove its untranslated strings from the <b>String Translation</b> table. Any strings that already have translations will still be available.": [
+            "يحتوي جدول <b>ترجمة النصوص</b> حاليًا على نصوص من النطاقات المدرجة أدناه. إذا كنت لا تخطط لترجمة نصوص من نطاق معين، فحدده أدناه لإزالة نصوصه غير المترجمة من جدول <b>ترجمة النصوص</b>. ستظل أي نصوص تحتوي بالفعل على ترجمات متاحة."
+         ],
+         "Search": [
+            "بحث"
+         ],
+         "Removing strings from <b>String Translation</b> table": [
+            "جارٍ إزالة النصوص من جدول <b>ترجمة النصوص</b>"
+         ],
+         "To add strings back to the <b>String Translation</b> table, you may need to rescan translation files or register strings as translatable.": [
+            "لإضافة النصوص مرة أخرى إلى جدول <b>ترجمة النصوص</b>، قد تحتاج إلى إعادة فحص ملفات الترجمة أو تسجيل النصوص كقابلة للترجمة."
+         ],
+         "Read more about <a>scanning your site for strings and registering them as translatable</a>.": [
+            "اقرأ المزيد حول <a>فحص موقعك بحثًا عن النصوص وتسجيلها كقابلة للترجمة</a>."
+         ],
+         "Successfully removed strings": [
+            "تمت إزالة النصوص بنجاح"
+         ],
+         "OK, Great": [
+            "حسناً، رائع"
+         ],
+         "Domain": [
+            "النطاق"
+         ],
+         "Strings count": [
+            "عدد النصوص"
+         ],
+         "Translated strings": [
+            "النصوص المترجمة"
+         ]
+      }
+   }
+}

@@ -77,25 +77,58 @@
 			var self = this;
 
 			self.needsCorrection = false;
-			if ( ! self.model.get( "name" ) ) {
+			var langs = TaxonomyTranslation.data.activeLanguages;
+			var lang = self.model.get( "language_code" );
+			var langLabel = ( langs && langs[ lang ] && langs[ lang ].label ) ? langs[ lang ].label : lang;
+			var name = self.model.get( "name" );
+			var stateLabel = '';
+
+			if ( self.model.get( "inProgress" ) && ! self.model.isOriginal() ) {
+				self.template = WPML_core[ "templates/taxonomy-translation/term-in-progress.html" ];
+			} else if ( self.model.get( "needsUpdate" ) && ! self.model.isOriginal() ) {
+				self.template = WPML_core[ "templates/taxonomy-translation/term-needs-update.html" ];
+				stateLabel = self.buildStateLabel( langLabel, name, labels.needsUpdateOfTerm, labels.needsUpdate );
+			} else if ( ! name ) {
 				self.template = WPML_core[ "templates/taxonomy-translation/term-not-translated.html" ];
 			} else if ( self.model.isOriginal() ) {
 				self.template = WPML_core[ "templates/taxonomy-translation/term-original-disabled.html" ];
 			} else {
 				self.template = WPML_core[ "templates/taxonomy-translation/term-translated.html" ];
+				stateLabel = self.buildStateLabel( langLabel, name, labels.editTranslationOfTerm, labels.editTranslation );
 			}
 
 			var html = self.template({
 					trid: self.model.get("trid"),
-					lang: self.model.get("language_code"),
-					name: self.model.get("name"),
+					lang: lang,
+					name: name,
 					level: self.model.get("level"),
 					correctedLevel: self.model.get("level"),
-					langs: TaxonomyTranslation.data.activeLanguages
+					langs: langs,
+					stateLabel: stateLabel
 				});
 			self.$el.html( html );
 
 			return self;
+		},
+		/**
+		 * The name of one per-language control in a term row.
+		 *
+		 * The control is an icon on its own, so this text is everything a
+		 * screen reader announces and everything a hover shows. Where there
+		 * is a translation it carries the translation itself, which is the
+		 * one thing the row could not say before. `withTerm` is a label with
+		 * %language% and %term% placeholders; `withoutTerm` is the plain
+		 * state name, used only for the case where the state says there is a
+		 * translation and no term text came with it.
+		 */
+		buildStateLabel: function ( langLabel, name, withTerm, withoutTerm ) {
+			if ( name && withTerm ) {
+				return String( withTerm )
+					.replace( '%language%', langLabel )
+					.replace( '%term%', name );
+			}
+
+			return langLabel + ': ' + withoutTerm;
 		},
 		openPopUpTerm: function (e) {
 			var self = this;

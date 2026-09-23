@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: WP Engine <support@advancedcustomfields.com>\n"
-"POT-Creation-Date: 2026-05-26 16:02+0000\n"
+"POT-Creation-Date: 2026-03-02 19:47+0000\n"
 "Report-Msgid-Bugs-To: https://support.advancedcustomfields.com\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -16,112 +16,102 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pro/acf-pro.php:77
+#: pro/acf-pro.php:62
 msgid "Advanced Custom Fields PRO"
 msgstr ""
 
-#: pro/acf-pro.php:216
+#: pro/acf-pro.php:199
 msgid "Your ACF PRO license is no longer active. Please renew to continue to have access to updates, support, & PRO features."
 msgstr ""
 
-#: pro/acf-pro.php:213
+#: pro/acf-pro.php:196
 msgid "Your license has expired. Please renew to continue to have access to updates, support &amp; PRO features."
 msgstr ""
 
-#: pro/acf-pro.php:210
+#: pro/acf-pro.php:193
 msgid "Activate your license to enable access to updates, support &amp; PRO features."
 msgstr ""
 
-#: pro/acf-pro.php:231, pro/admin/views/html-settings-updates.php:110
+#: pro/acf-pro.php:214, pro/admin/views/html-settings-updates.php:110
 msgid "Manage License"
 msgstr ""
 
-#: pro/acf-pro.php:299
+#: pro/acf-pro.php:282
 msgid "A valid license is required to edit options pages."
 msgstr ""
 
-#: pro/acf-pro.php:297
+#: pro/acf-pro.php:280
 msgid "A valid license is required to edit field groups assigned to a block."
 msgstr ""
 
-#: pro/blocks-auto-inline-editing.php:197, pro/blocks.php:2159
+#: pro/blocks-auto-inline-editing.php:152, pro/blocks.php:1819
 msgid "Type to edit..."
 msgstr ""
 
-#. translators: %s - The block name.
-#: pro/blocks.php:225
-msgid "A field defined in block \"%s\" is missing a \"name\" and will be skipped."
-msgstr ""
-
-#. translators: %s - The block title.
-#: pro/blocks.php:283
-msgid "Block: %s"
-msgstr ""
-
-#: pro/blocks.php:340
+#: pro/blocks.php:207
 msgid "Block type name is required."
 msgstr ""
 
 #. translators: The name of the block type
-#: pro/blocks.php:348
+#: pro/blocks.php:215
 msgid "Block type \"%s\" is already registered."
 msgstr ""
 
-#: pro/blocks.php:1122
+#: pro/blocks.php:825
 msgid "The render template for this ACF Block was not found"
 msgstr ""
 
-#: pro/blocks.php:1174
+#: pro/blocks.php:877
 msgid "Switch to Edit"
 msgstr ""
 
-#: pro/blocks.php:1175
+#: pro/blocks.php:878
 msgid "Switch to Preview"
 msgstr ""
 
-#: pro/blocks.php:1176
+#: pro/blocks.php:879
 msgid "Change content alignment"
 msgstr ""
 
-#: pro/blocks.php:1177
+#: pro/blocks.php:880
 msgid "An error occurred when loading the preview for this block."
 msgstr ""
 
-#: pro/blocks.php:1178
+#: pro/blocks.php:881
 msgid "An error occurred when loading the block in edit mode."
 msgstr ""
 
-#: pro/blocks.php:1179
+#: pro/blocks.php:882
 msgid "Edit Block"
 msgstr ""
 
-#: pro/blocks.php:1180
+#: pro/blocks.php:883
 msgid "Open Expanded Editor"
 msgstr ""
 
-#: pro/blocks.php:1181
+#: pro/blocks.php:884
 msgid "The preview for this block couldn’t be loaded. Review its content or settings for issues."
 msgstr ""
 
-#: pro/blocks.php:1182
+#: pro/blocks.php:885
 msgid "ACF Block"
 msgstr ""
 
-#: pro/blocks.php:1183, pro/admin/views/acf-ui-options-page/create-options-page-modal.php:63
+#: pro/blocks.php:886, pro/admin/views/acf-ui-options-page/create-options-page-modal.php:63
 msgid "Done"
 msgstr ""
 
 #. translators: %s: Block type title
-#: pro/blocks.php:1186
+#: pro/blocks.php:889
 msgid "%s settings"
 msgstr ""
 
-#: pro/blocks.php:1479
+#: pro/blocks.php:1151
 msgid "This block contains no editable fields."
 msgstr ""
 
 #. translators: %s: an admin URL to the field group edit screen
-#: pro/blocks.php:1485
+#: pro/blocks.php:1157
 msgid "Assign a <a href=\"%s\" target=\"_blank\">field group</a> to add fields to this block."
 msgstr ""
 
@@ -129,7 +119,7 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: pro/options-page.php:73, pro/fields/class-acf-field-gallery.php:484, pro/post-types/acf-ui-options-page.php:173, pro/admin/views/acf-ui-options-page/advanced-settings.php:165
+#: pro/options-page.php:73, pro/fields/class-acf-field-gallery.php:483, pro/post-types/acf-ui-options-page.php:173, pro/admin/views/acf-ui-options-page/advanced-settings.php:165
 msgid "Update"
 msgstr ""
 
@@ -248,15 +238,15 @@ msgstr ""
 msgid "Your site URL has changed since last activating your license, but we weren't able to automatically reactivate it: %s"
 msgstr ""
 
-#: pro/admin/admin-options-page.php:162
+#: pro/admin/admin-options-page.php:159
 msgid "Publish"
 msgstr ""
 
-#: pro/admin/admin-options-page.php:165
+#: pro/admin/admin-options-page.php:162
 msgid "No Custom Field Groups found for this options page. <a href=\"%s\">Create a Custom Field Group</a>"
 msgstr ""
 
-#: pro/admin/admin-options-page.php:266
+#: pro/admin/admin-options-page.php:263
 msgid "Edit field group"
 msgstr ""
 
@@ -382,7 +372,7 @@ msgstr ""
 msgid "Add Row"
 msgstr ""
 
-#: pro/fields/class-acf-field-flexible-content.php:82, pro/fields/class-acf-field-flexible-content.php:769, pro/fields/class-acf-field-flexible-content.php:855
+#: pro/fields/class-acf-field-flexible-content.php:82, pro/fields/class-acf-field-flexible-content.php:748, pro/fields/class-acf-field-flexible-content.php:834
 msgid "layout"
 msgid_plural "layouts"
 msgstr[0] ""
@@ -422,7 +412,7 @@ msgstr ""
 msgid "Rename Layout"
 msgstr ""
 
-#: pro/fields/class-acf-field-flexible-content.php:98, src/pro/Fields/FlexibleContent/Render.php:248
+#: pro/fields/class-acf-field-flexible-content.php:98, src/pro/Fields/FlexibleContent/Render.php:247
 msgid "Rename"
 msgstr ""
 
@@ -434,7 +424,7 @@ msgstr ""
 msgid "Remove Custom Label"
 msgstr ""
 
-#: pro/fields/class-acf-field-flexible-content.php:103, pro/fields/class-acf-field-flexible-content.php:768, pro/fields/class-acf-field-flexible-content.php:854
+#: pro/fields/class-acf-field-flexible-content.php:103, pro/fields/class-acf-field-flexible-content.php:747, pro/fields/class-acf-field-flexible-content.php:833
 msgid "This field requires at least {min} {label} {identifier}"
 msgstr ""
 
@@ -502,17 +492,17 @@ msgstr ""
 msgid "Button Label"
 msgstr ""
 
-#: pro/fields/class-acf-field-flexible-content.php:1540, pro/fields/class-acf-field-repeater.php:915
+#: pro/fields/class-acf-field-flexible-content.php:1507, pro/fields/class-acf-field-repeater.php:915
 msgid "%s must be of type array or null."
 msgstr ""
 
-#: pro/fields/class-acf-field-flexible-content.php:1551
+#: pro/fields/class-acf-field-flexible-content.php:1518
 msgid "%1$s must contain at least %2$s %3$s layout."
 msgid_plural "%1$s must contain at least %2$s %3$s layouts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: pro/fields/class-acf-field-flexible-content.php:1567
+#: pro/fields/class-acf-field-flexible-content.php:1534
 msgid "%1$s must contain at most %2$s %3$s layout."
 msgid_plural "%1$s must contain at most %2$s %3$s layouts."
 msgstr[0] ""
@@ -534,155 +524,155 @@ msgstr ""
 msgid "Maximum selection reached"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:283
+#: pro/fields/class-acf-field-gallery.php:282
 msgid "Length"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:298
+#: pro/fields/class-acf-field-gallery.php:297
 msgid "Edit"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:299, pro/fields/class-acf-field-gallery.php:452
+#: pro/fields/class-acf-field-gallery.php:298, pro/fields/class-acf-field-gallery.php:451
 msgid "Remove"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:315
+#: pro/fields/class-acf-field-gallery.php:314
 msgid "Title"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:327
+#: pro/fields/class-acf-field-gallery.php:326
 msgid "Caption"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:339
+#: pro/fields/class-acf-field-gallery.php:338
 msgid "Alt Text"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:351, pro/admin/post-types/admin-ui-options-pages.php:113, pro/admin/views/acf-ui-options-page/advanced-settings.php:153
+#: pro/fields/class-acf-field-gallery.php:350, pro/admin/post-types/admin-ui-options-pages.php:113, pro/admin/views/acf-ui-options-page/advanced-settings.php:153
 msgid "Description"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:461
+#: pro/fields/class-acf-field-gallery.php:460
 msgid "Add to gallery"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:465
+#: pro/fields/class-acf-field-gallery.php:464
 msgid "Bulk actions"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:466
+#: pro/fields/class-acf-field-gallery.php:465
 msgid "Sort by date uploaded"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:467
+#: pro/fields/class-acf-field-gallery.php:466
 msgid "Sort by date modified"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:468
+#: pro/fields/class-acf-field-gallery.php:467
 msgid "Sort by title"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:469
+#: pro/fields/class-acf-field-gallery.php:468
 msgid "Reverse current order"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:481
+#: pro/fields/class-acf-field-gallery.php:480
 msgid "Close"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:509
+#: pro/fields/class-acf-field-gallery.php:508
 msgid "Return Format"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:515
+#: pro/fields/class-acf-field-gallery.php:514
 msgid "Image Array"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:516
+#: pro/fields/class-acf-field-gallery.php:515
 msgid "Image URL"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:517
+#: pro/fields/class-acf-field-gallery.php:516
 msgid "Image ID"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:525
+#: pro/fields/class-acf-field-gallery.php:524
 msgid "Library"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:526
+#: pro/fields/class-acf-field-gallery.php:525
 msgid "Limit the media library choice"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:531, pro/locations/class-acf-location-block.php:68
+#: pro/fields/class-acf-field-gallery.php:530, pro/locations/class-acf-location-block.php:68
 msgid "All"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:532
+#: pro/fields/class-acf-field-gallery.php:531
 msgid "Uploaded to post"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:568
+#: pro/fields/class-acf-field-gallery.php:567
 msgid "Minimum Selection"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:578
+#: pro/fields/class-acf-field-gallery.php:577
 msgid "Maximum Selection"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:588
+#: pro/fields/class-acf-field-gallery.php:587
 msgid "Minimum"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:589, pro/fields/class-acf-field-gallery.php:625
+#: pro/fields/class-acf-field-gallery.php:588, pro/fields/class-acf-field-gallery.php:624
 msgid "Restrict which images can be uploaded"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:592, pro/fields/class-acf-field-gallery.php:628
+#: pro/fields/class-acf-field-gallery.php:591, pro/fields/class-acf-field-gallery.php:627
 msgid "Width"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:603, pro/fields/class-acf-field-gallery.php:639
+#: pro/fields/class-acf-field-gallery.php:602, pro/fields/class-acf-field-gallery.php:638
 msgid "Height"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:615, pro/fields/class-acf-field-gallery.php:651
+#: pro/fields/class-acf-field-gallery.php:614, pro/fields/class-acf-field-gallery.php:650
 msgid "File size"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:624
+#: pro/fields/class-acf-field-gallery.php:623
 msgid "Maximum"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:660
+#: pro/fields/class-acf-field-gallery.php:659
 msgid "Allowed File Types"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:661
+#: pro/fields/class-acf-field-gallery.php:660
 msgid "Comma separated list. Leave blank for all types"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:680
+#: pro/fields/class-acf-field-gallery.php:679
 msgid "Insert"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:681
+#: pro/fields/class-acf-field-gallery.php:680
 msgid "Specify where new attachments are added"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:685
+#: pro/fields/class-acf-field-gallery.php:684
 msgid "Append to the end"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:686
+#: pro/fields/class-acf-field-gallery.php:685
 msgid "Prepend to the beginning"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:694
+#: pro/fields/class-acf-field-gallery.php:693
 msgid "Preview Size"
 msgstr ""
 
-#: pro/fields/class-acf-field-gallery.php:788
+#: pro/fields/class-acf-field-gallery.php:787
 msgid "%1$s requires at least %2$s selection"
 msgid_plural "%1$s requires at least %2$s selections"
 msgstr[0] ""
@@ -748,24 +738,16 @@ msgstr ""
 msgid "Select a sub field to show when row is collapsed"
 msgstr ""
 
-#: pro/fields/class-acf-field-repeater.php:1085
+#: pro/fields/class-acf-field-repeater.php:1084
 msgid "Invalid nonce."
 msgstr ""
 
-#: pro/fields/class-acf-field-repeater.php:1091
-msgid "Sorry, you do not have permission to do that."
-msgstr ""
-
-#: pro/fields/class-acf-field-repeater.php:1096
+#: pro/fields/class-acf-field-repeater.php:1089
 msgid "Invalid field key or name."
 msgstr ""
 
-#: pro/fields/class-acf-field-repeater.php:1105
+#: pro/fields/class-acf-field-repeater.php:1098
 msgid "There was an error retrieving the field."
-msgstr ""
-
-#: pro/fields/class-acf-field-repeater.php:1113
-msgid "Pagination is not enabled for this field."
 msgstr ""
 
 #: pro/fields/class-acf-repeater-table.php:366, src/pro/Fields/FlexibleContent/Layout.php:229
@@ -1319,22 +1301,22 @@ msgid "Toggle layout"
 msgstr ""
 
 #. translators: %s the button label used for adding a new layout.
-#: src/pro/Fields/FlexibleContent/Render.php:109
+#: src/pro/Fields/FlexibleContent/Render.php:108
 msgid "Click the \"%s\" button below to start creating your layout"
 msgstr ""
 
-#: src/pro/Fields/FlexibleContent/Render.php:188
+#: src/pro/Fields/FlexibleContent/Render.php:187
 msgid "Expand All"
 msgstr ""
 
-#: src/pro/Fields/FlexibleContent/Render.php:191
+#: src/pro/Fields/FlexibleContent/Render.php:190
 msgid "Collapse All"
 msgstr ""
 
-#: src/pro/Fields/FlexibleContent/Render.php:253
+#: src/pro/Fields/FlexibleContent/Render.php:252
 msgid "Disable"
 msgstr ""
 
-#: src/pro/Fields/FlexibleContent/Render.php:256
+#: src/pro/Fields/FlexibleContent/Render.php:255
 msgid "Enable"
 msgstr ""

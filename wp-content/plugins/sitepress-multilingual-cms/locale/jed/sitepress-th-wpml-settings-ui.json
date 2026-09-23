@@ -1,0 +1,69 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "th"
+         },
+         "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
+            "คุณต้องใช้ตัวแก้ไขการแปลขั้นสูงหากต้องการแปลเนื้อหาของคุณโดยอัตโนมัติ"
+         ],
+         "Synchronize translators and translation managers with ATE": [
+            "ซิงโครไนซ์นักแปลและผู้จัดการการแปลกับ ATE"
+         ],
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "โปรดลองอีกครั้งในอีกไม่กี่นาที หากปัญหายังคงอยู่ โปรดติดต่อ %1$sฝ่ายสนับสนุน WPML%2$s"
+         ],
+         "Are you sure you want to change the translation option?": [
+            "คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนตัวเลือกการแปล?"
+         ],
+         "No, go back": [
+            "ไม่ กลับไป"
+         ],
+         "Yes, continue": [
+            "ใช่ ดำเนินการต่อ"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "เมื่อบันทึกแล้ว WPML จะส่งโพสต์ที่ได้รับผลกระทบไปแปลโดยอัตโนมัติ ซึ่งอาจมีการใช้คำสำหรับการแปลเพิ่มเติม"
+         ],
+         "Are you OK with this?": [
+            "คุณตกลงตามนี้หรือไม่?"
+         ],
+         "Save": [
+            "บันทึก"
+         ],
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "การเปลี่ยนแปลงนี้ส่งผลกระทบต่อ %d เรื่อง เมื่อบันทึกแล้ว WPML จะอัปเดตสถานะการแปลของเรื่องเหล่านี้ ซึ่งอาจใช้เวลาสูงสุด 1 นาที"
+         ],
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "การเปลี่ยนแปลงนี้ส่งผลกระทบต่อ %1$d เรื่อง เมื่อบันทึกแล้ว WPML จะอัปเดตสถานะการแปลของเรื่องเหล่านี้ ซึ่งอาจใช้เวลาสูงสุด %2$d ชั่วโมง"
+         ],
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "การเปลี่ยนแปลงนี้ส่งผลกระทบต่อ %1$d เรื่อง เมื่อบันทึกแล้ว WPML จะอัปเดตสถานะการแปลของเรื่องเหล่านี้ ซึ่งอาจใช้เวลาสูงสุด %2$d นาที"
+         ],
+         "Calculate Costs": [
+            "คำนวณค่าใช้จ่าย"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML จะแปล %1$s เป็น %2$s โดยอัตโนมัติ"
+         ],
+         "Automatic translation uses translation words.": [
+            "การแปลอัตโนมัติมีการใช้คำสำหรับการแปล"
+         ],
+         "%d term": [
+            "%d รายการ"
+         ],
+         "%d language": [
+            "%d ภาษา"
+         ],
+         "%s will be translated.": [
+            "%s จะถูกแปล"
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "บริการการแปลอัตโนมัติของ WPML ไม่ยอมรับคำขอนี้ (ได้รับคำตอบเป็น %d) โปรดรอสักครู่แล้วลองใหม่อีกครั้ง และติดต่อฝ่ายสนับสนุนของ WPML หากปัญหายังคงเกิดขึ้น"
+         ]
+      }
+   }
+}

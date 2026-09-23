@@ -207,7 +207,6 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									do_action( "acf/render_field_settings/type={$field['type']}", $field );
 									do_action( "acf/field_group/render_field_settings_tab/{$tab_key}/type={$field['type']}", $field );
 									do_action( "acf/render_field_{$tab_key}_settings/type={$field['type']}", $field );
-									do_action( "acf/render_field_{$tab_key}_settings", $field );
 									?>
 								</div>
 								<?php
@@ -219,7 +218,6 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									<?php
 									do_action( "acf/field_group/render_field_settings_tab/{$tab_key}/type={$field['type']}", $field );
 									do_action( "acf/render_field_{$tab_key}_settings/type={$field['type']}", $field );
-									do_action( "acf/render_field_{$tab_key}_settings", $field );
 									?>
 								</div>
 								<?php
@@ -275,7 +273,6 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									<?php
 									do_action( "acf/field_group/render_field_settings_tab/{$tab_key}/type={$field['type']}", $field );
 									do_action( "acf/render_field_{$tab_key}_settings/type={$field['type']}", $field );
-									do_action( "acf/render_field_{$tab_key}_settings", $field );
 									?>
 								</div>
 								<?php
@@ -307,7 +304,6 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									<?php
 									do_action( "acf/field_group/render_field_settings_tab/{$tab_key}/type={$field['type']}", $field );
 									do_action( "acf/render_field_{$tab_key}_settings/type={$field['type']}", $field );
-									do_action( "acf/render_field_{$tab_key}_settings", $field );
 									?>
 								</div>
 								<?php
@@ -321,7 +317,6 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									// Type-specific action hook for custom tabs.
 									do_action( "acf/field_group/render_field_settings_tab/{$tab_key}/type={$field['type']}", $field );
 									do_action( "acf/render_field_{$tab_key}_settings/type={$field['type']}", $field );
-									do_action( "acf/render_field_{$tab_key}_settings", $field );
 									?>
 								</div>
 								<?php

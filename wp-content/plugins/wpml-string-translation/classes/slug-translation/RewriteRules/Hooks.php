@@ -3,19 +3,16 @@
 namespace WPML\ST\SlugTranslation\Hooks;
 
 class Hooks {
-	/** @var \WPML_Rewrite_Rule_Filter_Factory */
 	private $factory;
 
-	/** @var \WPML_ST_Slug_Translation_Settings $slug_translation_settings */
 	private $slug_translation_settings;
 
-	/** @var array|null */
 	private $cache;
 
-	/**
-	 * @param \WPML_Rewrite_Rule_Filter_Factory  $factory
-	 * @param \WPML_ST_Slug_Translation_Settings $slug_translation_settings
-	 */
+	private $source;
+
+	private $language;
+
 	public function __construct(
 		\WPML_Rewrite_Rule_Filter_Factory $factory,
 		\WPML_ST_Slug_Translation_Settings $slug_translation_settings
@@ -38,32 +35,32 @@ class Hooks {
 		}
 	}
 
-	/**
-	 * @param array $value
-	 *
-	 * @return array
-	 */
 	public function filter( $value ) {
 		if ( empty( $value ) || apply_filters( 'wpml_st_disable_rewrite_rules', false ) ) {
 			return $value;
 		}
 
-		if ( ! $this->cache ) {
-			$this->cache = $this->factory->create()->rewrite_rules_filter( $value );
+		$language = $this->getCurrentLanguage();
+
+		if ( null === $this->cache || $this->source !== $value || $this->language !== $language ) {
+			$this->cache    = $this->factory->create()->rewrite_rules_filter( $value );
+			$this->source   = $value;
+			$this->language = $language;
 		}
 
 		return $this->cache;
 	}
 
-	public function clearCache() {
-		$this->cache = null;
+	private function getCurrentLanguage() {
+		return (string) apply_filters( 'wpml_current_language', null );
 	}
 
-	/**
-	 * @param bool $hard
-	 *
-	 * @return mixed
-	 */
+	public function clearCache() {
+		$this->cache    = null;
+		$this->source   = null;
+		$this->language = null;
+	}
+
 	public function flushRewriteRulesHard( $hard ) {
 		$this->clearCache();
 

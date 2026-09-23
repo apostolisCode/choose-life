@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"X-Generator: babel-plugin-makepot\n"
+
+#: src/js/shared/Request.js:39
+#. Shown when WPML's automatic translation service refused a request. %d: the HTTP status the service answered with.
+msgid ""
+"WPML's automatic translation service did not accept this request (it "
+"answered %d). Wait a minute and try again, and contact WPML support if it "
+"keeps happening."
+msgstr ""

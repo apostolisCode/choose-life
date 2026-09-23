@@ -3,9 +3,7 @@
  * Plugin Name:       Safe SVG
  * Plugin URI:        https://wordpress.org/plugins/safe-svg/
  * Description:       Enable SVG uploads and sanitize them to stop XML/SVG vulnerabilities in your WordPress website
- * Version:           2.4.0
- * Requires at least: 6.6
- * Requires PHP:      7.4
+ * Version:           2.5.1
  * Author:            10up
  * Author URI:        https://10up.com
  * License:           GPL-2.0-or-later
@@ -14,6 +12,8 @@
  * Domain Path:       /languages
  *
  * @package safe-svg
+ *
+ * phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed
  */
 
 namespace SafeSvg;
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'SAFE_SVG_VERSION', '2.4.0' );
+define( 'SAFE_SVG_VERSION', '2.5.1' );
 define( 'SAFE_SVG_PLUGIN_DIR', __DIR__ );
 define( 'SAFE_SVG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -54,7 +54,7 @@ function site_meets_php_requirements() {
 if ( ! site_meets_php_requirements() ) {
 	add_action(
 		'admin_notices',
-		function() {
+		function () {
 			?>
 			<div class="notice notice-error">
 				<p>
@@ -78,7 +78,7 @@ if ( ! site_meets_php_requirements() ) {
 } elseif ( ! class_exists( Sanitizer::class ) ) {
 	add_action(
 		'admin_notices',
-		function() {
+		function () {
 			?>
 			<div class="notice notice-error">
 				<p>
@@ -102,9 +102,12 @@ if ( ! site_meets_php_requirements() ) {
 require __DIR__ . '/includes/safe-svg-tags.php';
 require __DIR__ . '/includes/safe-svg-attributes.php';
 require __DIR__ . '/includes/safe-svg-settings.php';
+require __DIR__ . '/includes/safe-svg-sanitizer.php';
+require __DIR__ . '/includes/safe-svg-rest.php';
 require __DIR__ . '/includes/blocks.php';
 require __DIR__ . '/includes/optimizer.php';
 
+new Rest();
 new \SafeSVG\Optimizer();
 
 if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
@@ -115,24 +118,15 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 	class safe_svg {
 
 		/**
-		 * The sanitizer
-		 *
-		 * @var \enshrined\svgSanitize\Sanitizer
-		 */
-		protected $sanitizer;
-
-		/**
 		 * Set up the class
 		 */
 		public function __construct() {
-			$this->sanitizer = new Sanitizer();
-			$this->sanitizer->minify( true );
-
 			// Allow SVG uploads from specific contexts.
 			add_action( 'load-upload.php', array( $this, 'allow_svg_from_upload' ) );
 			add_action( 'load-post-new.php', array( $this, 'allow_svg_from_upload' ) );
 			add_action( 'load-post.php', array( $this, 'allow_svg_from_upload' ) );
 			add_action( 'load-site-editor.php', array( $this, 'allow_svg_from_upload' ) );
+			add_action( 'load-media_page_enable-media-replace/enable-media-replace', array( $this, 'allow_svg_from_upload' ) );
 
 			// This filter runs very early on in the `wp_enqueue_media()` function, which is used to load the
 			// assets required to use the media JS APIs. Whilst we don't want to adjust the tabs, this does
@@ -237,7 +231,7 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 		 *
 		 * @return null
 		 */
-		public function fix_mime_type_svg( $data = null, $file = null, $filename = null, $mimes = null ) {
+		public function fix_mime_type_svg( $data = null, $file = null, $filename = null, $mimes = null ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- legacy
 			$ext = isset( $data['ext'] ) ? $data['ext'] : '';
 			if ( strlen( $ext ) < 1 ) {
 				$exploded = explode( '.', $filename );
@@ -331,40 +325,24 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 		protected function sanitize( $file ) {
 			$dirty = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-			// Is the SVG gzipped? If so we try and decode the string
+			if ( false === $dirty ) {
+				return false;
+			}
+
+			// Remember compression before sanitize_markup() decodes it.
 			$is_zipped = $this->is_gzipped( $dirty );
-			if ( $is_zipped ) {
-				$dirty = gzdecode( $dirty );
-
-				// If decoding fails, bail as we're not secure
-				if ( false === $dirty ) {
-					return false;
-				}
-			}
-
-			// Allow large SVGs if the setting is on.
-			if ( get_option( 'safe_svg_large_svg' ) ) {
-				$this->sanitizer->setAllowHugeFiles( true );
-			}
-
-			/**
-			 * Load extra filters to allow devs to access the safe tags and attrs by themselves.
-			 */
-			$this->sanitizer->setAllowedTags( new SafeSvgTags\safe_svg_tags() );
-			$this->sanitizer->setAllowedAttrs( new SafeSvgAttr\safe_svg_attributes() );
-
-			$clean = $this->sanitizer->sanitize( $dirty );
+			$clean     = Svg_Sanitizer::sanitize_markup( $dirty );
 
 			if ( false === $clean ) {
 				return false;
 			}
 
-			// If we were gzipped, we need to re-zip
+			// Persist `.svgz` attachments as gzip, matching what we read.
 			if ( $is_zipped ) {
 				$clean = gzencode( $clean );
 			}
 
-			file_put_contents( $file, $clean ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
+			file_put_contents( $file, $clean ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
 			return true;
 		}
@@ -379,13 +357,7 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 		 * @return bool
 		 */
 		protected function is_gzipped( $contents ) {
-			// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
-			if ( function_exists( 'mb_strpos' ) ) {
-				return 0 === mb_strpos( $contents, "\x1f" . "\x8b" . "\x08" );
-			} else {
-				return 0 === strpos( $contents, "\x1f" . "\x8b" . "\x08" );
-			}
-			// phpcs:enable
+			return Svg_Sanitizer::is_gzipped( $contents );
 		}
 
 		/**
@@ -397,7 +369,7 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 		 *
 		 * @return array
 		 */
-		public function fix_admin_preview( $response, $attachment, $meta ) {
+		public function fix_admin_preview( $response, $attachment, $meta ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- legacy
 
 			if ( 'image/svg+xml' === $response['mime'] ) {
 				$dimensions = $this->svg_dimensions( $attachment->ID );
@@ -454,7 +426,7 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 		 *
 		 * @return array
 		 */
-		public function one_pixel_fix( $image, $attachment_id, $size, $icon ) {
+		public function one_pixel_fix( $image, $attachment_id, $size, $icon ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- legacy
 			if ( get_post_mime_type( $attachment_id ) === 'image/svg+xml' ) {
 				$dimensions = $this->svg_dimensions( $attachment_id, $size );
 
@@ -516,7 +488,7 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 				if ( is_array( $size ) ) {
 					$width  = $size[0];
 					$height = $size[1];
-				} elseif ( 'full' === $size && $dimensions = $this->svg_dimensions( $id ) ) { // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.Found, Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
+				} elseif ( 'full' === $size && $dimensions = $this->svg_dimensions( $id ) ) { // phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition.Found, Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
 					$width  = $dimensions['width'];
 					$height = $dimensions['height'];
 				} else {
@@ -713,14 +685,12 @@ if ( ! class_exists( 'SafeSvg\\safe_svg' ) ) {
 						$width  = $viewbox_width;
 						$height = $viewbox_height;
 					}
-				} else {
-					if ( isset( $viewbox_width, $viewbox_height ) ) {
+				} elseif ( isset( $viewbox_width, $viewbox_height ) ) {
 						$width  = $viewbox_width;
 						$height = $viewbox_height;
-					} elseif ( isset( $attr_width, $attr_height ) ) {
-						$width  = $attr_width;
-						$height = $attr_height;
-					}
+				} elseif ( isset( $attr_width, $attr_height ) ) {
+					$width  = $attr_width;
+					$height = $attr_height;
 				}
 
 				if ( ! $width && ! $height ) {

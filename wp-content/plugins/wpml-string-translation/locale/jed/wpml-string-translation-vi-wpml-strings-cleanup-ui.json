@@ -1,0 +1,57 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "vi"
+         },
+         "Clean up the <b>String Translation</b> table by removing untranslated strings by domain.": [
+            "Dọn dẹp bảng <b>Dịch chuỗi</b> bằng cách xóa các chuỗi chưa được dịch theo textdomain."
+         ],
+         "Remove strings by domain": [
+            "Xóa chuỗi theo textdomain"
+         ],
+         "Remove strings": [
+            "Xóa chuỗi"
+         ],
+         "Cancel": [
+            "Hủy"
+         ],
+         "Remove": [
+            "Xóa"
+         ],
+         "The <b>String Translation</b> table currently contains strings from the domains listed below. If you do not plan to translate strings from a particular domain, select it below to remove its untranslated strings from the <b>String Translation</b> table. Any strings that already have translations will still be available.": [
+            "Bảng <b>Dịch chuỗi</b> hiện chứa các chuỗi từ các textdomain được liệt kê bên dưới. Nếu bạn không có kế hoạch dịch các chuỗi từ một textdomain cụ thể, hãy chọn nó bên dưới để xóa các chuỗi chưa được dịch khỏi bảng <b>Dịch chuỗi</b>. Mọi chuỗi đã có bản dịch vẫn sẽ khả dụng."
+         ],
+         "Search": [
+            "Tìm kiếm"
+         ],
+         "Removing strings from <b>String Translation</b> table": [
+            "Đang xóa các chuỗi khỏi bảng <b>Dịch chuỗi</b>"
+         ],
+         "To add strings back to the <b>String Translation</b> table, you may need to rescan translation files or register strings as translatable.": [
+            "Để thêm lại các chuỗi vào bảng <b>Dịch chuỗi</b>, bạn có thể cần quét lại các tệp dịch thuật hoặc đăng ký các chuỗi là có thể dịch được."
+         ],
+         "Read more about <a>scanning your site for strings and registering them as translatable</a>.": [
+            "Đọc thêm về <a>quét trang web của bạn để tìm chuỗi và đăng ký chúng là có thể dịch được</a>."
+         ],
+         "Successfully removed strings": [
+            "Đã xóa các chuỗi thành công"
+         ],
+         "OK, Great": [
+            "OK, Tuyệt"
+         ],
+         "Domain": [
+            "Textdomain"
+         ],
+         "Strings count": [
+            "Số lượng chuỗi"
+         ],
+         "Translated strings": [
+            "Các chuỗi đã dịch"
+         ]
+      }
+   }
+}

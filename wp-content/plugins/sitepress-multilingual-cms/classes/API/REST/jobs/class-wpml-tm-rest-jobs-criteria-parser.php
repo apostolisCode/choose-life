@@ -8,11 +8,6 @@ use WPML\LIB\WP\User;
 use WPML\TM\API\Translators;
 
 class WPML_TM_Rest_Jobs_Criteria_Parser {
-	/**
-	 * @param WP_REST_Request $request
-	 *
-	 * @return WPML_TM_Jobs_Search_Params
-	 */
 	public function build_criteria( WP_REST_Request $request ) {
 		$params = new WPML_TM_Jobs_Search_Params();
 
@@ -24,12 +19,6 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 		return $params;
 	}
 
-	/**
-	 * @param WPML_TM_Jobs_Search_Params $params
-	 * @param WP_REST_Request $request
-	 *
-	 * @return WPML_TM_Jobs_Search_Params
-	 */
 	private function set_scope( WPML_TM_Jobs_Search_Params $params, WP_REST_Request $request ) {
 		$scope = $request->get_param( 'scope' );
 		if ( WPML_TM_Jobs_Search_Params::is_valid_scope( $scope ) ) {
@@ -39,12 +28,6 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 		return $params;
 	}
 
-	/**
-	 * @param WPML_TM_Jobs_Search_Params $params
-	 * @param WP_REST_Request $request
-	 *
-	 * @return WPML_TM_Jobs_Search_Params
-	 */
 	private function set_pagination( WPML_TM_Jobs_Search_Params $params, WP_REST_Request $request ) {
 		$limit = (int) $request->get_param( 'limit' );
 		if ( $limit > 0 ) {
@@ -67,6 +50,11 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 			}
 		}
 
+		$translate_job_id = (int) $request->get_param( 'job_id' );
+		if ( $translate_job_id ) {
+			$params->set_translate_job_id( $translate_job_id );
+		}
+
 		foreach ( [ 'ids', 'local_job_ids', 'title', 'target_language', 'batch_name' ] as $key ) {
 			$value = (string) $request->get_param( $key );
 			if ( strlen( $value ) ) {
@@ -77,15 +65,8 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 		if ( $request->get_param( 'status' ) !== null ) {
 			$statuses = Fns::map( Cast::toInt(), explode( ',', $request->get_param( 'status' ) ) );
 
-			if ( $statuses === [ ICL_TM_NEEDS_REVIEW ] ) {
-				$params->set_needs_review( true );
-			} else {
-				$params->set_status( Fns::reject( Relation::equals( ICL_TM_NEEDS_REVIEW ), $statuses ) );
-
-				if ( ! Lst::includes( ICL_TM_NEEDS_REVIEW, $statuses ) ) {
-					$params->set_needs_review( false );
-				}
-			}
+			$params->set_status( Fns::reject( Relation::equals( ICL_TM_NEEDS_REVIEW ), $statuses ) );
+			$params->set_needs_review( Lst::includes( ICL_TM_NEEDS_REVIEW, $statuses ) );
 		}
 		$params->set_exclude_cancelled();
 
@@ -114,51 +95,56 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 			}
 		}
 
-		if ( $request->get_param( 'pageName' ) === \WPML_TM_Jobs_List_Script_Data::TRANSLATION_QUEUE_PAGE ) {
-			global $wpdb;
+		global $wpdb;
+		$where     = [];
+		$isQueue   = $request->get_param( 'pageName' ) === \WPML_TM_Jobs_List_Script_Data::TRANSLATION_QUEUE_PAGE;
+		$isManager = User::canManageTranslations();
 
-			/**
-			 * On Translation Queue page, in general, you should only see the jobs assigned to you or unassigned.
-			 * Although, we want to make an exception for automatic jobs which require review. Those jobs shall not have assigned translator,
-			 * but due to some old bugs, a user can have corrupted data in the database. We want him to be able to see them even if due to the bug,
-			 * they are assigned to somebody else.
-			 */
-			$translatorCond = "(
-				(translate_job.translator_id = %d OR translate_job.translator_id = 0 OR translate_job.translator_id IS NULL) 
-				OR (automatic = 1 OR review_status = 'NEEDS_REVIEW') 
-			)";
-			$where[] = $wpdb->prepare( $translatorCond, User::getCurrentId() );
+		if ( $isQueue || ! $isManager ) {
+			$where[] = $wpdb->prepare( "(
+				(translate_job.translator_id = %d OR translate_job.translator_id = 0 OR translate_job.translator_id IS NULL)
+				OR (automatic = 1 OR review_status = 'NEEDS_REVIEW')
+			)", User::getCurrentId() );
+		}
 
+		if ( $isQueue ) {
 			if ( ! $request->get_param( 'includeTranslationServiceJobs' ) ) {
-				$where[] = 'translation_status.translation_service = "local"';
+				$where[] = "translation_status.translation_service = 'local'";
 			}
 			$where[] = "( automatic = 0 OR review_status = 'NEEDS_REVIEW' )";
+		}
 
+		if ( $isQueue || ! $isManager ) {
 			$where[] = $this->buildLanguagePairsCriteria();
+		}
 
+		if ( $where ) {
 			$params->set_custom_where_conditions( $where );
 		}
 
 		return $params;
 	}
 
-	/**
-	 * @return string
-	 */
 	private function buildLanguagePairsCriteria() {
 		$translator = Translators::getCurrent();
 
 		$buildWhereForPair = function ( $targets, $source ) {
 			return sprintf(
-				'( translations.source_language_code = "%s" AND translations.language_code IN (%s) )',
+				"( translations.source_language_code = '%s' AND translations.language_code IN (%s) )",
 				$source,
 				wpml_prepare_in( $targets )
 			);
 		};
 
-		return '( ' . \wpml_collect( $translator->language_pairs )
+		$pairs = \wpml_collect( $translator->language_pairs )
 			->map( $buildWhereForPair )
-			->implode( ' OR ' ) . ' ) ';
+			->implode( ' OR ' );
+
+		if ( '' === $pairs ) {
+			return '( 1 = 0 )';
+		}
+
+		return '( ' . $pairs . ' ) ';
 	}
 
 	private function set_sorting( WPML_TM_Jobs_Search_Params $params, WP_REST_Request $request ) {
@@ -180,11 +166,6 @@ class WPML_TM_Rest_Jobs_Criteria_Parser {
 		return $params;
 	}
 
-	/**
-	 * @param array $request_param
-	 *
-	 * @return WPML_TM_Jobs_Sorting_Param[]
-	 */
 	private function build_sorting_params( array $request_param ) {
 		return \wpml_collect( $request_param )->map(
 			function ( $direction, $column ) {

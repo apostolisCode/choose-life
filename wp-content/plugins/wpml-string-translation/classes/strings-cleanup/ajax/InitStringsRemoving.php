@@ -16,14 +16,12 @@ class InitStringsRemoving implements IHandler {
 
 		if ( $domains !== false ) {
 
-			/** @var UntranslatedStrings $untranslatedStrings */
 			$untranslatedStrings = make( UntranslatedStrings::class );
 
-			/** @var AutoRegisterSettings $autoRegsiterSettings */
 			$autoRegsiterSettings = make( AutoRegisterSettings::class );
 
 			if ( $autoRegsiterSettings->isEnabled() ) {
-				$autoRegsiterSettings->setEnabled( false );
+				do_action( 'wpml_st_update_settings', 'setAutoregisterStringsTypeDisabled' );
 			}
 
 			return Either::of( [

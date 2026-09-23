@@ -30,7 +30,7 @@ class Register {
         echo self::getRegistrationForm($model);
 	}
 
-	private static function getRegistrationForm( $model ) {
+	public static function getRegistrationForm( $model ) {
 		$registrationText = sprintf(
 			__( 'Enter the site key, from your %1$s account, to receive automatic updates for %2$s.', 'installer' ),
 			self::removeScheme( $model->productUrl ),
@@ -58,11 +58,6 @@ class Register {
 		return str_replace( [ 'https://', 'http://' ], '', $str );
 	}
 
-	/**
-	 * @param $model
-	 *
-	 * @return string
-	 */
 	private static function getAccountUrl( $model ) {
 		return apply_filters(
 			'otgs_installer_add_site_url',
@@ -71,11 +66,6 @@ class Register {
 		);
 	}
 
-	/**
-	 * @param $model
-	 *
-	 * @return string
-	 */
 	private static function getRegisterLink( $model ) {
 		$buttonText = sprintf( esc_attr( 'register on %s.' ), self::removeScheme( $model->productUrl ) );
 		ob_start();

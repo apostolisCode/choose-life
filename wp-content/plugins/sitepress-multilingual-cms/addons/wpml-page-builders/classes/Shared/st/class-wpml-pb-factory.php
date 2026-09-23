@@ -4,11 +4,9 @@ use function WPML\Container\make;
 
 class WPML_PB_Factory {
 
-	/** @var wpdb */
 	private $wpdb;
-	/** @var SitePress */
 	private $sitepress;
-	private $string_translations = array();
+	private $string_translations = [];
 
 	public function __construct( wpdb $wpdb, SitePress $sitepress ) {
 		$this->wpdb      = $wpdb;
@@ -32,12 +30,6 @@ class WPML_PB_Factory {
 		return new WPML_PB_Shortcodes( $strategy );
 	}
 
-	/**
-	 * @param WPML_PB_Shortcode_Strategy $strategy
-	 * @param bool $migration_mode
-	 *
-	 * @return WPML_PB_Register_Shortcodes
-	 */
 	public function get_register_shortcodes( WPML_PB_Shortcode_Strategy $strategy, $migration_mode = false ) {
 		$string_factory = new WPML_ST_String_Factory( $this->wpdb );
 
@@ -59,14 +51,14 @@ class WPML_PB_Factory {
 	}
 
 	public function get_update_post( $package_data, IWPML_PB_Strategy $strategy ) {
-		return new WPML_PB_Update_Post( $this->wpdb, $this->sitepress, $package_data, $strategy );
+		return new WPML_PB_Update_Post( $this->sitepress, $package_data, $strategy );
 	}
 
-	public function get_shortcode_content_updater( IWPML_PB_Strategy $strategy ) {
+	public function get_shortcode_content_updater( WPML_PB_Shortcode_Strategy $strategy ) {
 		return new WPML_PB_Update_Shortcodes_In_Content( $strategy, new WPML_PB_Shortcode_Encoding() );
 	}
 
-	public function get_api_hooks_content_updater( IWPML_PB_Strategy $strategy ) {
+	public function get_api_hooks_content_updater( WPML_PB_API_Hooks_Strategy $strategy ) {
 		return new WPML_PB_Update_API_Hooks_In_Content( $strategy );
 	}
 
@@ -78,19 +70,20 @@ class WPML_PB_Factory {
 		return new WPML_PB_Handle_Post_Body(
 			new WPML_Page_Builders_Page_Built(
 				new WPML_Config_Built_With_Page_Builders()
-			)
+			),
+			$this->get_element_factory()
 		);
 	}
 
-	/**
-	 * @depecated Use the static methods instead of the instance.
-	 */
 	public function get_last_translation_edit_mode() {
 		return new WPML_PB_Last_Translation_Edit_Mode();
 	}
 
 	public function get_post_element( $post_id ) {
-		$factory = new WPML_Translation_Element_Factory( $this->sitepress );
-		return $factory->create_post( $post_id );
+		return $this->get_element_factory()->create_post( $post_id );
+	}
+
+	private function get_element_factory() {
+		return new WPML_Translation_Element_Factory( $this->sitepress );
 	}
 }

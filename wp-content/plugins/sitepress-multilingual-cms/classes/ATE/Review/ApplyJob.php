@@ -4,11 +4,11 @@ namespace WPML\TM\ATE\Review;
 
 use WPML\Element\API\Post as WPMLPost;
 use WPML\FP\Fns;
+use WPML\FP\Str;
 use WPML\FP\Logic;
 use WPML\FP\Lst;
 use WPML\FP\Maybe;
 use WPML\FP\Obj;
-use WPML\FP\Relation;
 use WPML\LIB\WP\Hooks;
 use WPML\LIB\WP\Post;
 use WPML\Setup\Option;
@@ -18,7 +18,6 @@ use function WPML\FP\spreadArgs;
 
 class ApplyJob implements \IWPML_Backend_Action, \IWPML_REST_Action, \IWPML_AJAX_Action {
 
-	/** @var string[] */
 	private static $excluded_from_review = [ 'st-batch', 'package' ];
 
 	public function add_hooks() {
@@ -37,7 +36,8 @@ class ApplyJob implements \IWPML_Backend_Action, \IWPML_REST_Action, \IWPML_AJAX
 			) {
 				Jobs::setReviewStatus(
 					(int) $job->job_id,
-					ReviewStatus::NEEDS_REVIEW );
+                    ReviewStatus::NEEDS_REVIEW
+                );
 			}
 
 			return $status;
@@ -56,12 +56,14 @@ class ApplyJob implements \IWPML_Backend_Action, \IWPML_REST_Action, \IWPML_AJAX
 			return $job && self::shouldBeReviewed( $job );
 		};
 
-		$isPostNewlyCreated = Fns::converge( Relation::equals(), [
-			Obj::prop( 'post_date' ),
-			Obj::prop( 'post_modified' )
-		] );
+		$isPostNewlyCreated = function ( $post ) {
+			return (bool) get_post_meta(
+				(int) Obj::prop( 'ID', $post ),
+				\WPML_Save_Translation_Data_Action::JUST_CREATED_META,
+				true
+			);
+		};
 
-		/** @var callable $isNotNull */
 		$isNotNull = Logic::isNotNull();
 
 		$setPostStatus = pipe(
@@ -95,16 +97,48 @@ class ApplyJob implements \IWPML_Backend_Action, \IWPML_REST_Action, \IWPML_AJAX
 		     ->then( spreadArgs( $keepDraftPostsDraftIfNeedsReview ) );
 	}
 
-	/**
-	 * @param $job
-	 *
-	 * @return bool
-	 */
 	private static function shouldBeReviewed( $job ) {
-		return ! Lst::includes( $job->element_type_prefix, self::$excluded_from_review )
-		       && $job->automatic
-		       && (int) $job->original_doc_id !== (int) get_option( 'page_for_posts' );
+		if ( ! $job ) {
+			return false;
+		}
+
+		$isAutomatic = Obj::prop( 'automatic', $job );
+		if ( ! $isAutomatic ) {
+			return false;
+		}
+
+		$originalElementId = (int) Obj::prop( 'original_doc_id', $job );
+		$isHomePage        = $originalElementId && $originalElementId == (int) get_option( 'page_for_posts' );
+
+		if ( $isHomePage ) {
+			return false;
+		}
+
+		$excluded = apply_filters(
+			'wpml_tm_skip_element_type_from_review',
+			self::excludeElementTypes( $job ),
+			$job->original_post_type
+		);
+
+		if ( $excluded ) {
+			return false;
+		}
+
+		if ( ! property_exists( $job, 'completed_date' ) || ! $job->completed_date ) {
+			return true;
+		}
+
+		return time() - strtotime( $job->completed_date ) < 60;
+
 	}
 
+	private static function excludeElementTypes( $job ): bool {
+		$elementType =Obj::prop( 'original_post_type', $job );
 
+		if ( Str::startsWith( 'st-batch', $elementType ) || Str::startsWith( 'package', $elementType ) ) {
+			return true;
+		}
+
+		return false;
+	}
 }

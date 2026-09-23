@@ -3,53 +3,66 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages"
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "ko_KR"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "<strong>번역 관리 대시보드</strong>에서 번역할 글을 선택할 수 있습니다."
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            "예, <b>기존</b> 및 <b>향후</b> 콘텐츠를 자동으로 번역합니다"
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            "예, 하지만 <b>향후</b> 콘텐츠만 자동으로 번역합니다"
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            "예, <b>향후</b> 콘텐츠를 자동으로 번역합니다"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "아니오. 이 글 중 일부를 번역하고 싶지만 전부는 아닙니다"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "컨텐츠를 자동 번역하려면 고급 번역 편집기를 사용해야 합니다."
+            "콘텐츠를 자동으로 번역하려면 고급 번역 에디터를 사용해야 합니다."
          ],
          "Synchronize translators and translation managers with ATE": [
-            "ATE에서 번역가와 번역 관리자 동기화"
+            "번역가 및 번역 관리자를 고급 번역 에디터(ATE)와 동기화"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "잠시 후에 다시 시도하십시오. 문제가 지속되면 %sWPML 지원팀%s에 문의하십시오."
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "몇 분 후에 다시 시도해 주세요. 문제가 지속되면 %1$sWPML 지원%2$s팀에 문의하시기 바랍니다."
          ],
-         "Are you OK with paying for this?": [
-            "비용을 지불하시겠습니까?"
+         "Are you sure you want to change the translation option?": [
+            "번역 옵션을 변경하시겠습니까?"
          ],
-         "Cancel": [
-            "취소"
+         "No, go back": [
+            "아니요, 뒤로 가기"
          ],
-         "Make translatable": [
-            "번역 가능하도록 설정"
+         "Yes, continue": [
+            "예, 계속하기"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "저장하면 WPML이 영향을 받는 포스트를 자동으로 번역으로 보냅니다. 이 과정에서 추가 번역 단어가 사용될 수 있습니다."
+         ],
+         "Are you OK with this?": [
+            "이에 동의하십니까?"
          ],
          "Save": [
             "저장"
          ],
-         "Please confirm this translation setting": [
-            "이 번역 설정을 확인하십시오"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "이 변경 사항은 %d개의 포스트에 영향을 미칩니다. 저장하면 WPML이 이 포스트들의 번역 상태를 업데이트합니다. 이 작업은 최대 1분 정도 소요될 수 있습니다."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "사이트는 모든 콘텐츠를 자동으로 번역하도록 설정되어 있습니다. <PostTypesNames />을(를) 번역할 수 있도록 설정하면 WPML에서 %1$d개의 기존 항목을 자동으로 번역합니다.",
-            "사이트는 모든 콘텐츠를 자동으로 번역하도록 설정되어 있습니다. <PostTypesNames />을(를) 번역할 수 있도록 설정하면 WPML에서 %1$d개의 기존 항목을 자동으로 번역합니다."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "이 변경 사항은 %1$d개의 포스트에 영향을 미칩니다. 저장하면 WPML이 이 포스트들의 번역 상태를 업데이트합니다. 이 작업은 최대 %2$d시간 정도 소요될 수 있습니다."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            "사이트는 모든 콘텐츠를 자동으로 번역하도록 설정되어 있습니다. <PostTypesNames />을(를) 번역할 수 있도록 설정하면 WPML에서 모든 향후 콘텐츠를 자동으로 번역합니다."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "이 변경 사항은 %1$d개의 포스트에 영향을 미칩니다. 저장하면 WPML이 이 포스트들의 번역 상태를 업데이트합니다. 이 작업은 최대 %2$d분 정도 소요될 수 있습니다."
+         ],
+         "Calculate Costs": [
+            "비용 계산"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML이 %1$s을(를) %2$s(으)로 자동 번역합니다."
+         ],
+         "Automatic translation uses translation words.": [
+            "자동 번역에는 번역 단어가 사용됩니다."
+         ],
+         "%d term": [
+            "%d개 용어"
+         ],
+         "%d language": [
+            "%d개 언어"
+         ],
+         "%s will be translated.": [
+            "%s이(가) 번역됩니다."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "WPML의 자동 번역 서비스가 이 요청을 수락하지 않았습니다(응답 코드: %d). 잠시 후 다시 시도해 주시고, 문제가 계속 발생하면 WPML 지원팀에 문의하십시오."
          ]
       }
    }

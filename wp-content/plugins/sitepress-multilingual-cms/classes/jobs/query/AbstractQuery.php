@@ -5,25 +5,20 @@ namespace WPML\TM\Jobs\Query;
 use wpdb;
 use WPML_TM_Editors;
 use WPML_TM_Jobs_Search_Params;
+use WPML\Core\Component\Translation\Domain\Query\LatestTranslateJobSql;
 use WPML\TM\ATE\Jobs;
 
 abstract class AbstractQuery implements Query {
-	/** @var wpdb */
 	protected $wpdb;
 
-	/** @var QueryBuilder */
 	protected $query_builder;
 
-	/** @var string */
 	protected $title_column = 'posts.post_title';
 
-	/** @var string */
 	protected $batch_name_column = 'batches.batch_name';
 
-	/**
-	 * @param wpdb         $wpdb
-	 * @param QueryBuilder $query_builder
-	 */
+	protected $batch_join = 'INNER JOIN';
+
 	public function __construct( wpdb $wpdb, QueryBuilder $query_builder ) {
 		$this->wpdb          = $wpdb;
 		$this->query_builder = $query_builder;
@@ -84,13 +79,15 @@ abstract class AbstractQuery implements Query {
 		return $this->build_query( $params, $columns );
 	}
 
+	public function get_exists_query( WPML_TM_Jobs_Search_Params $params ) {
+		$params = clone $params;
+		$params->set_limit( 1 )->set_offset( 0 );
+		$params->set_sorting( array() );
 
-	/**
-	 * @param WPML_TM_Jobs_Search_Params $params
-	 * @param array                      $columns
-	 *
-	 * @return string
-	 */
+		return $this->build_query( $params, array( '1' ) );
+	}
+
+
 	protected function build_query( WPML_TM_Jobs_Search_Params $params, array $columns ) {
 		if ( $this->check_job_type( $params ) ) {
 			return '';
@@ -109,18 +106,10 @@ abstract class AbstractQuery implements Query {
 		return $query_builder->build();
 	}
 
-	/**
-	 * @param WPML_TM_Jobs_Search_Params $params
-	 *
-	 * @return bool
-	 */
 	protected function check_job_type( WPML_TM_Jobs_Search_Params $params ) {
 		return $params->get_job_types() && ! in_array( $this->get_type(), $params->get_job_types(), true );
 	}
 
-	/**
-	 * @return string
-	 */
 	abstract protected function get_type();
 
 	protected function define_joins( QueryBuilder $query_builder ) {
@@ -134,15 +123,7 @@ abstract class AbstractQuery implements Query {
 				ON original_translations.trid = translations.trid AND original_translations.language_code = translations.source_language_code"
 		);
 
-		$subquery = "
-			SELECT *
-            FROM {$this->wpdb->prefix}icl_translate_job as translate_job
-            WHERE job_id = (
-				SELECT MAX(job_id) AS job_id
-				FROM {$this->wpdb->prefix}icl_translate_job as sub_translate_job
-				WHERE sub_translate_job.rid = translate_job.rid
-			)
-		";
+		$subquery = LatestTranslateJobSql::correlatedDerivedTable( $this->wpdb->prefix );
 		$query_builder->add_join( "INNER JOIN ({$subquery}) AS translate_job ON translate_job.rid = translation_status.rid" );
 
 		$this->add_resource_join( $query_builder );
@@ -158,7 +139,7 @@ abstract class AbstractQuery implements Query {
 		);
 
 		$query_builder->add_join(
-			"INNER JOIN {$this->wpdb->prefix}icl_translation_batches batches
+			"{$this->batch_join} {$this->wpdb->prefix}icl_translation_batches batches
 				ON batches.id = translation_status.batch_id"
 		);
 	}
@@ -194,6 +175,7 @@ abstract class AbstractQuery implements Query {
 		$query_builder->set_numeric_value_filter( 'translation_status.rid', $params->get_id() );
 		$query_builder->set_numeric_value_filter( 'translation_status.rid', $params->get_ids() );
 		$query_builder->set_numeric_value_filter( 'translation_status.rid', $params->get_local_job_ids() );
+		$query_builder->set_numeric_value_filter( 'translate_job.job_id', $params->get_translate_job_ids() );
 		$query_builder->set_numeric_value_filter(
 			'original_translations.element_id',
 			$params->get_original_element_id()
@@ -202,8 +184,6 @@ abstract class AbstractQuery implements Query {
 
 		if ( $params->needs_review() ) {
 			$query_builder->set_needs_review();
-		} elseif ( $params->needs_review() === false ) {
-			$query_builder->set_do_not_need_review();
 		}
 
 		if ( $params->should_exclude_manual() ) {
@@ -249,8 +229,7 @@ abstract class AbstractQuery implements Query {
 				if ( $statuses ) {
 					$statuses = wpml_prepare_in( $params->get_status(), '%d' );
 					$statuses = sprintf( 'translation_status.status IN (%s)', $statuses );
-
-					$query_builder->add_AND_where_condition( "( translation_status.needs_update = 1 OR {$statuses} )" );
+					$query_builder->add_AND_where_condition( "( translation_status.needs_update = 1 AND {$statuses} )" );
 				} else {
 					$query_builder->add_AND_where_condition( 'translation_status.needs_update = 1' );
 				}

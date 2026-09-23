@@ -3,6 +3,7 @@
 namespace WPML\TM\Settings;
 
 use WPML\Core\BackgroundTask\Service\BackgroundTaskService;
+use WPML\Infrastructure\WordPress\Component\CustomFieldPreferences\ContainerFreeServices;
 use WPML\FP\Lst;
 use WPML\LIB\WP\Hooks;
 use WPML\WP\OptionManager;
@@ -11,22 +12,29 @@ use function WPML\Container\make;
 class CustomFieldChangeDetector implements \IWPML_Backend_Action, \IWPML_DIC_Action {
 	const PREVIOUS_SETTING = 'previous-custom-fields-to-translate';
 	const DETECTED_SETTING = 'detected-custom-fields-to-translate';
+	const RECHECK_SECONDS  = 86400;
 
-	/** @var BackgroundTaskService */
 	private $backgroundTaskService;
 
-	/**
-	 * @param BackgroundTaskService $backgroundTaskService
-	 */
 	public function __construct( BackgroundTaskService $backgroundTaskService ) {
 		$this->backgroundTaskService = $backgroundTaskService;
 	}
 
 	public function add_hooks() {
 		Hooks::onAction( 'wpml_after_tm_loaded', 1 )
-		     ->then( [ self::class, 'getNew' ] )
-		     ->then( [ self::class, 'notify' ] )
-		     ->then( [ self::class, 'updatePrevious' ] );
+		     ->then( [ self::class, 'detectIfDue' ] );
+	}
+
+	public static function detectIfDue() {
+		$signal = ContainerFreeServices::changeSignal();
+		if ( ! $signal->isCheckDue( self::RECHECK_SECONDS ) ) {
+			return;
+		}
+
+		self::notify( self::getNew() );
+		self::updatePrevious();
+
+		$signal->markChecked();
 	}
 
 	public static function getNew() {
@@ -41,6 +49,8 @@ class CustomFieldChangeDetector implements \IWPML_Backend_Action, \IWPML_DIC_Act
 	}
 
 	public static function notify( array $newFields ) {
+		$newFields = self::withoutConsented( $newFields );
+
 		if ( count( $newFields ) ) {
 			OptionManager::update(
 				'TM',
@@ -48,6 +58,16 @@ class CustomFieldChangeDetector implements \IWPML_Backend_Action, \IWPML_DIC_Act
 				Lst::concat( self::getDetected(), $newFields )
 			);
 		}
+	}
+
+	private static function withoutConsented( array $fields ) {
+		if ( ! count( $fields ) ) {
+			return $fields;
+		}
+
+		$consented = PreferenceReapplyConsent::consume( $fields );
+
+		return $consented ? array_values( array_diff( $fields, $consented ) ) : $fields;
 	}
 
 	public static function remove( array $fields ) {
@@ -69,24 +89,24 @@ class CustomFieldChangeDetector implements \IWPML_Backend_Action, \IWPML_DIC_Act
 	}
 
 	public function processNewFields() {
+		$consented = PreferenceReapplyConsent::consume( self::getDetected() );
+		if ( $consented ) {
+			self::remove( $consented );
+		}
+
 		$newFields = self::getDetected();
 		if ( count( $newFields ) > 0 ) {
 			$newFields = array_unique( $newFields );
 
-			/** @var ProcessNewTranslatableFields $backroundTaskEndpoint */
 			$backroundTaskEndpoint = make( ProcessNewTranslatableFields::class );
 
 			$payload = wpml_collect( [ 'newFields' => $newFields ] );
 
-			if ( $backroundTaskEndpoint->getTotalRecords( $payload ) ) {
-				// We could do some optimization to avoid running again after consecutive changes on same field.
-				// But currently, it's more consistent to enqueue a new task every time, since there may be cases
-				// when the user is running a task affecting some custom field for long time, and wants to update again
-				// and ghet the posts re-processed.
-				$this->backgroundTaskService->add( $backroundTaskEndpoint, $payload );
-			}
+			$task = $this->backgroundTaskService->add( $backroundTaskEndpoint, $payload );
 
-			self::remove( $newFields );
+			if ( $task ) {
+				self::remove( $newFields );
+			}
 		}
 	}
 }

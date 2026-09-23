@@ -10,10 +10,11 @@ class WPML_PB_Config_Import_Shortcode {
 	const PB_MEDIA_SHORTCODE_SETTING = 'wpml_pb_media_shortcode';
 	const PB_IDS_SHORTCODE_SETTING   = 'wpml_pb_ids_shortcode';
 
+	const HAS_SHORTCODE_SETTINGS_FLAG = 'wpml_pb_has_shortcode_settings';
+
 	const TYPE_POST_IDS     = 'post-ids';
 	const TYPE_TAXONOMY_IDS = 'taxonomy-ids';
 
-	/** @var  WPML_ST_Settings $st_settings */
 	private $st_settings;
 
 	public function __construct( WPML_ST_Settings $st_settings ) {
@@ -32,7 +33,6 @@ class WPML_PB_Config_Import_Shortcode {
 		return $config_data;
 	}
 
-	/** @param array $config_data */
 	private function update_shortcodes_config( $config_data ) {
 		$old_shortcode_data = $this->get_settings();
 
@@ -86,10 +86,10 @@ class WPML_PB_Config_Import_Shortcode {
 
 		if ( $shortcode_data != $old_shortcode_data ) {
 			$this->st_settings->update_setting( self::PB_SHORTCODE_SETTING, $shortcode_data, true );
+			update_option( self::HAS_SHORTCODE_SETTINGS_FLAG, empty( $shortcode_data ) ? 0 : 1, true );
 		}
 	}
 
-	/** @param array $config_data */
 	private function update_media_shortcodes_config( $config_data ) {
 		$old_shortcodes_data = $this->get_media_settings();
 		$shortcodes_data     = array();
@@ -139,7 +139,6 @@ class WPML_PB_Config_Import_Shortcode {
 		}
 	}
 
-	/** @param array $config_data */
 	private function update_ids_shortcodes_config( $config_data ) {
 		$old_shortcodes_data = $this->get_id_settings();
 		$shortcodes_data     = [];
@@ -179,21 +178,11 @@ class WPML_PB_Config_Import_Shortcode {
 		}
 	}
 
-	/**
-	 * @param array $attribute
-	 *
-	 * @return bool
-	 */
 	private function is_string_attribute( array $attribute ) {
 		return ! $this->is_id_attribute( $attribute )
 		       && ! $this->is_media_attribute( $attribute );
 	}
 
-	/**
-	 * @param array $attribute
-	 *
-	 * @return bool
-	 */
 	private function is_id_attribute( array $attribute ) {
 		return ConvertIdsHelper::isValidType( Obj::path( [ 'attr', 'type' ], $attribute ) );
 	}
@@ -224,16 +213,16 @@ class WPML_PB_Config_Import_Shortcode {
 		return get_option( self::PB_MEDIA_SHORTCODE_SETTING, array() );
 	}
 
-	/**
-	 * @return array
-	 */
 	public function get_id_settings() {
 		return get_option( self::PB_IDS_SHORTCODE_SETTING, [] );
 	}
 
 	public function has_settings() {
-		$settings = $this->get_settings();
+		$flag = get_option( self::HAS_SHORTCODE_SETTINGS_FLAG, null );
+		if ( null !== $flag ) {
+			return (bool) $flag;
+		}
 
-		return ! empty( $settings );
+		return ! empty( $this->get_settings() );
 	}
 }

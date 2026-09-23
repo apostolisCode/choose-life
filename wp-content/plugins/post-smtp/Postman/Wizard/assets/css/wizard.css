@@ -395,6 +395,20 @@
   padding: 8px 20px 3px 20px;
 }
 
+.ps-wizard-socket-radio img[src*="cloudflare"] {
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+  padding: 8px 0 3px 0;
+}
+
+.ps-wizard-socket-radio img[src*="smtpcom"] {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+  padding: 8px 0 3px 0;
+}
+
 .ps-wizard-socket-tick-container {
   transition: .5s ease;
   opacity: 0;
@@ -535,6 +549,10 @@
   width: 184px;
 }
 
+.ps-blue-btn span{
+    line-height: 1.4 !important;
+}
+
 .button-primary.ps-blue-btn.ps-disabled {
   background: #cccccc;
   border-color: #999999;
@@ -570,7 +588,7 @@
 
 .button-primary.ps-blue-btn .dashicons,
 .button-primary.ps-yellow-btn .dashicons {
-  vertical-align: middle;
+  vertical-align: sub !important;
   font-size: 15px;
 }
 
@@ -965,7 +983,7 @@ span.ps-pro-close-popup {
   border-radius: 0px !important;
   line-height: 40px !important;
   font-size: 15px !important;
-  width: 215px;
+  width: 250px !important;
   display: inline-flex !important;
   align-items: center;
   text-decoration: none;
@@ -989,7 +1007,7 @@ span.ps-pro-close-popup {
   border-radius: 0px !important;
   line-height: 40px !important;
   font-size: 15px !important;
-  width: 184px;
+  width: 204px;
   display: inline-flex !important;
   align-items: center;
   text-decoration: none;
@@ -1221,6 +1239,13 @@ div#ps-pro-code-copy-notification {
   color: #666666;
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+.ps-wizard-footer-right .ps-finish-wizard {
+  width: auto;
+  min-width: 184px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .ps-disable-office365-setup b {

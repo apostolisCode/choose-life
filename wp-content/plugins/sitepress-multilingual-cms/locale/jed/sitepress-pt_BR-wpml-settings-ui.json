@@ -3,53 +3,71 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages"
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n != 1);",
+            "lang": "pt_BR"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "Você pode escolher quais posts traduzir através do <strong>painel do Translation Management</strong>."
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            "Sim, traduzir conteúdo <b>existente</b> e <b>futuro</b> automaticamente"
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            "Sim, mas apenas traduzir conteúdo <b>futuro</b> automaticamente"
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            "Sim, traduzir conteúdo <b>futuro</b> automaticamente"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "Não, quero traduzir alguns desses posts, mas não todos"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "Você deve usar o Advanced Translation Editor se quiser traduzir seu conteúdo automaticamente."
+            "Você deve usar o Editor de tradução avançado se quiser traduzir seu conteúdo automaticamente."
          ],
          "Synchronize translators and translation managers with ATE": [
             "Sincronizar tradutores e gerentes de tradução com o ATE"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "Tente novamente daqui a alguns minutos. Se o problema continuar, entre em contato com %so suporte do WPML%s."
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "Tente novamente em alguns minutos. Se o problema continuar, entre em contato com o %1$ssuporte do WPML%2$s."
          ],
-         "Are you OK with paying for this?": [
-            "Você concorda em pagar por isso?"
+         "Are you sure you want to change the translation option?": [
+            "Tem certeza de que deseja alterar a opção de tradução?"
          ],
-         "Cancel": [
-            "Cancelar"
+         "No, go back": [
+            "Não, voltar"
          ],
-         "Make translatable": [
-            "Tornar traduzível"
+         "Yes, continue": [
+            "Sim, continuar"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "Depois de salvo, o WPML enviará automaticamente os posts afetados para tradução. Isso pode usar palavras de tradução adicionais."
+         ],
+         "Are you OK with this?": [
+            "Tudo bem para você?"
          ],
          "Save": [
             "Salvar"
          ],
-         "Please confirm this translation setting": [
-            "Confirme essa configuração de tradução"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "Essa alteração afeta %d post. Depois de salvo, o WPML atualizará o status de tradução desse post. Isso pode levar até 1 minuto.",
+            "Essa alteração afeta %d posts. Depois de salvo, o WPML atualizará o status de tradução desses posts. Isso pode levar até 1 minuto."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "Seu site está configurado para traduzir todo o conteúdo automaticamente. Ao tornar <PostTypesNames /> traduzível, o WPML traduzirá automaticamente o item existente de %1$d.",
-            "Seu site está configurado para traduzir todo o conteúdo automaticamente. Ao tornar <PostTypesNames /> traduzível, o WPML traduzirá automaticamente os itens existentes de %1$d ."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "Essa alteração afeta %1$d post. Depois de salvo, o WPML atualizará o status de tradução desse post. Isso pode levar até %2$d horas.",
+            "Essa alteração afeta %1$d posts. Depois de salvo, o WPML atualizará o status de tradução desses posts. Isso pode levar até %2$d horas."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            "Seu site está configurado para traduzir todo o conteúdo automaticamente. Ao tornar <PostTypesNames /> traduzível, o WPML traduzirá automaticamente todo o conteúdo futuro."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "Essa alteração afeta %1$d post. Depois de salvo, o WPML atualizará o status de tradução desse post. Isso pode levar até %2$d minutos.",
+            "Essa alteração afeta %1$d posts. Depois de salvo, o WPML atualizará o status de tradução desses posts. Isso pode levar até %2$d minutos."
+         ],
+         "Calculate Costs": [
+            "Calcular custos"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "O WPML traduzirá automaticamente %1$s para %2$s."
+         ],
+         "Automatic translation uses translation words.": [
+            "A tradução automática usa palavras de tradução."
+         ],
+         "%d term": [
+            "%d termo",
+            "%d termos"
+         ],
+         "%d language": [
+            "%d idioma",
+            "%d idiomas"
+         ],
+         "%s will be translated.": [
+            "%s serão traduzidos."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "O serviço de tradução automática do WPML não aceitou esta solicitação (a resposta foi %d). Aguarde um minuto e tente novamente; se continuar acontecendo, entre em contato com o suporte do WPML."
          ]
       }
    }

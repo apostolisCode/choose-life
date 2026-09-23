@@ -8,10 +8,6 @@ class WPML_Frontend_Post_Actions extends WPML_Post_Translation {
 		parent::init ();
 		if ( $this->is_setup_complete() ) {
 
-			/**
-			 * In theory, we could add the 'delete_post` action for all frontend requests
-			 * We'll limit it to REST to avoid any unexpected problems
-			 */
 			Hooks::onAction( 'rest_api_init' )
 			     ->then( function () {
 				     add_action( 'delete_post', [ $this, 'delete_post_actions' ] );
@@ -19,23 +15,51 @@ class WPML_Frontend_Post_Actions extends WPML_Post_Translation {
 		}
 	}
 
-	/**
-	 * @param int    $post_id
-	 * @param string $post_status
-	 *
-	 * @return null|int
-	 */
 	function get_save_post_trid( $post_id, $post_status ) {
+		$trid = $this->get_element_trid( $post_id );
 
-		return $this->get_element_trid( $post_id );
+		if (
+			! $trid
+			&& ! empty( $_GET['wpml_editor'] )
+			&& isset( $_GET['trid'], $_GET['lang'] )
+			&& wpml_is_rest_request()
+		) {
+			global $sitepress;
+			$maybe_trid = (int) $_GET['trid'];
+			$maybe_lang = \WPML\Language\RequestedLanguage::forPrivileged( sanitize_text_field( wp_unslash( $_GET['lang'] ) ) );
+			if (
+				$maybe_trid
+				&& null !== $maybe_lang
+				&& SitePress::get_source_language_by_trid( $maybe_trid )
+				&& $this->current_user_can_join_translation_group(
+					$maybe_trid,
+					'post_' . get_post_type( $post_id ),
+					$maybe_lang
+				)
+			) {
+				$trid = $maybe_trid;
+			}
+		}
+
+		return $trid;
 	}
 
-	/**
-	 * @param int     $pidd
-	 * @param WP_Post $post
-	 *
-	 * @return void
-	 */
+	public function get_save_post_lang( $post_id, $sitepress ) {
+		if (
+			! empty( $_GET['wpml_editor'] )
+			&& isset( $_GET['lang'] )
+			&& wpml_is_rest_request()
+			&& ! $this->get_element_lang_code( $post_id )
+		) {
+			$maybe_lang = \WPML\Language\RequestedLanguage::forPrivileged( sanitize_text_field( wp_unslash( $_GET['lang'] ) ) );
+			if ( null !== $maybe_lang ) {
+				return apply_filters( 'wpml_save_post_lang', $maybe_lang );
+			}
+		}
+
+		return parent::get_save_post_lang( $post_id, $sitepress );
+	}
+
 	public function save_post_actions( $pidd, $post ) {
 		global $sitepress;
 
@@ -45,18 +69,15 @@ class WPML_Frontend_Post_Actions extends WPML_Post_Translation {
 		}
 
 		$http_referer = new WPML_URL_HTTP_Referer( new WPML_Rest( new WP_Http() ) );
-		// exceptions
 		if ( ! $this->has_save_post_action( $post ) || $http_referer->is_rest_request_called_from_post_edit_page() ) {
 			return;
 		}
 		$default_language       = $sitepress->get_default_language();
 		$post_vars              = $this->get_post_vars( $post );
 		$post_id                = isset( $post_vars['post_ID'] ) ? $post_vars['post_ID']
-			: $pidd; //latter case for XML-RPC publishing
+			: $pidd;
 		$language_code          = $this->get_save_post_lang( $post_id, $sitepress );
 		$trid                   = $this->get_save_post_trid( $post_id, $post->post_status );
-		// after getting the right trid set the source language from it by referring to the root translation
-		// of this trid, in case no proper source language has been set yet
 		$source_language = $this->get_save_post_source_lang( $trid, $language_code, $default_language );
 		$this->after_save_post( $trid, $post_vars, $language_code, $source_language );
 	}

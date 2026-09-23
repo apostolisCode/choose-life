@@ -1,11 +1,12 @@
 <wpml-config>
 	<custom-fields>
 		<custom-field action="translate">_yoast_wpseo_title</custom-field>
-		<custom-field action="translate">_yoast_wpseo_bctitle</custom-field>
-		<custom-field action="translate">_yoast_wpseo_metadesc</custom-field>
-		<custom-field action="translate">_yoast_wpseo_metakeywords</custom-field>
-		<custom-field action="translate">_yoast_wpseo_focuskw</custom-field>
-		<custom-field action="translate">_yoast_wpseo_focuskeywords</custom-field>
+		<custom-field action="translate" label="Breadcrumb Title">_yoast_wpseo_bctitle</custom-field>
+		<custom-field action="translate" label="Meta Description">_yoast_wpseo_metadesc</custom-field>
+		<custom-field action="translate" label="Meta Keywords">_yoast_wpseo_metakeywords</custom-field>
+		<custom-field action="translate" label="Focus Keyword">_yoast_wpseo_focuskw</custom-field>
+		<custom-field action="translate" label="Focus Keywords" encoding="json">_yoast_wpseo_focuskeywords</custom-field>
+		<custom-field action="translate" encoding="json">_yoast_wpseo_keyword</custom-field>
 		<custom-field action="copy">_yoast_wpseo_meta-robots-noindex</custom-field>
 		<custom-field action="copy">_yoast_wpseo_meta-robots-nofollow</custom-field>
 		<custom-field action="copy">_yoast_wpseo_meta-robots-adv</custom-field>
@@ -20,6 +21,8 @@
 		<custom-field action="copy-once">_yoast_wpseo_twitter-image</custom-field>
 		<custom-field action="copy">_yoast_wpseo_primary_category</custom-field>
 		<custom-field action="copy">_yoast_wpseo_primary_product_cat</custom-field>
+		<custom-field action="copy">_yoast_wpseo_schema_page_type</custom-field>
+		<custom-field action="copy">_yoast_wpseo_schema_article_type</custom-field>
 	</custom-fields>
 	<custom-fields-texts>
 		<key name="_yoast_wpseo_focuskeywords">
@@ -35,6 +38,8 @@
 			<key name="metadesc-*" />
 			<key name="metakey-*" />
 			<key name="company_name" />
+			<key name="company_alternate_name" />
+			<key name="org-description" />
 			<key name="breadcrumbs-sep" />
 			<key name="breadcrumbs-home" />
 			<key name="breadcrumbs-prefix" />
@@ -55,6 +60,41 @@
 			<key name="og_frontpage_desc" />
 			<key name="og_frontpage_image" />
 		</key>
+		<key name="wpseo_internallinks">
+			<key name="breadcrumbs-sep" />
+			<key name="breadcrumbs-home" />
+			<key name="breadcrumbs-prefix" />
+			<key name="breadcrumbs-archiveprefix" />
+			<key name="breadcrumbs-searchprefix" />
+			<key name="breadcrumbs-404crumb" />
+		</key>
 	</admin-texts>
+	<gutenberg-blocks>
+		<gutenberg-block type="yoast/faq-block" translate="1" label="Yoast Faq Block">
+			<key name="questions">
+				<key name="*">
+					<key name="question" />
+					<key name="answer" />
+					<key name="jsonQuestion" />
+					<key name="jsonAnswer" />
+				</key>
+			</key>
+			<xpath label="Question">//div/strong</xpath>
+			<xpath label="Answer">//div/p</xpath>
+		</gutenberg-block>
+		<gutenberg-block type="yoast/how-to-block" translate="1" label="Yoast How to Block">
+			<key name="jsonDescription" />
+			<key name="steps">
+				<key name="*">
+					<key name="name" />
+					<key name="text" />
+					<key name="jsonName" />
+					<key name="jsonText" />
+				</key>
+			</key>
+			<xpath>//div/p</xpath>
+			<xpath label="Step Title">//div/ol/li/strong</xpath>
+			<xpath label="Step Description">//div/ol/li/p</xpath>
+		</gutenberg-block>
+	</gutenberg-blocks>
 </wpml-config>
-

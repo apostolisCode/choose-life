@@ -6,32 +6,16 @@ use WPML\Collect\Support\Collection;
 
 class View {
 
-	/** @var Collection $logs */
 	private $logs;
 
 	public function __construct( Collection $logs ) {
 		$this->logs = $logs;
 	}
 
-	public function renderSupportSection() {
-		?>
-		<div class="wrap">
-			<h2 id="ate-log">
-				<?php esc_html_e( 'Advanced Translation Editor', 'wpml-translation-management' ); ?>
-			</h2>
-			<p>
-				<a href="<?php echo admin_url( 'admin.php?page=' . Hooks::SUBMENU_HANDLE ); ?>">
-					<?php echo sprintf( esc_html__( 'Error Logs (%d)', 'wpml-translation-management' ), $this->logs->count() ); ?>
-				</a>
-			</p>
-		</div>
-		<?php
-	}
-
 	public function renderPage() {
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Advanced Translation Editor Error Logs', 'wpml-translation-management' ); ?></h1>
+			<h1><?php esc_html_e( 'Advanced Translation Editor Error Logs', 'sitepress' ); ?></h1>
 			<br>
 			<table class="wp-list-table widefat fixed striped posts">
 				<thead><?php $this->renderTableHeader(); ?></thead>
@@ -55,22 +39,22 @@ class View {
 		?>
 		<tr>
 			<th class="date">
-				<span><?php esc_html_e( 'Date', 'wpml-translation-management' ); ?></span>
+				<span><?php /* translators: Column heading in a table: the date something happened. */ esc_html_e( 'Date', 'sitepress' ); ?></span>
 			</th>
 			<th class="event">
-				<span><?php esc_html_e( 'Event', 'wpml-translation-management' ); ?></span>
+				<span><?php /* translators: Column heading in the log of automatic translation: what happened. */ esc_html_e( 'Event', 'sitepress' ); ?></span>
 			</th>
 			<th class="description">
-				<span><?php esc_html_e( 'Description', 'wpml-translation-management' ); ?></span>
+				<span><?php /* translators: Column heading and field label for the longer text that describes something. */ esc_html_e( 'Description', 'sitepress' ); ?></span>
 			</th>
 			<th class="wpml-job-id">
-				<span><?php esc_html_e( 'WPML Job ID', 'wpml-translation-management' ); ?></span>
+				<span><?php esc_html_e( 'WPML Job ID', 'sitepress' ); ?></span>
 			</th>
 			<th class="ate-job-id">
-				<span><?php esc_html_e( 'ATE Job ID', 'wpml-translation-management' ); ?></span>
+				<span><?php esc_html_e( 'ATE Job ID', 'sitepress' ); ?></span>
 			</th>
 			<th class="extra-data">
-				<span><?php esc_html_e( 'Extra data', 'wpml-translation-management' ); ?></span>
+				<span><?php /* translators: Column heading in the log of automatic translation, above the further details of an event. */ esc_html_e( 'Extra data', 'sitepress' ); ?></span>
 			</th>
 		</tr>
 		<?php
@@ -105,7 +89,7 @@ class View {
 		?>
 		<tr>
 			<td colspan="6" class="title column-title has-row-actions column-primary">
-				<?php esc_html_e( 'No entries', 'wpml-translation-management' ); ?>
+				<?php /* translators: Shown in place of a table when the log holds nothing. */ esc_html_e( 'No entries', 'sitepress' ); ?>
 			</td>
 		</tr>
 		<?php

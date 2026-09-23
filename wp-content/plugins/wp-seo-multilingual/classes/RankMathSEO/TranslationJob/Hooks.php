@@ -1,0 +1,25 @@
+<?php
+
+namespace WPML\WPSEO\RankMathSEO\TranslationJob;
+
+use WPML\WPSEO\Shared\TranslationJob\BaseHooks;
+
+class Hooks extends BaseHooks {
+
+	const OPTION_PREFIX = 'rank-math-';
+
+	protected function getFieldPrefix() {
+		return 'field-rank_math_';
+	}
+
+	protected function getTopLevelGroup() {
+		return [ self::OPTION_PREFIX => 'Rank Math SEO' ];
+	}
+
+	protected function getKeyPurposeMap() {
+		return [
+			'rank_math_title'       => self::PURPOSE_SEO_TITLE,
+			'rank_math_description' => self::PURPOSE_SEO_META_DESC,
+		];
+	}
+}

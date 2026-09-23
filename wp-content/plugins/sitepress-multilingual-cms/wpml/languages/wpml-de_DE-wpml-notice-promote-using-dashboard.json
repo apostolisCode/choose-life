@@ -1,0 +1,33 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n != 1);",
+            "lang": "de_DE"
+         },
+         "Dissmiss Notice": [
+            "Hinweis verwerfen"
+         ],
+         "Streamline your site's translation using WPML's <b>Translation Dashboard</b>": [
+            "Optimiere die Übersetzung deiner Website mit dem <b>Übersetzungs-Dashboard</b> von WPML"
+         ],
+         "Translate pages, posts, products and strings from one place": [
+            "Übersetze Seiten, Beiträge, Produkte und Strings an einem zentralen Ort"
+         ],
+         "Bulk automatic translation": [
+            "Automatische Massenübersetzung"
+         ],
+         "Translate everything automatically": [
+            "Alles automatisch übersetzen"
+         ],
+         "Go to the <b>Translation Dashboard</b>": [
+            "Gehe zum <b>Übersetzungs-Dashboard</b>"
+         ],
+         "Learn More": [
+            "Mehr erfahren"
+         ]
+      }
+   }
+}

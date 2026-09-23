@@ -3,53 +3,91 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages"
+            "domain": "messages",
+            "plural_forms": "nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);",
+            "lang": "ar"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "يمكنك اختيار المقالات التي ترغب في ترجمتها من خلال <strong>لوحة أدوات إدارة الترجمة</strong>."
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            "نعم، ترجم المحتوى <b>الحالي</b> و<b>المستقبلي</b> آليًا"
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            "نعم، ولكن قم فقط بترجمة المحتوى <b>المستقبلي</b> آليًا"
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            "نعم، ترجم المحتوى <b>المستقبلي</b> آليًا"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "لا، أرغب في ترجمة بعض هذه المقالات، وليس جميعها"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "يجب عليك استخدام محرر الترجمة المتقدم إذا كنت ترغب في ترجمة محتواك آليًا."
+            "يجب عليك استخدام محرر الترجمة المتقدم إذا كنت ترغب في ترجمة محتواك تلقائيًا."
          ],
          "Synchronize translators and translation managers with ATE": [
-            "مزامنة المترجمين ومديري الترجمة مع محرر الترجمة المتقدم"
+            "مزامنة المترجمين ومديري الترجمة مع ATE"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "يُرجى إعادة المحاولة بعد عدة دقائق. إذا استمرت المشكلة، يُرجى التواصل مع %sدعم WPML%s."
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "يرجى المحاولة مرة أخرى بعد بضع دقائق. إذا استمرت المشكلة، يرجى الاتصال بـ %1$sدعم WPML%2$s."
          ],
-         "Are you OK with paying for this?": [
-            "هل أنت موافق على الدفع للحصول على هذا؟"
+         "Are you sure you want to change the translation option?": [
+            "هل أنت متأكد أنك تريد تغيير خيار الترجمة؟"
          ],
-         "Cancel": [
-            "إلغاء"
+         "No, go back": [
+            "لا، العودة"
          ],
-         "Make translatable": [
-            "جعله قابلًا للترجمة"
+         "Yes, continue": [
+            "نعم، متابعة"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "بمجرد الحفظ، سيقوم WPML تلقائيًا بإرسال المقالات المتأثرة للترجمة. قد يستهلك هذا كلمات ترجمة إضافية."
+         ],
+         "Are you OK with this?": [
+            "هل أنت موافق على هذا؟"
          ],
          "Save": [
             "حفظ"
          ],
-         "Please confirm this translation setting": [
-            "يُرجى تأكيد إعداد الترجمة هذا"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "يؤثر هذا التغيير على %d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى دقيقة واحدة.",
+            "يؤثر هذا التغيير على مقالة %d واحدة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالة. قد يستغرق هذا ما يصل إلى دقيقة واحدة.",
+            "يؤثر هذا التغيير على %d مقالتين. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهاتين المقالتين. قد يستغرق هذا ما يصل إلى دقيقة واحدة.",
+            "يؤثر هذا التغيير على %d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى دقيقة واحدة.",
+            "يؤثر هذا التغيير على %d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى دقيقة واحدة.",
+            "يؤثر هذا التغيير على %d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى دقيقة واحدة."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "تم تعيين موقعك إلى ترجمة كل المحتوى آليًا. عندما تجعل <PostTypesNames /> قابلًا للترجمة، سيقوم WPML بترجمة عنصر %1$d الحالي آليًا.",
-            "تم تعيين موقعك إلى ترجمة كل المحتوى آليًا. عندما تجعل <PostTypesNames /> قابلًا للترجمة، سيقوم WPML بترجمة عناصر %1$d الحالية آليًا."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d ساعة.",
+            "يؤثر هذا التغيير على مقالة %1$d واحدة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالة. قد يستغرق هذا ما يصل إلى %2$d ساعة.",
+            "يؤثر هذا التغيير على %1$d مقالتين. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهاتين المقالتين. قد يستغرق هذا ما يصل إلى %2$d ساعة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d ساعة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d ساعة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d ساعة."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            "تم تعيين موقعك إلى ترجمة كل المحتوى آليًا. عندما تجعل <PostTypesNames /> قابلًا للترجمة، سيقوم WPML بترجمة كل المحتوى المستقبلي."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d دقيقة.",
+            "يؤثر هذا التغيير على مقالة %1$d واحدة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالة. قد يستغرق هذا ما يصل إلى %2$d دقيقة.",
+            "يؤثر هذا التغيير على %1$d مقالتين. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهاتين المقالتين. قد يستغرق هذا ما يصل إلى %2$d دقيقة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d دقيقة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d دقيقة.",
+            "يؤثر هذا التغيير على %1$d مقالة. بمجرد الحفظ، سيقوم WPML بتحديث حالة الترجمة لهذه المقالات. قد يستغرق هذا ما يصل إلى %2$d دقيقة."
+         ],
+         "Calculate Costs": [
+            "حساب التكاليف"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "سيقوم WPML تلقائيًا بترجمة %1$s إلى %2$s."
+         ],
+         "Automatic translation uses translation words.": [
+            "تستخدم الترجمة التلقائية كلمات الترجمة."
+         ],
+         "%d term": [
+            "%d مصطلح",
+            "مصطلح %d واحد",
+            "%d مصطلحان",
+            "%d مصطلحات",
+            "%d مصطلحًا",
+            "%d مصطلح"
+         ],
+         "%d language": [
+            "%d لغة",
+            "لغة %d واحدة",
+            "%d لغتان",
+            "%d لغات",
+            "%d لغة",
+            "%d لغة"
+         ],
+         "%s will be translated.": [
+            "سيتم ترجمة %s."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "لم تقبل خدمة الترجمة التلقائية من WPML هذا الطلب (كان الرد %d). انتظر دقيقة ثم حاول مرة أخرى، واتصل بدعم WPML إذا استمر حدوث ذلك."
          ]
       }
    }

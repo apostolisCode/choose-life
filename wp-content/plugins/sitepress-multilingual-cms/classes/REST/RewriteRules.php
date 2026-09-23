@@ -3,12 +3,8 @@
 namespace WPML\Core\REST;
 
 class RewriteRules implements \IWPML_REST_Action, \IWPML_DIC_Action {
-	/** @var \SitePress */
 	private $sitepress;
 
-	/**
-	 * @param \SitePress $sitepress
-	 */
 	public function __construct( \SitePress $sitepress ) {
 		$this->sitepress = $sitepress;
 	}
@@ -29,12 +25,15 @@ class RewriteRules implements \IWPML_REST_Action, \IWPML_DIC_Action {
 		}
 
 		$subdirectory = $this->getSubdirectory();
+		$restPrefix   = $this->getRestUrlPrefix();
 
-		$mapKeys = function ( $value, $key ) use ( $subdirectory ) {
-			if ( $key === '^wp-json/?$' ) {
-				$key = "^($subdirectory/)?wp-json/?$";
-			} elseif ( $key === '^wp-json/(.*)?' ) {
-				$key   = "^($subdirectory/)?wp-json/(.*)?";
+		$quotedPrefix = preg_quote( $restPrefix, '#' );
+
+		$mapKeys = function ( $value, $key ) use ( $subdirectory, $restPrefix, $quotedPrefix ) {
+			if ( $key === '^' . $restPrefix . '/?$' ) {
+				$key = "^($subdirectory/)?$quotedPrefix/?$";
+			} elseif ( $key === '^' . $restPrefix . '/(.*)?' ) {
+				$key   = "^($subdirectory/)?$quotedPrefix/(.*)?";
 				$value = str_replace( 'matches[1]', 'matches[2]', $value );
 			}
 
@@ -44,32 +43,27 @@ class RewriteRules implements \IWPML_REST_Action, \IWPML_DIC_Action {
 		return \wpml_collect( $rewriteRules )->mapWithKeys( $mapKeys )->toArray();
 	}
 
-	/**
-	 * @return bool
-	 */
+	private function getRestUrlPrefix() {
+		$prefix = function_exists( 'rest_get_url_prefix' ) ? (string) rest_get_url_prefix() : '';
+		$prefix = trim( $prefix, '/' );
+
+		return '' === $prefix ? 'wp-json' : $prefix;
+	}
+
 	private function isLangInDirectory() {
 		return (int) $this->sitepress->get_setting( 'language_negotiation_type' ) === WPML_LANGUAGE_NEGOTIATION_TYPE_DIRECTORY;
 	}
 
-	/**
-	 * @return bool
-	 */
 	private function isUseDirectoryForDefaultLanguage() {
 		$urlSettings = $this->sitepress->get_setting( 'urls' );
 
 		return isset( $urlSettings['directory_for_default_language'] ) && $urlSettings['directory_for_default_language'];
 	}
 
-	/**
-	 * @return bool
-	 */
 	private function isInstalledInSubdirectory() {
 		return ! empty( $this->getSubdirectory() );
 	}
 
-	/**
-	 * @return string
-	 */
 	private function getSubdirectory() {
 		$url       = get_option( 'home' );
 		$home_path = trim( (string) parse_url( $url, PHP_URL_PATH ), '/' );

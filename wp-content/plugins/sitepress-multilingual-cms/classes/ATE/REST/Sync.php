@@ -9,18 +9,19 @@ use WPML\FP\Logic;
 use WPML\FP\Lst;
 use WPML\FP\Obj;
 use WPML\FP\Relation;
+use WPML\TM\API\Jobs;
+use WPML\TM\ATE\API\ClientRestrictionState;
+use WPML\TM\ATE\API\SpendCapState;
 use WPML\TM\ATE\Sync\Arguments;
 use WPML\TM\ATE\Sync\Process;
 use WPML\TM\ATE\Sync\Result;
 use WPML\TM\ATE\SyncLock;
 use WPML\TM\REST\Base;
 use WPML_TM_ATE_AMS_Endpoints;
+use WPML_TM_ATE_Job;
 use function WPML\Container\make;
 
 class Sync extends Base {
-	/**
-	 * @return array
-	 */
 	public function get_routes() {
 		return [
 			[
@@ -39,11 +40,6 @@ class Sync extends Base {
 		];
 	}
 
-	/**
-	 * @param WP_REST_Request $request
-	 *
-	 * @return array
-	 */
 	public function get_allowed_capabilities( WP_REST_Request $request ) {
 		return [
 			'manage_options',
@@ -52,12 +48,6 @@ class Sync extends Base {
 		];
 	}
 
-	/**
-	 * @param WP_REST_Request $request
-	 *
-	 * @return array
-	 * @throws \Auryn\InjectionException
-	 */
 	public function sync( WP_REST_Request $request ) {
 		$args                    = new Arguments();
 		$args->ateToken          = $request->get_param( 'ateToken' );
@@ -68,79 +58,57 @@ class Sync extends Base {
 		$lock    = make( SyncLock::class );
 		$lockKey = $lock->create( $request->get_param( 'lockKey' ) );
 		if ( $lockKey ) {
-			/** @var Result $result */
 			$result          = make( Process::class )->run( $args );
 			$result->lockKey = $lockKey;
 
-			$jobsFromDB = Fns::filter(
-				Logic::complement( $this->findSyncedJob( $result->jobs ) ),
-				$this->getJobStatuses( $request->get_param( 'jobIds' ), $request->get_param( 'returnUrl' ) )
-			);
-
-			/** @phpstan-ignore-next-line */
-			$result = $this->createResultWithJobs( Lst::concat( $result->jobs, $jobsFromDB ), $result );
+			$this->fallback_to_unstuck_completed_jobs( $result->jobs );
 		} else {
-			$result = $this->createResultWithJobs( $this->getJobStatuses( $request->get_param( 'jobIds' ), $request->get_param( 'returnUrl' ) ) );
+			$result = new Result();
+		}
+
+		$restriction = ClientRestrictionState::get();
+		if ( $restriction ) {
+			$result->clientRestriction = $restriction->toArray();
+		}
+
+		$spendCap = SpendCapState::get();
+		if ( $spendCap ) {
+			$result->spendCap = $spendCap->toArray();
+		}
+
+		if ( is_array( $result->jobs ) && $result->jobs ) {
+			$resolver     = \WPML\TM\Jobs\Authorization\AuthorizedJobResolver::make();
+			$context      = \WPML\Core\Security\ExecutionContext\ExecutionContextHolder::current();
+			$result->jobs = array_values( array_filter(
+				$result->jobs,
+				function ( $job ) use ( $resolver, $context ) {
+					return (bool) $resolver->byLocalId( $context, (int) Obj::prop( 'jobId', $job ) );
+				}
+			) );
 		}
 
 		return (array) $result;
 	}
 
-	/**
-	 * @return array
-	 */
-	private function getJobStatuses( $wpmlJobIds, $returnUrl ) {
-		if ( ! $wpmlJobIds ) {
-			return [];
+	private function fallback_to_unstuck_completed_jobs( &$jobs ) {
+		if ( ! is_array( $jobs ) ) {
+			return;
 		}
 
-		global $wpdb;
+		foreach ( $jobs as $job ) {
+			if (
+				! is_object( $job )
+				|| ! property_exists( $job, 'jobId' )
+				|| ! property_exists( $job, 'ateStatus' )
+				|| ! property_exists( $job, 'status' )
+			) {
+				continue;
+			}
 
-		$ids = wpml_prepare_in( $wpmlJobIds, '%d' );
-		$sql = "
-			SELECT jobs.job_id as jobId, statuses.status as status, jobs.editor_job_id as ateJobId, jobs.automatic FROM {$wpdb->prefix}icl_translate_job as jobs
-		    INNER JOIN {$wpdb->prefix}icl_translation_status as statuses ON statuses.rid = jobs.rid
-			WHERE jobs.job_id IN ( {$ids} ) AND 1 = %d
-	    "; // I need additional AND condition to utilize prepare function  which is required to make writing unit tests easier. It's not perfect but saves a lot of time now
-
-		$result = $wpdb->get_results( $wpdb->prepare( $sql , 1) );
-		if ( ! is_array( $result ) ) {
-			return [];
+			if ( WPML_TM_ATE_Job::ATE_JOB_DELIVERED === $job->ateStatus ) {
+				$job->status = ICL_TM_COMPLETE;
+				Jobs::setStatus( $job->jobId, ICL_TM_COMPLETE );
+			}
 		}
-
-		$jobs = Fns::map( Obj::evolve( [
-			'jobId'     => Cast::toInt(),
-			'status' => Cast::toInt(),
-			'ateJobId'      => Cast::toInt(),
-		] ), $result );
-
-		list( $completed, $notCompleted ) = \wpml_collect( $jobs )->partition( Relation::propEq( 'status', ICL_TM_COMPLETE ) );
-
-		if ( count( $completed ) ) {
-			$completed = Download::getJobs( $completed, $returnUrl )->map( function ( $job ) {
-				return (array) $job;
-			} );
-		}
-
-		return $completed->merge( $notCompleted )->all();
-	}
-
-	private function findSyncedJob( $jobsFromATE ) {
-		return function ( $jobFromDb ) use ( $jobsFromATE ) {
-			return Lst::find( Relation::propEq( 'jobId', Obj::prop( 'jobId', $jobFromDb ) ), $jobsFromATE );
-		};
-	}
-
-	/**
-	 * @param array $jobs
-	 * @param Result|null $template
-	 *
-	 * @return Result
-	 */
-	private function createResultWithJobs( array $jobs, Result $template = null ) {
-		$result       = $template ? clone $template : new Result();
-		$result->jobs = $jobs;
-
-		return $result;
 	}
 }

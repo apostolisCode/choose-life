@@ -1,0 +1,342 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n != 1);",
+            "lang": "sv_SE"
+         },
+         "Error in updating since dates for types.": [
+            "Fel vid uppdatering av datum för typer."
+         ],
+         "Error in fetching untranslated types count": [
+            "Fel vid hämtning av antal oöversatta typer"
+         ],
+         "Error in updating since date for type.": [
+            "Fel vid uppdatering av datum för typ."
+         ],
+         "Content to translate": [
+            "Innehåll att översätta"
+         ],
+         "Content to Translate": [
+            "Innehåll att översätta"
+         ],
+         "Content type": [
+            "Innehållstyp"
+         ],
+         "Include": [
+            "Inkludera"
+         ],
+         "These settings can be changed on the Translations dashboard.": [
+            "Dessa inställningar kan ändras i översättningspanelen."
+         ],
+         "Items": [
+            "Objekt"
+         ],
+         "Word count": [
+            "Antal ord"
+         ],
+         "Loading content to translate": [
+            "Laddar innehåll att översätta"
+         ],
+         "Words to translate": [
+            "Ord att översätta"
+         ],
+         "Calculating… <s>less than 1 minute left.</s>": [
+            "Beräknar… <s>mindre än 1 minut kvar.</s>"
+         ],
+         "Calculating… <s>%d minute left.</s>": [
+            "Beräknar… <s>%d minut kvar.</s>",
+            "Beräknar… <s>%d minuter kvar.</s>"
+         ],
+         "Words needed to translate your existing content into the new languages: %s.": [
+            "Ord som behövs för att översätta ditt befintliga innehåll till de nya språken: %s."
+         ],
+         "Words needed to translate your existing content into the new language.": [
+            "Ord som behövs för att översätta ditt befintliga innehåll till det nya språket."
+         ],
+         "Based on the remaining untranslated content across all languages.": [
+            "Baserat på återstående oöversatt innehåll på alla språk."
+         ],
+         "Estimated from the selected source volume multiplied by the target languages.": [
+            "Uppskattat från den valda källvolymen multiplicerat med målspråken."
+         ],
+         "%1$s source words × %2$s language": [
+            "%1$s källord × %2$s språk",
+            "%1$s källord × %2$s språk"
+         ],
+         "Already translated content": [
+            "Redan översatt innehåll"
+         ],
+         "Words required:": [
+            "Ord som krävs:"
+         ],
+         "Words": [
+            "Ord"
+         ],
+         "Documents you translated yourself stay exactly as you made them": [
+            "Dokument som du har översatt själv förblir exakt som du skapade dem"
+         ],
+         "(%d document)": [
+            "(%d dokument)",
+            "(%d dokument)"
+         ],
+         "View documents": [
+            "Visa dokument"
+         ],
+         "%1$d of %2$d language will be translated automatically": [
+            "%1$d av %2$d språk kommer att översättas automatiskt",
+            "%1$d av %2$d språk kommer att översättas automatiskt"
+         ],
+         "Translated to %d language": [
+            "Översatt till %d språk",
+            "Översatt till %d språk"
+         ],
+         "Add/remove languages": [
+            "Lägg till/ta bort språk"
+         ],
+         "Percentages show how much of your selected content is already translated in each language.": [
+            "Procentandelen visar hur mycket av ditt valda innehåll som redan är översatt på varje språk."
+         ],
+         "Note: Content already translated into all languages is not included in this calculation.": [
+            "Obs! Innehåll som redan är översatt till alla språk ingår inte i denna beräkning."
+         ],
+         "Same as default": [
+            "Samma som standard"
+         ],
+         "Automatic translation isn't available between %1$s and %2$s because they're recognized as the same language.": [
+            "Automatisk översättning är inte tillgänglig mellan %1$s och %2$s eftersom de identifieras som samma språk."
+         ],
+         "Manual only": [
+            "Endast manuellt"
+         ],
+         "%s has no automatic-translation support. You can translate this content manually.": [
+            "%s har inget stöd för automatisk översättning. Du kan översätta detta innehåll manuellt."
+         ],
+         "Adjusted word rate (%s)": [
+            "Justerad ordtaxa (%s)"
+         ],
+         "This adjusted word rate applies to legacy translation engines.": [
+            "Denna justerade ordtaxa gäller för äldre översättningsmotorer."
+         ],
+         "Translation engine: <strong>%s</strong>": [
+            "Översättningsmotor: <strong>%s</strong>"
+         ],
+         "Legacy engine": [
+            "Äldre motor"
+         ],
+         "Legacy pricing applied. %s is a legacy translation engine, not recommended for new sites and will be deprecated. Existing sites keep an adjusted word rate for it.": [
+            "Prissättning för äldre motor tillämpas. %s är en äldre översättningsmotor som inte rekommenderas för nya webbplatser och kommer att fasas ut. Befintliga webbplatser behåller en justerad ordtaxa för den."
+         ],
+         "Switch to PTC": [
+            "Byt till PTC"
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Future updates are charged only for the words you add or change.": [
+            "Detta är vad som krävs för att översätta ditt nuvarande innehåll idag. Det inkluderar inte vissa texter som lagts till av andra tillägg, såsom formulär eller sliders, vilka räknas efter att installationen är klar. Webbplatssträngar från ditt tema och dina tillägg räknas också efter installationen och lägger vanligtvis till flera hundra ord. Framtida uppdateringar debiteras endast för de ord du lägger till eller ändrar."
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Pay once per page — edited words are charged again when you change a page.": [
+            "Detta är vad som krävs för att översätta ditt nuvarande innehåll idag. Det inkluderar inte vissa texter som lagts till av andra tillägg, såsom formulär eller sliders, vilka räknas efter att installationen är klar. Webbplatssträngar från ditt tema och dina tillägg räknas också efter installationen och lägger vanligtvis till flera hundra ord. Betala en gång per sida — ändrade ord debiteras igen när du gör ändringar på en sida."
+         ],
+         "This is what translating your current content needs today. Future updates are charged only for the words you add or change.": [
+            "Detta är vad som krävs för att översätta ditt nuvarande innehåll idag. Framtida uppdateringar debiteras endast för de ord du lägger till eller ändrar."
+         ],
+         "This is what translating your current content needs today. Pay once per page — edited words are charged again when you change a page.": [
+            "Detta är vad som krävs för att översätta ditt nuvarande innehåll idag. Betala en gång per sida – redigerade ord debiteras igen när du ändrar en sida."
+         ],
+         "Total items": [
+            "Totalt antal objekt"
+         ],
+         "Total source words": [
+            "Totalt antal källord"
+         ],
+         "Previous": [
+            "Föregående"
+         ],
+         "Next": [
+            "Nästa"
+         ],
+         "Showing %1$d–%2$d of %3$d types.": [
+            "Visar %1$d–%2$d av %3$d typer."
+         ],
+         "All current %1$s are translated to all languages.<br>New %2$s or edits will be automatically translated.": [
+            "Alla nuvarande %1$s är översatta till alla språk.<br>Nya %2$s eller redigeringar kommer att översättas automatiskt."
+         ],
+         "All %s": [
+            "Alla %s"
+         ],
+         "For translated types": [
+            "För översatta typer"
+         ],
+         "None": [
+            "Ingen"
+         ],
+         "Since %s": [
+            "Sedan %s"
+         ],
+         "Since specific date": [
+            "Sedan specifikt datum"
+         ],
+         "<b>Pay-As-You-Go</b> activated": [
+            "<b>Pay-As-You-Go</b> aktiverat"
+         ],
+         "Prepaid words assigned": [
+            "Förbetalda ord tilldelade"
+         ],
+         "Your site will be translated right after the setup.": [
+            "Din webbplats kommer att översättas direkt efter konfigurationen."
+         ],
+         "You have %1$s prepaid words — %2$s more are needed.": [
+            "Du har %1$s förbetalda ord – %2$s till behövs."
+         ],
+         "%s words are needed to translate your site.": [
+            "%s ord behövs för att översätta din webbplats."
+         ],
+         "To start <b>Translate Everything Automatically</b>, activate <b>Pay-As-You-Go</b> or assign prepaid words.": [
+            "För att starta <b>Översätt allt automatiskt</b>, aktivera <b>Pay-As-You-Go</b> eller tilldela förbetalda ord."
+         ],
+         "Translation started": [
+            "Översättning påbörjad"
+         ],
+         "Your content is being sent for automatic translation. Follow its progress on the Translations page.": [
+            "Ditt innehåll skickas för automatisk översättning. Följ förloppet på sidan Översättningar."
+         ],
+         "Close": [
+            "Stäng"
+         ],
+         "Preparing…": [
+            "Förbereder…"
+         ],
+         "Go to Translations": [
+            "Gå till översättningar"
+         ],
+         "Adjust content limits for <b>Translate Everything</b>": [
+            "Justera innehållsgränser för <b>Översätt allt</b>"
+         ],
+         "Review the cost and adjust how far back automatic translation applies per content type.": [
+            "Granska kostnaden och justera hur långt tillbaka automatisk översättning ska gälla per innehållstyp."
+         ],
+         "This amount will cover translating your existing content into the new language.": [
+            "Detta belopp kommer att täcka översättning av ditt befintliga innehåll till det nya språket.",
+            "Detta belopp kommer att täcka översättning av ditt befintliga innehåll till de nya språken."
+         ],
+         "Choose how to pay for the translation": [
+            "Välj hur du vill betala för översättningen"
+         ],
+         "WPML could not calculate the word count. You can add the language without a cost estimate.": [
+            "WPML kunde inte beräkna antalet ord. Du kan lägga till språket utan en kostnadsuppskattning."
+         ],
+         "Cancel": [
+            "Avbryt"
+         ],
+         "Save changes": [
+            "Spara ändringar"
+         ],
+         "You can adjust the content limits once Translate Everything finishes the current translation run.": [
+            "Du kan justera innehållsgränserna när Översätt allt är klar med den nuvarande översättningskörningen."
+         ],
+         "%1$sCheck pricing%2$s.": [
+            "%1$sKontrollera prissättning%2$s."
+         ],
+         "Lowest cost per word": [
+            "Lägsta kostnad per ord"
+         ],
+         "Pay only for what you use": [
+            "Betala endast för det du använder"
+         ],
+         "Never run out. Translation never stops.": [
+            "Ta aldrig slut. Översättningen stannar aldrig."
+         ],
+         "The first 500 words each month are free": [
+            "De första 500 orden varje månad är gratis"
+         ],
+         "Pay-As-You-Go": [
+            "Pay-As-You-Go"
+         ],
+         "Activate <b>Pay-As-You-Go</b> to translate automatically. You are billed for the words you use.": [
+            "Aktivera <b>Pay-As-You-Go</b> för att översätta automatiskt. Du faktureras för de ord du använder."
+         ],
+         "Activate <b>Pay-As-You-Go</b>": [
+            "Aktivera <b>pay-as-you-go</b>"
+         ],
+         "Already using <b>Pay-As-You-Go</b> on another site?": [
+            "Använder du redan <b>Pay-As-You-Go</b> på en annan webbplats?"
+         ],
+         "Connect this site to it": [
+            "Anslut denna webbplats till den"
+         ],
+         "Connect your sites to share translation memory, glossary and word quota.": [
+            "Anslut dina webbplatser för att dela översättningsminne, ordlista och ordkvot."
+         ],
+         "Learn more": [
+            "Läs mer"
+         ],
+         "Copy your migration code:": [
+            "Kopiera din migreringskod:"
+         ],
+         "Loading…": [
+            "Laddar…"
+         ],
+         "Copied!": [
+            "Kopierad!"
+         ],
+         "Log into a site with an active automatic translation account.": [
+            "Logga in på en webbplats med ett aktivt konto för automatisk översättning."
+         ],
+         "Go to \"WPML\" → \"Translation Dashboard\".": [
+            "Gå till ”WPML” → ”Översättningspanel”."
+         ],
+         "In the \"Payment & Maintenance\" tab, go to \"Connected sites\".": [
+            "I fliken ”Payment & Maintenance”, gå till ”Connected sites”."
+         ],
+         "Click \"Enter the connection key of another site\" to finish connecting your sites.": [
+            "Klicka på ”Enter the connection key of another site” för att slutföra anslutningen av dina webbplatser."
+         ],
+         "Refresh to assign words": [
+            "Uppdatera för att tilldela ord"
+         ],
+         "Assign words": [
+            "Tilldela ord"
+         ],
+         "Buy and assign words": [
+            "Köp och tilldela ord"
+         ],
+         "Buy a %1$sprepaid package%2$s with at least %3$s%4$s words%5$s and assign them to this site.": [
+            "Köp ett %1$sförbetalt paket%2$s med minst %3$s%4$s ord%5$s och tilldela dem till denna webbplats."
+         ],
+         "This amount will cover translation of all your current content.": [
+            "Detta belopp kommer att täcka översättning av allt ditt nuvarande innehåll."
+         ],
+         "Assign at least %1$s%2$s words%3$s to this site to continue.": [
+            "Tilldela minst %1$s%2$s ord%3$s till denna webbplats för att fortsätta."
+         ],
+         "Assign words from your WPML account and buy an additional %1$sprepaid package%2$s with at least %3$s%4$s words%5$s to cover the remaining amount.": [
+            "Tilldela ord från ditt WPML-konto och köp ett ytterligare %1$sförbetalt paket%2$s med minst %3$s%4$s ord%5$s för att täcka det återstående beloppet."
+         ],
+         "Prepaid words": [
+            "Förbetalda ord"
+         ],
+         "There are %1$s%2$s available on your WPML account.%3$s": [
+            "Det finns %1$s%2$s tillgängliga på ditt WPML-konto.%3$s"
+         ],
+         "(Only the WPML account owner can do this.)": [
+            "(Endast ägaren av WPML-kontot kan göra detta.)"
+         ],
+         "Checking for new words...": [
+            "Letar efter nya ord..."
+         ],
+         "Still not enough words. Refresh again in %d seconds.": [
+            "Fortfarande inte tillräckligt med ord. Uppdatera igen om %d sekunder."
+         ],
+         "Already assigned?": [
+            "Redan tilldelat?"
+         ],
+         "Refresh": [
+            "Uppdatera"
+         ],
+         "Close modal": [
+            "Stäng modal"
+         ]
+      }
+   }
+}

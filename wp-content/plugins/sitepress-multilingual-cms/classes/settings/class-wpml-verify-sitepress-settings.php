@@ -1,26 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bruce
- * Date: 5/10/17
- * Time: 10:23 PM
- */
 
 class WPML_Verify_SitePress_Settings {
 
-	/** @var WPML_WP_API $wp_api */
 	private $wp_api;
 
 	public function __construct( WPML_WP_API $wp_api ) {
 		$this->wp_api = $wp_api;
 	}
 
-	/**
-	 * @param array $settings
-	 *
-	 * @return array
-	 */
 	public function verify( $settings ) {
+		$is_fresh_install = ! isset( $settings['sync_delete'] )
+			&& ! isset( $settings['sync_delete_tax'] )
+			&& ! isset( $settings[ \WPML\ContentDeletion\Settings::KEY ] );
+
 		$default_settings = [
 			'interview_translators'              => 1,
 			'existing_content_language_verified' => 0,
@@ -35,7 +27,7 @@ class WPML_Verify_SitePress_Settings {
 			'sync_password'                      => 1,
 			'sync_private_flag'                  => 1,
 			'sync_post_format'                   => 1,
-			'sync_delete'                        => 0,
+			'sync_delete'                        => 1,
 			'sync_delete_tax'                    => 0,
 			'sync_post_taxonomies'               => 1,
 			'sync_post_date'                     => 1,
@@ -59,7 +51,6 @@ class WPML_Verify_SitePress_Settings {
 				'head_langs_priority'         => 1,
 			],
 			'posts_slug_translation'             => [
-				/** @deprected key `on`, use option `wpml_base_slug_translation` instead */
 				'on' => 1,
 			],
 			'languages_order'                    => [],
@@ -82,7 +73,6 @@ class WPML_Verify_SitePress_Settings {
 			'tm_block_retranslating_terms'       => 1,
 		];
 
-		// configured for three levels
 		$update_settings = false;
 		foreach ( $default_settings as $key => $value ) {
 			if ( is_array( $value ) ) {
@@ -109,8 +99,38 @@ class WPML_Verify_SitePress_Settings {
 			}
 		}
 
+		if ( $is_fresh_install ) {
+			$settings[ \WPML\ContentDeletion\Settings::KEY ] = self::seedContentDeletion();
+			$settings['sync_delete']                         = 0;
+			$settings['sync_delete_tax']                     = 0;
+			$update_settings                                 = true;
+		}
+
 		return [ $settings, $update_settings ];
 
+	}
+
+	private static function seedContentDeletion() {
+		$keys = [
+			\WPML\ContentDeletion\Settings::postKey( 'post' ),
+			\WPML\ContentDeletion\Settings::postKey( 'page' ),
+			\WPML\ContentDeletion\Settings::postKey( 'attachment' ),
+			\WPML\ContentDeletion\Settings::termKey( 'category' ),
+			\WPML\ContentDeletion\Settings::termKey( 'post_tag' ),
+			\WPML\ContentDeletion\Settings::termKey( 'nav_menu' ),
+		];
+
+		$originals    = [];
+		$translations = [];
+		foreach ( $keys as $key ) {
+			$originals[ $key ]    = \WPML\ContentDeletion\Settings::ASK;
+			$translations[ $key ] = \WPML\ContentDeletion\Settings::ONLY;
+		}
+
+		return [
+			\WPML\ContentDeletion\Settings::ORIGINALS    => $originals,
+			\WPML\ContentDeletion\Settings::TRANSLATIONS => $translations,
+		];
 	}
 
 

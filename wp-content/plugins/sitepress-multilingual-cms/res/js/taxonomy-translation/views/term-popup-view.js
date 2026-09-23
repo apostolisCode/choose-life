@@ -18,9 +18,24 @@
 		initialize: function () {
 			var self = this;
 			self.listenTo(self.model, 'translationSaved', self.close);
-			self.listenTo(self.model, 'saveFailed', self.render);
+			self.listenTo(self.model, 'saveFailed', self.onSaveFailed);
 			self.dialog = null;
 			return self;
+		},
+
+		/**
+		 * A failed save must keep what the user typed (wpmldev-7728): the model
+		 * only holds the new values after a successful save, so re-rendering
+		 * here would rebuild the fields from stale model data and discard the
+		 * typed input. Restore interactivity without re-rendering instead.
+		 */
+		onSaveFailed: function () {
+			var self = this;
+			self.$el.find('.spinner').hide();
+			self.$el.find('.term-save').prop('disabled', false);
+			self.$el.find('.cancel').prop('disabled', false);
+			self.delegateEvents();
+			self.updateUI();
 		},
 
 		render: function () {
@@ -145,6 +160,13 @@
                     	if( true === response.success ) {
                             term_slug.val( response.data.slug );
                         }
+                        term_slug.prop('disabled', false);
+                        term_slug.css('background', '');
+                    },
+                    error: function() {
+                        // Re-enable the field (empty, editable) so a failed
+                        // suggestion request does not leave the slug input
+                        // disabled until the popup is reopened (wpmldev-7585).
                         term_slug.prop('disabled', false);
                         term_slug.css('background', '');
                     }

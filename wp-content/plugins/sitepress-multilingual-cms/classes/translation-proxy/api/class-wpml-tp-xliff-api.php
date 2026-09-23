@@ -1,7 +1,6 @@
 <?php
 
 class WPML_TP_XLIFF_API extends WPML_TP_API {
-	/** @var WPML_TP_Xliff_Parser */
 	private $xliff_parser;
 
 	public function __construct(
@@ -14,15 +13,9 @@ class WPML_TP_XLIFF_API extends WPML_TP_API {
 		$this->xliff_parser = $xliff_parser;
 	}
 
-	/**
-	 * @param int  $tp_job_id
-	 * @param bool $parse
-	 *
-	 * @return WPML_TP_Translation_Collection|string
-	 * @throws WPML_TP_API_Exception
-	 */
 	public function get_remote_translations( $tp_job_id, $parse = true ) {
 		$request = new WPML_TP_API_Request( '/jobs/{job_id}/xliff.json' );
+		$request->set_timeout( \WPML\TM\TranslationProxy\SendTuning::receiveCallTimeoutSeconds() );
 		$request->set_params(
 			array(
 				'job_id'    => $tp_job_id,
@@ -32,8 +25,18 @@ class WPML_TP_XLIFF_API extends WPML_TP_API {
 
 		$result = $this->client->send_request( $request );
 		if ( empty( $result ) || false === strpos( $result, 'xliff' ) ) {
+			\WPML\TM\Jobs\JobLog::addError( 'tp_xliff_fetch_failed', array( 'tp_job_id' => $tp_job_id ) );
+
 			throw new WPML_TP_API_Exception( 'XLIFF file could not be fetched for tp_job: ' . $tp_job_id, $request );
 		}
+
+		\WPML\TM\Jobs\JobLog::add(
+			'tp_xliff_downloaded',
+			array(
+				'tp_job_id' => $tp_job_id,
+				'bytes'     => strlen( $result ),
+			)
+		);
 
 		$result = apply_filters( 'wpml_tm_data_from_pro_translation', $result );
 		if ( ! $parse ) {
@@ -42,6 +45,8 @@ class WPML_TP_XLIFF_API extends WPML_TP_API {
 
 		$xliff = @simplexml_load_string( $result );
 		if ( ! $xliff ) {
+			\WPML\TM\Jobs\JobLog::addError( 'tp_xliff_parse_failed', array( 'tp_job_id' => $tp_job_id ) );
+
 			throw new WPML_TP_API_Exception( 'XLIFF file could not be parsed.' );
 		}
 

@@ -12,11 +12,6 @@ class Hooks implements \IWPML_Frontend_Action {
 		add_filter( 'rank_math/frontend/breadcrumb/is_using_shop_base', [ $this, 'filterIsUsingShopBase' ] );
 	}
 
-	/**
-	 * @param bool $isUsingShopBase
-	 *
-	 * @return bool
-	 */
 	public function filterIsUsingShopBase( $isUsingShopBase ) {
 		if ( $isUsingShopBase ) {
 			return $isUsingShopBase;

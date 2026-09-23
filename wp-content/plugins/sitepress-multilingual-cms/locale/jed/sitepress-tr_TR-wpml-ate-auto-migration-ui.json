@@ -1,0 +1,186 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "tr_TR"
+         },
+         "WPML detected that the alias domain feature was incorrectly configured and has been automatically reset. The alias domain feature is designed only for cases where two domains point to the same WordPress installation. See the details below for the current state of your site.": [
+            "WPML, takma ad alanı özelliğinin yanlış yapılandırıldığını tespit etti ve bu özellik otomatik olarak sıfırlandı. Takma ad alanı özelliği, yalnızca iki alan adının aynı WordPress kurulumuna yönlendirildiği durumlar için tasarlanmıştır. Sitenizin mevcut durumuyla ilgili ayrıntıları aşağıda görebilirsiniz."
+         ],
+         "Connect this site to the original?": [
+            "Bu site orijinal siteye bağlansın mı?"
+         ],
+         "If you connect, this site will re-attach to ": [
+            "Bağlanırsanız bu site şuraya yeniden bağlanacaktır: "
+         ],
+         ". Specifically:": [
+            ". Özellikle:"
+         ],
+         "share billing and translation words": [
+            "fatura bilgilerini ve çeviri kelimelerini paylaşacak"
+         ],
+         " with the original site again. This site won’t need its own subscription or PAYG plan.": [
+            " orijinal siteyle tekrar paylaşacaktır. Bu sitenin kendi aboneliğine veya Kullandıkça Öde planına ihtiyacı olmayacaktır."
+         ],
+         "It will ": [
+            "Şunu yapacak: "
+         ],
+         "regain access to the shared translation memory": [
+            "paylaşılan çeviri belleğine yeniden erişim sağlayacak"
+         ],
+         ". New translations created on either site become reusable on the other.": [
+            ". Her iki sitede de oluşturulan yeni çeviriler diğeri üzerinde tekrar kullanılabilir hale gelir."
+         ],
+         "The original site at ": [
+            "Şu adresteki orijinal site: "
+         ],
+         " is not affected.": [
+            " bu durumdan etkilenmez."
+         ],
+         "Do you want to connect this site?": [
+            "Bu siteyi bağlamak istiyor musunuz?"
+         ],
+         "No, keep independent": [
+            "Hayır, bağımsız kalsın"
+         ],
+         "Connecting…": [
+            "Bağlanıyor…"
+         ],
+         "Yes, connect": [
+            "Evet, bağla"
+         ],
+         "Site disconnected": [
+            "Sitenin bağlantısı kesildi"
+         ],
+         "Site copy connected": [
+            "Site kopyası bağlandı"
+         ],
+         "Register this site": [
+            "Bu siteyi kaydet"
+         ],
+         "Register this site copy": [
+            "Bu site kopyasını kaydet"
+         ],
+         "This site is now running from a new URL.": [
+            "Bu site artık yeni bir URL üzerinden çalışıyor."
+         ],
+         "This site is now ": [
+            "Bu site artık "
+         ],
+         "independent": [
+            "bağımsız"
+         ],
+         ". It no longer shares billing, translation words, or translation memory with ": [
+            ". Artık fatura bilgilerini, çeviri kelimelerini veya çeviri belleğini şununla paylaşmıyor: "
+         ],
+         ". The original site is unaffected.": [
+            ". Orijinal site bu durumdan etkilenmez."
+         ],
+         "This site is connected to your original at ": [
+            "Bu site, şu adresteki orijinal sitenize bağlıdır: "
+         ],
+         ". It shares the same ": [
+            ". Şunları paylaşır: "
+         ],
+         "billing, translation words, and translation memory": [
+            "fatura bilgileri, çeviri kelimeleri ve çeviri belleği"
+         ],
+         " — nothing changes there.": [
+            " — burada hiçbir şey değişmez."
+         ],
+         "Disconnect this site": [
+            "Bu sitenin bağlantısını kes"
+         ],
+         "Disconnect failed. Please try again later.": [
+            "Bağlantı kesilemedi. Lütfen daha sonra tekrar deneyin."
+         ],
+         "Disconnect this site from the original?": [
+            "Bu sitenin orijinal siteyle bağlantısı kesilsin mi?"
+         ],
+         "If you disconnect, this site will become independent from ": [
+            "Bağlantıyı keserseniz bu site şundan bağımsız hale gelecektir: "
+         ],
+         "stop sharing billing and translation words": [
+            "fatura bilgilerini ve çeviri kelimelerini paylaşmayı durduracak"
+         ],
+         " with the original site. This site will need its own subscription or PAYG plan to use automatic translation.": [
+            " orijinal siteyle paylaşmayı durduracaktır. Bu sitenin otomatik çeviriyi kullanabilmesi için kendi aboneliğine veya Kullandıkça Öde planına ihtiyacı olacaktır."
+         ],
+         "no longer access the shared translation memory": [
+            "paylaşılan çeviri belleğine artık erişemeyecek"
+         ],
+         ". Existing translations stay on each site, but new translations won’t be shared.": [
+            ". Mevcut çeviriler her sitede kalır ancak yeni çeviriler paylaşılmaz."
+         ],
+         "Do you want to disconnect this site?": [
+            "Bu sitenin bağlantısını kesmek istiyor musunuz?"
+         ],
+         "No, keep connected": [
+            "Hayır, bağlı kalsın"
+         ],
+         "Disconnecting…": [
+            "Bağlantı kesiliyor…"
+         ],
+         "Yes, disconnect": [
+            "Evet, bağlantıyı kes"
+         ],
+         "Dismiss this notice": [
+            "Bu bildirimi kapat"
+         ],
+         "This site is independent": [
+            "Bu site bağımsızdır"
+         ],
+         "connected": [
+            "bağlı"
+         ],
+         " to ": [
+            " şuna: "
+         ],
+         ". It shares the same billing, translation words, and translation memory as the original site.": [
+            ". Orijinal siteyle aynı fatura bilgilerini, çeviri kelimelerini ve çeviri belleğini paylaşır."
+         ],
+         "This site is independent of ": [
+            "Bu site şundan bağımsızdır: "
+         ],
+         ". It does not share billing, translation words, or translation memory with the original site.": [
+            ". Orijinal siteyle fatura bilgilerini, çeviri kelimelerini veya çeviri belleğini paylaşmaz."
+         ],
+         "Connect this site to the original": [
+            "Bu siteyi orijinaline bağla"
+         ],
+         "Connect failed. Please try again later.": [
+            "Bağlantı kurulamadı. Lütfen daha sonra tekrar deneyin."
+         ],
+         "Because this site lives at a new URL, please register a new site key to keep using WPML features like automatic translation and plugin updates. Your existing content and translations are safe.": [
+            "Bu site yeni bir URL'de bulunduğu için otomatik çeviri ve eklenti güncellemeleri gibi WPML özelliklerini kullanmaya devam etmek için lütfen yeni bir site anahtarı kaydedin. Mevcut içeriğiniz ve çevirileriniz güvendedir."
+         ],
+         "Tip:": [
+            "İpucu:"
+         ],
+         "production and development sites have separate site key quotas, so getting a key for this copy won’t reduce what’s available for your production site.": [
+            "üretim ve geliştirme sitelerinin ayrı site anahtarı kotaları vardır, bu nedenle bu kopya için bir anahtar almak üretim siteniz için mevcut olan kotayı azaltmaz."
+         ],
+         "Get a key for this site": [
+            "Bu site için bir anahtar al"
+         ],
+         "Site key:": [
+            "Site anahtarı:"
+         ],
+         "Enter your site key here": [
+            "Site anahtarınızı buraya girin"
+         ],
+         "Registering...": [
+            "Kaydediliyor..."
+         ],
+         "Register": [
+            "Kaydet"
+         ],
+         "Registration failed. Please try again.": [
+            "Kayıt başarısız oldu. Lütfen tekrar deneyin."
+         ]
+      }
+   }
+}

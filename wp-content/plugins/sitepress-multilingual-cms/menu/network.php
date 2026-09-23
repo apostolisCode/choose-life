@@ -49,9 +49,9 @@ $text = isset( $text ) ? $text : '';
 	<form action="" method="get" id="ms-search">
 		<p class="search-box">
 			<label class="screen-reader-text" for="icl_ss"><?php echo esc_html( $text ); ?>:</label>
-			<input type="hidden" name="page" value="<?php echo esc_attr( $_GET['page'] ); ?>"/>
+			<input type="hidden" name="page" value="<?php echo esc_attr( \WPML\SuperGlobals\Request::page() ); ?>"/>
 			<input type="text" id="icl_ss" name="s" value="<?php _admin_search_query(); ?>"/>
-			<?php submit_button( __( 'Search', 'sitepress' ), 'button', '', false, array( 'id' => 'search-submit' ) ); ?>
+			<?php submit_button( /* translators: Button label above a list, and the text inside the search field, for looking something up. Verb, imperative. */ __( 'Search', 'sitepress' ), 'button', '', false, array( 'id' => 'search-submit' ) ); ?>
 
 		</p>
 	</form>
@@ -73,15 +73,15 @@ $text = isset( $text ) ? $text : '';
         <table class="wp-list-table widefat">
             <thead>
             <tr>
-                <th><?php esc_html_e( 'Site', 'sitepress' ); ?></th>
-                <th><?php esc_html_e( 'Status', 'sitepress' ); ?></th>
+                <th><?php /* translators: Column heading in the table of sites of the network: one site of the network. */ esc_html_e( 'Site', 'sitepress' ); ?></th>
+                <th><?php /* translators: Column heading in tables of the WPML admin, above the cells that say how far something has got. Noun, singular. */ esc_html_e( 'Status', 'sitepress' ); ?></th>
                 <th>&nbsp;</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th><?php esc_html_e( 'Site', 'sitepress' ); ?></th>
-                <th><?php esc_html_e( 'Status', 'sitepress' ); ?></th>
+                <th><?php /* translators: Column heading in the table of sites of the network: one site of the network. */ esc_html_e( 'Site', 'sitepress' ); ?></th>
+                <th><?php /* translators: Column heading in tables of the WPML admin, above the cells that say how far something has got. Noun, singular. */ esc_html_e( 'Status', 'sitepress' ); ?></th>
                 <th>&nbsp;</th>
             </tr>
             </tfoot>
@@ -112,7 +112,6 @@ $text = isset( $text ) ? $text : '';
 				}
 
 				$blog_state = '';
-				/** @phpstan-ignore-next-line WP doc issue in above get_blog_status. */
 				if ( ! empty( $blog_states ) ) {
 					$state_count = count( $blog_states );
 					$i           = 0;
@@ -137,7 +136,6 @@ $text = isset( $text ) ? $text : '';
 						<a href="<?php echo esc_url( network_admin_url( 'site-info.php?id=' . $blog['blog_id'] ) ); ?>"
 						   class="edit"><?php echo esc_html( $blog_name ) . $blog_state; ?></a>
 						<?php
-						// Preordered.
 						$actions = array(
 							'edit'       => '',
 							'backend'    => '',
@@ -151,8 +149,11 @@ $text = isset( $text ) ? $text : '';
 							'visit'      => '',
 						);
 
+						/* translators: Link text that opens something for changing: a date, a language or a translation. Verb, imperative. */
 						$actions['edit']    = '<span class="edit"><a href="' . esc_url( network_admin_url( 'site-info.php?id=' . $blog['blog_id'] ) ) . '">' . esc_html__( 'Edit', 'sitepress' ) . '</a></span>';
+						/* translators: Link in the table of sites of the network that opens the admin of that site. */
 						$actions['backend'] = "<span class='backend'><a href='" . esc_url( get_admin_url( $blog['blog_id'] ) ) . "' class='edit'>" . esc_html__( 'Dashboard', 'sitepress' ) . '</a></span>';
+						/* translators: Link in the table of sites of the network that opens the site itself. Verb, imperative. */
 						$actions['visit']   = "<span class='view'><a href='" . esc_url( get_home_url( $blog['blog_id'] ) ) . "' rel='permalink'>" . esc_html__( 'Visit', 'sitepress' ) . '</a></span>';
 
 						$actions = apply_filters( 'manage_sites_action_links', array_filter( $actions ), $blog['blog_id'], $blog_name );
@@ -162,18 +163,18 @@ $text = isset( $text ) ? $text : '';
                     <td>
 						<?php switch_to_blog( $blog['blog_id'] ); ?>
 						<?php if ( get_option( '_wpml_inactive', false ) ) : ?>
-							<?php esc_html_e( 'Inactive', 'sitepress' ); ?>
+							<?php /* translators: Value in the table of sites of the network: WPML is not turned on for this site. Adjective. */ esc_html_e( 'Inactive', 'sitepress' ); ?>
                             <div class="row-actions">
-                                <a href="<?php echo esc_url( wp_nonce_url( network_admin_url( 'sites.php?action=activatewpml&amp;id=' . (int) $blog['blog_id'] ), 'activatewpml' ) ); ?>"><?php esc_html_e( 'Activate', 'sitepress' ); ?></a>
+                                <a href="<?php echo esc_url( wp_nonce_url( network_admin_url( 'sites.php?action=activatewpml&amp;id=' . (int) $blog['blog_id'] ), 'activatewpml' ) ); ?>"><?php /* translators: Link text that opens the plugins screen so an add-on can be turned on. Verb, imperative. */ esc_html_e( 'Activate', 'sitepress' ); ?></a>
                             </div>
 						<?php else : ?>
-							<?php esc_html_e( 'Active', 'sitepress' ); ?>
+							<?php /* translators: Value in a table saying that the thing the row is about is turned on and in use. Adjective. */ esc_html_e( 'Active', 'sitepress' ); ?>
 							<div class="row-actions">
 								<?php
 								global $current_blog;
 								if ( $blog['blog_id'] != $current_blog->blog_id ) {
 									?>
-									<a href="<?php echo esc_url( wp_nonce_url( network_admin_url( 'sites.php?action=deactivatewpml&amp;id=' . (int) $blog['blog_id'] ), 'deactivatewpml' ) ); ?>"><?php esc_html_e( 'Deactivate', 'sitepress' ); ?></a>
+									<a href="<?php echo esc_url( wp_nonce_url( network_admin_url( 'sites.php?action=deactivatewpml&amp;id=' . (int) $blog['blog_id'] ), 'deactivatewpml' ) ); ?>"><?php /* translators: Button label on the translation services screen: stop using this translation service. Verb, imperative. */ esc_html_e( 'Deactivate', 'sitepress' ); ?></a>
 									<?php
 								}
 								?>
@@ -185,10 +186,12 @@ $text = isset( $text ) ? $text : '';
 						   data-link="<?php echo esc_url( wp_nonce_url( network_admin_url( 'sites.php?action=resetwpml&amp;id=' . (int) $blog['blog_id'] ), 'resetwpml' ) ); ?>"
 						   data-msg="
 						   <?php
+						   /* translators: Question asked before WPML's data is erased for one site of the network. %s: the name of that site. */
 						   echo sprintf( esc_html__( 'You are about to reset WPML for this site: %s.', 'sitepress' ), esc_html( $blog_name ) ) .
+						        /* translators: Warning shown before WPML's data is erased. "They" are the translations that would be lost. */
 						        ' ' . esc_html__( "All translation data will be lost if you reset WPML's data. They cannot be recovered later.", 'sitepress' )
 						   ?>
-						   "><?php esc_html_e( 'Reset', 'sitepress' ); ?></a></td>
+						   "><?php /* translators: Heading of the section that erases WPML's data on the Troubleshooting screen, and the text of the link that opens it. It names the action, so use the form your language uses for such a control. */ esc_html_e( 'Reset', 'sitepress' ); ?></a></td>
                 </tr>
 			<?php endforeach; ?>
             </tbody>

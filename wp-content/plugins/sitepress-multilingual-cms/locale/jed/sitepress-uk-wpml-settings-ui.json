@@ -4,43 +4,75 @@
       "messages": {
          "": {
             "domain": "messages",
-            "lang": "en"
+            "plural_forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "uk"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "Публікації на переклад можна вибрати в <strong>Консолі керування перекладами</ strong>."
-         ],
-         "Yes, translate all of these posts automatically": [
-            "Так, перекласти всі ці публікації автоматично"
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "Ні, я хочу перекласти тільки окремі, а не всі публікації"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "Якщо ви хочете перекладати свій вміст автоматично, слід використовувати Розширений редактор перекладів."
+            "Ви повинні використовувати Розширений редактор перекладів, якщо хочете перекладати свій контент автоматично."
          ],
          "Synchronize translators and translation managers with ATE": [
-            "Синхронізувати перекладачів і менеджерів перекладацьких проектів за допомогою РРП"
+            "Синхронізувати перекладачів і менеджерів перекладів з ATE"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "Повторіть спробу за кілька хвилин. У разі, якщо проблема виникне знову, зверніться в %sслужбу підтримки WPML%s."
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "Будь ласка, спробуйте ще раз через кілька хвилин. Якщо проблема не зникне, зверніться до %1$sпідтримки WPML%2$s."
+         ],
+         "Are you sure you want to change the translation option?": [
+            "Ви впевнені, що хочете змінити параметр перекладу?"
+         ],
+         "No, go back": [
+            "Ні, повернутися"
+         ],
+         "Yes, continue": [
+            "Так, продовжити"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "Після збереження WPML автоматично надішле відповідні дописи на переклад. Це може потребувати додаткових слів для перекладу."
+         ],
+         "Are you OK with this?": [
+            "Ви згодні з цим?"
          ],
          "Save": [
             "Зберегти"
          ],
-         "Please confirm this translation setting": [
-            "Підтвердіть налаштування перекладу"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "Ця зміна стосується %d допису. Після збереження WPML оновить статус перекладу цього допису. Це може зайняти до 1 хвилини.",
+            "Ця зміна стосується %d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до 1 хвилини.",
+            "Ця зміна стосується %d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до 1 хвилини."
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the <NumberOfItems /> existing items.": [
-            "Ваш веб-сайт налаштовано на автоматичний переклад усього вмісту. Під час підготовки <PostTypesNames /> до перекладу WPML автоматично перекладе <NumberOfItems /> наявних елементів."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "Ця зміна стосується %1$d допису. Після збереження WPML оновить статус перекладу цього допису. Це може зайняти до %2$d годин.",
+            "Ця зміна стосується %1$d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до %2$d годин.",
+            "Ця зміна стосується %1$d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до %2$d годин."
          ],
-         "Are you OK with paying for this?": [
-            "Ви згодні заплатити за це?"
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "Ця зміна стосується %1$d допису. Після збереження WPML оновить статус перекладу цього допису. Це може зайняти до %2$d хвилин.",
+            "Ця зміна стосується %1$d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до %2$d хвилин.",
+            "Ця зміна стосується %1$d дописів. Після збереження WPML оновить статус перекладу цих дописів. Це може зайняти до %2$d хвилин."
          ],
-         "Cancel": [
-            "Скасувати"
+         "Calculate Costs": [
+            "Розрахувати вартість"
          ],
-         "Make translatable": [
-            "Підготувати до перекладу"
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML автоматично перекладе %1$s на %2$s."
+         ],
+         "Automatic translation uses translation words.": [
+            "Автоматичний переклад використовує слова для перекладу."
+         ],
+         "%d term": [
+            "%d термін",
+            "%d терміни",
+            "%d термінів"
+         ],
+         "%d language": [
+            "%d мова",
+            "%d мови",
+            "%d мов"
+         ],
+         "%s will be translated.": [
+            "%s буде перекладено."
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "Сервіс автоматичного перекладу WPML не прийняв цей запит (відповідь: %d). Зачекайте хвилину і спробуйте ще раз. Якщо проблема не зникне, зверніться до служби підтримки WPML."
          ]
       }
    }

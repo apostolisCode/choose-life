@@ -1,0 +1,57 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "tr_TR"
+         },
+         "Clean up the <b>String Translation</b> table by removing untranslated strings by domain.": [
+            "Dizgileri alan adına göre kaldırarak <b>Dizgi Çevirisi</b> tablosunu temizleyin."
+         ],
+         "Remove strings by domain": [
+            "Dizgileri alan adına göre kaldır"
+         ],
+         "Remove strings": [
+            "Dizgileri kaldır"
+         ],
+         "Cancel": [
+            "İptal"
+         ],
+         "Remove": [
+            "Kaldır"
+         ],
+         "The <b>String Translation</b> table currently contains strings from the domains listed below. If you do not plan to translate strings from a particular domain, select it below to remove its untranslated strings from the <b>String Translation</b> table. Any strings that already have translations will still be available.": [
+            "<b>Dizgi Çevirisi</b> tablosu şu anda aşağıda listelenen alan adlarından dizgiler içermektedir. Belirli bir alan adındaki dizgileri çevirmeyi planlamıyorsanız, çevrilmemiş dizgilerini <b>Dizgi Çevirisi</b> tablosundan kaldırmak için aşağıdan seçin. Halihazırda çevirisi olan dizgiler kullanılabilir olmaya devam edecektir."
+         ],
+         "Search": [
+            "Ara"
+         ],
+         "Removing strings from <b>String Translation</b> table": [
+            "Dizgiler <b>Dizgi Çevirisi</b> tablosundan kaldırılıyor"
+         ],
+         "To add strings back to the <b>String Translation</b> table, you may need to rescan translation files or register strings as translatable.": [
+            "Dizgileri <b>Dizgi Çevirisi</b> tablosuna geri eklemek için çeviri dosyalarını yeniden taramanız veya dizgileri çevrilebilir olarak kaydetmeniz gerekebilir."
+         ],
+         "Read more about <a>scanning your site for strings and registering them as translatable</a>.": [
+            "<a>Sitenizi dizgiler için tarama ve bunları çevrilebilir olarak kaydetme</a> hakkında daha fazla bilgi edinin."
+         ],
+         "Successfully removed strings": [
+            "Dizgiler başarıyla kaldırıldı"
+         ],
+         "OK, Great": [
+            "Tamam, harika"
+         ],
+         "Domain": [
+            "Alan Adı"
+         ],
+         "Strings count": [
+            "Dizgi sayısı"
+         ],
+         "Translated strings": [
+            "Çevrilmiş dizgiler"
+         ]
+      }
+   }
+}

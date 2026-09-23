@@ -23,9 +23,6 @@ class OTGS_Installer_Logger_Storage {
 		$this->log_factory = $log_factory;
 	}
 
-	/**
-	 * @return array|OTGS_Installer_Log[]
-	 */
 	public function get() {
 		if ( ! $this->log_entries ) {
 			$this->log_entries = get_option( self::OPTION_KEY );
@@ -35,20 +32,15 @@ class OTGS_Installer_Logger_Storage {
 	}
 
 	public function add( OTGS_Installer_Log $log ) {
-		$log->set_time( date( 'Y-d-m h:m:s' ) );
+		$log->set_time( current_time( 'mysql' ) );
 		$log_entries = $this->get();
 		array_unshift( $log_entries, $log );
 		$log_entries = array_slice( $log_entries, 0, $this->max_size );
 		$log_entries_arr = $this->convert_to_array( $log_entries );
-		update_option( self::OPTION_KEY, $log_entries_arr );
+		update_option( self::OPTION_KEY, $log_entries_arr, false );
 		$this->log_entries = $log_entries_arr;
 	}
 
-	/**
-	 * @param array $log_entries
-	 *
-	 * @return array
-	 */
 	private function convert_to_object( $log_entries ) {
 		$log_converted = array();
 
@@ -65,11 +57,6 @@ class OTGS_Installer_Logger_Storage {
 		return $log_converted;
 	}
 
-	/**
-	 * @param OTGS_Installer_Log[] $log_entries
-	 *
-	 * @return array
-	 */
 	private function convert_to_array( $log_entries ) {
 		$log_converted = array();
 

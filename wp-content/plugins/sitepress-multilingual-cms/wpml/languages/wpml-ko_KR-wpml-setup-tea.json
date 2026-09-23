@@ -1,0 +1,303 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "ko_KR"
+         },
+         "Error in updating since dates for types.": [
+            "유형별 시작 날짜를 업데이트하는 중 오류가 발생했습니다."
+         ],
+         "Error in fetching untranslated types count": [
+            "번역되지 않은 유형 수를 가져오는 중 오류가 발생했습니다."
+         ],
+         "Error persisting the offered type since dates.": [
+            "제공된 유형의 시작 날짜를 유지하는 중 오류가 발생했습니다."
+         ],
+         "Error in updating since date for type.": [
+            "유형의 시작 날짜를 업데이트하는 중 오류가 발생했습니다."
+         ],
+         "Content to translate": [
+            "번역할 콘텐츠"
+         ],
+         "Content to Translate": [
+            "번역할 콘텐츠"
+         ],
+         "Content type": [
+            "콘텐츠 유형"
+         ],
+         "Include": [
+            "포함"
+         ],
+         "These settings can be changed on the Translations dashboard.": [
+            "이 설정은 번역 대시보드에서 변경할 수 있습니다."
+         ],
+         "Items": [
+            "항목"
+         ],
+         "Word count": [
+            "단어 수"
+         ],
+         "Loading content to translate": [
+            "번역할 콘텐츠를 불러오는 중"
+         ],
+         "Words to translate": [
+            "번역할 단어"
+         ],
+         "Calculating… <s>less than 1 minute left.</s>": [
+            "계산 중… <s>남은 시간 1분 미만.</s>"
+         ],
+         "Calculating… <s>%d minute left.</s>": [
+            "계산 중… <s>%d분 남았습니다.</s>"
+         ],
+         "Words needed to translate your existing content into the new languages: %s.": [
+            "기존 콘텐츠를 새 언어로 번역하는 데 필요한 단어 수: %s."
+         ],
+         "Words needed to translate your existing content into the new language.": [
+            "기존 콘텐츠를 새 언어로 번역하는 데 필요한 단어 수입니다."
+         ],
+         "Based on the remaining untranslated content across all languages.": [
+            "모든 언어에 걸쳐 남아 있는 미번역 콘텐츠를 기준으로 합니다."
+         ],
+         "Estimated from the selected source volume multiplied by the target languages.": [
+            "선택한 소스 분량에 대상 언어 수를 곱하여 추정되었습니다."
+         ],
+         "%1$s source words × %2$s language": [
+            "%1$s 소스 단어 × %2$s개 언어"
+         ],
+         "Already translated content": [
+            "이미 번역된 콘텐츠"
+         ],
+         "Words required:": [
+            "필요한 단어:"
+         ],
+         "Words": [
+            "단어"
+         ],
+         "Documents you translated yourself stay exactly as you made them": [
+            "직접 번역한 문서는 작성한 그대로 유지됩니다"
+         ],
+         "(%d document)": [
+            "(%d개 문서)"
+         ],
+         "View documents": [
+            "문서 보기"
+         ],
+         "%1$d of %2$d language will be translated automatically": [
+            "%2$d개 언어 중 %1$d개 언어가 자동으로 번역됩니다"
+         ],
+         "Translated to %d language": [
+            "%d개 언어로 번역됨"
+         ],
+         "Add/remove languages": [
+            "언어 추가/제거"
+         ],
+         "Percentages show how much of your selected content is already translated in each language.": [
+            "백분율은 선택한 콘텐츠 중 각 언어로 이미 번역된 양을 나타냅니다."
+         ],
+         "Note: Content already translated into all languages is not included in this calculation.": [
+            "참고: 모든 언어로 이미 번역된 콘텐츠는 이 계산에 포함되지 않습니다."
+         ],
+         "Same as default": [
+            "기본 언어와 동일"
+         ],
+         "Automatic translation isn't available between %1$s and %2$s because they're recognized as the same language.": [
+            "%1$s와(과) %2$s은(는) 동일한 언어로 인식되므로 자동 번역을 사용할 수 없습니다."
+         ],
+         "Manual only": [
+            "수동 전용"
+         ],
+         "%s has no automatic-translation support. You can translate this content manually.": [
+            "%s은(는) 자동 번역을 지원하지 않습니다. 이 콘텐츠는 수동으로 번역할 수 있습니다."
+         ],
+         "Adjusted word rate (%s)": [
+            "조정된 단어 요율 (%s)"
+         ],
+         "This adjusted word rate applies to legacy translation engines.": [
+            "이 조정된 단어 요율은 레거시 번역 엔진에 적용됩니다."
+         ],
+         "Translation engine: <strong>%s</strong>": [
+            "번역 엔진: <strong>%s</strong>"
+         ],
+         "Legacy engine": [
+            "레거시 엔진"
+         ],
+         "Legacy pricing applied. %s is a legacy translation engine, not recommended for new sites and will be deprecated. Existing sites keep an adjusted word rate for it.": [
+            "레거시 가격이 적용되었습니다. %s은(는) 레거시 번역 엔진으로, 새 사이트에는 권장되지 않으며 곧 중단될 예정입니다. 기존 사이트에는 이에 대한 조정된 단어 요율이 유지됩니다."
+         ],
+         "Switch to PTC": [
+            "PTC로 전환"
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Future updates are charged only for the words you add or change.": [
+            "이것은 현재 콘텐츠를 번역하는 데 오늘 필요한 사항입니다. 여기에는 설정이 완료된 후 계산되는 양식이나 슬라이더와 같이 다른 플러그인에 의해 추가된 일부 텍스트는 포함되지 않습니다. 테마 및 플러그인의 사이트 문구 또한 설정 후에 계산되며 일반적으로 수백 단어가 추가됩니다. 향후 업데이트는 추가하거나 변경하는 단어에 대해서만 비용이 청구됩니다."
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Pay once per page — edited words are charged again when you change a page.": [
+            "이것은 현재 콘텐츠를 번역하는 데 오늘 필요한 사항입니다. 여기에는 설정이 완료된 후 계산되는 양식이나 슬라이더와 같이 다른 플러그인에 의해 추가된 일부 텍스트는 포함되지 않습니다. 테마 및 플러그인의 사이트 문구 또한 설정 후에 계산되며 일반적으로 수백 단어가 추가됩니다. 페이지당 한 번만 결제하면 되며, 페이지를 변경할 때 수정된 단어에 대해 다시 비용이 청구됩니다."
+         ],
+         "This is what translating your current content needs today. Future updates are charged only for the words you add or change.": [
+            "이는 현재 콘텐츠를 번역하는 데 오늘 필요한 양입니다. 향후 업데이트 시에는 추가되거나 변경된 단어에 대해서만 비용이 청구됩니다."
+         ],
+         "This is what translating your current content needs today. Pay once per page — edited words are charged again when you change a page.": [
+            "이는 현재 콘텐츠를 번역하는 데 오늘 필요한 양입니다. 페이지당 한 번만 결제하세요. 페이지를 변경하여 편집된 단어는 다시 청구됩니다."
+         ],
+         "Total items": [
+            "총 항목"
+         ],
+         "Total source words": [
+            "총 소스 단어"
+         ],
+         "Previous": [
+            "이전"
+         ],
+         "Next": [
+            "다음"
+         ],
+         "Showing %1$d–%2$d of %3$d types.": [
+            "총 %3$d개 유형 중 %1$d–%2$d개를 표시 중입니다."
+         ],
+         "All current %1$s are translated to all languages.<br>New %2$s or edits will be automatically translated.": [
+            "현재 모든 %1$s이(가) 모든 언어로 번역되었습니다.<br>새로운 %2$s 또는 편집 내용은 자동으로 번역됩니다."
+         ],
+         "All %s": [
+            "모든 %s"
+         ],
+         "For translated types": [
+            "번역된 유형에 따름"
+         ],
+         "None": [
+            "없음"
+         ],
+         "Since %s": [
+            "%s 이후"
+         ],
+         "Since specific date": [
+            "특정 날짜 이후"
+         ],
+         "<b>Pay-As-You-Go</b> activated": [
+            "<b>Pay-As-You-Go</b> 활성화됨"
+         ],
+         "Prepaid words assigned": [
+            "할당된 선불 단어"
+         ],
+         "Your site will be translated right after the setup.": [
+            "설정 직후 사이트가 번역됩니다."
+         ],
+         "You have %1$s prepaid words — %2$s more are needed.": [
+            "선불 단어 %1$s개를 보유하고 있으며, %2$s개가 더 필요합니다."
+         ],
+         "%s words are needed to translate your site.": [
+            "사이트를 번역하려면 %s 단어가 필요합니다."
+         ],
+         "To start <b>Translate Everything Automatically</b>, activate <b>Pay-As-You-Go</b> or assign prepaid words.": [
+            "<b>모든 항목 자동 번역</b>을 시작하려면 <b>Pay-As-You-Go</b>를 활성화하거나 선불 단어를 할당하세요."
+         ],
+         "Select payment method": [
+            "결제 수단 선택"
+         ],
+         "%1$sCheck pricing%2$s.": [
+            "%1$s가격 확인%2$s."
+         ],
+         "Lowest cost per word": [
+            "단어당 최저 비용"
+         ],
+         "Pay only for what you use": [
+            "사용하는 만큼만 결제"
+         ],
+         "Never run out. Translation never stops.": [
+            "부족할 걱정 없이 번역이 중단되지 않습니다."
+         ],
+         "The first 500 words each month are free": [
+            "매월 첫 500단어는 무료입니다"
+         ],
+         "Pay-As-You-Go": [
+            "Pay-As-You-Go"
+         ],
+         "Activate <b>Pay-As-You-Go</b> to translate automatically. You are billed for the words you use.": [
+            "자동으로 번역하려면 <b>Pay-As-You-Go</b>를 활성화하세요. 사용한 단어에 대해 비용이 청구됩니다."
+         ],
+         "Activate <b>Pay-As-You-Go</b>": [
+            "<b>Pay-As-You-Go</b> 활성화"
+         ],
+         "Already using <b>Pay-As-You-Go</b> on another site?": [
+            "이미 다른 사이트에서 <b>Pay-As-You-Go</b>를 사용 중이신가요?"
+         ],
+         "Connect this site to it": [
+            "이 사이트를 해당 계정에 연결"
+         ],
+         "Connect your sites to share translation memory, glossary and word quota.": [
+            "사이트를 연결하여 번역 메모리, 용어집 및 단어 할당량을 공유하세요."
+         ],
+         "Learn more": [
+            "더 알아보기"
+         ],
+         "Copy your migration code:": [
+            "이전 코드를 복사하세요:"
+         ],
+         "Loading…": [
+            "불러오는 중…"
+         ],
+         "Copied!": [
+            "복사되었습니다!"
+         ],
+         "Log into a site with an active automatic translation account.": [
+            "활성 자동 번역 계정이 있는 사이트에 로그인합니다."
+         ],
+         "Go to \"WPML\" → \"Translation Dashboard\".": [
+            "“WPML” → “번역 대시보드”로 이동합니다."
+         ],
+         "In the \"Payment & Maintenance\" tab, go to \"Connected sites\".": [
+            "“결제 및 유지 관리” 탭에서 “연결된 사이트”로 이동합니다."
+         ],
+         "Click \"Enter the connection key of another site\" to finish connecting your sites.": [
+            "“다른 사이트의 연결 키 입력”을 클릭하여 사이트 연결을 완료합니다."
+         ],
+         "Refresh to assign words": [
+            "단어를 할당하려면 새로고침"
+         ],
+         "Assign words": [
+            "단어 할당"
+         ],
+         "Buy and assign words": [
+            "단어 구매 및 할당"
+         ],
+         "Buy a %1$sprepaid package%2$s with at least %3$s%4$s words%5$s and assign them to this site.": [
+            "최소 %3$s%4$s 단어%5$s가 포함된 %1$s선불 패키지%2$s를 구매하여 이 사이트에 할당하세요."
+         ],
+         "This amount will cover translation of all your current content.": [
+            "이 금액으로 현재 모든 콘텐츠의 번역이 가능합니다."
+         ],
+         "Assign at least %1$s%2$s words%3$s to this site to continue.": [
+            "계속하려면 이 사이트에 최소 %1$s%2$s 단어%3$s를 할당하세요."
+         ],
+         "Assign words from your WPML account and buy an additional %1$sprepaid package%2$s with at least %3$s%4$s words%5$s to cover the remaining amount.": [
+            "WPML 계정에서 단어를 할당하고, 남은 금액을 충당하기 위해 최소 %3$s%4$s 단어%5$s가 포함된 추가 %1$s선불 패키지%2$s를 구매하세요."
+         ],
+         "Prepaid words": [
+            "선불 단어"
+         ],
+         "There are %1$s%2$s available on your WPML account.%3$s": [
+            "WPML 계정에 %1$s%2$s개를 사용할 수 있습니다.%3$s"
+         ],
+         "(Only the WPML account owner can do this.)": [
+            "(WPML 계정 소유자만 이 작업을 수행할 수 있습니다.)"
+         ],
+         "Checking for new words...": [
+            "새 단어 확인 중..."
+         ],
+         "Still not enough words. Refresh again in %d seconds.": [
+            "여전히 단어가 부족합니다. %d초 후에 다시 새로고침하세요."
+         ],
+         "Already assigned?": [
+            "이미 할당하셨나요?"
+         ],
+         "Refresh": [
+            "새로고침"
+         ],
+         "Close modal": [
+            "모달 닫기"
+         ]
+      }
+   }
+}

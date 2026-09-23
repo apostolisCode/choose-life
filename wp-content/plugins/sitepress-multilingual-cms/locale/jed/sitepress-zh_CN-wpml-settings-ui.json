@@ -4,53 +4,65 @@
       "messages": {
          "": {
             "domain": "messages",
-            "lang": "no"
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "zh_CN"
          },
-         "You can choose which posts to translate from the <strong>Translation Management Dashboard</strong>.": [
-            "您可以从<strong>翻译管理仪表板</strong>选择要翻译的文章。"
-         ],
-         "Yes, translate <b>existing</b> and <b>future</b> content automatically": [
-            ""
-         ],
-         "Yes, but only translate <b>future</b> content automatically": [
-            ""
-         ],
-         "Yes, translate <b>future</b> content automatically": [
-            ""
-         ],
-         "No, I want to translate some of these posts, but not all": [
-            "否，我想翻译其中一些文章，但不是全部"
-         ],
          "You must use the Advanced Translation Editor if you want to translate your content automatically.": [
-            "如果要自动翻译内容，必须使用高级翻译编辑器。"
+            "如果您想自动翻译您的内容，则必须使用高级翻译编辑器。"
          ],
          "Synchronize translators and translation managers with ATE": [
-            "与ATE同步译员和翻译经理"
+            "将译者和翻译管理员与 ATE 同步"
          ],
-         "Please try again in a few minutes. If the problem persists, please contact %sWPML support%s.": [
-            "请几分钟后再试。如果问题仍然存在，请联系%sWPML支持%s。"
+         "Please try again in a few minutes. If the problem persists, please contact %1$sWPML support%2$s.": [
+            "请在几分钟后重试。如果问题仍然存在，请联系 %1$sWPML 支持%2$s。"
          ],
-         "Are you OK with paying for this?": [
-            "您可以付这笔钱吗？"
+         "Are you sure you want to change the translation option?": [
+            "您确定要更改翻译选项吗？"
          ],
-         "Cancel": [
-            "取消"
+         "No, go back": [
+            "不，返回"
          ],
-         "Make translatable": [
-            "使可翻译"
+         "Yes, continue": [
+            "是，继续"
+         ],
+         "Once saved, WPML will automatically send affected posts to translation. This may use additional translation words.": [
+            "保存后，WPML 将自动发送受影响的文章进行翻译。这可能会消耗额外的翻译字数。"
+         ],
+         "Are you OK with this?": [
+            "您同意这样做吗？"
          ],
          "Save": [
             "保存"
          ],
-         "Please confirm this translation setting": [
-            "请确认此翻译设置"
+         "This change affects %d post. Once saved, WPML will update the translation status of this post. This can take up to 1 minute.": [
+            "此更改会影响 %d 篇文章。保存后，WPML 将更新这些文章的翻译状态。这可能需要长达 1 分钟。"
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing item.": [
-            "",
-            "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate the %1$d existing items."
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d hours.": [
+            "此更改会影响 %1$d 篇文章。保存后，WPML 将更新这些文章的翻译状态。这可能需要长达 %2$d 小时。"
          ],
-         "Your site is set to translate all content automatically. When you make <PostTypesNames /> translatable, WPML will automatically translate all future content.": [
-            ""
+         "This change affects %1$d post. Once saved, WPML will update the translation status of this post. This can take up to %2$d minutes.": [
+            "此更改会影响 %1$d 篇文章。保存后，WPML 将更新 these 文章的翻译状态。这可能需要长达 %2$d 分钟。"
+         ],
+         "Calculate Costs": [
+            "计算费用"
+         ],
+         "WPML will automatically translate %1$s into %2$s.": [
+            "WPML 将自动把 %1$s 翻译为 %2$s。"
+         ],
+         "Automatic translation uses translation words.": [
+            "自动翻译会消耗翻译字数。"
+         ],
+         "%d term": [
+            "%d 个条目"
+         ],
+         "%d language": [
+            "%d 种语言"
+         ],
+         "%s will be translated.": [
+            "%s 将被翻译。"
+         ],
+         "WPML's automatic translation service did not accept this request (it answered %d). Wait a minute and try again, and contact WPML support if it keeps happening.": [
+            "WPML 的自动翻译服务未接受此请求（返回了 %d）。请稍等片刻并重试，如果问题仍然存在，请联系 WPML 支持。"
          ]
       }
    }

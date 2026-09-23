@@ -1,0 +1,54 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "ru_RU"
+         },
+         "Alias Domain": [
+            "Домен-псевдоним"
+         ],
+         "Current alias domains:": [
+            "Текущие домены-псевдонимы:"
+         ],
+         "This will remove all registered alias domains. If you are accessing this site through an alias domain, the migration banner will appear again.": [
+            "Это приведет к удалению всех зарегистрированных доменов-псевдонимов. Если вы заходите на этот сайт через домен-псевдоним, баннер миграции появится снова."
+         ],
+         "Something went wrong. Please try again.": [
+            "Что-то пошло не так. Пожалуйста, попробуйте еще раз."
+         ],
+         "Resetting...": [
+            "Сброс..."
+         ],
+         "Reset alias domains": [
+            "Сбросить домены-псевдонимы"
+         ],
+         "Register a different URL that points to this same WordPress installation. WPML will use the current site URL for API communication with AMS.": [
+            "Зарегистрируйте другой URL-адрес, который указывает на ту же установку WordPress. WPML будет использовать текущий URL-адрес сайта для связи API с AMS."
+         ],
+         "Alias domain URL:": [
+            "URL-адрес домена-псевдонима:"
+         ],
+         "Registering...": [
+            "Регистрация..."
+         ],
+         "Register alias domain": [
+            "Зарегистрировать домен-псевдоним"
+         ],
+         "PostHog Integration": [
+            "Интеграция PostHog"
+         ],
+         "PostHog is running on your site": [
+            "PostHog запущен на вашем сайте"
+         ],
+         "Enable PostHog to help us improve our product": [
+            "Включите PostHog, чтобы помочь нам улучшить наш продукт"
+         ],
+         "your PostHog session ID is: ": [
+            "ваш ID сеанса PostHog: "
+         ]
+      }
+   }
+}

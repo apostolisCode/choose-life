@@ -1,0 +1,313 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+            "lang": "ru_RU"
+         },
+         "Error in updating since dates for types.": [
+            "Ошибка при обновлении дат «с момента» для типов."
+         ],
+         "Error in fetching untranslated types count": [
+            "Ошибка при получении количества непереведенных типов"
+         ],
+         "Error persisting the offered type since dates.": [
+            "Ошибка сохранения предложенных дат «с момента» для типа."
+         ],
+         "Error in updating since date for type.": [
+            "Ошибка при обновлении даты «с момента» для типа."
+         ],
+         "Content to translate": [
+            "Контент для перевода"
+         ],
+         "Content to Translate": [
+            "Контент для перевода"
+         ],
+         "Content type": [
+            "Тип контента"
+         ],
+         "Include": [
+            "Включить"
+         ],
+         "These settings can be changed on the Translations dashboard.": [
+            "Эти настройки можно изменить на панели управления переводами."
+         ],
+         "Items": [
+            "Элементы"
+         ],
+         "Word count": [
+            "Количество слов"
+         ],
+         "Loading content to translate": [
+            "Загрузка контента для перевода"
+         ],
+         "Words to translate": [
+            "Слова для перевода"
+         ],
+         "Calculating… <s>less than 1 minute left.</s>": [
+            "Вычисление… <s>осталось меньше 1 минуты.</s>"
+         ],
+         "Calculating… <s>%d minute left.</s>": [
+            "Вычисление… <s>осталась %d минута.</s>",
+            "Вычисление… <s>осталось %d минуты.</s>",
+            "Вычисление… <s>осталось %d минут.</s>"
+         ],
+         "Words needed to translate your existing content into the new languages: %s.": [
+            "Слов, необходимых для перевода существующего контента на новые языки: %s."
+         ],
+         "Words needed to translate your existing content into the new language.": [
+            "Слов, необходимых для перевода существующего контента на новый язык."
+         ],
+         "Based on the remaining untranslated content across all languages.": [
+            "На основе оставшегося непереведенного контента на всех языках."
+         ],
+         "Estimated from the selected source volume multiplied by the target languages.": [
+            "Рассчитано на основе выбранного исходного объема, умноженного на количество целевых языков."
+         ],
+         "%1$s source words × %2$s language": [
+            "%1$s исходное слово × %2$s язык",
+            "%1$s исходных слова × %2$s языка",
+            "%1$s исходных слов × %2$s языков"
+         ],
+         "Already translated content": [
+            "Уже переведенный контент"
+         ],
+         "Words required:": [
+            "Требуется слов:"
+         ],
+         "Words": [
+            "Слова"
+         ],
+         "Documents you translated yourself stay exactly as you made them": [
+            "Документы, которые вы перевели сами, останутся в том виде, в котором вы их создали"
+         ],
+         "(%d document)": [
+            "(%d документ)",
+            "(%d документа)",
+            "(%d документов)"
+         ],
+         "View documents": [
+            "Просмотреть документы"
+         ],
+         "%1$d of %2$d language will be translated automatically": [
+            "%1$d из %2$d языка будет переведен автоматически",
+            "%1$d из %2$d языков будут переведены автоматически",
+            "%1$d из %2$d языков будут переведены автоматически"
+         ],
+         "Translated to %d language": [
+            "Переведено на %d язык",
+            "Переведено на %d языка",
+            "Переведено на %d языков"
+         ],
+         "Add/remove languages": [
+            "Добавить/удалить языки"
+         ],
+         "Percentages show how much of your selected content is already translated in each language.": [
+            "Проценты показывают, какая часть выбранного контента уже переведена на каждый язык."
+         ],
+         "Note: Content already translated into all languages is not included in this calculation.": [
+            "Примечание: контент, уже переведенный на все языки, не включен в этот расчет."
+         ],
+         "Same as default": [
+            "Так же, как по умолчанию"
+         ],
+         "Automatic translation isn't available between %1$s and %2$s because they're recognized as the same language.": [
+            "Автоматический перевод между %1$s и %2$s недоступен, так как они распознаются как один и тот же язык."
+         ],
+         "Manual only": [
+            "Только вручную"
+         ],
+         "%s has no automatic-translation support. You can translate this content manually.": [
+            "%s не поддерживает автоматический перевод. Вы можете перевести этот контент вручную."
+         ],
+         "Adjusted word rate (%s)": [
+            "Скорректированный тариф за слово (%s)"
+         ],
+         "This adjusted word rate applies to legacy translation engines.": [
+            "Этот скорректированный тариф за слово применяется к устаревшим системам перевода."
+         ],
+         "Translation engine: <strong>%s</strong>": [
+            "Система перевода: <strong>%s</strong>"
+         ],
+         "Legacy engine": [
+            "Устаревшая система"
+         ],
+         "Legacy pricing applied. %s is a legacy translation engine, not recommended for new sites and will be deprecated. Existing sites keep an adjusted word rate for it.": [
+            "Применены устаревшие расценки. %s — это устаревшая система перевода, она не рекомендуется для новых сайтов и скоро будет выведена из эксплуатации. Для существующих сайтов сохраняется скорректированный тариф за слово."
+         ],
+         "Switch to PTC": [
+            "Перейти на PTC"
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Future updates are charged only for the words you add or change.": [
+            "Это то, что требуется для перевода вашего текущего контента сегодня. Сюда не входят некоторые тексты, добавленные другими плагинами, такие как формы или слайдеры, которые подсчитываются после завершения настройки. Строки сайта из вашей темы и плагинов также подсчитываются после настройки и обычно добавляют несколько сотен слов. Плата за будущие обновления взимается только за те слова, которые вы добавляете или изменяете."
+         ],
+         "This is what translating your current content needs today. It does not include some texts added by other plugins, such as forms or sliders, which are counted after setup is complete. Site strings from your theme and plugins are also counted after setup and typically add several hundred words. Pay once per page — edited words are charged again when you change a page.": [
+            "Это то, что требуется для перевода вашего текущего контента сегодня. Сюда не входят некоторые тексты, добавленные другими плагинами, такие как формы или слайдеры, которые подсчитываются после завершения настройки. Строки сайта из вашей темы и плагинов также подсчитываются после настройки и обычно добавляют несколько сотен слов. Платите один раз за страницу — измененные слова оплачиваются повторно при редактировании страницы."
+         ],
+         "This is what translating your current content needs today. Future updates are charged only for the words you add or change.": [
+            "Это то, что требуется для перевода вашего текущего контента сегодня. В будущем оплата будет взиматься только за добавленные или измененные слова."
+         ],
+         "This is what translating your current content needs today. Pay once per page — edited words are charged again when you change a page.": [
+            "Это то, что требуется для перевода вашего текущего контента сегодня. Платите один раз за страницу — измененные слова оплачиваются снова при обновлении страницы."
+         ],
+         "Total items": [
+            "Всего элементов"
+         ],
+         "Total source words": [
+            "Всего слов в оригинале"
+         ],
+         "Previous": [
+            "Назад"
+         ],
+         "Next": [
+            "Далее"
+         ],
+         "Showing %1$d–%2$d of %3$d types.": [
+            "Отображение типов %1$d–%2$d из %3$d."
+         ],
+         "All current %1$s are translated to all languages.<br>New %2$s or edits will be automatically translated.": [
+            "Все текущие %1$s переведены на все языки.<br>Новые %2$s или правки будут переведены автоматически."
+         ],
+         "All %s": [
+            "Все %s"
+         ],
+         "For translated types": [
+            "Для переведенных типов"
+         ],
+         "None": [
+            "Нет"
+         ],
+         "Since %s": [
+            "С %s"
+         ],
+         "Since specific date": [
+            "С определенной даты"
+         ],
+         "<b>Pay-As-You-Go</b> activated": [
+            "<b>Pay-As-You-Go</b> активирован"
+         ],
+         "Prepaid words assigned": [
+            "Назначено предоплаченных слов"
+         ],
+         "Your site will be translated right after the setup.": [
+            "Ваш сайт будет переведен сразу после настройки."
+         ],
+         "You have %1$s prepaid words — %2$s more are needed.": [
+            "У вас есть %1$s предоплаченных слов — требуется еще %2$s."
+         ],
+         "%s words are needed to translate your site.": [
+            "Для перевода вашего сайта требуется %s слов."
+         ],
+         "To start <b>Translate Everything Automatically</b>, activate <b>Pay-As-You-Go</b> or assign prepaid words.": [
+            "Чтобы запустить функцию <b>Переводить все автоматически</b>, активируйте <b>Pay-As-You-Go</b> или назначьте предоплаченные слова."
+         ],
+         "Select payment method": [
+            "Выберите способ оплаты"
+         ],
+         "%1$sCheck pricing%2$s.": [
+            "%1$sПроверить цены%2$s."
+         ],
+         "Lowest cost per word": [
+            "Самая низкая стоимость за слово"
+         ],
+         "Pay only for what you use": [
+            "Платите только за то, что используете"
+         ],
+         "Never run out. Translation never stops.": [
+            "Слова никогда не закончатся. Перевод никогда не остановится."
+         ],
+         "The first 500 words each month are free": [
+            "Первые 500 слов каждый месяц бесплатно"
+         ],
+         "Pay-As-You-Go": [
+            "Pay-As-You-Go"
+         ],
+         "Activate <b>Pay-As-You-Go</b> to translate automatically. You are billed for the words you use.": [
+            "Активируйте <b>Pay-As-You-Go</b>, чтобы переводить автоматически. Счета выставляются за использованные слова."
+         ],
+         "Activate <b>Pay-As-You-Go</b>": [
+            "Активировать <b>Pay-As-You-Go</b>"
+         ],
+         "Already using <b>Pay-As-You-Go</b> on another site?": [
+            "Уже используете <b>Pay-As-You-Go</b> на другом сайте?"
+         ],
+         "Connect this site to it": [
+            "Подключить этот сайт к нему"
+         ],
+         "Connect your sites to share translation memory, glossary and word quota.": [
+            "Подключите свои сайты, чтобы совместно использовать память переводов, глоссарий и квоту слов."
+         ],
+         "Learn more": [
+            "Узнать больше"
+         ],
+         "Copy your migration code:": [
+            "Скопируйте ваш код миграции:"
+         ],
+         "Loading…": [
+            "Загрузка…"
+         ],
+         "Copied!": [
+            "Скопировано!"
+         ],
+         "Log into a site with an active automatic translation account.": [
+            "Войдите на сайт с активным аккаунтом автоматического перевода."
+         ],
+         "Go to \"WPML\" → \"Translation Dashboard\".": [
+            "Перейдите в «WPML» → «Панель управления переводами»."
+         ],
+         "In the \"Payment & Maintenance\" tab, go to \"Connected sites\".": [
+            "На вкладке «Payment & Maintenance» перейдите в «Connected sites»."
+         ],
+         "Click \"Enter the connection key of another site\" to finish connecting your sites.": [
+            "Нажмите «Enter the connection key of another site», чтобы завершить подключение сайтов."
+         ],
+         "Refresh to assign words": [
+            "Обновить, чтобы назначить слова"
+         ],
+         "Assign words": [
+            "Назначить слова"
+         ],
+         "Buy and assign words": [
+            "Купить и назначить слова"
+         ],
+         "Buy a %1$sprepaid package%2$s with at least %3$s%4$s words%5$s and assign them to this site.": [
+            "Купите %1$sпредоплаченный пакет%2$s минимум на %3$s%4$s слов%5$s и назначьте их этому сайту."
+         ],
+         "This amount will cover translation of all your current content.": [
+            "Этого количества хватит для перевода всего вашего текущего контента."
+         ],
+         "Assign at least %1$s%2$s words%3$s to this site to continue.": [
+            "Назначьте этому сайту не менее %1$s%2$s слов%3$s, чтобы продолжить."
+         ],
+         "Assign words from your WPML account and buy an additional %1$sprepaid package%2$s with at least %3$s%4$s words%5$s to cover the remaining amount.": [
+            "Назначьте слова из своего аккаунта WPML и купите дополнительный %1$sпредоплаченный пакет%2$s минимум на %3$s%4$s слов%5$s, чтобы покрыть оставшуюся сумму."
+         ],
+         "Prepaid words": [
+            "Предоплаченные слова"
+         ],
+         "There are %1$s%2$s available on your WPML account.%3$s": [
+            "В вашем аккаунте WPML доступно %1$s%2$s слов%3$s."
+         ],
+         "(Only the WPML account owner can do this.)": [
+            "(Это может сделать только владелец аккаунта WPML.)"
+         ],
+         "Checking for new words...": [
+            "Проверка новых слов..."
+         ],
+         "Still not enough words. Refresh again in %d seconds.": [
+            "Слов все еще недостаточно. Обновите еще раз через %d сек."
+         ],
+         "Already assigned?": [
+            "Уже назначены?"
+         ],
+         "Refresh": [
+            "Обновить"
+         ],
+         "Close modal": [
+            "Закрыть модальное окно"
+         ]
+      }
+   }
+}

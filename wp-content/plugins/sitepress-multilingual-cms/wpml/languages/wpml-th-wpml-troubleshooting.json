@@ -1,0 +1,54 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=1; plural=0;",
+            "lang": "th"
+         },
+         "Alias Domain": [
+            "โดเมนชื่อพ่วง"
+         ],
+         "Current alias domains:": [
+            "โดเมนชื่อพ่วงปัจจุบัน:"
+         ],
+         "This will remove all registered alias domains. If you are accessing this site through an alias domain, the migration banner will appear again.": [
+            "การดำเนินการนี้จะลบโดเมนชื่อพ่วงที่ลงทะเบียนไว้ทั้งหมด หากคุณกำลังเข้าถึงไซต์นี้ผ่านโดเมนชื่อพ่วง แบนเนอร์การย้ายข้อมูลจะปรากฏขึ้นอีกครั้ง"
+         ],
+         "Something went wrong. Please try again.": [
+            "เกิดข้อผิดพลาดบางประการ โปรดลองอีกครั้ง"
+         ],
+         "Resetting...": [
+            "กำลังรีเซ็ต..."
+         ],
+         "Reset alias domains": [
+            "รีเซ็ตโดเมนชื่อพ่วง"
+         ],
+         "Register a different URL that points to this same WordPress installation. WPML will use the current site URL for API communication with AMS.": [
+            "ลงทะเบียน URL อื่นที่ชี้มายังการติดตั้ง WordPress เดียวกันนี้ WPML จะใช้ URL ของไซต์ปัจจุบันสำหรับการสื่อสาร API กับ AMS"
+         ],
+         "Alias domain URL:": [
+            "URL ของโดเมนชื่อพ่วง:"
+         ],
+         "Registering...": [
+            "กำลังลงทะเบียน..."
+         ],
+         "Register alias domain": [
+            "ลงทะเบียนโดเมนชื่อพ่วง"
+         ],
+         "PostHog Integration": [
+            "การรวม PostHog"
+         ],
+         "PostHog is running on your site": [
+            "PostHog กำลังทำงานบนไซต์ของคุณ"
+         ],
+         "Enable PostHog to help us improve our product": [
+            "เปิดใช้งาน PostHog เพื่อช่วยเราปรับปรุงผลิตภัณฑ์ของเรา"
+         ],
+         "your PostHog session ID is: ": [
+            "ID เซสชัน PostHog ของคุณคือ: "
+         ]
+      }
+   }
+}

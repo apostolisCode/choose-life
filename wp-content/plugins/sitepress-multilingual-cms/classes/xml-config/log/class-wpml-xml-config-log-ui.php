@@ -1,14 +1,7 @@
 <?php
 
-/**
- * @author OnTheGo Systems
- */
 class WPML_XML_Config_Log_UI {
-	/** @var IWPML_Template_Service */
 	private $template_service;
-	/**
-	 * @var \WPML_Config_Update_Log
-	 */
 	private $log;
 
 	function __construct( WPML_Config_Update_Log $log, IWPML_Template_Service $template_service ) {
@@ -16,16 +9,12 @@ class WPML_XML_Config_Log_UI {
 		$this->template_service = $template_service;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function show() {
 		$model = $this->get_model();
 
 		return $this->template_service->show( $model, 'main.twig' );
 	}
 
-	/** @return array */
 	private function get_model() {
 		$entries = $this->log->get();
 		krsort( $entries );
@@ -55,16 +44,19 @@ class WPML_XML_Config_Log_UI {
 			'strings' => array(
 				'title'     => __( 'Remote XML Config Log', 'sitepress' ),
 				'message'   => __( "WPML needs to load configuration files, which tell it how to translate your theme and the plugins that you use. If there's a problem, use the Retry button. If the problem continues, contact WPML support, show the error details and we'll help you resolve it.", 'sitepress' ),
+				/* translators: Link that unfolds the further information about a row. */
 				'details'   => __( 'Details', 'sitepress' ),
 				'empty_log' => __( 'The remote XML Config Log is empty', 'sitepress' ),
 			),
 			'buttons' => array(
 				'retry' => array(
+					/* translators: Button label in a notice: do the same thing once more. Verb, imperative. */
 					'label' => __( 'Retry', 'sitepress' ),
 					'url'   => null,
 					'type'  => 'primary',
 				),
 				'clear' => array(
+					/* translators: Button label: empty the log that is being shown. Verb phrase, imperative. */
 					'label' => __( 'Clear log', 'sitepress' ),
 					'url'   => null,
 					'type'  => 'secondary',
@@ -104,7 +96,7 @@ class WPML_XML_Config_Log_UI {
 			return $time;
 		}
 
-		list( $sec, $usec ) = explode( '.', $time ); // split the microtime on .
+		list( $sec, $usec ) = explode( '.', $time );
 
 		return date( $dFormat, (int) $sec ) . $usec;
 	}

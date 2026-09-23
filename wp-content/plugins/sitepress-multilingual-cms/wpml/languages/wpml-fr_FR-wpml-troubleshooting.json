@@ -1,0 +1,54 @@
+{
+   "domain": "messages",
+   "locale_data": {
+      "messages": {
+         "": {
+            "domain": "messages",
+            "plural_forms": "nplurals=2; plural=(n > 1);",
+            "lang": "fr_FR"
+         },
+         "Alias Domain": [
+            "Domaine alias"
+         ],
+         "Current alias domains:": [
+            "Domaines alias actuels :"
+         ],
+         "This will remove all registered alias domains. If you are accessing this site through an alias domain, the migration banner will appear again.": [
+            "Cela supprimera tous les domaines alias enregistrés. Si vous accédez à ce site via un domaine alias, la bannière de migration apparaîtra de nouveau."
+         ],
+         "Something went wrong. Please try again.": [
+            "Une erreur est survenue. Veuillez réessayer."
+         ],
+         "Resetting...": [
+            "Réinitialisation..."
+         ],
+         "Reset alias domains": [
+            "Réinitialiser les domaines alias"
+         ],
+         "Register a different URL that points to this same WordPress installation. WPML will use the current site URL for API communication with AMS.": [
+            "Enregistrez une URL différente qui pointe vers cette même installation WordPress. WPML utilisera l'URL du site actuel pour la communication API avec AMS."
+         ],
+         "Alias domain URL:": [
+            "URL du domaine alias :"
+         ],
+         "Registering...": [
+            "Enregistrement..."
+         ],
+         "Register alias domain": [
+            "Enregistrer le domaine alias"
+         ],
+         "PostHog Integration": [
+            "Intégration PostHog"
+         ],
+         "PostHog is running on your site": [
+            "PostHog est en cours d'exécution sur votre site"
+         ],
+         "Enable PostHog to help us improve our product": [
+            "Activez PostHog pour nous aider à améliorer notre produit"
+         ],
+         "your PostHog session ID is: ": [
+            "votre ID de session PostHog est : "
+         ]
+      }
+   }
+}

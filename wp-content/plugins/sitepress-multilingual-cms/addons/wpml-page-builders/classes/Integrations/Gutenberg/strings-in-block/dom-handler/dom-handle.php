@@ -9,62 +9,27 @@ abstract class DOMHandle {
 
 	const INNER_HTML_PARTIAL = 'partial';
 	const INNER_HTML_FULL    = 'full';
+	const LINE_BREAK_TAG     = 'br';
 
-	/**
-	 * @param string $html
-	 *
-	 * @return \DOMXPath
-	 */
 	public function getDomxpath( $html ) {
 		$dom = $this->getDom( $html );
 
 		return new \DOMXPath( $dom );
 	}
 
-	/**
-	 * @param string $html
-	 *
-	 * @return \DOMDocument
-	 */
 	public function getDom( $html ) {
 		$dom = new \DOMDocument();
 		\libxml_use_internal_errors( true );
-		$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+		$html = mb_encode_numericentity( $html, [ 0x80, 0x1FFFFF, 0, 0x1FFFFF ], 'UTF-8' );
 		$dom->loadHTML( '<div>' . $html . '</div>' );
 		\libxml_clear_errors();
 
-		// Remove doc type and <html> <body> wrappers
 		$dom->removeChild( $dom->doctype );
 
-		/**
-		 * $dom->firstChild->firstChild->firstChild is node that we are intersted in (without body tags).
-		 * $dom->firstChild Old node that we are replacing
-		 */
 		$dom->replaceChild( $dom->firstChild->firstChild->firstChild, $dom->firstChild );
 		return $dom;
 	}
 
-	/**
-	 * This is required when a block has innerBlocks and translatable content at the root.
-	 * Unfortunately we cannot use the DOM because we have only HTML extracts which
-	 * are not valid taken independently.
-	 *
-	 * {@internal
-	 *          innerContent => [
-	 *              '<div><p>The title</p>',
-	 *              null,
-	 *              '\n\n',
-	 *              null,
-	 *              '</div>'
-	 *          ]}
-	 *
-	 * @param \WP_Block_Parser_Block $block
-	 * @param \DOMNode               $element
-	 * @param string                 $translation
-	 * @param string|null            $originalValue
-	 *
-	 * @return \WP_Block_Parser_Block
-	 */
 	public function applyStringTranslations( \WP_Block_Parser_Block $block, \DOMNode $element, $translation, $originalValue = null ) {
 		if ( empty( $block->innerContent ) || empty( $element->nodeValue ) ) {
 			return $block;
@@ -75,27 +40,199 @@ abstract class DOMHandle {
 			$search       = '/(")(' . $search_value . ')(")/';
 			$translation  = esc_attr( $translation );
 		} else {
-			$replace_full_html_node_content = $element->childNodes->length > 0 && $originalValue;
+			$replace_full_html_node_content = $element->hasChildNodes() && $originalValue;
 
-			$search_value = preg_quote( $replace_full_html_node_content ? $originalValue : $element->nodeValue, '/' );
-			$search       = '/(>)(' . $search_value . ')(<)/';
+			$original = $replace_full_html_node_content ? $originalValue : $element->nodeValue;
+
+			if ( $this->isPlainText( $original ) ) {
+				$original    = $this->encodeAmpersands( $original );
+				$translation = $this->encodeAmpersands( $translation );
+			}
+
+			$search_value = preg_quote( $original, '/' );
+			$search_value = str_replace( [ preg_quote( '<br>', '/' ), preg_quote( '<br/>', '/' ) ], '<br\/?>', $search_value );
+			$search = '/(>|^)(' . $search_value . ')(<|$)/';
 		}
+
+		$replace = function ( array $matches ) use ( $translation ) {
+			return $matches[1] . $translation . $matches[3];
+		};
 
 		foreach ( $block->innerContent as &$inner_content ) {
 			if ( $inner_content ) {
-				$inner_content = preg_replace( $search, '${1}' . $translation . '${3}', $inner_content );
+				$inner_content = preg_replace_callback( $search, $replace, $inner_content );
 			}
 		}
 
 		return $block;
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 * @param string   $context
-	 *
-	 * @return array
-	 */
+	public function applyTranslationToInnerContent( \WP_Block_Parser_Block $block, $original, $translation ) {
+		if ( empty( $block->innerContent ) || ! in_array( null, $block->innerContent, true ) ) {
+			return $block;
+		}
+
+		$translatedNodes = $this->getTranslatedNodes(
+			$this->getDom( $original )->documentElement,
+			$this->getDom( $translation )->documentElement
+		);
+
+		if ( null === $translatedNodes || $this->translationsInterfere( $translatedNodes ) ) {
+			return $block;
+		}
+
+		$untranslatedInnerContent = $block->innerContent;
+
+		foreach ( $this->dropRepeatedNodeValues( $translatedNodes ) as list( $node, $value ) ) {
+			$innerContentBeforeNode = $block->innerContent;
+
+			$block = $this->applyStringTranslations( $block, $node, $value );
+
+			if ( $block->innerContent === $innerContentBeforeNode ) {
+				$block->innerContent = $untranslatedInnerContent;
+
+				return $block;
+			}
+		}
+
+		return $block;
+	}
+
+	private function dropRepeatedNodeValues( array $translatedNodes ) {
+		$seen  = [];
+		$pairs = [];
+
+		foreach ( $translatedNodes as $pair ) {
+			$key = ( $pair[0] instanceof \DOMAttr ? 'attr:' : 'text:' ) . $pair[0]->nodeValue;
+
+			if ( isset( $seen[ $key ] ) ) {
+				continue;
+			}
+
+			$seen[ $key ] = true;
+			$pairs[]      = $pair;
+		}
+
+		return $pairs;
+	}
+
+	private function translationsInterfere( array $translatedNodes ) {
+		$translationsByOriginal = [];
+
+		foreach ( $translatedNodes as list( $node, $translation ) ) {
+			$original = $node->nodeValue;
+
+			if ( isset( $translationsByOriginal[ $original ] ) && $translationsByOriginal[ $original ] !== $translation ) {
+				return true;
+			}
+
+			$translationsByOriginal[ $original ] = $translation;
+		}
+
+		foreach ( $translationsByOriginal as $translation ) {
+			if ( isset( $translationsByOriginal[ $translation ] ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function getTranslatedNodes( \DOMNode $original, \DOMNode $translated ) {
+		if ( $original->nodeType !== $translated->nodeType || $original->nodeName !== $translated->nodeName ) {
+			return null;
+		}
+
+		if ( $original instanceof \DOMText ) {
+			return $original->nodeValue === $translated->nodeValue ? [] : [ [ $original, $translated->nodeValue ] ];
+		}
+
+		$translatedNodes = $this->getTranslatedAttributes( $original, $translated );
+
+		if ( null === $translatedNodes ) {
+			return null;
+		}
+
+		$originalChildren   = $this->getContentChildNodes( $original );
+		$translatedChildren = $this->getContentChildNodes( $translated );
+
+		if ( count( $originalChildren ) !== count( $translatedChildren ) ) {
+			return null;
+		}
+
+		foreach ( $originalChildren as $index => $child ) {
+			$fromChild = $this->getTranslatedNodes( $child, $translatedChildren[ $index ] );
+
+			if ( null === $fromChild ) {
+				return null;
+			}
+
+			$translatedNodes = array_merge( $translatedNodes, $fromChild );
+		}
+
+		return $translatedNodes;
+	}
+
+	private function getContentChildNodes( \DOMNode $node ) {
+		$children = [];
+
+		if ( ! $node->hasChildNodes() ) {
+			return $children;
+		}
+
+		foreach ( $node->childNodes as $child ) {
+			if ( $this->isFormattingNode( $child ) ) {
+				continue;
+			}
+
+			$children[] = $child;
+		}
+
+		return $children;
+	}
+
+	private function isFormattingNode( \DOMNode $node ) {
+		if ( $node instanceof \DOMText ) {
+			return '' === trim( $node->nodeValue );
+		}
+
+		return self::LINE_BREAK_TAG === $node->nodeName;
+	}
+
+	private function getTranslatedAttributes( \DOMNode $original, \DOMNode $translated ) {
+		if ( ! $original instanceof \DOMElement || ! $translated instanceof \DOMElement ) {
+			return [];
+		}
+
+		if ( $original->attributes->length !== $translated->attributes->length ) {
+			return null;
+		}
+
+		$translatedAttributes = [];
+
+		foreach ( $original->attributes as $attribute ) {
+			$translatedAttribute = $translated->attributes->getNamedItem( $attribute->name );
+
+			if ( ! $translatedAttribute ) {
+				return null;
+			}
+
+			if ( $attribute->nodeValue !== $translatedAttribute->nodeValue ) {
+				$translatedAttributes[] = [ $attribute, $translatedAttribute->nodeValue ];
+			}
+		}
+
+		return $translatedAttributes;
+	}
+
+	private function isPlainText( $value ) {
+		return false === strpos( $value, '<' );
+	}
+
+	private function encodeAmpersands( $value ) {
+		return str_replace( '&', '&amp;', $value );
+	}
+
 	protected function getInnerHTML( \DOMNode $element, $context ) {
 		$innerHTML = $element instanceof \DOMText
 			? $element->nodeValue
@@ -112,50 +249,29 @@ abstract class DOMHandle {
 			[ $this, 'removeCdataFromScriptTag' ]
 		);
 
-		return [ $removeCdata($innerHTML), $type ];
+		return [ $removeCdata( $innerHTML ), $type ];
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 * @param string   $context
-	 *
-	 * @return string
-	 */
 	abstract protected function getInnerHTMLFromChildNodes( \DOMNode $element, $context );
 
-	/**
-	 * @param \DOMNode $element
-	 *
-	 * @return array
-	 */
 	public function getPartialInnerHTML( \DOMNode $element ) {
 		return $this->getInnerHTML( $element, self::INNER_HTML_PARTIAL );
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 *
-	 * @return array
-	 */
 	public function getFullInnerHTML( \DOMNode $element ) {
 		return $this->getInnerHTML( $element, self::INNER_HTML_FULL );
 	}
 
-	/**
-	 * @param \DOMNode $element
-	 * @param string   $value
-	 */
 	public function setElementValue( \DOMNode $element, $value ) {
 		if ( $element instanceof \DOMAttr ) {
-			// @phpstan-ignore-next-line
 			$element->parentNode->setAttribute( $element->name, $value );
 		} elseif ( $element instanceof \DOMText ) {
-			$clone = $this->cloneNodeWithoutChildren( $element );
+			$clone            = $this->cloneNodeWithoutChildren( $element );
 			$clone->nodeValue = $value;
 			$element->parentNode->replaceChild( $clone, $element );
 		} else {
-			$clone = $this->cloneNodeWithoutChildren( $element );
-			$fragment = $this->getDom( $value )->firstChild; // Skip the wrapping div
+			$clone    = $this->cloneNodeWithoutChildren( $element );
+			$fragment = $this->getDom( $value )->firstChild;
 			foreach ( $fragment->childNodes as $child ) {
 				$clone->appendChild( $element->ownerDocument->importNode( $child, true ) );
 			}
@@ -166,48 +282,57 @@ abstract class DOMHandle {
 		}
 	}
 
-	/**
-	 * @param \DOMNode $clone
-	 * @param \DOMNode $element
-	 */
-	abstract protected function appendExtraChildNodes( \DOMNode $clone, \DOMNode $element );
+	abstract protected function appendExtraChildNodes( \DOMNode $clonedElement, \DOMNode $element );
 
-	/**
-	 * @param \DOMNode $element
-	 *
-	 * @return \DOMNode
-	 */
 	private function cloneNodeWithoutChildren( \DOMNode $element ) {
 		return $element->cloneNode( false );
 	}
 
 	protected function getAsHTML5( \DOMNode $element ) {
-		return str_replace( '--/>', '-->', strtr(
-			$element->ownerDocument->saveXML( $element, LIBXML_NOEMPTYTAG ),
-			[
-				'></area>'   => '/>',
-				'></base>'   => '/>',
-				'></br>'     => '/>',
-				'></col>'    => '/>',
-				'></embed>'  => '/>',
-				'></hr>'     => '/>',
-				'></img>'    => '/>',
-				'></input>'  => '/>',
-				'></link>'   => '/>',
-				'></meta>'   => '/>',
-				'></param>'  => '/>',
-				'></source>' => '/>',
-				'></track>'  => '/>',
-				'></wbr>'    => '/>',
-			] ) );
+		return str_replace(
+			'--/>',
+			'-->',
+			strtr(
+				$element->ownerDocument->saveXML( $element, LIBXML_NOEMPTYTAG ),
+				[
+					'></area>'   => '/>',
+					'></base>'   => '/>',
+					'></br>'     => '/>',
+					'></col>'    => '/>',
+					'></embed>'  => '/>',
+					'></hr>'     => '/>',
+					'></img>'    => '/>',
+					'></input>'  => '/>',
+					'></link>'   => '/>',
+					'></meta>'   => '/>',
+					'></param>'  => '/>',
+					'></source>' => '/>',
+					'></track>'  => '/>',
+					'></wbr>'    => '/>',
+				]
+			)
+		);
 	}
 
 	public static function removeCdataFromStyleTag( $innerHTML ) {
-		return preg_replace( '/<style(.*?)><!\\[CDATA\\[(.*?)\\]\\]><\\/style>/s', '<style$1>$2</style>', $innerHTML );
+		return self::unwrapCdataFromTag( 'style', $innerHTML );
 	}
 
 	public static function removeCdataFromScriptTag( $innerHTML ) {
-		return preg_replace( '/<script(.*?)><!\\[CDATA\\[(.*?)\\]\\]><\\/script>/s', '<script$1>$2</script>', $innerHTML );
+		return self::unwrapCdataFromTag( 'script', $innerHTML );
 	}
 
+	private static function unwrapCdataFromTag( $tag, $innerHTML ) {
+		$pattern = '/<' . $tag . '(.*?)><!\\[CDATA\\[(.*?)\\]\\]><\\/' . $tag . '>/s';
+
+		return preg_replace_callback(
+			$pattern,
+			function ( array $matches ) use ( $tag ) {
+				return '<' . $tag . $matches[1] . '>'
+					. str_replace( ']]]]><![CDATA[>', ']]>', $matches[2] )
+					. '</' . $tag . '>';
+			},
+			$innerHTML
+		);
+	}
 }

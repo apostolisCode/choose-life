@@ -1,20 +1,11 @@
 <?php
 
-/**
- * Class WPML_TM_Translation_Priorities_Register_Action
- */
 class WPML_TM_Translation_Priorities_Register_Action implements IWPML_Action {
 
-	/** @var SitePress */
 	private $sitepress;
 
 	const TRANSLATION_PRIORITY_TAXONOMY = 'translation_priority';
 
-	/**
-	 * WPML_TM_Translation_Priorities_Register_Action constructor.
-	 *
-	 * @param SitePress $sitepress
-	 */
 	public function __construct( SitePress $sitepress ) {
 		$this->sitepress = $sitepress;
 	}
@@ -35,9 +26,12 @@ class WPML_TM_Translation_Priorities_Register_Action implements IWPML_Action {
 			apply_filters(
 				'wpml_taxonomy_args_translation_priority',
 				array(
+					/* translators: Label of the setting that says how important the translation of this content is. */
 					'label'              => __( 'Translation Priority', 'sitepress' ),
 					'labels'             => array(
+						/* translators: Name of the group of values that say how important a translation is. Plural. */
 						'name'          => __( 'Translation Priorities', 'sitepress' ),
+						/* translators: Label of the setting that says how important the translation of this content is. */
 						'singular_name' => __( 'Translation Priority', 'sitepress' ),
 						'all_items'     => __( 'All Translation Priorities', 'sitepress' ),
 						'edit_item'     => __( 'Edit Translation Priority', 'sitepress' ),
