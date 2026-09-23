@@ -45,7 +45,8 @@
                     "step": 1,
                     "prepend": "",
                     "append": "€",
-                    "parent_repeater": "field_68f1a0c200002"
+                    "parent_repeater": "field_68f1a0c200002",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_68f1a0c200004",
@@ -66,9 +67,11 @@
                     "ui": 1,
                     "ui_on_text": "",
                     "ui_off_text": "",
-                    "parent_repeater": "field_68f1a0c200002"
+                    "parent_repeater": "field_68f1a0c200002",
+                    "wpml_cf_preferences": 1
                 }
-            ]
+            ],
+            "wpml_cf_preferences": 1
         }
     ],
     "location": [
@@ -89,5 +92,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790157268
+    "modified": 1790172276,
+    "acfml_field_group_mode": "translation"
 }

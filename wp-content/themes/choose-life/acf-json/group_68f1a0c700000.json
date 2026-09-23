@@ -20,7 +20,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_68f1a0c700005",
@@ -40,7 +41,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_68f1a0c700001",
@@ -88,7 +90,8 @@
                     "max_size": "",
                     "mime_types": "",
                     "preview_size": "thumbnail",
-                    "parent_repeater": "field_68f1a0c700001"
+                    "parent_repeater": "field_68f1a0c700001",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_68f1a0c700003",
@@ -105,14 +108,16 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https://www.instagram.com/p/…",
-                    "parent_repeater": "field_68f1a0c700001"
+                    "placeholder": "https:\/\/www.instagram.com\/p\/…",
+                    "parent_repeater": "field_68f1a0c700001",
+                    "wpml_cf_preferences": 1
                 }
-            ]
+            ],
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_68f1a0c700006",
-            "label": "Follow badge / profile link",
+            "label": "Follow badge \/ profile link",
             "name": "instagram_link",
             "aria-label": "",
             "type": "link",
@@ -124,7 +129,8 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array"
+            "return_format": "array",
+            "wpml_cf_preferences": 2
         }
     ],
     "location": [
@@ -145,5 +151,6 @@
     "active": true,
     "description": "Shown on every template that includes the Instagram feed section.",
     "show_in_rest": 0,
-    "modified": 1790168524
+    "modified": 1790172276,
+    "acfml_field_group_mode": "advanced"
 }

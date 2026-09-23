@@ -1,0 +1,11 @@
+<wpml-config>
+    <!-- Donations and subscriptions are records, not content: one copy for every language -->
+    <custom-types>
+        <custom-type translate="0">donations</custom-type>
+        <custom-type translate="0">subscriptions</custom-type>
+        <custom-type translate="1">faq</custom-type>
+    </custom-types>
+    <taxonomies>
+        <taxonomy translate="1">faq_category</taxonomy>
+    </taxonomies>
+</wpml-config>

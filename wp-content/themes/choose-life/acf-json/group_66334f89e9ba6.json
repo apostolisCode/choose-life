@@ -26,7 +26,8 @@
             "allow_null": 0,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_663397847ff7c",
@@ -48,7 +49,8 @@
             "placeholder": "",
             "step": "",
             "prepend": "€",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66334f8a946e8",
@@ -66,7 +68,8 @@
             },
             "display_format": "F j, Y",
             "return_format": "Ymd",
-            "first_day": 1
+            "first_day": 1,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66334fdf946e9",
@@ -84,7 +87,8 @@
             },
             "display_format": "F j, Y",
             "return_format": "Ymd",
-            "first_day": 1
+            "first_day": 1,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_6633502e090ba",
@@ -106,7 +110,8 @@
             "placeholder": "",
             "step": "",
             "prepend": "Month(s)",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66335097090bb",
@@ -132,7 +137,8 @@
             "allow_null": 1,
             "bidirectional": 0,
             "ui": 1,
-            "bidirectional_target": []
+            "bidirectional_target": [],
+            "wpml_cf_preferences": 1
         }
     ],
     "location": [
@@ -153,5 +159,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1714657630
+    "modified": 1790172276,
+    "acfml_field_group_mode": "translation"
 }

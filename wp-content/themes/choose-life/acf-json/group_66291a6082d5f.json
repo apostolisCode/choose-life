@@ -20,7 +20,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291ad165fad",
@@ -40,7 +41,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291af065fae",
@@ -60,7 +62,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291afa65faf",
@@ -80,7 +83,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291b1a65fb0",
@@ -100,7 +104,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291b2b65fb1",
@@ -120,7 +125,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66291b4f65fb2",
@@ -394,7 +400,8 @@
             "ui": 0,
             "layout": "vertical",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_662f88d568819",
@@ -414,7 +421,8 @@
             "default_value": 0,
             "ui": 0,
             "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_off_text": "",
+            "wpml_cf_preferences": 1
         }
     ],
     "location": [
@@ -435,5 +443,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1714392127
+    "modified": 1790172276,
+    "acfml_field_group_mode": "translation"
 }

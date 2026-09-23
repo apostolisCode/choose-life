@@ -37,7 +37,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66322a8b43e22",
@@ -57,7 +58,8 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_68f1a0c300001",
@@ -94,7 +96,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_68f1a0c300003",
@@ -114,7 +117,8 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66322a9d43e23",
@@ -151,7 +155,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66322aba43e25",
@@ -171,7 +176,8 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66322acc43e26",
@@ -191,7 +197,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_66322af043e27",
@@ -211,7 +218,8 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0,
-            "delay": 0
+            "delay": 0,
+            "wpml_cf_preferences": 2
         }
     ],
     "location": [
@@ -219,7 +227,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates/my-account.php"
+                "value": "templates\/my-account.php"
             }
         ]
     ],
@@ -232,5 +240,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790158328
+    "modified": 1790172276,
+    "acfml_field_group_mode": "translation"
 }
