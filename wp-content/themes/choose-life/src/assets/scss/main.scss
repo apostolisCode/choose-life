@@ -42,3 +42,4 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 */
 @import './elements/templates/my-account/index';
 @import './elements/templates/donation';
+@import './elements/templates/faq';

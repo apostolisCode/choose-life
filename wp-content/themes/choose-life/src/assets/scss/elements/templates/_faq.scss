@@ -1,0 +1,116 @@
+/* =========================================
+		FAQ page (templates/faq.php)
+		The questions reuse the .faq__* styles of the FAQ section.
+   ========================================= */
+
+.faq-page {
+	overflow-x: hidden;
+	font-family: $manrope_font;
+	color: $c_dark;
+
+	&__header {
+		@include page-width;
+		padding-top: 176px;
+	}
+
+	&__title {
+		@include display-title;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 44px;
+		width: calc(100% - 2 * #{$page_gutter});
+		max-width: 964px;
+		margin: 145px auto 0;
+	}
+
+	&__panel {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 44px;
+	}
+
+	.faq__more {
+		padding: 0;
+		border: 0;
+		background: none;
+		font-family: $manrope_font;
+		cursor: pointer;
+	}
+
+	@include media-breakpoint-down(xl) {
+		&__header {
+			padding-top: 96px;
+		}
+
+		&__body {
+			margin-top: 72px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		&__header {
+			padding-top: 56px;
+		}
+
+		&__body {
+			gap: 28px;
+			margin-top: 40px;
+		}
+
+		&__panel {
+			gap: 28px;
+		}
+	}
+}
+
+.faq-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+
+	&__tab {
+		padding: 11.8px 24.8px;
+		border: 1.2px solid $c_dark;
+		border-radius: 999px;
+		background-color: $c_white;
+		font-family: $manrope_font;
+		font-size: 22px;
+		line-height: 35px;
+		font-weight: 700;
+		color: #0A0A0A;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease;
+
+		&:hover {
+			border-color: $c_main;
+			color: $c_main;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $c_dark;
+			outline-offset: 3px;
+		}
+
+		&.is-active {
+			border-color: $c_main;
+			background-color: $c_main;
+			color: $c_white;
+			cursor: default;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		gap: 8px;
+
+		&__tab {
+			padding: 8px 18px;
+			font-size: 16px;
+			line-height: 24px;
+		}
+	}
+}
