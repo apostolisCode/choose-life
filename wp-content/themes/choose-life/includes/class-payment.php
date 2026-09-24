@@ -124,22 +124,15 @@ class Inc_Payment {
 			'donation_id' => $donation_id,
 		];
 
-		$computed_digest = $this->get_response_digest( $posted_data );
-		write_log('handle_recurring_payment_response, digest, computed digest');
-		write_log($posted_data['digest']);
-		write_log($computed_digest);
-//		if ( $computed_digest !== $posted_data['digest'] ) {
-//			$result['status'] = 'Digest mismatch';
-//			return $result;
-//		}
-
+		// the digest is checked by Inc_Api::handle_recurring_payment_response()
 		if ( $posted_data['status'] === 'CAPTURED' || $posted_data['status'] === 'AUTHORIZED' ) {
 			$result['status'] = 'completed';
-			// @todo recurring email notification
-//			$email            = new Inc_Email( $new_donation_id );
-//			$email->send_email();
 		}
 		update_field( 'donation_status', $result['status'], $donation_id );
+
+		if ( $result['status'] === 'completed' ) {
+			( new Inc_Email( $donation_id ) )->send_email();
+		}
 
 		return $result;
 	}
@@ -164,16 +157,21 @@ class Inc_Payment {
 		}
 
 		$computed_digest = $this->get_response_digest( $posted_data );
-		if ( $computed_digest !== $posted_data['digest'] ) {
+		if ( ! hash_equals( $computed_digest, (string) ( $posted_data['digest'] ?? '' ) ) ) {
+			write_log( 'Payment callback rejected: digest mismatch' );
+			write_log( $posted_data );
+
 			return $result;
 		}
 
 		if ( $posted_data['status'] === 'CAPTURED' || $posted_data['status'] === 'AUTHORIZED' ) {
 			$result['status'] = 'completed';
-			$email            = new Inc_Email( $result['donation_id'] );
-			$email->send_email();
 		}
 		update_field( 'donation_status', $result['status'], $result['donation_id'] );
+
+		if ( $result['status'] === 'completed' ) {
+			( new Inc_Email( $result['donation_id'] ) )->send_email();
+		}
 
 		if ($donation['data']['donation_type']['value'] === 'recurring' &&
 		    $result['status'] === 'completed' ) {

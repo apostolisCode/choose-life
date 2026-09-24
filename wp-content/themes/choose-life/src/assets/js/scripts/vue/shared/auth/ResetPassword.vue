@@ -158,7 +158,7 @@ export default {
 			this.$refs['reset-form-2'].validate().then((result) => {
 				if (result.valid) {
 					this.toggleLoading(true);
-					this.resetPassword(this.otp, this.userPassword)
+					this.resetPassword(this.userEmail, this.otp, this.userPassword)
 						.then((res) => {
 							if (res.success) {
 								this.$toast.open({

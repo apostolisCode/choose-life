@@ -155,6 +155,9 @@ add_action( 'admin_init', function () {
 	}
 }, 1 );
 
+// retry of the emails wp_mail() could not send (Inc_Email::schedule_email)
+add_action( 'cl_schedule_email_notification', [ 'Inc_Email', 'send_scheduled_email' ], 10, 5 );
+
 add_action( 'after_setup_theme', [ 'Inc_Api', 'get_instance' ] );
 add_action( 'after_setup_theme', [ 'Inc_Auth', 'get_instance' ] );
 add_action( 'after_setup_theme', [ 'Inc_Subscription', 'get_instance' ] );

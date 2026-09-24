@@ -106,8 +106,9 @@ export const userStore = defineStore('user', {
                     return res;
                 });
         },
-        resetPassword(otp, password) {
+        resetPassword(email, otp, password) {
             const data = {
+                email,
                 otp,
                 password
             };

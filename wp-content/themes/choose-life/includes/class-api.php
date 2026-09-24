@@ -310,7 +310,7 @@ class Inc_Api {
 			wp_send_json( $response );
 		}
 
-		$response['otp'] = Inc_Email::reset_password_init( $email );
+		Inc_Email::reset_password_init( $user );
 
 		$response['success']    = true;
 		$response['statusCode'] = 200;
@@ -332,10 +332,11 @@ class Inc_Api {
 		];
 
 		$payload  = $this->get_payload();
-		$otp      = $payload['otp'] ?? '';
+		$email    = $payload['email'] ?? '';
+		$otp      = preg_replace( '/\s+/', '', (string) ( $payload['otp'] ?? '' ) );
 		$password = $payload['password'] ?? '';
 
-		if ( ! $otp || ! $password ) {
+		if ( ! is_email( $email ) || ! $otp || ! $password ) {
 			$response['message'] = __( 'Invalid data. Please refresh the page and try again.', 'choose-life' );
 			wp_send_json( $response );
 		}
@@ -344,18 +345,15 @@ class Inc_Api {
 			$response['message'] = __( 'You must enter a strong password.', 'choose-life' );
 			wp_send_json( $response );
 		}
-		$otp_data = CRL_Cache::read( $otp );
-		if ( ! $otp_data ) {
-			$response['message'] = __( 'The One-Time Password (OTP) has expired. Please restart the password reset process.', 'choose-life' );
-			wp_send_json( $response );
-		}
-		if ( ! array_key_exists( 'email', $otp_data ) || ! is_email( $otp_data['email'] ) ) {
-			$response['message'] = __( 'Invalid One-Time Password (OTP). Please restart the password reset process.', 'choose-life' );
-			wp_send_json( $response );
-		}
-		$user = get_user_by( 'email', $otp_data['email'] );
+		$user = get_user_by( 'email', $email );
 		if ( ! $user ) {
 			$response['message'] = __( 'Invalid One-Time Password (OTP). Please restart the password reset process.', 'choose-life' );
+			wp_send_json( $response );
+		}
+		// the code is checked against this user only, with a limited number of tries
+		$code_check = Inc_Email::check_reset_code( $user, $otp );
+		if ( $code_check !== true ) {
+			$response['message'] = $code_check;
 			wp_send_json( $response );
 		}
 
@@ -373,14 +371,26 @@ class Inc_Api {
 
 		$response = false;
 
-		$data = $request->get_params();
-		preg_match( '/(.*?)at/', $data['orderid'], $matches );
+		$data    = $request->get_params();
+		$payment = Inc_Payment::get_instance();
+
+		// only charges signed by the gateway: a forged call must not record a
+		// donation (or email the donor)
+		if ( empty( $data['digest'] ) || ! hash_equals( $payment->get_response_digest( $data ), (string) $data['digest'] ) ) {
+			write_log( 'Recurring payment callback rejected: digest mismatch' );
+			write_log( $data );
+
+			return new WP_REST_Response( false, 403 );
+		}
+
+		if ( ! preg_match( '/^(\d+)at/', (string) ( $data['orderid'] ?? '' ), $matches ) ) {
+			return new WP_REST_Response( false, 400 );
+		}
 		$first_donation_id = $matches[1];
 
 		$donation_class = Inc_Donation::get_instance();
 		$donation_id    = $donation_class->create_recurring_donation( $first_donation_id, $data );
 		if ( $donation_id ) {
-			$payment  = Inc_Payment::get_instance();
 			$response = $payment->handle_recurring_payment_response( $data, $donation_id );
 		}
 

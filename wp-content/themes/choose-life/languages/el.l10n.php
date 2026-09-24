@@ -196,5 +196,23 @@ return [
 		'Patient country'              => 'Χώρα ασθενούς',
 		'Clear filters'                => 'Καθαρισμός φίλτρων',
 		'No journeys match these filters.' => 'Κανένα ταξίδι δεν ταιριάζει με αυτά τα φίλτρα.',
+		// Thank you email (Inc_Email)
+		'Thank you for your donation {ORDER_NUMBER}' => 'Σε ευχαριστούμε για τη δωρεά σου {ORDER_NUMBER}',
+		'Your donation of %1$s has been received. Reference: %2$s' => 'Λάβαμε τη δωρεά σου ύψους %1$s. Κωδικός δωρεάς: %2$s',
+		'Thank you!'                   => 'Σε ευχαριστούμε!',
+		'Hi {FIRST_NAME},'             => 'Γεια σου,',
+		'Thank you so much for your donation. Your support helps us continue our work and bring hope to the people who need it most.' => 'Σε ευχαριστούμε θερμά για τη δωρεά σου. Η στήριξή σου μάς βοηθά να συνεχίσουμε το έργο μας και να δίνουμε ελπίδα σε όσους τη χρειάζονται περισσότερο.',
+		'You will find the details of your donation below.' => 'Παρακάτω θα βρεις τα στοιχεία της δωρεάς σου.',
+		'With gratitude,'              => 'Με ευγνωμοσύνη,',
+		'The Choose Life team'         => 'Η ομάδα του Choose Life',
+		'See your donations'           => 'Δες τις δωρεές σου',
+		'Questions? Contact us:'       => 'Έχεις κάποια απορία; Επικοινώνησε μαζί μας:',
+		// Password reset email / code check (Inc_Email)
+		'Your one time password'       => 'Ο κωδικός μίας χρήσης σου',
+		'Password reset'               => 'Επαναφορά κωδικού',
+		'Use this one-time code to choose a new password for {USER_EMAIL}:' => 'Χρησιμοποίησε αυτόν τον κωδικό μίας χρήσης για να ορίσεις νέο κωδικό πρόσβασης για το {USER_EMAIL}:',
+		'The code expires in a few minutes. If you did not ask for a new password, you can ignore this email.' => 'Ο κωδικός λήγει σε λίγα λεπτά. Αν δεν ζήτησες νέο κωδικό πρόσβασης, αγνόησε αυτό το email.',
+		'The One-Time Password (OTP) is not correct. Please try again.' => 'Ο κωδικός μίας χρήσης (OTP) δεν είναι σωστός. Δοκίμασε ξανά.',
+		'Too many wrong codes. Please restart the password reset process.' => 'Έγιναν πολλές λάθος προσπάθειες. Ξεκίνησε ξανά την επαναφορά κωδικού.',
 	],
 ];

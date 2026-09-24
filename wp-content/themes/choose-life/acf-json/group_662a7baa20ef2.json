@@ -178,7 +178,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "{ORDER_NUMBER}: Order ID",
+            "message": "{ORDER_NUMBER}: Donation reference (e.g. #CL-2026-0612)\r\n{FIRST_NAME}: Donor first name\r\n{LAST_NAME}: Donor last name\r\n{AMOUNT}: Donation amount (e.g. 50€)\r\n{DATE}: Donation date\r\n\r\nLeave the subject or the content empty to use the default texts. The donation details are always added below the content.",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -518,6 +518,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1790172276,
+    "modified": 1790240642,
     "acfml_field_group_mode": "advanced"
 }

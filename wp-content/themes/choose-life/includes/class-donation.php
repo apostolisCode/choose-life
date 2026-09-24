@@ -207,6 +207,11 @@ class Inc_Donation {
 
 		$data_to_save['donation_status'] = 'pending';
 
+		// the thank you email goes out in this language (Inc_Email)
+		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+			$data_to_save['donation_language'] = apply_filters( 'wpml_current_language', null );
+		}
+
 		// the custom name only applies to the "other name" choice
 		if ( ( $data_to_save['donor_list_display'] ?? '' ) !== 'other' ) {
 			unset( $data_to_save['donor_list_name'] );
@@ -384,8 +389,9 @@ class Inc_Donation {
 		$subscription_id = get_field('subscription_id', $first_donation_id);
 
 		$data_to_save = [
-			'donation_status' => 'pending',
-			'subscription_id' => $subscription_id
+			'donation_status'   => 'pending',
+			'subscription_id'   => $subscription_id,
+			'donation_language' => get_post_meta( $first_donation_id, 'donation_language', true ),
 		];
 		foreach ( $fields as $k => $v ) {
 			$data_to_save[ $k ] = $v['value'];
