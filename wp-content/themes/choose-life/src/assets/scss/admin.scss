@@ -5,6 +5,11 @@
    ========================================= */
 
 .cl-coords-picker {
+	// the latitude / longitude fields the map fills
+	&__source.acf-field {
+		display: none !important;
+	}
+
 	&__search {
 		display: flex;
 		align-items: center;

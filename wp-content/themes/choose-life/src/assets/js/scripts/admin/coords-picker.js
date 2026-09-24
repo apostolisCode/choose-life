@@ -32,14 +32,21 @@ function setupPair(L, root, prefix) {
 	const cityInput = field('city')?.querySelector('input');
 	const countrySelect = field('country')?.querySelector('select');
 
-	const box = document.createElement('div');
+	// the map sets the numbers; the fields stay in the form, out of sight
+	[latField, lngField].forEach((el) => el.classList.add('cl-coords-picker__source'));
+
+	// same markup as the fields around it: rows of a table on the term edit
+	// screen, divs everywhere else
+	const inTable = lngField.tagName === 'TR';
+	const cell = inTable ? 'td' : 'div';
+	const box = document.createElement(inTable ? 'tr' : 'div');
 	box.className = 'acf-field cl-coords-picker';
 	box.innerHTML = `
-		<div class="acf-label">
+		<${cell} class="acf-label">
 			<label>Point on the map</label>
 			<p class="description">Click the map or drag the pin, or search for the place. Empty: the centre of the country.</p>
-		</div>
-		<div class="acf-input">
+		</${cell}>
+		<${cell} class="acf-input">
 			<div class="cl-coords-picker__search">
 				<input type="search" placeholder="Search a place…">
 				<button type="button" class="button" data-search>Search</button>
@@ -47,7 +54,7 @@ function setupPair(L, root, prefix) {
 			</div>
 			<ul class="cl-coords-picker__results" hidden></ul>
 			<div class="cl-coords-picker__map"></div>
-		</div>`;
+		</${cell}>`;
 	lngField.after(box);
 
 	const search = box.querySelector('input[type="search"]');
@@ -91,7 +98,6 @@ function setupPair(L, root, prefix) {
 		const {lat, lng} = marker.getLatLng();
 		write([lat, lng]);
 	});
-	[latInput, lngInput].forEach((input) => input.addEventListener('input', () => show(current())));
 
 	box.querySelector('[data-clear]').addEventListener('click', () => {
 		latInput.value = '';
@@ -146,6 +152,12 @@ function setupPair(L, root, prefix) {
 	search.addEventListener('focus', () => {
 		if (!search.value && cityInput?.value) search.value = cityInput.value;
 	});
+
+	// the box is not an ACF field, so ACF tabs / conditional logic don't hide
+	// it: follow the longitude field's "acf-hidden" class
+	const syncHidden = () => box.classList.toggle('acf-hidden', lngField.classList.contains('acf-hidden'));
+	new MutationObserver(syncHidden).observe(lngField, {attributes: true, attributeFilter: ['class']});
+	syncHidden();
 
 	// ACF tabs start hidden: redraw once the map gets a size
 	new ResizeObserver(() => map.invalidateSize()).observe(mapEl);
