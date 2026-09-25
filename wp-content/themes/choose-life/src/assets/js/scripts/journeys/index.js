@@ -178,6 +178,25 @@ function init(root, data) {
 	list.addEventListener('scroll', updateScrollbar, {passive: true});
 	new ResizeObserver(updateScrollbar).observe(list);
 
+	// ─── look of the globe (?globe=, selector for editors) ──────────────
+
+	let theme = data.theme || data.default;
+	const themeButtons = [...root.querySelectorAll('[data-journeys-theme]')];
+
+	function setTheme(name) {
+		root.classList.replace(`journeys--${theme}`, `journeys--${name}`);
+		theme = name;
+		themeButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.journeysTheme === name)));
+		globe?.setTheme(name);
+
+		// shareable: keep it in the address
+		const url = new URL(window.location.href);
+		name === data.default ? url.searchParams.delete('globe') : url.searchParams.set('globe', name);
+		history.replaceState(history.state, '', url);
+	}
+
+	themeButtons.forEach((button) => button.addEventListener('click', () => setTheme(button.dataset.journeysTheme)));
+
 	// ─── tour: step through the journeys until the visitor takes over ───
 
 	function stopTour() {
@@ -221,6 +240,7 @@ function init(root, data) {
 				journeys,
 				textures: data.textures,
 				icons: {sample: data.icons.sample},
+				theme,
 				reducedMotion,
 				onSelect: (id) => select(id),
 				onInteract: stopTour,

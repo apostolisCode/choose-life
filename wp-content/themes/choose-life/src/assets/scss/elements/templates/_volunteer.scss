@@ -160,6 +160,268 @@ $journeys_blue: #3D4F98;
 		opacity: 0;
 	}
 
+	// the other looks (?globe=): a warm dark card instead of the navy one,
+	// no fallback image (it shows the original globe) unless there is no WebGL
+	&--flat,
+	&--illustration {
+		.journeys__card::before {
+			background: linear-gradient(90deg, $c_dark 72%, #33211F);
+		}
+
+		.journeys__label {
+			background-color: rgba($c_dark, .82);
+		}
+
+		.journeys__hint {
+			background-color: rgba($c_dark, .72);
+		}
+
+		.journeys__filters {
+			background-color: rgba($c_dark, .95);
+		}
+
+		// dark glass, so the white text stays readable over the light land
+		.journeys__panel {
+			background: linear-gradient(135deg, rgba($c_dark, .78), rgba($c_dark, .55) 60%);
+		}
+
+		.journeys__filters-toggle {
+			background-color: rgba($c_dark, .6);
+
+			&:hover,
+			&[aria-expanded="true"] {
+				background-color: rgba($c_dark, .8);
+			}
+		}
+
+		.journey-card {
+			background: linear-gradient(135deg, rgba($c_dark, .7), rgba($c_dark, .5) 70%);
+
+			&.is-active {
+				background: linear-gradient(135deg, rgba($c_dark, .85), rgba($c_dark, .65) 70%);
+			}
+		}
+
+		&:not(.is-static) .journeys__fallback {
+			opacity: 0;
+		}
+	}
+
+	// illustration: a light card (a blue sky with clouds) instead of the dark one
+	&--illustration .journeys__card::before {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1736 877' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='%23fff'%3E%3Cg opacity='0.95' transform='translate(600 60) scale(0.9)'%3E%3Ccircle cx='40' cy='42' r='34'/%3E%3Ccircle cx='84' cy='26' r='46'/%3E%3Ccircle cx='132' cy='44' r='34'/%3E%3Crect x='6' y='42' width='160' height='36' rx='18'/%3E%3C/g%3E%3Cg opacity='0.8' transform='translate(1040 130) scale(0.6)'%3E%3Ccircle cx='40' cy='42' r='34'/%3E%3Ccircle cx='84' cy='26' r='46'/%3E%3Ccircle cx='132' cy='44' r='34'/%3E%3Crect x='6' y='42' width='160' height='36' rx='18'/%3E%3C/g%3E%3Cg opacity='0.9' transform='translate(150 740) scale(0.8)'%3E%3Ccircle cx='40' cy='42' r='34'/%3E%3Ccircle cx='84' cy='26' r='46'/%3E%3Ccircle cx='132' cy='44' r='34'/%3E%3Crect x='6' y='42' width='160' height='36' rx='18'/%3E%3C/g%3E%3Cg opacity='0.7' transform='translate(1290 30) scale(0.5)'%3E%3Ccircle cx='40' cy='42' r='34'/%3E%3Ccircle cx='84' cy='26' r='46'/%3E%3Ccircle cx='132' cy='44' r='34'/%3E%3Crect x='6' y='42' width='160' height='36' rx='18'/%3E%3C/g%3E%3Cg opacity='0.6' transform='translate(430 250) scale(0.45)'%3E%3Ccircle cx='40' cy='42' r='34'/%3E%3Ccircle cx='84' cy='26' r='46'/%3E%3Ccircle cx='132' cy='44' r='34'/%3E%3Crect x='6' y='42' width='160' height='36' rx='18'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat, linear-gradient(180deg, #7CC2EE, #D4EDFA);
+	}
+
+	&--illustration {
+		// on the light card the glass would turn a muddy grey: (almost) solid dark
+		.journeys__themes,
+		.journeys__filters-toggle,
+		.journeys__filters-toggle:hover {
+			background-color: $c_dark;
+		}
+
+		.journeys__panel {
+			background: rgba($c_dark, .94);
+		}
+
+		.journey-card {
+			background: rgba($c_dark, .88);
+
+			&.is-active {
+				background: $c_dark;
+				border-color: $c_main;
+			}
+		}
+
+		.journeys__scrollbar::before {
+			background-color: rgba($c_dark, .25);
+		}
+
+		.journeys__scrollbar-thumb {
+			background-color: $c_dark;
+		}
+
+		.journeys__empty {
+			color: $c_dark;
+		}
+	}
+
+	// map: the grey map of the design, with a light UI (white cards, dark text)
+	&--map {
+		.journeys__card {
+			color: $c_dark;
+		}
+
+		.journeys__card::before {
+			background: #DADADA;
+		}
+
+		&:not(.is-static) .journeys__fallback {
+			opacity: 0;
+		}
+
+		.journeys__themes {
+			background-color: $c_dark;
+		}
+
+		.journeys__label {
+			border-color: #D6D6D6;
+			background-color: rgba($c_white, .92);
+			color: $c_dark;
+
+			&--donor {
+				color: $c_grey;
+			}
+		}
+
+		.journeys__hint {
+			background-color: rgba($c_white, .85);
+			color: $c_dark;
+		}
+
+		.journeys__panel {
+			border-color: rgba($c_white, .7);
+			background: rgba(#F4F4F4, .88);
+		}
+
+		.journeys__close img,
+		.journeys__filters-toggle img {
+			filter: invert(1);
+		}
+
+		.journeys__close:hover {
+			background-color: rgba($c_dark, .08);
+		}
+
+		.journeys__panel-title,
+		.journeys__facts dd {
+			color: $c_dark;
+		}
+
+		.journeys__facts dt,
+		.journeys__story {
+			color: #585858;
+		}
+
+		.journeys__route-arc path {
+			stroke: $c_main;
+			stroke-opacity: 1;
+		}
+
+		.journeys__place {
+			border: 1px solid #DCDCDC;
+			background-color: $c_white;
+		}
+
+		.journeys__filters-toggle {
+			background-color: $c_white;
+			color: $c_dark;
+
+			&:hover,
+			&[aria-expanded="true"] {
+				background-color: #F4F4F4;
+			}
+		}
+
+		.journeys__filters {
+			border-color: #DCDCDC;
+			background-color: $c_white;
+			color: $c_dark;
+			box-shadow: 0 24px 60px rgba($c_black, .12);
+		}
+
+		.journeys__filter-group legend {
+			color: $c_grey;
+		}
+
+		.journeys__chip span {
+			border-color: #CFCFCF;
+		}
+
+		.journeys__chip input:checked + span {
+			color: $c_white;
+		}
+
+		.journeys__filters-clear {
+			color: $c_dark;
+		}
+
+		.journeys__empty {
+			color: $c_dark;
+		}
+
+		.journeys__scrollbar::before {
+			background-color: rgba($c_dark, .15);
+		}
+
+		.journeys__scrollbar-thumb {
+			background-color: $c_dark;
+		}
+
+		.journey-card {
+			border-color: transparent;
+			background: $c_white;
+			color: $c_dark;
+			backdrop-filter: none;
+
+			&:hover {
+				border-color: #CFCFCF;
+			}
+
+			&.is-active {
+				border-color: $c_main;
+				background: $c_white;
+			}
+		}
+
+		.journey-card__route {
+			color: $c_grey;
+		}
+	}
+
+	// look selector for editors (elements/sections/journeys-globe.php)
+	&__themes {
+		position: absolute;
+		top: 28px;
+		left: 58px;
+		z-index: 3;
+		display: flex;
+		gap: 4px;
+		padding: 4px;
+		border: 1px solid rgba($c_white, .16);
+		border-radius: 999px;
+		background-color: rgba($c_black, .35);
+		backdrop-filter: blur(12px);
+	}
+
+	&__theme {
+		padding: 6px 16px;
+		border: 0;
+		border-radius: 999px;
+		background: none;
+		font-family: $manrope_font;
+		font-size: 14px;
+		line-height: 20px;
+		font-weight: 700;
+		color: rgba($c_white, .75);
+		cursor: pointer;
+		transition: background-color 200ms ease, color 200ms ease;
+
+		&:hover {
+			color: $c_white;
+		}
+
+		&[aria-pressed="true"] {
+			background-color: $c_white;
+			color: $c_dark;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $c_white;
+			outline-offset: 2px;
+		}
+	}
+
 	&__overlay {
 		position: absolute;
 		inset: 0;
@@ -589,10 +851,19 @@ $journeys_blue: #3D4F98;
 		&__route {
 			margin-top: 64px;
 		}
+
+		&__themes {
+			left: 40px;
+		}
 	}
 
 	@include media-breakpoint-down(xl) {
 		margin-top: 72px;
+
+		&__themes {
+			top: 16px;
+			left: 20px;
+		}
 
 		&__card {
 			display: flex;

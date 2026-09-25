@@ -22,10 +22,30 @@ $first   = $journeys[0];
 $place_label = function ( $place ) {
 	return $place['city'] ? $place['city'] . ', ' . $place['country_name'] : $place['country_name'];
 };
+
+// look of the globe (illustration by default), while the design is being chosen: ?globe=original|flat|map for anyone, a selector for editors
+$themes = [
+	'original'     => __( 'Original', 'choose-life' ),
+	'flat'         => __( 'Flat', 'choose-life' ),
+	'illustration' => __( 'Illustration', 'choose-life' ),
+	'map'          => __( 'Map', 'choose-life' ),
+];
+$default_theme = 'illustration';
+$theme         = sanitize_key( wp_unslash( $_GET['globe'] ?? '' ) );
+$theme         = isset( $themes[ $theme ] ) ? $theme : $default_theme;
 ?>
-<section class="journeys" data-journeys aria-label="<?php esc_attr_e( 'Journeys of hope', 'choose-life' ); ?>">
+<section class="journeys journeys--<?php echo esc_attr( $theme ); ?>" data-journeys aria-label="<?php esc_attr_e( 'Journeys of hope', 'choose-life' ); ?>">
     <div class="journeys__card" data-tilt-card data-tilt="-5">
         <span class="journeys__card-back" data-tilt-card-back aria-hidden="true"></span>
+
+		<?php if ( current_user_can( 'edit_posts' ) ) : ?>
+            <div class="journeys__themes" role="group" aria-label="<?php esc_attr_e( 'Globe look', 'choose-life' ); ?>">
+				<?php foreach ( $themes as $key => $label ) : ?>
+                    <button type="button" class="journeys__theme" data-journeys-theme="<?php echo esc_attr( $key ); ?>"
+                            aria-pressed="<?php echo $key === $theme ? 'true' : 'false'; ?>"><?php echo esc_html( $label ); ?></button>
+				<?php endforeach; ?>
+            </div>
+		<?php endif; ?>
 
         <div class="journeys__stage" data-journeys-stage aria-hidden="true">
             <img class="journeys__fallback" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/globe/globe-fallback.webp' ); ?>"
@@ -132,5 +152,7 @@ $place_label = function ( $place ) {
 		'journeys' => $journeys,
 		'textures' => get_template_directory_uri() . '/assets/img/globe/',
 		'icons'    => [ 'sample' => $svg . 'sample.svg' ],
+		'theme'    => $theme,
+		'default'  => $default_theme,
 	] ); ?>;
 </script>

@@ -19,7 +19,9 @@ import {
 	LinearMipmapLinearFilter,
 	Mesh,
 	MeshBasicMaterial,
+	NearestFilter,
 	NoColorSpace,
+	NormalBlending,
 	PerspectiveCamera,
 	Points,
 	Raycaster,
@@ -34,6 +36,7 @@ import {
 	Vector4,
 	WebGLRenderer,
 } from 'three';
+import COUNTRY_IDS from './country-ids';
 import {arcPoints, nearestAngle, rotationFor, toVector} from './geo';
 import {
 	arcFragment,
@@ -50,15 +53,47 @@ import {
 
 const FOV = 30;
 const DEG = Math.PI / 180;
-const ARC_COLOR = new Color('#bfe2ff');
-const ARC_ACTIVE_COLOR = new Color('#ffffff');
-const HEAD_COLOR = new Color('#9fd4ff');
-const HEAD_ACTIVE_COLOR = new Color('#ff5a5f');
-const HEART_COLOR = new Color('#d6ecff');
-const HEART_ACTIVE_COLOR = new Color('#ff3b44');
-const POINT_COLOR = new Color('#d8ecff');
-const POINT_ACTIVE_COLOR = new Color('#ffffff');
-const DONOR_COLOR = new Color('#8fc2ff');
+
+/**
+ * Looks of the globe (switchable, see setTheme()): the style of the Earth
+ * shader, the colours of the arcs / points / hearts and the atmosphere.
+ * flat: normal instead of additive blending; glow: opacity of the soft tube
+ * around each arc; dashed: dashed arcs; countries: the countries of the chosen
+ * journey filled (needs countries-4k.png); pointOutline: outline of the points
+ * (else outline, which the hearts use); arcWidth: thickness of the arcs.
+ */
+const THEMES = {
+	original: {
+		style: 0, flat: false, glow: 1,
+		arc: '#bfe2ff', arcActive: '#ffffff', head: '#9fd4ff', headActive: '#ff5a5f',
+		heart: '#d6ecff', heartActive: '#ff3b44', point: '#d8ecff', pointActive: '#ffffff',
+		donor: '#8fc2ff', outline: '#000000', atmosphere: '#4f9dff', atmosphereStrength: 1.6,
+	},
+	flat: {
+		style: 1, flat: true, glow: 0,
+		arc: '#D91A21', arcActive: '#D91A21', head: '#FF6168', headActive: '#FF6168',
+		heart: '#D91A21', heartActive: '#D91A21', point: '#D91A21', pointActive: '#D91A21',
+		donor: '#D91A21', outline: '#1C1C1C', atmosphere: '#EEBEB1', atmosphereStrength: 0.55,
+	},
+	map: {
+		style: 3, flat: true, glow: 0, dashed: true, countries: true, arcWidth: 0.45,
+		arc: '#EDB3BA', arcActive: '#F3223F', head: '#F3223F', headActive: '#FF6168',
+		heart: '#F3223F', heartActive: '#F3223F', point: '#FFFFFF', pointActive: '#FFFFFF',
+		donor: '#F3223F', outline: '#FFFFFF', pointOutline: '#9E9E9E', atmosphere: '#000000', atmosphereStrength: 0,
+	},
+	illustration: {
+		style: 2, flat: true, glow: 0,
+		arc: '#D91A21', arcActive: '#D91A21', head: '#FF6168', headActive: '#FF6168',
+		heart: '#D91A21', heartActive: '#D91A21', point: '#D91A21', pointActive: '#D91A21',
+		donor: '#D91A21', outline: '#FFFFFF', atmosphere: '#000000', atmosphereStrength: 0,
+	},
+};
+Object.values(THEMES).forEach((theme) => {
+	Object.keys(theme).forEach((key) => {
+		if (typeof theme[key] === 'string') theme[key] = new Color(theme[key]);
+	});
+});
+
 const SPEED = 0.16;
 // region of the detail textures (earth-detail-*): lng −12…48, lat 28…62, as UV (u = (lng+180)/360, v = (lat+90)/180)
 const DETAIL_BOUNDS = [168 / 360, 118 / 180, 228 / 360, 152 / 180];
@@ -79,6 +114,7 @@ export default class JourneyGlobe {
 		this.overlay = overlay;
 		this.options = options;
 		this.motion = options.reducedMotion ? 0 : 1;
+		this.theme = THEMES[options.theme] || THEMES.original;
 
 		this.state = {
 			yaw: -110 * DEG, pitch: -8 * DEG, zoom: 1,
@@ -99,6 +135,7 @@ export default class JourneyGlobe {
 		this.setupPoints();
 		this.setupOverlay();
 		this.setupPointer();
+		this.setTheme(options.theme);
 		this.resize();
 
 		this.resizeObserver = new ResizeObserver(() => this.resize());
@@ -138,7 +175,11 @@ export default class JourneyGlobe {
 			uDetailLights: {value: null},
 			uDetailBounds: {value: new Vector4(...DETAIL_BOUNDS)},
 			uDetailOn: {value: 0},
+			uCountries: {value: null},
+			uActive: {value: new Vector3()},
+			uActiveOn: {value: 0},
 			uLightDir: {value: new Vector3(-0.6, 0.55, 0.9)},
+			uStyle: {value: 0},
 		};
 		this.earth = new Mesh(
 			new SphereGeometry(1, 128, 64),
@@ -153,7 +194,7 @@ export default class JourneyGlobe {
 			new ShaderMaterial({
 				vertexShader: atmosphereVertex,
 				fragmentShader: atmosphereFragment,
-				uniforms: {uColor: {value: new Color('#4f9dff')}, uStrength: {value: 1.6}},
+				uniforms: {uColor: {value: new Color()}, uStrength: {value: 1}},
 				side: BackSide,
 				blending: AdditiveBlending,
 				transparent: true,
@@ -163,7 +204,8 @@ export default class JourneyGlobe {
 		this.scene.add(this.atmosphere);
 	}
 
-	arcMaterial(offset, dashed = false) {
+	// dashes: along the arc, by its length (angle), so that they keep about the same size
+	arcMaterial(offset, dashed = false, angle = 0.35) {
 		return new ShaderMaterial({
 			vertexShader: arcVertex,
 			fragmentShader: arcFragment,
@@ -176,8 +218,10 @@ export default class JourneyGlobe {
 				uMotion: {value: this.motion},
 				uSoft: {value: 0},
 				uDashed: {value: dashed ? 1 : 0},
-				uColor: {value: (dashed ? DONOR_COLOR : ARC_COLOR).clone()},
-				uHeadColor: {value: HEAD_COLOR.clone()},
+				uDashes: {value: Math.max(6, Math.round(angle * 40))},
+				uFlat: {value: 0},
+				uColor: {value: new Color()},
+				uHeadColor: {value: new Color()},
 			},
 			blending: AdditiveBlending,
 			transparent: true,
@@ -222,13 +266,13 @@ export default class JourneyGlobe {
 			const b = toVector(journey.patient.lat, journey.patient.lng);
 			const {points, angle} = arcPoints(a, b);
 			const offset = (index * 0.618) % 1;
-			const arc = {journey, angle, offset, phase: offset, a, b, meshes: [], materials: [], curve: null, opacity: 1, active: 0, hover: 0};
+			const arc = {journey, angle, points, offset, phase: offset, a, b, meshes: [], materials: [], curve: null, opacity: 1, active: 0, hover: 0};
 
 			if (angle > 0.002) {
 				const core = this.tube(points, angle, 1);
 				const glow = this.tube(points, angle, 3.4);
-				const coreMaterial = this.arcMaterial(offset);
-				const glowMaterial = this.arcMaterial(offset);
+				const coreMaterial = this.arcMaterial(offset, false, angle);
+				const glowMaterial = this.arcMaterial(offset, false, angle);
 				glowMaterial.uniforms.uSoft.value = 1;
 				arc.curve = core.curve;
 				arc.meshes.push(new Mesh(core.geometry, coreMaterial), new Mesh(glow.geometry, glowMaterial));
@@ -248,7 +292,8 @@ export default class JourneyGlobe {
 				const leg = arcPoints(d, a, 24);
 				if (leg.angle > 0.002) {
 					const tube = this.tube(leg.points, leg.angle, 0.8);
-					const material = this.arcMaterial(0, true);
+					arc.leg = leg;
+					const material = this.arcMaterial(0, true, leg.angle);
 					arc.donorMesh = new Mesh(tube.geometry, material);
 					arc.donorMaterial = material;
 					this.globe.add(arc.donorMesh);
@@ -297,8 +342,10 @@ export default class JourneyGlobe {
 			uTime: {value: 0},
 			uMotion: {value: this.motion},
 			uPixelRatio: {value: this.pixelRatio},
-			uColor: {value: POINT_COLOR},
-			uActiveColor: {value: POINT_ACTIVE_COLOR},
+			uFlat: {value: 0},
+			uColor: {value: new Color()},
+			uActiveColor: {value: new Color()},
+			uOutlineColor: {value: new Color()},
 		};
 		this.points = new Points(geometry, new ShaderMaterial({
 			vertexShader: pointVertex,
@@ -327,8 +374,10 @@ export default class JourneyGlobe {
 			fragmentShader: heartFragment,
 			uniforms: {
 				uPixelRatio: {value: this.pixelRatio},
-				uColor: {value: HEART_COLOR},
-				uActiveColor: {value: HEART_ACTIVE_COLOR},
+				uFlat: {value: 0},
+				uColor: {value: new Color()},
+				uActiveColor: {value: new Color()},
+				uOutlineColor: {value: new Color()},
 			},
 			blending: AdditiveBlending,
 			transparent: true,
@@ -367,6 +416,74 @@ export default class JourneyGlobe {
 		this.marker.className = 'journeys__marker';
 		this.marker.innerHTML = `<img src="${this.options.icons.sample}" width="17" height="24" alt="">`;
 		this.overlay.appendChild(this.marker);
+	}
+
+	/**
+	 * Switch the look (THEMES): the Earth style, the colours and the blending
+	 * of the arcs, points and hearts. The arc colours follow in update().
+	 */
+	setTheme(name) {
+		const theme = THEMES[name] || THEMES.original;
+		const blending = theme.flat ? NormalBlending : AdditiveBlending;
+		const flat = theme.flat ? 1 : 0;
+		this.theme = theme;
+
+		this.earthUniforms.uStyle.value = theme.style;
+		this.atmosphere.material.uniforms.uColor.value.copy(theme.atmosphere);
+		this.atmosphere.material.uniforms.uStrength.value = theme.atmosphereStrength;
+		// additive on the transparent canvas it would darken a light card: none there
+		this.atmosphere.visible = theme.atmosphereStrength > 0;
+
+		const materials = [this.points.material, this.hearts.material];
+		this.arcs.forEach((arc) => {
+			materials.push(...arc.materials);
+			if (arc.donorMaterial) {
+				materials.push(arc.donorMaterial);
+				arc.donorMaterial.uniforms.uColor.value.copy(theme.donor);
+				arc.donorMaterial.uniforms.uHeadColor.value.copy(theme.donor);
+			}
+		});
+		materials.forEach((material) => {
+			material.blending = blending;
+			material.uniforms.uFlat.value = flat;
+		});
+		this.arcs.forEach((arc) => arc.materials.forEach((m) => (m.uniforms.uDashed.value = theme.dashed ? 1 : 0)));
+		this.setArcWidth(theme.arcWidth || 1);
+		if (theme.countries) this.loadCountries();
+
+		const points = this.points.material.uniforms;
+		points.uColor.value.copy(theme.point);
+		points.uActiveColor.value.copy(theme.pointActive);
+		points.uOutlineColor.value.copy(theme.pointOutline || theme.outline);
+		const hearts = this.hearts.material.uniforms;
+		hearts.uColor.value.copy(theme.heart);
+		hearts.uActiveColor.value.copy(theme.heartActive);
+		hearts.uOutlineColor.value.copy(theme.outline);
+
+		if (!this.running && this.width) {
+			this.update(0);
+			this.render();
+		}
+	}
+
+	// rebuild the arc tubes (core and donor leg; the glow keeps its size) at a thickness
+	setArcWidth(width) {
+		if (this.arcWidth === width) return;
+		const first = this.arcWidth === undefined;
+		this.arcWidth = width;
+		if (first && width === 1) return;
+
+		this.arcs.forEach((arc) => {
+			if (arc.curve) {
+				const core = arc.meshes[0];
+				core.geometry.dispose();
+				core.geometry = this.tube(arc.points, arc.angle, width).geometry;
+			}
+			if (arc.donorMesh) {
+				arc.donorMesh.geometry.dispose();
+				arc.donorMesh.geometry = this.tube(arc.leg.points, arc.leg.angle, 0.8 * width).geometry;
+			}
+		});
 	}
 
 	setupPointer() {
@@ -457,15 +574,21 @@ export default class JourneyGlobe {
 		}
 	}
 
-	// a texture from an image decoded off the main thread (ImageBitmap) when possible
-	texture(file) {
+	// a texture from an image decoded off the main thread (ImageBitmap) when possible;
+	// nearest: no filtering or mipmaps (the country ids must stay exact)
+	texture(file, nearest = false) {
 		const url = this.options.textures + file;
 		const finish = (image, flipY) => {
 			const texture = new Texture(image);
 			texture.flipY = flipY;
 			texture.colorSpace = NoColorSpace;
-			texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
-			texture.minFilter = LinearMipmapLinearFilter;
+			if (nearest) {
+				texture.minFilter = texture.magFilter = NearestFilter;
+				texture.generateMipmaps = false;
+			} else {
+				texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+				texture.minFilter = LinearMipmapLinearFilter;
+			}
 			texture.needsUpdate = true;
 
 			return texture;
@@ -515,6 +638,23 @@ export default class JourneyGlobe {
 				});
 			}
 		});
+	}
+
+	loadCountries() {
+		if (this.countriesRequested) return;
+		this.countriesRequested = true;
+
+		this.texture('countries-4k.png', true).then((texture) => {
+			this.swap('uCountries', texture);
+			if (!this.running) this.render();
+		});
+	}
+
+	// ids (countries-4k.png) of the donor, hospital and patient countries of a journey
+	countryIds(journey) {
+		const ids = [journey.donor, journey.hospital, journey.patient].map((place) => (place && COUNTRY_IDS[place.country]) || 0);
+
+		return new Vector3(...ids);
 	}
 
 	loadDetail() {
@@ -625,6 +765,11 @@ export default class JourneyGlobe {
 		this.state.targetYaw = nearestAngle(yaw, this.state.yaw);
 		this.state.targetPitch = Math.max(-1.1, Math.min(1.1, pitch));
 
+		// the countries of the route: fade in afresh
+		this.earthUniforms.uActive.value.copy(this.countryIds(journey));
+		this.earthUniforms.uActiveOn.value = 0;
+		this.countriesTarget = 1;
+
 		this.updatePoints();
 		this.buildLabels(journey);
 		if (!this.running) this.render();
@@ -632,6 +777,7 @@ export default class JourneyGlobe {
 
 	clearSelection() {
 		this.activeId = null;
+		this.countriesTarget = 0;
 		this.state.targetZoom = 1;
 		this.updatePoints();
 		this.buildLabels(null);
@@ -730,15 +876,16 @@ export default class JourneyGlobe {
 			arc.active = ease(arc.active, isActive ? 1 : 0, 6, dt);
 			arc.hover = ease(arc.hover, id === this.hoverId ? 1 : 0, 10, dt);
 			arc.phase = (arc.phase + dt * this.motion * (isActive ? ACTIVE_SPEED : SPEED)) % 1;
-			arc.materials.forEach((m) => {
+			// materials: [core, glow]
+			arc.materials.forEach((m, i) => {
 				const u = m.uniforms;
 				u.uTime.value = this.time;
 				u.uHead.value = arc.phase * 1.4 - 0.2;
-				u.uOpacity.value = arc.opacity;
+				u.uOpacity.value = arc.opacity * (i ? this.theme.glow : 1);
 				u.uActive.value = arc.active;
 				u.uHover.value = arc.hover;
-				u.uColor.value.copy(ARC_COLOR).lerp(ARC_ACTIVE_COLOR, arc.active);
-				u.uHeadColor.value.copy(HEAD_COLOR).lerp(HEAD_ACTIVE_COLOR, arc.active);
+				u.uColor.value.copy(this.theme.arc).lerp(this.theme.arcActive, arc.active);
+				u.uHeadColor.value.copy(this.theme.head).lerp(this.theme.headActive, arc.active);
 			});
 			arc.meshes.forEach((mesh) => (mesh.visible = arc.opacity > 0.01));
 			if (arc.donorMaterial) {
@@ -749,6 +896,8 @@ export default class JourneyGlobe {
 		});
 		this.pointUniforms.uTime.value = this.time;
 		this.updateHearts();
+		const on = this.earthUniforms.uActiveOn;
+		on.value = this.motion ? ease(on.value, this.countriesTarget || 0, 4, dt) : this.countriesTarget || 0;
 		if (this.detailTarget) {
 			const u = this.earthUniforms.uDetailOn;
 			u.value = this.motion ? ease(u.value, 1, 3, dt) : 1;
