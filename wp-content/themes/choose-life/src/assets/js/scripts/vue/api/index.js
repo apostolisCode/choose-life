@@ -63,10 +63,22 @@ export default {
         return res;
     },
     async logout() {
-        return post('cl_logout');
+        const res = await post('cl_logout');
+        if (res && res.success && res.nonce) {
+            currentNonce = res.nonce;
+        }
+        return res;
     },
     async updateUserFields(fields) {
         return post('cl_update_user', { fields });
+    },
+    async changePassword(data) {
+        // a new password starts a new session, hence a new nonce
+        const res = await post('cl_change_password', data);
+        if (res && res.success && res.nonce) {
+            currentNonce = res.nonce;
+        }
+        return res;
     },
     async placeOrder(data) {
         return post('cl_place_order', data);

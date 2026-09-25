@@ -20,6 +20,13 @@
           <label for="telephone" class="cl-field__label" v-html="strings.telephone"></label>
           <v-field as="input" type="tel" name="telephone" id="telephone" class="cl-field__input" v-model="fields.telephone" autocomplete="tel"/>
         </div>
+        <div class="account-form__password">
+          <div>
+            <span class="cl-field__label" v-html="strings.password"></span>
+            <span class="account-form__password-mask" aria-hidden="true">••••••••</span>
+          </div>
+          <button type="button" class="cl-btn cl-btn--outline cl-btn--sm account-form__password-btn" @click="openPasswordModal" v-html="pageContent.my_account.change_password"></button>
+        </div>
       </section>
 
       <section class="account-form__card">
@@ -49,12 +56,42 @@
           <span class="cl-choice__control"></span>
           <span class="cl-choice__label" v-html="strings.marketing_acceptance_text"></span>
         </label>
-        <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block account-form__submit" :disabled="!meta.touched || isLoading">
-          <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <span v-else v-html="pageContent.my_account.save_changes"></span>
+        <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block account-form__submit" :class="{'is-loading': savingProfile}" :disabled="!meta.touched || savingProfile" :aria-busy="savingProfile">
+          <span v-html="pageContent.my_account.save_changes"></span>
         </button>
       </section>
     </v-form>
+
+    <modal :open="passwordModal" :title="pageContent.my_account.change_password" @close="closePasswordModal">
+      <v-form v-if="passwordModal" ref="password-form" :validation-schema="passwordSchema" v-slot="{ errors }" class="account-password">
+        <div class="cl-field">
+          <label for="current_password" class="cl-field__label" v-html="pageContent.my_account.current_password"></label>
+          <password-reveal v-slot="{ type }">
+            <v-field as="input" :type="type" name="current_password" id="current_password" class="cl-field__input" :class="{'is-invalid': errors.current_password}" v-model="password.current" placeholder="••••••••" autocomplete="current-password" :aria-invalid="!!errors.current_password" autofocus/>
+          </password-reveal>
+          <span v-if="errors.current_password" class="cl-field__error">{{ errors.current_password }}</span>
+        </div>
+        <div class="cl-field">
+          <label for="new_password" class="cl-field__label" v-html="strings.new_password"></label>
+          <password-reveal v-slot="{ type }">
+            <v-field as="input" :type="type" name="new_password" id="new_password" class="cl-field__input" :class="{'is-invalid': errors.new_password}" v-model="password.new" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.new_password"/>
+          </password-reveal>
+          <span v-if="errors.new_password" class="cl-field__error">{{ errors.new_password }}</span>
+        </div>
+        <div class="cl-field">
+          <label for="retype_password" class="cl-field__label" v-html="strings.retype_password"></label>
+          <password-reveal v-slot="{ type }">
+            <v-field as="input" :type="type" name="retype_password" id="retype_password" class="cl-field__input" :class="{'is-invalid': errors.retype_password}" v-model="password.retype" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.retype_password"/>
+          </password-reveal>
+          <span v-if="errors.retype_password" class="cl-field__error">{{ errors.retype_password }}</span>
+        </div>
+        <!-- inline, not a toast: the modal sits above the page's toasts -->
+        <p v-if="passwordError" class="account-password__error" role="alert" v-html="passwordError"></p>
+        <button type="submit" @click.prevent="onPasswordSubmit" class="cl-btn cl-btn--primary cl-btn--block account-password__submit" :class="{'is-loading': savingPassword}" :disabled="savingPassword" :aria-busy="savingPassword">
+          <span v-html="strings.save_password"></span>
+        </button>
+      </v-form>
+    </modal>
   </account-layout>
 </template>
 
@@ -62,27 +99,37 @@
 
 import {Form, Field, ErrorMessage, defineRule } from 'vee-validate';
 
-import { uiStore } from '../../../stores/ui';
 import { userStore } from '../../../stores/user';
 import { mapActions, mapState } from 'pinia';
 
 import api from '../../../api';
+import {helpers} from '../../../helpers';
 import AccountLayout from '../parts/AccountLayout.vue';
+import Modal from '../../../shared/Modal.vue';
+import PasswordReveal from '../../../shared/PasswordReveal.vue';
 
 export default {
   name: 'Account',
   components: {
+    PasswordReveal,
     VForm: Form,
     VField: Field,
     ErrorMessage,
-    AccountLayout
+    AccountLayout,
+    Modal
   },
   computed: {
-    ...mapState(uiStore, ['isLoading']),
     ...mapState(userStore, ['getUserData']),
     validationSchema() {
       return {
         email: 'required|email'
+      };
+    },
+    passwordSchema() {
+      return {
+        current_password: 'required',
+        new_password: 'required|accountStrongPass',
+        retype_password: 'accountSamePass'
       };
     }
   },
@@ -101,6 +148,15 @@ export default {
         billing_postal_code: null,
         billing_country: 'GR' in (window.app_config.countries_list || {}) ? 'GR' : null,
 				marketing_acceptance: null
+      },
+      savingProfile: false,
+      savingPassword: false,
+      passwordModal: false,
+      passwordError: '',
+      password: {
+        current: '',
+        new: '',
+        retype: ''
       }
     }
   },
@@ -117,6 +173,12 @@ export default {
       }
       return true;
     });
+    defineRule('accountStrongPass', value => {
+      return helpers.strongPasswordCheck(value) || this.strings.invalid_password_strength;
+    });
+    defineRule('accountSamePass', value => {
+      return value === this.password.new || this.strings.invalid_same_as_password;
+    });
     for (const [key, value] of Object.entries(this.getUserData)) {
       if (key in this.fields && value) {
         this.fields[key] = value;
@@ -124,12 +186,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(userStore, ['updateUser']),
-    ...mapActions(uiStore, ['toggleLoading']),
+    ...mapActions(userStore, ['updateUser', 'changePassword']),
     onSubmit() {
       this.$refs['profile-form'].validate().then((result) => {
         if (result.valid) {
-          this.toggleLoading(true);
+          this.savingProfile = true;
           this.updateUser(this.fields)
             .then((res) => {
               this.$toast.open({
@@ -137,9 +198,40 @@ export default {
                 type: res.success ? 'success' : 'error'
               });
             }).finally(() => {
-              this.toggleLoading(false);
+              this.savingProfile = false;
             })
         }
+      });
+    },
+    openPasswordModal() {
+      this.password = {current: '', new: '', retype: ''};
+      this.passwordError = '';
+      this.passwordModal = true;
+    },
+    closePasswordModal() {
+      this.passwordModal = false;
+    },
+    onPasswordSubmit() {
+      this.passwordError = '';
+      this.$refs['password-form'].validate().then((result) => {
+        if (!result.valid) {
+          return;
+        }
+        this.savingPassword = true;
+        this.changePassword(this.password.current, this.password.new)
+          .then((res) => {
+            if (!res.success) {
+              this.passwordError = res.message;
+              return;
+            }
+            this.closePasswordModal();
+            this.$toast.open({
+              message: res.message,
+              type: 'success'
+            });
+          }).finally(() => {
+            this.savingPassword = false;
+          });
       });
     }
   }
@@ -187,6 +279,30 @@ export default {
     margin-top: 16px;
   }
 
+  &__password {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid $c_grey_divider;
+    .cl-field__label {
+      display: block;
+    }
+  }
+
+  &__password-mask {
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: $c_dark;
+  }
+
+  &__password-btn {
+    flex: 0 0 auto;
+    border-width: 1.5px;
+  }
+
   @include media-breakpoint-down(lg) {
     flex-direction: column;
     &__card:first-child,
@@ -200,6 +316,24 @@ export default {
       padding: 32px 20px;
       border-radius: 28px;
     }
+  }
+}
+</style>
+<style lang="scss" scoped>
+.account-password {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__error {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: $c_main;
+  }
+
+  &__submit {
+    margin-top: 8px;
   }
 }
 </style>

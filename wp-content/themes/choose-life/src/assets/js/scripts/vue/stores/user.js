@@ -7,6 +7,9 @@ const storageData = helpers.getDefaultStoredData('user');
 if (storageData) {
     defaultData = storageData;
 }
+
+// the one session check of this page load (see validateUser)
+let sessionCheck = null;
 export const userStore = defineStore('user', {
     state: () => ({
         ...{
@@ -65,23 +68,51 @@ export const userStore = defineStore('user', {
                     return res;
                 });
         },
+        /**
+         * Whether a user is signed in, for the routers' guards. The session is
+         * read once per page load — from app_config.user printed with the page,
+         * else with cl_me — and then kept by the store: login, register and
+         * logout update it, so navigating needs no request.
+         */
         async validateUser() {
-            return api.validateToken()
+            if (!sessionCheck) {
+                const initial = window.app_config && window.app_config.user;
+                sessionCheck = (initial !== undefined
+                    ? Promise.resolve(initial ? {success: true, data: initial} : {success: false})
+                    : api.validateToken())
+                    .then(res => {
+                        this.userData = res && res.success ? res.data : false;
+                        helpers.updateStorage('user', {
+                            userData: this.userData
+                        });
+                    })
+                    .catch(() => {
+                        sessionCheck = null;   // try again on the next navigation
+                        this.userData = false;
+                    });
+            }
+            await sessionCheck;
+
+            return {success: this.isLoggedIn, data: this.userData};
+        },
+        async updateUser(fields) {
+            return api.updateUserFields(fields)
                 .then(res => {
                     if (res.success) {
-                        this.userData = res.data;
+                        // the pages read the profile from the store
+                        this.userData = {...this.userData, ...fields};
                         helpers.updateStorage('user', {
-                            userData: res.data
+                            userData: this.userData
                         });
                     }
                     return res;
                 });
         },
-        async updateUser(fields) {
-            return api.updateUserFields(fields)
-                .then(res => {
-                    return res;
-                });
+        async changePassword(currentPassword, newPassword) {
+            return api.changePassword({
+                current_password: currentPassword,
+                new_password: newPassword
+            });
         },
         async userLogout() {
             await api.logout();

@@ -3,7 +3,7 @@
     <ul v-if="isLoggedIn">
       <li><router-link :to="{ name: 'my-account' }" v-html="strings.menu_my_account"></router-link></li>
       <li><router-link :to="{ name: 'donations' }" v-html="strings.menu_donations"></router-link></li>
-      <li><a href="#" @click.prevent="logout" v-html="strings.menu_logout"></a></li>
+      <li><a href="#" :aria-busy="loggingOut" @click.prevent="logout"><span v-html="strings.menu_logout"></span> <span v-if="loggingOut" class="cl-spinner" aria-hidden="true"></span></a></li>
     </ul>
   </teleport>
 </template>
@@ -26,13 +26,19 @@ export default {
   data() {
     return {
       strings: window.app_config.strings,
-      myAccountUrl: window.app_config.my_account_url
+      myAccountUrl: window.app_config.my_account_url,
+      loggingOut: false
     }
   },
   methods: {
     ...mapActions(userStore, ['userLogout']),
     async logout() {
+      if (this.loggingOut) {
+        return;
+      }
+      this.loggingOut = true;
       await this.userLogout();
+      this.loggingOut = false;
       this.$router.push({ name: 'login' });
     }
   }

@@ -1,13 +1,14 @@
 <wpml-config>
     <!-- Donations and subscriptions are records, not content: one copy for every language -->
+    <!-- Journeys and hospitals show in the default language until they are translated -->
     <custom-types>
         <custom-type translate="0">donations</custom-type>
         <custom-type translate="0">subscriptions</custom-type>
         <custom-type translate="1">faq</custom-type>
-        <custom-type translate="1">journey</custom-type>
+        <custom-type translate="1" display-as-translated="1">journey</custom-type>
     </custom-types>
     <taxonomies>
         <taxonomy translate="1">faq_category</taxonomy>
-        <taxonomy translate="1">journey_hospital</taxonomy>
+        <taxonomy translate="1" display-as-translated="1">journey_hospital</taxonomy>
     </taxonomies>
 </wpml-config>

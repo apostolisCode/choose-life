@@ -10,14 +10,15 @@
       </div>
       <div class="cl-field">
         <label for="userPassword" class="cl-field__label" v-html="strings.password"></label>
-        <v-field as="input" type="password" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="current-password" :aria-invalid="!!errors.userPassword"/>
+        <password-reveal v-slot="{ type }">
+          <v-field as="input" :type="type" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="current-password" :aria-invalid="!!errors.userPassword"/>
+        </password-reveal>
         <span v-if="errors.userPassword" class="cl-field__error">{{ errors.userPassword }}</span>
       </div>
 			<router-link :to="{ name: 'reset-password' }" class="login-form__lost-password cl-link cl-link--sm" v-html="strings.lost_password"></router-link>
       <div class="cl-form__actions">
-        <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :disabled="isLoading">
-          <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <span v-else v-html="strings.login"></span>
+        <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :class="{'is-loading': submitting}" :disabled="submitting" :aria-busy="submitting">
+          <span v-html="strings.login"></span>
         </button>
         <slot name="actions"></slot>
       </div>
@@ -29,9 +30,9 @@
 <script>
 
 import {Form, Field, ErrorMessage, defineRule} from 'vee-validate';
-import { mapActions, mapState } from 'pinia';
+import { mapActions } from 'pinia';
 import { userStore } from '../../stores/user';
-import { uiStore } from '../../stores/ui';
+import PasswordReveal from '../PasswordReveal.vue';
 
 export default {
   name: 'LoginForm',
@@ -42,12 +43,12 @@ export default {
 		}
 	},
   components: {
+    PasswordReveal,
     VForm: Form,
     VField: Field,
     ErrorMessage
   },
   computed: {
-    ...mapState(uiStore, ['isLoading']),
     validationSchema() {
       return {
         userEmail: 'required|email',
@@ -57,6 +58,7 @@ export default {
   },
   data() {
     return {
+      submitting: false,
       strings: window.app_config.strings,
       userEmail: null,
       userPassword: null,
@@ -80,18 +82,17 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['userLogin']),
-    ...mapActions(uiStore, ['toggleLoading']),
     onSubmit() {
       this.errorMsg = null;
       this.$refs['login-form'].validate().then((result) => {
         if (result.valid) {
-          this.toggleLoading(true);
+          this.submitting = true;
           this.userLogin(this.userEmail, this.userPassword)
             .then((res) => {
               if (res.success) {
                 this.$router.push({ name: this.$props.redirect });
               } else {
-                this.toggleLoading(false);
+                this.submitting = false;
                 this.errorMsg = res.message;
               }
             });

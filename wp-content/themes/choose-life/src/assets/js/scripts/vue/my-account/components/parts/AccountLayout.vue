@@ -7,7 +7,10 @@
           <router-link :to="{ name: 'my-account' }" class="account-layout__item" v-html="strings.menu_account"></router-link>
           <router-link :to="{ name: 'donations' }" class="account-layout__item" v-html="strings.menu_donations"></router-link>
           <span class="account-layout__divider" aria-hidden="true"></span>
-          <button type="button" class="account-layout__item" @click="logout" v-html="strings.menu_logout"></button>
+          <button type="button" class="account-layout__item" :disabled="loggingOut" :aria-busy="loggingOut" @click="logout">
+            <span v-html="strings.menu_logout"></span>
+            <span v-if="loggingOut" class="cl-spinner" aria-hidden="true"></span>
+          </button>
         </nav>
         <div class="account-layout__content">
           <slot></slot>
@@ -26,12 +29,14 @@ export default {
   name: 'AccountLayout',
   data() {
     return {
-      strings: window.app_config.strings
+      strings: window.app_config.strings,
+      loggingOut: false
     }
   },
   methods: {
     ...mapActions(userStore, ['userLogout']),
     async logout() {
+      this.loggingOut = true;
       await this.userLogout();
       this.$router.push({name: 'login'});
     }
@@ -76,6 +81,7 @@ export default {
   &__item {
     display: flex;
     align-items: center;
+    gap: 10px;
     height: 56px;
     padding: 0 20px;
     border: 0;

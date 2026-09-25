@@ -10,18 +10,21 @@
 			</div>
 			<div class="cl-field">
 				<label for="userPassword" class="cl-field__label" v-html="strings.password"></label>
-				<v-field as="input" type="password" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userPassword"/>
+				<password-reveal v-slot="{ type }">
+					<v-field as="input" :type="type" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userPassword"/>
+				</password-reveal>
 				<span v-if="errors.userPassword" class="cl-field__error">{{ errors.userPassword }}</span>
 			</div>
 			<div class="cl-field">
 				<label for="userRetypePassword" class="cl-field__label" v-html="strings.retype_password"></label>
-				<v-field as="input" type="password" name="userRetypePassword" :class="{'is-invalid': errors.userRetypePassword }" class="cl-field__input" id="userRetypePassword" v-model="userRetypePassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userRetypePassword"/>
+				<password-reveal v-slot="{ type }">
+					<v-field as="input" :type="type" name="userRetypePassword" :class="{'is-invalid': errors.userRetypePassword }" class="cl-field__input" id="userRetypePassword" v-model="userRetypePassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userRetypePassword"/>
+				</password-reveal>
 				<span v-if="errors.userRetypePassword" class="cl-field__error">{{ errors.userRetypePassword }}</span>
 			</div>
 			<div class="cl-form__actions">
-				<button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :disabled="isLoading">
-					<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-					<span v-else v-html="strings.register"></span>
+				<button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :class="{'is-loading': submitting}" :disabled="submitting" :aria-busy="submitting">
+					<span v-html="strings.register"></span>
 				</button>
 				<slot name="actions"></slot>
 			</div>
@@ -33,10 +36,10 @@
 <script>
 
 import {Form, Field, ErrorMessage, defineRule} from 'vee-validate';
-import {mapActions, mapState} from 'pinia';
-import {uiStore} from '../../stores/ui';
+import {mapActions} from 'pinia';
 import {userStore} from '../../stores/user';
 import {helpers} from '../../helpers';
+import PasswordReveal from '../PasswordReveal.vue';
 
 export default {
 	name: 'RegisterForm',
@@ -48,12 +51,12 @@ export default {
 		}
 	},
 	components: {
+		PasswordReveal,
 		VForm: Form,
 		VField: Field,
 		ErrorMessage
 	},
 	computed: {
-		...mapState(uiStore, ['isLoading']),
 		validationSchema() {
 			return {
 				userEmail: 'required|email',
@@ -64,6 +67,7 @@ export default {
 	},
 	data() {
 		return {
+		  submitting: false,
 			strings: window.app_config.strings,
 			userEmail: null,
 			userPassword: null,
@@ -103,12 +107,11 @@ export default {
 	},
 	methods: {
 		...mapActions(userStore, ['userRegister']),
-		...mapActions(uiStore, ['toggleLoading']),
 		onSubmit() {
 			this.errorMsg = null;
 			this.$refs['register-form'].validate().then((result) => {
 				if (result.valid) {
-					this.toggleLoading(true);
+					this.submitting = true;
 					this.userRegister(this.userEmail, this.userPassword)
 							.then((res) => {
 								if (res.success) {
@@ -121,7 +124,7 @@ export default {
 									this.errorMsg = res.message;
 								}
 							}).finally(() => {
-								this.toggleLoading(false);
+								this.submitting = false;
 							})
 				}
 			});

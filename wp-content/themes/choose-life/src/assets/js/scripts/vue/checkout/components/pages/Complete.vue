@@ -143,9 +143,8 @@
             <strong>{{ paymentAmount }}</strong>
           </div>
 
-          <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :disabled="isLoading">
-            <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span v-else><span v-html="texts.complete_order"></span> <span aria-hidden="true">&rarr;</span></span>
+          <button type="submit" @click.prevent="onSubmit" class="cl-btn cl-btn--primary cl-btn--block" :class="{'is-loading': submitting}" :disabled="submitting" :aria-busy="submitting">
+            <span><span v-html="texts.complete_order"></span> <span aria-hidden="true">&rarr;</span></span>
           </button>
         </section>
       </v-form>
@@ -155,7 +154,6 @@
 
 <script>
 import {Form, Field, ErrorMessage, defineRule} from 'vee-validate';
-import {uiStore} from '../../../stores/ui';
 import {userStore} from '../../../stores/user';
 import {mapActions, mapState} from 'pinia';
 
@@ -174,7 +172,6 @@ export default {
     CheckoutSteps
   },
   computed: {
-    ...mapState(uiStore, ['isLoading']),
     ...mapState(userStore, ['isLoggedIn', 'getUserData', 'getDonationAmount']),
     validationSchema() {
       return {
@@ -207,6 +204,7 @@ export default {
   },
   data() {
     return {
+      submitting: false,
       strings: window.app_config.strings,
       countries: window.app_config.countries_list,
       texts: window.page_content.complete,
@@ -256,14 +254,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(uiStore, ['toggleLoading']),
     ...mapActions(userStore, ['setDonationAmount']),
     onSubmit() {
       this.$refs['checkout-form'].validate().then((result) => {
         if (!result.valid) {
           return;
         }
-        this.toggleLoading(true);
+        this.submitting = true;
         const fields = {
           ...this.fields,
           donation_amount: this.getDonationAmount
@@ -279,7 +276,7 @@ export default {
                   message: res.message,
                   type: 'error'
                 });
-                this.toggleLoading(false);
+                this.submitting = false;
               } else {
                 this.setDonationAmount(0);
                 helpers.postForm(res.data.params.post_url, res.data.params.fields);

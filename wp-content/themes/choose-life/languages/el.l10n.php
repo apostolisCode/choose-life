@@ -214,5 +214,13 @@ return [
 		'The code expires in a few minutes. If you did not ask for a new password, you can ignore this email.' => 'Ο κωδικός λήγει σε λίγα λεπτά. Αν δεν ζήτησες νέο κωδικό πρόσβασης, αγνόησε αυτό το email.',
 		'The One-Time Password (OTP) is not correct. Please try again.' => 'Ο κωδικός μίας χρήσης (OTP) δεν είναι σωστός. Δοκίμασε ξανά.',
 		'Too many wrong codes. Please restart the password reset process.' => 'Έγιναν πολλές λάθος προσπάθειες. Ξεκίνησε ξανά την επαναφορά κωδικού.',
+		// My account: change password (Inc_Auth)
+		'Change password'              => 'Αλλαγή κωδικού',
+		'Current password'             => 'Τρέχων κωδικός',
+		'The current password is not correct.' => 'Ο τρέχων κωδικός δεν είναι σωστός.',
+		'The new password must be different from the current one.' => 'Ο νέος κωδικός πρέπει να είναι διαφορετικός από τον τρέχοντα.',
+		'Your password has been changed.' => 'Ο κωδικός σου άλλαξε.',
+		'Show password'                => 'Εμφάνιση κωδικού',
+		'Hide password'                => 'Απόκρυψη κωδικού',
 	],
 ];

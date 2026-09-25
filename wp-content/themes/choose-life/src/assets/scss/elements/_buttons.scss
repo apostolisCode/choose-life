@@ -22,6 +22,8 @@
 	text-decoration: none !important;
 	cursor: pointer;
 	transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease;
+	position: relative;
+	--cl-btn-spinner: #{$c_white};
 
 	&:disabled {
 		opacity: .65;
@@ -45,6 +47,7 @@
 	}
 
 	&--outline {
+		--cl-btn-spinner: #{$c_dark};
 		border-color: $c_dark;
 		color: $c_dark;
 		&:hover:not(:disabled) {
@@ -69,6 +72,56 @@
 
 	&--block {
 		width: 100%;
+	}
+
+	// Waiting for the request it sent: the label keeps its room (so the button
+	// keeps its size) and a spinner in the label's colour turns over it.
+	// <button class="cl-btn ..." :class="{'is-loading': busy}" :disabled="busy" :aria-busy="busy">
+	&.is-loading {
+		color: transparent !important;
+		&:disabled {
+			opacity: 1;
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 22px;
+			height: 22px;
+			margin: -11px 0 0 -11px;
+			border: 2.5px solid var(--cl-btn-spinner);
+			border-right-color: transparent;
+			border-radius: 50%;
+			animation: cl-btn-spin 700ms linear infinite;
+		}
+	}
+}
+
+// Small spinner next to a link's text while its request runs (e.g. logout),
+// in the text colour: <span v-if="busy" class="cl-spinner" aria-hidden="true"></span>
+.cl-spinner {
+	display: inline-block;
+	flex: 0 0 auto;
+	width: 16px;
+	height: 16px;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	vertical-align: -2px;
+	animation: cl-btn-spin 700ms linear infinite;
+}
+
+@keyframes cl-btn-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cl-btn.is-loading::after,
+	.cl-spinner {
+		animation-duration: 1.6s;
 	}
 }
 

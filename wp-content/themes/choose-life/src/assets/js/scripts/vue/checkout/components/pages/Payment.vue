@@ -33,9 +33,8 @@
 					<template v-if="isCompleted">
 						<a v-if="donorsList" :href="donorsList.url" :target="donorsList.target || null" class="cl-btn cl-btn--primary checkout-result__btn" v-html="donorsList.title || labels.donors_list"></a>
 					</template>
-					<button v-else type="button" class="cl-btn cl-btn--primary checkout-result__btn" :disabled="isLoading" @click="pay">
-						<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-						<span v-else v-html="labels.try_again"></span>
+					<button v-else type="button" class="cl-btn cl-btn--primary checkout-result__btn" :class="{'is-loading': paying}" :disabled="paying" :aria-busy="paying" @click="pay">
+						<span v-html="labels.try_again"></span>
 					</button>
 					<a :href="homepageUrl" class="cl-btn cl-btn--outline checkout-result__btn" v-html="labels.back_to_homepage"></a>
 				</div>
@@ -49,7 +48,7 @@
 <script>
 
 import {uiStore} from '../../../stores/ui';
-import {mapActions, mapState} from 'pinia';
+import {mapActions} from 'pinia';
 
 import api from '../../../api';
 import {helpers} from '../../../helpers';
@@ -65,7 +64,6 @@ export default {
 		CheckoutSteps
 	},
 	computed: {
-		...mapState(uiStore, ['isLoading']),
 		isCompleted() {
 			return this.paymentStatus === 'completed';
 		},
@@ -93,6 +91,7 @@ export default {
 			summary: null,
 			donorsList: null,
 			paymentStatus: null,
+			paying: false,
 			orderKey: null
 		}
 	},
@@ -126,7 +125,7 @@ export default {
 			return new Intl.NumberFormat(document.documentElement.lang, {maximumFractionDigits: 0}).format(amount) + '€';
 		},
 		pay() {
-			this.toggleLoading(true);
+			this.paying = true;
 			api.payDonation(this.orderKey)
 				.then(res => {
 					if (!res.success) {
@@ -134,7 +133,7 @@ export default {
 							message: res.message,
 							type: 'error'
 						});
-						this.toggleLoading(false);
+						this.paying = false;
 					} else {
 						helpers.postForm(res.data.post_url, res.data.fields);
 					}

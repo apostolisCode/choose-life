@@ -27,6 +27,9 @@ class Inc_Window_data {
 
 		if ( is_page_template( 'templates/my-account.php' ) || is_page_template( 'templates/checkout.php' ) ) {
 			$data['countries_list'] = acf()->fields->get_field_type( 'country' )->get_countries();
+			// the session as the page was built, so the apps start without a
+			// cl_me round trip (the page already carries a per-session nonce)
+			$data['user'] = is_user_logged_in() ? ( new Inc_User( get_current_user_id() ) )->get_user_fields() : false;
 		}
 
 		if ( ! empty( $data ) ) {
@@ -42,6 +45,9 @@ class Inc_Window_data {
 			'password'                      => __( 'Password', 'choose-life' ),
 			'retype_password'               => __( 'Retype password', 'choose-life' ),
 			'new_password'                  => __( 'New password', 'choose-life' ),
+			'close'                         => __( 'Close', 'choose-life' ),
+			'show_password'                 => __( 'Show password', 'choose-life' ),
+			'hide_password'                 => __( 'Hide password', 'choose-life' ),
 			'or_upper'                      => __( 'OR', 'choose-life' ),
 			'login_to_account'              => __( 'Login to your Account', 'choose-life' ),
 			'create_account'                => __( 'Create Account', 'choose-life' ),

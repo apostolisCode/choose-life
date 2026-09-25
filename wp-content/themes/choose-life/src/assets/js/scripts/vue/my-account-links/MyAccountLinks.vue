@@ -2,7 +2,7 @@
   <ul v-if="isLoggedIn">
     <li><a :href="`${myAccountUrl}/#/my-account`" v-html="strings.menu_my_account"></a></li>
     <li><a :href="`${myAccountUrl}/#/donations`" v-html="strings.menu_donations"></a></li>
-    <li><a href="#" @click.prevent="logout" v-html="strings.menu_logout"></a></li>
+    <li><a href="#" :aria-busy="loggingOut" @click.prevent="logout"><span v-html="strings.menu_logout"></span> <span v-if="loggingOut" class="cl-spinner" aria-hidden="true"></span></a></li>
   </ul>
 </template>
 
@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       strings: window.app_config.strings,
-      myAccountUrl: window.app_config.my_account_url
+      myAccountUrl: window.app_config.my_account_url,
+      loggingOut: false
     }
   },
 	created() {
@@ -33,6 +34,11 @@ export default {
   methods: {
     ...mapActions(userStore, ['userLogout', 'setDonationAmount']),
     async logout() {
+      if (this.loggingOut) {
+        return;
+      }
+      // stays on until the page changes
+      this.loggingOut = true;
       await this.userLogout();
       window.location.href = this.myAccountUrl;
     }

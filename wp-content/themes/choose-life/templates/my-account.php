@@ -19,6 +19,8 @@ $page_content = [
 		"save_changes"  => __( 'Save changes', 'choose-life' ),
 		"personal_info" => __( 'Personal information', 'choose-life' ),
 		"address_info"  => __( 'Address information', 'choose-life' ),
+		"change_password"  => __( 'Change password', 'choose-life' ),
+		"current_password" => __( 'Current password', 'choose-life' ),
 	],
 	"donations"  => [
 		"recurring_donations_title"   => get_field( 'recurring_donations_title' ),

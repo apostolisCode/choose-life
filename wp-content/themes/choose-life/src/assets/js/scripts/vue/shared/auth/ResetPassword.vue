@@ -15,9 +15,8 @@
             <span v-if="errors.userEmail" class="cl-field__error">{{ errors.userEmail }}</span>
           </div>
           <div class="cl-form__actions">
-            <button type="submit" @click.prevent="step1Submit" class="cl-btn cl-btn--primary cl-btn--block" :disabled="isLoading">
-              <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              <span v-else v-html="strings.send_code"></span>
+            <button type="submit" @click.prevent="step1Submit" class="cl-btn cl-btn--primary cl-btn--block" :class="{'is-loading': submitting}" :disabled="submitting" :aria-busy="submitting">
+              <span v-html="strings.send_code"></span>
             </button>
             <or-divider/>
             <router-link :to="{ name: 'login' }" class="cl-btn cl-btn--outline cl-btn--block" v-html="strings.back_to_login"></router-link>
@@ -32,14 +31,15 @@
           </div>
           <div class="cl-field">
             <label for="userPassword" class="cl-field__label" v-html="strings.new_password"></label>
-            <v-field as="input" type="password" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userPassword"/>
+            <password-reveal v-slot="{ type }">
+              <v-field as="input" :type="type" name="userPassword" :class="{'is-invalid': errors.userPassword }" class="cl-field__input" id="userPassword" v-model="userPassword" placeholder="••••••••" autocomplete="new-password" :aria-invalid="!!errors.userPassword"/>
+            </password-reveal>
             <span v-if="errors.userPassword" class="cl-field__error">{{ errors.userPassword }}</span>
           </div>
           <a href="#" class="reset-form__resend cl-link cl-link--sm" @click.prevent="restart" v-html="strings.resend_code"></a>
           <div class="cl-form__actions">
-            <button type="submit" @click.prevent="step2Submit" class="cl-btn cl-btn--primary cl-btn--block" :disabled="isLoading">
-              <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              <span v-else v-html="strings.save_password"></span>
+            <button type="submit" @click.prevent="step2Submit" class="cl-btn cl-btn--primary cl-btn--block" :class="{'is-loading': submitting}" :disabled="submitting" :aria-busy="submitting">
+              <span v-html="strings.save_password"></span>
             </button>
             <or-divider/>
             <router-link :to="{ name: 'login' }" class="cl-btn cl-btn--outline cl-btn--block" v-html="strings.back_to_login"></router-link>
@@ -53,15 +53,16 @@
 <script>
 import {Form, Field, ErrorMessage, defineRule} from 'vee-validate';
 import {mapActions, mapState} from "pinia";
-import {uiStore} from "../../stores/ui";
 import {userStore} from "../../stores/user";
 import {helpers} from "../../helpers";
 import AuthLayout from './AuthLayout.vue';
 import OrDivider from './OrDivider.vue';
+import PasswordReveal from '../PasswordReveal.vue';
 
 export default {
   name: 'ResetPassword',
   components: {
+		PasswordReveal,
 		VForm: Form,
 		VField: Field,
 		ErrorMessage,
@@ -76,7 +77,6 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(uiStore, ['isLoading']),
 		stepOneValidationSchema() {
 			return {
 				userEmail: 'required|email',
@@ -91,6 +91,7 @@ export default {
 	},
   data() {
     return {
+      submitting: false,
       strings: window.app_config.strings,
 			step: 1,
 			loading: false,
@@ -124,7 +125,6 @@ export default {
   },
 	methods: {
 		...mapActions(userStore, ['resetPasswordInit', 'resetPassword']),
-		...mapActions(uiStore, ['toggleLoading']),
 		getAlertClass() {
 			return `alert alert-${this.alertMsgType} mb-0`;
 		},
@@ -138,7 +138,7 @@ export default {
 			this.alertMsg = null;
 			this.$refs['reset-form-1'].validate().then((result) => {
 				if (result.valid) {
-					this.toggleLoading(true);
+					this.submitting = true;
 					this.resetPasswordInit(this.userEmail)
 							.then((res) => {
 								this.alertMsgType = res.success ? 'success' : 'warning';
@@ -148,7 +148,7 @@ export default {
 									this.step = 2;
 								}
 							}).finally(() => {
-						this.toggleLoading(false);
+						this.submitting = false;
 					});
 				}
 			});
@@ -157,7 +157,7 @@ export default {
 			this.alertMsg = null;
 			this.$refs['reset-form-2'].validate().then((result) => {
 				if (result.valid) {
-					this.toggleLoading(true);
+					this.submitting = true;
 					this.resetPassword(this.userEmail, this.otp, this.userPassword)
 						.then((res) => {
 							if (res.success) {
@@ -171,7 +171,7 @@ export default {
 								this.alertMsg = res.message;
 							}
 						}).finally(() => {
-							this.toggleLoading(false);
+							this.submitting = false;
 						});
 				}
 			});
