@@ -63,12 +63,6 @@ const DEG = Math.PI / 180;
  * (else outline, which the hearts use); arcWidth: thickness of the arcs.
  */
 const THEMES = {
-	original: {
-		style: 0, flat: false, glow: 1,
-		arc: '#bfe2ff', arcActive: '#ffffff', head: '#9fd4ff', headActive: '#ff5a5f',
-		heart: '#d6ecff', heartActive: '#ff3b44', point: '#d8ecff', pointActive: '#ffffff',
-		donor: '#8fc2ff', outline: '#000000', atmosphere: '#4f9dff', atmosphereStrength: 1.6,
-	},
 	flat: {
 		style: 1, flat: true, glow: 0,
 		arc: '#D91A21', arcActive: '#D91A21', head: '#FF6168', headActive: '#FF6168',
@@ -114,7 +108,7 @@ export default class JourneyGlobe {
 		this.overlay = overlay;
 		this.options = options;
 		this.motion = options.reducedMotion ? 0 : 1;
-		this.theme = THEMES[options.theme] || THEMES.original;
+		this.theme = THEMES[options.theme] || THEMES.map;
 
 		this.state = {
 			yaw: -110 * DEG, pitch: -8 * DEG, zoom: 1,
@@ -423,7 +417,7 @@ export default class JourneyGlobe {
 	 * of the arcs, points and hearts. The arc colours follow in update().
 	 */
 	setTheme(name) {
-		const theme = THEMES[name] || THEMES.original;
+		const theme = THEMES[name] || THEMES.map;
 		const blending = theme.flat ? NormalBlending : AdditiveBlending;
 		const flat = theme.flat ? 1 : 0;
 		this.theme = theme;
