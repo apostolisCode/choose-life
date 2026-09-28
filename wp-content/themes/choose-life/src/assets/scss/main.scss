@@ -32,6 +32,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import './elements/forms';
 @import './elements/donation-amounts';
 @import './elements/layout';
+@import './elements/icon-cards';
 /*
 * Component styles
 */
@@ -45,3 +46,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import './elements/templates/faq';
 @import './elements/templates/contact';
 @import './elements/templates/volunteer';
+@import './elements/templates/about';
+@import './elements/templates/institute';
+@import './elements/templates/home';
+@import './elements/templates/actions';

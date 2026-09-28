@@ -8,7 +8,7 @@ $journeys_navy: #141A32;
 $journeys_blue: #3D4F98;
 
 .volunteer-page {
-	overflow-x: hidden;
+	overflow-x: clip;
 	font-family: $manrope_font;
 	color: $c_dark;
 

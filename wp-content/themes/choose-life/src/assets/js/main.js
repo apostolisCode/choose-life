@@ -7,3 +7,7 @@ import './scripts/instagram-feed';
 import './scripts/smooth-scroll';
 import './scripts/animations';
 import './scripts/faq-tabs';
+import './scripts/tour-360';
+import './scripts/sticky-cta';
+import './scripts/actions-carousel';
+import './scripts/share';

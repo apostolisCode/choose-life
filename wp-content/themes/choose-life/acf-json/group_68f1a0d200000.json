@@ -1,0 +1,104 @@
+{
+    "key": "group_68f1a0d200000",
+    "title": "Action details",
+    "fields": [
+        {
+            "key": "field_68f1a0d200001",
+            "label": "Date",
+            "name": "event_date",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "When the action takes (or took) place; shown in the site date format (Settings → General).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Ymd",
+            "first_day": 1,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0d200003",
+            "label": "Location",
+            "name": "event_location",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "E.g. Αθήνα.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0d200004",
+            "label": "Button",
+            "name": "cta",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional, below the content (e.g. \"Κάνε την εγγραφή σου\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0d200005",
+            "label": "Share text",
+            "name": "share_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional: the text shared with the link (share sheet \/ copied link). Empty: the one in Theme Options → Share.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "wpml_cf_preferences": 2
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790593975,
+    "acfml_field_group_mode": "translation"
+}

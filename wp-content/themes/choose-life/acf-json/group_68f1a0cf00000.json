@@ -1,0 +1,379 @@
+{
+    "key": "group_68f1a0cf00000",
+    "title": "Template -- Institute",
+    "fields": [
+        {
+            "key": "field_68f1a0cf00001",
+            "label": "Intro",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_68f1a0cf00002",
+            "label": "Title",
+            "name": "intro_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave empty to use the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cf00003",
+            "label": "Text",
+            "name": "intro_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "An empty line starts a new paragraph.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cf00004",
+            "label": "Image",
+            "name": "intro_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "70",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cf00005",
+            "label": "Image alignment",
+            "name": "intro_image_position",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Which part of the photo stays visible in the frame.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "left": "Left",
+                "center": "Center",
+                "right": "Right"
+            },
+            "default_value": "center",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cf00006",
+            "label": "360° tour",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_68f1a0cf00007",
+            "label": "Title",
+            "name": "tour_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cf00008",
+            "label": "Tour URL",
+            "name": "tour_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "The embed link of the 360° tour; it is shown in an iframe. Leave empty to hide the section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cf00009",
+            "label": "Cover image",
+            "name": "tour_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Optional. Shown with a “360°” button until the visitor starts the tour; without it the tour is embedded straight away.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0cf00010",
+            "label": "Videos",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_68f1a0cf00011",
+            "label": "Title",
+            "name": "videos_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0cf00016",
+            "label": "Videos",
+            "name": "videos",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add video",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_68f1a0cf00012",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "60",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "wpml_cf_preferences": 2,
+                    "parent_repeater": "field_68f1a0cf00016"
+                },
+                {
+                    "key": "field_68f1a0cf00013",
+                    "label": "Subtitle",
+                    "name": "subtitle",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "E.g. the speaker.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "wpml_cf_preferences": 2,
+                    "parent_repeater": "field_68f1a0cf00016"
+                },
+                {
+                    "key": "field_68f1a0cf00014",
+                    "label": "Video",
+                    "name": "video",
+                    "aria-label": "",
+                    "type": "file",
+                    "instructions": "MP4 or WebM.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": "mp4,webm",
+                    "wpml_cf_preferences": 1,
+                    "parent_repeater": "field_68f1a0cf00016"
+                },
+                {
+                    "key": "field_68f1a0cf00015",
+                    "label": "Poster",
+                    "name": "poster",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Optional. Otherwise the first frame of the video is shown.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "thumbnail",
+                    "wpml_cf_preferences": 1,
+                    "parent_repeater": "field_68f1a0cf00016"
+                }
+            ],
+            "wpml_cf_preferences": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "templates/institute.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790585172,
+    "acfml_field_group_mode": "translation"
+}

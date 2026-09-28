@@ -1,0 +1,321 @@
+/* =========================================
+		Institute page (templates/institute.php)
+   ========================================= */
+
+.institute-page {
+	overflow-x: clip;
+	font-family: $manrope_font;
+	color: $c_dark;
+}
+
+/* Intro: the donation hero with a smaller title
+   ========================================= */
+
+.donation-hero--institute {
+	.donation-hero__content {
+		flex-basis: 620px;
+		gap: 24px;
+	}
+
+	.donation-hero__title {
+		font-size: 56px;
+		line-height: 62px;
+		font-weight: 500;
+		letter-spacing: -1.4px;
+	}
+
+	@include media-breakpoint-down(xl) {
+		// stacked: the basis would become a 620px height
+		.donation-hero__content {
+			flex: none;
+		}
+
+		.donation-hero__title {
+			font-size: 44px;
+			line-height: 50px;
+			letter-spacing: -1.1px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.donation-hero__content {
+			gap: 16px;
+		}
+
+		.donation-hero__title {
+			font-size: 34px;
+			line-height: 40px;
+			letter-spacing: -.8px;
+		}
+	}
+}
+
+/* 360° tour
+   ========================================= */
+
+.tour-360 {
+	@include page-width(1736px);
+	position: relative;
+	margin-top: 174px;
+
+	// sits on the top edge of the card
+	&__rainbow {
+		position: absolute;
+		z-index: 1;
+		top: -74px;
+		right: 45.5px;
+		display: block;
+		pointer-events: none;
+	}
+
+	&__inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 80px;
+		padding: 90px 24px;
+		border-radius: 60px;
+		background-color: $c_dark;
+	}
+
+	&__title {
+		@include display-title;
+		max-width: 1002px;
+		font-weight: 500;
+		text-align: center;
+		color: $c_white;
+	}
+
+	&__frame {
+		position: relative;
+		width: 100%;
+		max-width: 1438px;
+		aspect-ratio: 1438 / 700;
+		overflow: hidden;
+		border: 10px solid $c_white;
+		border-radius: 60px;
+		background-color: $c_black;
+	}
+
+	&__image,
+	&__iframe {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	&__image {
+		object-fit: cover;
+	}
+
+	&__play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		width: 160px;
+		height: 160px;
+		padding: 32px;
+		border: 0;
+		border-radius: 50%;
+		background-color: $c_dark;
+		color: $c_white;
+		cursor: pointer;
+		transform: translate(-50%, -50%);
+		transition: transform 250ms ease;
+
+		&:hover {
+			transform: translate(-50%, -50%) scale(1.06);
+		}
+
+		&:focus-visible {
+			outline: 3px solid $c_white;
+			outline-offset: 4px;
+		}
+	}
+
+	// the arrows' strokes run a little past their 96 × 19 box
+	&__arrow {
+		display: block;
+		flex: none;
+		max-width: none;
+		margin: -2.5px;
+	}
+
+	&__label {
+		font-size: 27px;
+		line-height: 37px;
+		font-weight: 600;
+	}
+
+	@include media-breakpoint-down(xl) {
+		margin-top: 120px;
+
+		&__rainbow {
+			top: -48px;
+			right: 32px;
+			width: 130px;
+			height: auto;
+		}
+
+		&__inner {
+			gap: 48px;
+			padding: 64px 20px;
+		}
+
+		&__frame {
+			border-radius: 44px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		&__inner {
+			gap: 32px;
+			padding: 48px 12px 12px;
+			border-radius: 36px;
+		}
+
+		// a taller window, so the tour stays usable on a phone
+		&__frame {
+			aspect-ratio: 1;
+			border-width: 6px;
+			border-radius: 28px;
+		}
+
+		&__play {
+			transform: translate(-50%, -50%) scale(.75);
+
+			&:hover {
+				transform: translate(-50%, -50%) scale(.8);
+			}
+		}
+	}
+}
+
+/* Video cards
+   ========================================= */
+
+.video-cards {
+	@include page-width(1452px);
+	padding: 104px 0 112px;
+
+	&__title {
+		@include display-title;
+		margin-bottom: 56px;
+		font-weight: 500;
+		letter-spacing: -1.52px;
+		text-align: center;
+		color: $c_black;
+	}
+
+	&__list {
+		@include list--no;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: start;
+		gap: 20px;
+		margin: 0;
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding: 88px 0 80px;
+
+		&__title {
+			margin-bottom: 40px;
+		}
+	}
+
+	@include media-breakpoint-down(lg) {
+		&__list {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+.video-card {
+	padding: 52px 40px 40px;
+	border-radius: 60px;
+	background-color: $c_white;
+
+	&--blush {
+		background-color: $c_pink;
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 40px;
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 35px;
+		line-height: 42px;
+		font-weight: 600;
+		color: $c_dark;
+	}
+
+	&__subtitle {
+		margin: 0;
+		font-size: 20px;
+		line-height: 32px;
+		color: #0A0A0A;
+	}
+
+	// the whole video: its own ratio, from the width / height attributes
+	&__player {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 20px;
+		object-fit: contain;
+		background-color: $c_black;
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding: 40px 32px 32px;
+		border-radius: 44px;
+
+		&__header {
+			margin-bottom: 28px;
+		}
+
+		&__title {
+			font-size: 28px;
+			line-height: 36px;
+		}
+
+		&__subtitle {
+			font-size: 18px;
+			line-height: 28px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		padding: 32px 20px 20px;
+		border-radius: 32px;
+
+		&__title {
+			font-size: 23px;
+			line-height: 30px;
+		}
+
+		&__subtitle {
+			font-size: 16px;
+			line-height: 26px;
+		}
+
+		&__player {
+			border-radius: 16px;
+		}
+	}
+}

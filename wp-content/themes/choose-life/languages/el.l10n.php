@@ -222,5 +222,28 @@ return [
 		'Your password has been changed.' => 'Ο κωδικός σου άλλαξε.',
 		'Show password'                => 'Εμφάνιση κωδικού',
 		'Hide password'                => 'Απόκρυψη κωδικού',
+
+		// Institute page: 360° tour (elements/sections/tour-360.php)
+		'360° tour'                    => 'Περιήγηση 360°',
+		'Start the 360° tour'          => 'Ξεκίνα την περιήγηση 360°',
+
+		// Newsletter form (elements/cf7-newsletter.php)
+		'Subscribe'                    => 'Εγγραφή',
+		'I accept the %s and agree to receive the newsletter by email.' => 'Αποδέχομαι την %s και συναινώ να λαμβάνω το newsletter με email.',
+
+		// Actions: listing, card, single (templates/actions.php, single.php)
+		'More'                         => 'Περισσότερα',
+		'Featured actions'             => 'Προβεβλημένες δράσεις',
+		'Pages'                        => 'Σελίδες',
+		'Previous page'                => 'Προηγούμενη σελίδα',
+		'Next page'                    => 'Επόμενη σελίδα',
+		'Breadcrumb'                   => 'Διαδρομή',
+		'Home'                         => 'Αρχική',
+		'Location'                     => 'Τοποθεσία',
+		'Share'                        => 'Κοινοποίηση',
+		'Share on %s'                  => 'Κοινοποίηση στο %s',
+		'Share or copy the link'       => 'Κοινοποίηση ή αντιγραφή του συνδέσμου',
+		'Link copied'                  => 'Ο σύνδεσμος αντιγράφηκε',
+		'More actions'                 => 'Περισσότερες δράσεις',
 	],
 ];

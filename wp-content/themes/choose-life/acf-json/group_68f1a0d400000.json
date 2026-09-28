@@ -1,0 +1,47 @@
+{
+    "key": "group_68f1a0d400000",
+    "title": "Share",
+    "fields": [
+        {
+            "key": "field_68f1a0d400001",
+            "label": "Share text",
+            "name": "share_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Sent with the link of an action by the share button (the device share sheet, or copied with the link). Each action can override it. Facebook and LinkedIn show the page title, description and image instead (Yoast → Social).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Δες αυτή τη δράση της Choose Life και γίνε κι εσύ μέρος της αλλαγής!",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "wpml_cf_preferences": 2
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790593975,
+    "acfml_field_group_mode": "translation"
+}

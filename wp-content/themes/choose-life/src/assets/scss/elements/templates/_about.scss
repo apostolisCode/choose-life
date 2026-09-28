@@ -1,0 +1,498 @@
+/* =========================================
+		About page (templates/about.php)
+   ========================================= */
+
+// the wide (1840px) cards run closer to the edges than the page gutter
+$about_wide_gutter: clamp(16px, 2.1vw, 40px);
+// how far the page is pulled up behind the (sticky) header, more than its height,
+// so the hero's blue runs up to the top of the body
+$about_header_pull: 200px;
+
+@mixin about-section-title {
+	@include display-title;
+	font-weight: 600;
+	text-align: center;
+}
+
+// the pull is on the page wrapper, which clips sideways only: overflow-x: hidden
+// would make it a scroll container (a second scrollbar while cards reveal)
+.about-page {
+	margin-top: -$about_header_pull;
+	overflow-x: clip;
+	font-family: $manrope_font;
+	color: $c_dark;
+}
+
+/* Hero
+   ========================================= */
+
+.about-hero {
+	&__intro {
+		padding: calc(#{$about_header_pull} + 144px) 0 80px;
+		background-color: $c_blue;
+	}
+
+	&__inner {
+		@include page-width(1736px);
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 26.66px;
+	}
+
+	&__title {
+		flex: 1 1 0;
+		max-width: 866px;
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 111px;
+		line-height: 111px;
+		font-weight: 500;
+		color: $c_white;
+	}
+
+	&__text {
+		flex: 0 1 741px;
+		margin: 0;
+		font-size: 26px;
+		line-height: 36px;
+		color: $c_white;
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		height: 700px;
+		object-fit: cover;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__title {
+			font-size: 92px;
+			line-height: 96px;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		&__intro {
+			padding-top: calc(#{$about_header_pull} + 96px);
+			padding-bottom: 64px;
+		}
+
+		&__inner {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 24px;
+		}
+
+		&__title {
+			flex: none;
+			font-size: 80px;
+			line-height: 84px;
+		}
+
+		&__text {
+			flex: none;
+			max-width: 741px;
+			font-size: 20px;
+			line-height: 32px;
+		}
+
+		&__image {
+			height: clamp(320px, 45vw, 560px);
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		&__intro {
+			padding-top: calc(#{$about_header_pull} + 64px);
+			padding-bottom: 48px;
+		}
+
+		&__title {
+			font-size: 52px;
+			line-height: 56px;
+		}
+
+		&__text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+	}
+}
+
+/* Story + the dream (white)
+   ========================================= */
+
+.about-story {
+	padding: 120px 0 280px;
+	background-color: $c_white;
+
+	&__inner {
+		width: calc(100% - 2 * #{$page_gutter});
+		max-width: 906px;
+		margin: 0 auto;
+	}
+
+	&__title {
+		margin: 0 0 80px;
+		font-family: $manrope_font;
+		font-size: 74.7px;
+		line-height: 74.67px;
+		font-weight: 600;
+		color: $c_black;
+	}
+
+	&__text {
+		font-size: 26px;
+		line-height: 36px;
+		color: #0A0A0A;
+
+		p {
+			margin: 0 0 20px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding: 88px 0 200px;
+
+		&__title {
+			margin-bottom: 48px;
+			font-size: 56px;
+			line-height: 62px;
+		}
+
+		&__text {
+			font-size: 20px;
+			line-height: 32px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		padding: 64px 0 120px;
+
+		&__title {
+			margin-bottom: 32px;
+			font-size: 40px;
+			line-height: 46px;
+		}
+
+		&__text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+	}
+}
+
+// a 24-column grid, like the design: label on columns 2-6, text on 7-21
+.about-dream {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(24, minmax(0, 1fr));
+	column-gap: 26.667px;
+	align-items: start;
+	width: calc(100% - 2 * #{$about_wide_gutter});
+	max-width: 1840px;
+	margin: 231px auto 0;
+	padding-top: 141.333px;
+
+	// the tilted violet card, running 84px past the end of the text,
+	// with a red one behind it tilting out on scroll
+	&__bg {
+		@include tilt-card($c_violet);
+		position: absolute;
+		top: 0;
+		left: 4px;
+		right: -4px;
+		bottom: -84px;
+		border-radius: 60px;
+		transform: rotate(-5deg);
+	}
+
+	&__bg-back {
+		@include tilt-card-back;
+	}
+
+	&__rainbow {
+		position: absolute;
+		top: -147.33px;
+		right: 78.62px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 207.383px;
+		height: 139.284px;
+		pointer-events: none;
+
+		> span {
+			position: relative;
+			flex: none;
+			width: 197.454px;
+			height: 122.541px;
+			transform: rotate(175deg) scaleY(-1);
+		}
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: block;
+			max-width: none;
+		}
+	}
+
+	&__label,
+	&__text {
+		position: relative;
+		grid-row: 1;
+		font-size: 34px;
+		line-height: 42px;
+		color: $c_dark;
+	}
+
+	&__label {
+		grid-column: 2 / span 5;
+		margin: 0;
+		font-family: $manrope_font;
+		font-weight: 600;
+	}
+
+	&__text {
+		grid-column: 7 / span 15;
+		max-width: 988px;
+
+		p {
+			margin: 0 0 16px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		strong,
+		b {
+			font-weight: 600;
+		}
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__label {
+			grid-column: 2 / span 4;
+		}
+
+		&__text {
+			grid-column: 6 / span 18;
+			font-size: 28px;
+			line-height: 38px;
+		}
+	}
+
+	// the 24 column gaps no longer fit: label above the text
+	@include media-breakpoint-down(xl) {
+		display: block;
+		margin-top: 160px;
+		padding: 96px clamp(24px, 8%, 120px) 0;
+
+		&__bg {
+			bottom: -64px;
+		}
+
+		&__label {
+			font-size: 26px;
+			line-height: 36px;
+		}
+
+		&__text {
+			margin-top: 24px;
+			font-size: 24px;
+			line-height: 34px;
+		}
+
+		&__rainbow {
+			top: -120px;
+			right: 32px;
+			transform: scale(.8);
+			transform-origin: bottom right;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		margin-top: 110px;
+		padding: 56px 24px 0;
+
+		&__bg {
+			bottom: -48px;
+			border-radius: 36px;
+			transform: rotate(-2deg);
+		}
+
+		&__label {
+			font-size: 20px;
+			line-height: 28px;
+		}
+
+		&__text {
+			margin-top: 16px;
+			font-size: 18px;
+			line-height: 28px;
+		}
+
+		&__rainbow {
+			top: -84px;
+			right: 8px;
+			transform: scale(.55);
+		}
+	}
+}
+
+/* Our mission: elements/sections/icon-cards.php (styles in _icon-cards.scss)
+   ========================================= */
+
+.about-page .icon-cards {
+	padding-top: 160px;
+
+	@include media-breakpoint-down(xl) {
+		padding-top: 110px;
+	}
+}
+
+/* Our team
+   ========================================= */
+
+.about-team {
+	@include page-width(1472px);
+	padding: 160px 0 40px;
+
+	&__title {
+		@include about-section-title;
+		margin-bottom: 88px; // 48px + the design's 40px card padding
+	}
+
+	&__grid {
+		@include list--no;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 352px));
+		justify-content: center;
+		gap: 126px 172px;
+		margin: 0;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__grid {
+			column-gap: 96px;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding-top: 110px;
+
+		&__title {
+			margin-bottom: 56px;
+		}
+
+		&__grid {
+			gap: 64px 32px;
+		}
+	}
+
+	@include media-breakpoint-down(lg) {
+		&__grid {
+			grid-template-columns: repeat(2, minmax(0, 352px));
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		&__grid {
+			grid-template-columns: minmax(0, 352px);
+			row-gap: 40px;
+		}
+	}
+}
+
+.team-card {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 352 / 619.45;
+	border: 4px solid $c_offwhite;
+	border-radius: 60px;
+	background-color: $c_offwhite;
+
+	&__photo {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	// white name plate, its torn-paper edge sitting on the photo
+	&__info {
+		position: absolute;
+		left: -2px;
+		right: -2px;
+		bottom: -4px;
+		padding: 32px 32px 36px;
+		background-color: $c_white;
+		text-align: center;
+	}
+
+	&__wave {
+		position: absolute;
+		left: -2px;
+		bottom: 100%;
+		display: block;
+		max-width: none;
+	}
+
+	&__name {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 26px;
+		line-height: 36px;
+		font-weight: 600;
+		color: $c_dark;
+	}
+
+	&__role {
+		margin: 10px 0 0;
+		font-size: 20px;
+		line-height: 32px;
+		color: #0A0A0A;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__info {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+		&__name {
+			font-size: 22px;
+			line-height: 30px;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		border-radius: 44px;
+
+		&__info {
+			padding: 24px 20px 28px;
+		}
+
+		&__name {
+			font-size: 22px;
+			line-height: 30px;
+		}
+
+		&__role {
+			margin-top: 6px;
+			font-size: 17px;
+			line-height: 26px;
+		}
+	}
+}

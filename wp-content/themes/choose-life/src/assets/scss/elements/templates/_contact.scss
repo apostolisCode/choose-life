@@ -4,7 +4,7 @@
    ========================================= */
 
 .contact-page {
-	overflow-x: hidden;
+	overflow-x: clip;
 	font-family: $manrope_font;
 	color: $c_dark;
 
@@ -206,27 +206,7 @@
 		}
 
 		input[type="checkbox"] {
-			flex: 0 0 20px;
-			width: 20px;
-			height: 20px;
-			margin: 2px 0 0;
-			border: 1px solid #767676;
-			border-radius: 2.5px;
-			background: $c_white no-repeat center / 16px 16px;
-			appearance: none;
-			cursor: pointer;
-			transition: background-color 200ms ease, border-color 200ms ease;
-
-			&:checked {
-				border-color: $c_main;
-				background-color: $c_main;
-				background-image: url('#{$p_svg}checkout/check.svg');
-			}
-
-			&:focus-visible {
-				outline: 2px solid $c_dark;
-				outline-offset: 2px;
-			}
+			@include cl-checkbox;
 		}
 
 		a {

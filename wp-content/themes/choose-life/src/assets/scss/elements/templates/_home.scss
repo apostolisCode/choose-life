@@ -1,0 +1,1215 @@
+/* =========================================
+		Homepage (templates/home.php)
+		Also: feature card, pillars, impact, supporters, sticky CTA,
+		newsletter form (their only use so far)
+   ========================================= */
+
+// how far the page is pulled up behind the (sticky) header, more than its height,
+// so the hero's orange runs up to the top of the body
+$home_header_pull: 200px;
+
+// the pull is on the page wrapper, which clips sideways only: overflow-x: hidden
+// would make it a scroll container (a second scrollbar while cards reveal)
+.home-page {
+	margin-top: -$home_header_pull;
+	overflow-x: clip;
+	font-family: $manrope_font;
+	color: $c_dark;
+}
+
+/* Hero (+ who we are)
+   ========================================= */
+
+.home-hero {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	padding: calc(#{$home_header_pull} + 105px) 0 60px;
+	background-color: $c_orange;
+
+	&__intro {
+		@include page-width(1736px);
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 26.66px;
+		min-height: 240px;
+	}
+
+	&__title {
+		flex: 0 1 1270px;
+		align-self: flex-start;
+		margin: 4px 0 0;
+		font-family: $manrope_font;
+		font-size: 111px;
+		line-height: 111px;
+		font-weight: 500;
+		color: $c_black;
+	}
+
+	&__text {
+		flex: 0 0 440px;
+		margin: 0;
+		font-size: 26px;
+		line-height: 36px;
+		color: #0A0A0A;
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		height: 700px;
+		object-fit: cover;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__title {
+			font-size: 92px;
+			line-height: 96px;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		gap: 40px;
+		padding-top: calc(#{$home_header_pull} + 72px);
+
+		&__intro {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 24px;
+			min-height: 0;
+		}
+
+		&__title {
+			flex: none;
+			margin: 0;
+			font-size: 72px;
+			line-height: 78px;
+		}
+
+		&__text {
+			flex: none;
+			max-width: 560px;
+			font-size: 20px;
+			line-height: 32px;
+		}
+
+		&__image {
+			height: clamp(320px, 45vw, 560px);
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		gap: 32px;
+		padding-top: calc(#{$home_header_pull} + 48px);
+		padding-bottom: 32px;
+
+		&__title {
+			font-size: 48px;
+			line-height: 52px;
+		}
+
+		&__text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+	}
+}
+
+/* Feature card (elements/sections/feature-card.php)
+   A 24-column grid, like the design: text on the left, title in the middle,
+   photo on columns 19-23
+   ========================================= */
+
+.feature-card {
+	display: grid;
+	grid-template-columns: repeat(24, minmax(0, 1fr));
+	column-gap: 26.667px;
+	align-items: start;
+	margin: 0 auto;
+	padding: 66.667px 0;
+
+	&--blue {
+		width: calc(100% - 2 * clamp(16px, 3.125vw, 60px));
+		max-width: 1800px;
+		background-color: $c_blue;
+	}
+
+	// the newsletter, always the last section: room above the footer's "support our work" bar
+	&--dark {
+		width: calc(100% - 2 * clamp(16px, 2.1vw, 40px));
+		max-width: 1840px;
+		margin-top: 85px;
+		margin-bottom: 147px;
+		background-color: $c_dark;
+
+		@include media-breakpoint-down(xl) {
+			margin-bottom: 100px;
+		}
+
+		@include media-breakpoint-down(md) {
+			margin-bottom: 72px;
+		}
+	}
+
+	&__text,
+	&__main,
+	&__media {
+		grid-row: 1;
+	}
+
+	&__text {
+		grid-column: 1 / span 7;
+		max-width: 381px;
+		margin: 0 0 0 58.33px;
+		font-size: 20px;
+		line-height: 32px;
+		color: $c_white;
+	}
+
+	&--dark &__text {
+		grid-column: 1 / span 6;
+		max-width: 315px;
+		margin: 9px 0 0 40px;
+	}
+
+	&__main {
+		grid-column: 8 / span 11;
+	}
+
+	&--dark &__main {
+		grid-column: 7 / span 12;
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 72.8px;
+		line-height: 74.67px;
+		font-weight: 500;
+		color: $c_black;
+	}
+
+	&__accent {
+		display: block;
+		color: $c_white;
+	}
+
+	&--dark &__title {
+		color: $c_white;
+	}
+
+	&--dark &__accent {
+		color: $c_main;
+	}
+
+	&__button,
+	&__form {
+		margin-top: 53.33px;
+	}
+
+	&__button {
+		padding: 21.25px 40px 22px;
+	}
+
+	&__media {
+		position: relative;
+		isolation: isolate;
+		grid-column: 19 / span 5;
+		padding: 0 23.55px 0 9.55px;
+	}
+
+	// a card behind the photo (red on blue, white on dark), tilting out on scroll
+	&__media-back {
+		position: absolute;
+		inset: 13.1px 33.21px 12.9px 13.55px;
+		z-index: -1;
+		background-color: $c_main;
+	}
+
+	&--dark &__media-back {
+		inset: 13.1px 37.54px 12.9px 9.55px;
+		background-color: $c_white;
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		height: 334.96px;
+		object-fit: cover;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__title {
+			font-size: 60px;
+			line-height: 64px;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		padding: 56px clamp(24px, 6vw, 64px);
+
+		&__text,
+		&--dark &__text {
+			max-width: 640px;
+			margin: 0;
+		}
+
+		&__media {
+			width: min(315px, 100%);
+			padding: 0;
+		}
+
+		&__media-back,
+		&--dark &__media-back {
+			inset: 13px 10px 13px 4px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		gap: 24px;
+		padding-top: 40px;
+		padding-bottom: 40px;
+
+		&__text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+
+		&__title {
+			font-size: 44px;
+			line-height: 48px;
+		}
+
+		&__button,
+		&__form {
+			margin-top: 32px;
+		}
+
+		&__button {
+			padding: 16px 30px;
+		}
+
+		&__image {
+			height: auto;
+			aspect-ratio: 315 / 335;
+		}
+	}
+}
+
+// Contact Form 7 fields: elements/cf7-newsletter.php (on the dark card)
+.newsletter-form {
+	max-width: 100%;
+
+	// email + button; the error tip hangs under the email, so they keep their height
+	&__row {
+		display: flex;
+		align-items: flex-start;
+
+		.wpcf7-form-control-wrap {
+			position: relative;
+			display: block;
+			flex: 0 1 445px;
+			min-width: 0;
+		}
+
+		.wpcf7-not-valid-tip {
+			position: absolute;
+			top: calc(100% + 6px);
+			left: 0;
+		}
+
+		// CF7 puts its spinner after the button
+		.wpcf7-spinner {
+			align-self: center;
+			margin: 0 0 0 16px;
+		}
+	}
+
+	&__input {
+		display: block;
+		width: 100%;
+		height: 68px;
+		padding: 20px 22px 21px;
+		border: 0;
+		border-radius: 0;
+		background-color: $c_white;
+		font-family: $manrope_font;
+		font-size: 18px;
+		color: #011409;
+
+		&::placeholder {
+			color: #011409;
+			opacity: 1;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $c_main;
+			outline-offset: -2px;
+		}
+	}
+
+	&__submit {
+		flex: none;
+		height: 68px;
+		padding: 16px 30px;
+		border: 0;
+		border-radius: 0;
+		background-color: $c_main;
+		font-family: $manrope_font;
+		font-size: 22px;
+		line-height: 35.2px;
+		font-weight: 700;
+		color: $c_white;
+		cursor: pointer;
+		transition: background-color 300ms ease, opacity 300ms ease;
+
+		&:hover:not(:disabled) {
+			background-color: darken($c_main, 8%);
+		}
+
+		&:disabled {
+			opacity: .65;
+			cursor: default;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $c_white;
+			outline-offset: 2px;
+		}
+	}
+
+	&__consent {
+		max-width: 600px;
+		margin-top: 36px;
+		font-size: 16px;
+		line-height: 25.6px;
+		color: #E6E6E6;
+
+		.wpcf7-list-item {
+			margin: 0;
+		}
+
+		label {
+			display: flex;
+			align-items: flex-start;
+			gap: 13px;
+			cursor: pointer;
+		}
+
+		input[type="checkbox"] {
+			@include cl-checkbox($c_white);
+		}
+
+		a {
+			color: $c_white;
+			text-decoration: underline;
+
+			&:hover {
+				color: $c_pink;
+			}
+		}
+
+		.wpcf7-not-valid-tip {
+			margin-top: 6px;
+			padding-left: 33px;
+		}
+	}
+
+	// red would be too faint on the dark card
+	.wpcf7-not-valid-tip {
+		font-size: 14px;
+		line-height: 18px;
+		color: $c_pink;
+	}
+
+	@include media-breakpoint-down(sm) {
+		&__row {
+			flex-wrap: wrap;
+
+			.wpcf7-form-control-wrap,
+			.newsletter-form__submit {
+				flex: 1 1 100%;
+			}
+
+			// stacked: the error tip can sit in the flow, between email and button
+			.wpcf7-not-valid-tip {
+				position: static;
+				margin: 6px 0 10px;
+			}
+		}
+
+		&__consent {
+			font-size: 14px;
+			line-height: 22px;
+		}
+	}
+}
+
+// CF7 status message under the newsletter form
+.feature-card--dark .wpcf7 form .wpcf7-response-output {
+	max-width: 600px;
+	margin: 20px 0 0;
+	padding: 0;
+	border: 0;
+	font-size: 16px;
+	line-height: 24px;
+	color: $c_pink;
+}
+
+.feature-card--dark .wpcf7 form.sent .wpcf7-response-output {
+	color: #8FD9A8;
+}
+
+/* Pillars: our mission (elements/sections/pillars.php)
+   ========================================= */
+
+.pillars {
+	@include page-width(1736px);
+	position: relative;
+	margin-top: 160px;
+
+	// sits on the top edge of the card
+	&__rainbow {
+		position: absolute;
+		z-index: 1;
+		top: -74px;
+		right: 45.5px;
+		display: block;
+		pointer-events: none;
+	}
+
+	&__card {
+		@include tilt-card($c_dark);
+		display: flex;
+		align-items: flex-start;
+		padding-top: 90px;
+		border-radius: 60px;
+		color: $c_white;
+	}
+
+	&__card-back {
+		@include tilt-card-back;
+	}
+
+	&__intro {
+		display: flex;
+		flex: 0 0 607px;
+		flex-direction: column;
+		gap: 40px;
+		padding-left: 45px;
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 76px;
+		line-height: 82px;
+		font-weight: 500;
+		color: $c_white;
+	}
+
+	&__text {
+		margin: 0;
+		font-size: 26px;
+		line-height: 36px;
+		color: #E6E6E6;
+	}
+
+	&__list {
+		@include list--no;
+		flex: 0 1 1084px;
+		min-width: 0;
+		margin: 0;
+		padding: 24px 0 0 88px;
+	}
+
+	&__item {
+		display: flex;
+		max-width: 982px;
+		padding: 46px 0 90px;
+		border-top: 1px solid rgba($c_white, .32);
+
+		&:last-child {
+			padding-bottom: 91px;
+			border-bottom: 1px solid rgba($c_white, .32);
+		}
+	}
+
+	&__icon {
+		flex: 0 0 132px;
+
+		img {
+			display: block;
+			width: 48px;
+			height: 48px;
+			object-fit: contain;
+		}
+	}
+
+	&__body {
+		flex: 1 1 0;
+		min-width: 0;
+		padding-bottom: 22.5px;
+	}
+
+	&__item-title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 46px;
+		line-height: 54px;
+		font-weight: 500;
+		color: $c_white;
+	}
+
+	&__item-text {
+		max-width: 765px;
+		margin: 33.75px 0 0;
+		font-size: 26px;
+		line-height: 36px;
+		color: #E6E6E6;
+	}
+
+	// hand-drawn "finger heart", standing on the bottom edge under the intro
+	&__hand {
+		position: absolute;
+		left: 10.22%;
+		bottom: 0;
+		display: block;
+		pointer-events: none;
+	}
+
+	@include media-breakpoint-down(xxl) {
+		&__intro {
+			flex-basis: 38%;
+		}
+
+		&__list {
+			flex: 1 1 0;
+			padding-left: 48px;
+			padding-right: 32px;
+		}
+
+		&__icon {
+			flex-basis: 88px;
+		}
+
+		&__item-title {
+			font-size: 38px;
+			line-height: 46px;
+		}
+
+		&__item-text {
+			margin-top: 24px;
+			font-size: 22px;
+			line-height: 32px;
+		}
+
+		&__hand {
+			left: 6%;
+			width: 200px;
+			height: auto;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		margin-top: 120px;
+
+		&__rainbow {
+			top: -48px;
+			right: 32px;
+			width: 130px;
+			height: auto;
+		}
+
+		&__card {
+			flex-direction: column;
+			padding: 64px clamp(20px, 5vw, 48px) 0;
+		}
+
+		&__intro {
+			flex: none;
+			gap: 24px;
+			padding: 0;
+		}
+
+		&__title {
+			font-size: 56px;
+			line-height: 62px;
+		}
+
+		&__text {
+			font-size: 20px;
+			line-height: 32px;
+		}
+
+		&__list {
+			flex: none;
+			width: 100%;
+			padding: 40px 0 0;
+		}
+
+		&__item {
+			max-width: none;
+			padding: 32px 0 48px;
+
+			&:last-child {
+				padding-bottom: 48px;
+				border-bottom: 0;
+			}
+		}
+
+		&__icon {
+			flex-basis: 72px;
+		}
+
+		&__item-title {
+			font-size: 30px;
+			line-height: 38px;
+		}
+
+		&__item-text {
+			margin-top: 16px;
+			font-size: 18px;
+			line-height: 28px;
+		}
+
+		&__hand {
+			display: none;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		&__card {
+			border-radius: 36px;
+		}
+
+		&__title {
+			font-size: 40px;
+			line-height: 46px;
+		}
+
+		&__text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+
+		&__item {
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		&__icon {
+			flex-basis: auto;
+		}
+
+		&__item-title {
+			font-size: 24px;
+			line-height: 32px;
+		}
+
+		&__item-text {
+			font-size: 17px;
+			line-height: 27px;
+		}
+	}
+}
+
+/* How to help: elements/sections/icon-cards.php (styles in _icon-cards.scss)
+   ========================================= */
+
+.home-page .icon-cards {
+	padding-top: 122px;
+
+	@include media-breakpoint-up(xl) {
+		.icon-card__text {
+			font-size: 20px;
+			line-height: 32px;
+			color: #0A0A0A;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding-top: 96px;
+	}
+}
+
+/* Words bands, further apart (elements/sections/words-bands.php)
+   ========================================= */
+
+.words-bands--apart {
+	margin-top: 165px;
+	// the violet band below slides under them
+	margin-bottom: -71px;
+
+	.words-band--light {
+		margin-top: 8.5px;
+	}
+
+	@include media-breakpoint-down(xl) {
+		margin-top: 110px;
+	}
+
+	@include media-breakpoint-down(md) {
+		margin-bottom: -48px;
+	}
+}
+
+/* Impact: key figures (elements/sections/impact.php)
+   ========================================= */
+
+.impact {
+	@include tilt-card($c_violet);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 901px;
+	padding: 204px 224px;
+	border-radius: 0 0 60px 60px;
+
+	&__back {
+		@include tilt-card-back;
+	}
+
+	&__doodle {
+		position: absolute;
+		pointer-events: none;
+
+		&--start {
+			left: -50px;
+			top: 116.64px;
+		}
+
+		&--end {
+			right: 0;
+			top: 535px;
+			width: 362.6px;
+			height: 305px;
+		}
+	}
+
+	&__doodle-heart,
+	&__doodle-box {
+		position: absolute;
+		display: block;
+	}
+
+	&__doodle-heart {
+		left: 103px;
+		top: 0;
+	}
+
+	&__doodle-box {
+		left: 0;
+		top: 105px;
+	}
+
+	&__inner {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px;
+		width: 100%;
+		max-width: 1120px;
+	}
+
+	&__title {
+		max-width: 880px;
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 52px;
+		line-height: 56px;
+		font-weight: 600;
+		text-align: center;
+		color: #0A0A0A;
+	}
+
+	&__stats {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 59.5px;
+		width: 100%;
+	}
+
+	&__stat {
+		display: flex;
+		flex: 0 1 500px;
+		flex-direction: column;
+		gap: 12px;
+		min-width: 0;
+		text-align: center;
+		color: #0A0A0A;
+	}
+
+	&__value {
+		margin: 0;
+		font-size: 144px;
+		line-height: 172px;
+		font-weight: 500;
+		letter-spacing: -3.6px;
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+	}
+
+	&__label {
+		margin: 0;
+		font-size: 24px;
+		line-height: 34px;
+	}
+
+	// hand-drawn line, turned upright: its box keeps 1px of the row
+	&__divider {
+		flex: none;
+		display: block;
+		max-width: none;
+		margin: 0 -75.75px;
+		transform: rotate(90deg);
+	}
+
+	&__button {
+		padding: 21.25px 40px 22px;
+	}
+
+	// the doodles only fit in the side margins of a wide screen
+	@media (max-width: 1699.98px) {
+		&__doodle {
+			display: none;
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		min-height: 0;
+		padding: 150px 24px 100px;
+
+		&__title {
+			font-size: 42px;
+			line-height: 48px;
+		}
+
+		&__value {
+			font-size: 104px;
+			line-height: 120px;
+			letter-spacing: -2.6px;
+		}
+
+		&__label {
+			font-size: 20px;
+			line-height: 30px;
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		padding: 110px 16px 72px;
+		border-radius: 0 0 36px 36px;
+
+		&__title {
+			font-size: 30px;
+			line-height: 36px;
+
+			br {
+				display: none;
+			}
+		}
+
+		&__stats {
+			flex-direction: column;
+			gap: 24px;
+		}
+
+		&__stat {
+			flex: none;
+		}
+
+		&__divider {
+			margin: 0;
+			transform: none;
+		}
+
+		&__value {
+			font-size: 80px;
+			line-height: 92px;
+			letter-spacing: -2px;
+		}
+
+		&__button {
+			padding: 16px 30px;
+		}
+	}
+}
+
+/* Supporters: scrolling logos (elements/sections/supporters.php)
+   ========================================= */
+
+@keyframes supporters-scroll {
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+.supporters {
+	margin-top: 121px;
+	text-align: center;
+
+	&__title {
+		margin: 0 0 24px;
+		font-family: $manrope_font;
+		font-size: 20px;
+		line-height: 24px;
+		font-weight: 600;
+		color: $c_black;
+	}
+
+	&__strip {
+		display: flex;
+		align-items: center;
+		height: 130px;
+		overflow: hidden;
+	}
+
+	&__track {
+		display: flex;
+		width: max-content;
+		animation: supporters-scroll calc(var(--supporters-count, 7) * 5s) linear infinite;
+
+		&:hover {
+			animation-play-state: paused;
+		}
+	}
+
+	&__list {
+		@include list--no;
+		display: flex;
+		align-items: center;
+		gap: 44px;
+		margin: 0;
+		padding-right: 44px;
+	}
+
+	&__item {
+		display: flex;
+		flex: none;
+		align-items: center;
+		height: 62.33px;
+		padding: 10px 16px;
+
+		a {
+			display: block;
+		}
+	}
+
+	&__logo {
+		display: block;
+		width: auto;
+		max-width: 200px;
+		height: 42.33px;
+		object-fit: contain;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&__strip {
+			height: auto;
+			padding: 34px 0;
+		}
+
+		&__track {
+			width: 100%;
+			animation: none;
+		}
+
+		&__list {
+			flex-wrap: wrap;
+			justify-content: center;
+			width: 100%;
+			padding: 0 16px;
+
+			& + & {
+				display: none;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		margin-top: 88px;
+
+		&__strip {
+			height: 100px;
+		}
+
+		&__list {
+			gap: 24px;
+			padding-right: 24px;
+		}
+
+		&__logo {
+			height: 34px;
+		}
+	}
+}
+
+/* Donation steps: the mission section, four white cards in a staircase
+   (elements/sections/mission.php, modifier "steps")
+   ========================================= */
+
+.mission--steps {
+	padding-top: 120px;
+
+	.mission__inner {
+		max-width: 1472px;
+	}
+
+	.mission__title {
+		font-weight: 500;
+	}
+
+	@include media-breakpoint-up(xl) {
+		.mission__title {
+			flex: 0 1 724px;
+		}
+	}
+
+	.mission__cards {
+		gap: 0;
+	}
+
+	.mission__item {
+		padding: 0 10px;
+	}
+
+	.mission-card {
+		background-color: $c_white;
+	}
+
+	.mission-card__wave {
+		left: calc(50% + 126px);
+	}
+
+	.mission-card__title {
+		font-weight: 600;
+	}
+
+	// a step lower for each card
+	@include media-breakpoint-up(xl) {
+		.mission__item {
+			&:nth-child(n) {
+				padding-top: 0;
+			}
+
+			&:nth-child(4n + 2) {
+				padding-top: 60px;
+			}
+
+			&:nth-child(4n + 3) {
+				padding-top: 120px;
+			}
+
+			&:nth-child(4n) {
+				padding-top: 180px;
+			}
+		}
+	}
+
+	// two by two
+	@include media-breakpoint-between(md, xl) {
+		.mission__cards {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			row-gap: 20px;
+		}
+
+		.mission__item {
+			&:nth-child(n) {
+				padding-top: 0;
+			}
+
+			&:nth-child(2n) {
+				padding-top: 60px;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding-top: 96px;
+	}
+
+	@include media-breakpoint-down(md) {
+		.mission__item {
+			padding: 0;
+		}
+	}
+}
+
+/* FAQ: elements/sections/faq.php (styles in _donation.scss)
+   ========================================= */
+
+.home-page .faq {
+	padding-top: 145px;
+
+	&__title {
+		font-weight: 500;
+	}
+
+	@include media-breakpoint-down(xl) {
+		padding-top: 120px;
+	}
+}
+
+/* Floating "support our work" bar (elements/parts/sticky-cta.php)
+   ========================================= */
+
+.sticky-cta {
+	position: fixed;
+	z-index: 20;
+	left: 50%;
+	bottom: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	width: calc(100% - 2 * #{$page_gutter});
+	max-width: 1457px;
+	padding: 16px 16px 16px 28px;
+	border-radius: 32px;
+	background-color: rgba(228, 228, 228, .5);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	transform: translateX(-50%);
+	transition: opacity 300ms ease, transform 300ms ease, visibility 300ms;
+
+	&.is-hidden {
+		visibility: hidden;
+		opacity: 0;
+		transform: translate(-50%, 24px);
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $manrope_font;
+		font-size: 35px;
+		line-height: 42px;
+		font-weight: 700;
+		color: $c_dark;
+	}
+
+	@include media-breakpoint-down(md) {
+		bottom: 12px;
+		gap: 12px;
+		padding: 10px 10px 10px 18px;
+		border-radius: 24px;
+
+		&__title {
+			font-size: 18px;
+			line-height: 24px;
+		}
+
+		.cl-btn {
+			padding: 12px 18px;
+			font-size: 16px;
+			line-height: 22px;
+		}
+	}
+}

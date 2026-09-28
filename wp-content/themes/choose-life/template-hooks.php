@@ -155,6 +155,48 @@ add_action( 'admin_init', function () {
 	}
 }, 1 );
 
+// Donors (Subscribers) use the site's My account only: no toolbar, no wp-admin.
+// admin-ajax.php stays open, the front-end (login, checkout, my account) talks to it.
+function theme_is_donor( $user = null ) {
+	$user = $user ?: wp_get_current_user();
+
+	return $user instanceof WP_User && $user->exists() && in_array( 'subscriber', (array) $user->roles, true ) && ! $user->has_cap( 'edit_posts' );
+}
+
+function theme_donor_home_url() {
+	return get_field( 'my_account_url', 'options' ) ?: home_url( '/' );
+}
+
+add_filter( 'show_admin_bar', function ( $show ) {
+	return theme_is_donor() ? false : $show;
+} );
+
+// on init, not admin_init: wp-admin refuses the pages a subscriber can't see before admin_init runs
+add_action( 'init', function () {
+	if ( ! is_admin() || wp_doing_ajax() || ! theme_is_donor() ) {
+		return;
+	}
+	wp_safe_redirect( theme_donor_home_url() );
+	exit;
+}, 1 );
+
+// logging in on wp-login.php would otherwise land on wp-admin/profile.php
+add_filter( 'login_redirect', function ( $redirect_to, $requested, $user ) {
+	return theme_is_donor( $user ) ? theme_donor_home_url() : $redirect_to;
+}, 10, 3 );
+
+// On a single action (post) its listing page (templates/actions.php) is the current menu item
+add_filter( 'wp_nav_menu_objects', function ( $items ) {
+	if ( is_singular( 'post' ) && ( $page_id = theme_actions_page_id() ) ) {
+		foreach ( $items as $item ) {
+			if ( $item->object === 'page' && (int) $item->object_id === $page_id ) {
+				$item->current = true;
+			}
+		}
+	}
+	return $items;
+} );
+
 // retry of the emails wp_mail() could not send (Inc_Email::schedule_email)
 add_action( 'cl_schedule_email_notification', [ 'Inc_Email', 'send_scheduled_email' ], 10, 5 );
 

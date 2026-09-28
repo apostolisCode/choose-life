@@ -7,6 +7,7 @@ import initWordsBands from './words-bands';
 import initAccordions from './accordions';
 import initReveal from './reveal';
 import initTiltCards from './tilt-card';
+import initCountUp from './count-up';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,4 +16,5 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 	initAccordions();
 	initReveal();
 	initTiltCards();
+	initCountUp();
 }

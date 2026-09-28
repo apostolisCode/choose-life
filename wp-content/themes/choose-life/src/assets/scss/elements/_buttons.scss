@@ -46,6 +46,17 @@
 		}
 	}
 
+	&--dark {
+		background-color: #0A0A0A;
+		border-color: #0A0A0A;
+		color: $c_white;
+		&:hover:not(:disabled) {
+			background-color: $c_main;
+			border-color: $c_main;
+			color: $c_white;
+		}
+	}
+
 	&--outline {
 		--cl-btn-spinner: #{$c_dark};
 		border-color: $c_dark;

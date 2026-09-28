@@ -11,7 +11,8 @@ if ( ! $args['questions'] ) {
 }
 ?>
 <section class="faq">
-    <div class="faq__card" data-reveal>
+    <div class="faq__card" data-reveal data-tilt-card>
+        <span class="faq__card-back" data-tilt-card-back aria-hidden="true"></span>
         <img src="<?php echo esc_url( $svg_url . 'faq-rainbow.svg' ); ?>" width="197.454" height="122.541" alt="" class="faq__rainbow" loading="lazy"/>
         <div class="faq__inner">
 			<?php if ( $args['title'] ) : ?>

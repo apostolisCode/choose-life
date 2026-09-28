@@ -12,6 +12,32 @@ $page_gutter: clamp(16px, 4.8vw, 92px);
 	margin-right: auto;
 }
 
+// A card with a red one behind it that tilts out on scroll
+// (animations/tilt-card.js): the card is [data-tilt-card] with tilt-card($bg),
+// the red one a [data-tilt-card-back] child with tilt-card-back.
+@mixin tilt-card($bg) {
+	position: relative;
+	isolation: isolate;
+
+	// the card itself, drawn above the red one
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: inherit;
+		background-color: $bg;
+	}
+}
+
+@mixin tilt-card-back($color: $c_main) {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	border-radius: inherit;
+	background-color: $color;
+}
+
 @mixin display-title {
 	margin: 0;
 	font-family: $manrope_font;

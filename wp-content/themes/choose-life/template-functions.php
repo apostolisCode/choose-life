@@ -25,11 +25,8 @@ if ( ! function_exists( 'theme_setup' ) ) {
 			'script'
 		) );
 
-		// Let wp know we want to use post thumbnails
-		/* add_theme_support( 'post-thumbnails', array(
-			'post',
-			..more post types here
-		) ); */
+		// Let wp know we want to use post thumbnails (posts are the "Δράσεις" / actions)
+		add_theme_support( 'post-thumbnails', array( 'post' ) );
 
 		// Add Custom Logo Support.
 		/*add_theme_support( 'custom-logo', array(
@@ -245,5 +242,56 @@ if ( ! function_exists( 'write_log' ) ) {
 		} else {
 			error_log( $current_date_time . " " . $log . "\n", 3, WP_CONTENT_DIR . "/site-debug.log" );
 		}
+	}
+}
+
+if ( ! function_exists( 'theme_actions_page_id' ) ) {
+	/**
+	 * The page using the "Actions" template (templates/actions.php): the
+	 * listing of the actions (posts), in the current language
+	 *
+	 * @return int page id, 0 if there is none
+	 */
+	function theme_actions_page_id() {
+		static $page_id = null;
+		if ( $page_id === null ) {
+			$pages   = get_pages( [ 'meta_key' => '_wp_page_template', 'meta_value' => 'templates/actions.php', 'number' => 1 ] );
+			$page_id = $pages ? (int) $pages[0]->ID : 0;
+		}
+		return $page_id;
+	}
+}
+
+if ( ! function_exists( 'theme_action_date' ) ) {
+	/**
+	 * Date of an action (post): its ACF event date in the site's date format
+	 * (Settings → General), e.g. "25 Σεπτεμβρίου 2026"
+	 *
+	 * @param int|WP_Post|null $post
+	 *
+	 * @return string
+	 */
+	function theme_action_date( $post = null ) {
+		$post = get_post( $post );
+		$date = $post ? get_field( 'event_date', $post->ID ) : '';
+		$time = $date ? strtotime( $date ) : false;
+		if ( ! $time ) {
+			return '';
+		}
+		return date_i18n( get_option( 'date_format' ), $time );
+	}
+}
+
+if ( ! function_exists( 'theme_action_meta' ) ) {
+	/**
+	 * "Date · Location" line of an action card
+	 *
+	 * @param int|WP_Post|null $post
+	 *
+	 * @return string
+	 */
+	function theme_action_meta( $post = null ) {
+		$post = get_post( $post );
+		return $post ? implode( ' · ', array_filter( [ theme_action_date( $post ), (string) get_field( 'event_location', $post->ID ) ] ) ) : '';
 	}
 }

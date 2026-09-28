@@ -2,9 +2,10 @@
 /**
  * Two tilted, scrolling bands of words (pink and white)
  *
- * @var array $args words (string[])
+ * @var array $args words (string[]), modifier ('apart': the bands further apart, crossing)
  */
-$words = $args['words'] ?? [];
+$words    = $args['words'] ?? [];
+$modifier = $args['modifier'] ?? '';
 if ( ! $words ) {
 	return;
 }
@@ -13,7 +14,7 @@ $bands = [
 	'light' => array_reverse( $words ),
 ];
 ?>
-<div class="words-bands" aria-hidden="true">
+<div class="words-bands<?php echo $modifier ? ' words-bands--' . esc_attr( $modifier ) : ''; ?>" aria-hidden="true">
 	<?php foreach ( $bands as $variant => $band_words ) : ?>
         <div class="words-band words-band--<?php echo esc_attr( $variant ); ?>">
             <div class="words-band__track">

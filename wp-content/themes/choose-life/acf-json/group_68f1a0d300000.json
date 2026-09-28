@@ -1,0 +1,142 @@
+{
+    "key": "group_68f1a0d300000",
+    "title": "Newsletter",
+    "fields": [
+        {
+            "key": "field_68f1a0d300001",
+            "label": "Text",
+            "name": "newsletter_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short text on the left of the dark card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0d300002",
+            "label": "Title",
+            "name": "newsletter_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0d300003",
+            "label": "Title (red part)",
+            "name": "newsletter_title_accent",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_68f1a0d300004",
+            "label": "Form",
+            "name": "newsletter_form",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Contact Form 7 form. Its fields come from the theme file elements\/cf7-newsletter.php (Form type: Template).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": [],
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_68f1a0d300005",
+            "label": "Photo",
+            "name": "newsletter_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Shown on the right, about 315 × 335.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium",
+            "wpml_cf_preferences": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 4,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1790593975,
+    "acfml_field_group_mode": "translation"
+}

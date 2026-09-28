@@ -3,7 +3,7 @@
    ========================================= */
 
 .donation-page {
-	overflow-x: hidden;
+	overflow-x: clip;
 	font-family: $manrope_font;
 	color: $c_dark;
 }
@@ -37,6 +37,14 @@
 		margin: 0;
 		font-size: 26px;
 		line-height: 36px;
+
+		p {
+			margin: 0 0 16px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 
 	&__media {
@@ -548,12 +556,16 @@
 .faq {
 	padding-top: 218px;
 
+	// white card with a red one behind it tilting out on scroll
 	&__card {
 		@include page-width(1736px);
-		position: relative;
+		@include tilt-card($c_white);
 		padding: 100px 24px;
 		border-radius: 60px;
-		background-color: $c_white;
+	}
+
+	&__card-back {
+		@include tilt-card-back(#E41E2B);
 	}
 
 	&__rainbow {

@@ -2,10 +2,11 @@
 /**
  * "Our mission": title + intro, and staggered cards (image, title, text)
  *
- * @var array $args title, text, cards (ACF repeater rows: image, title, text, link)
+ * @var array $args title, text, cards (ACF repeater rows: image, title, text, link),
+ *                  modifier ('steps': white cards, four steps in a staircase)
  */
-$args  = wp_parse_args( $args ?? [], [ 'title' => '', 'text' => '', 'cards' => [] ] );
-$wave  = get_template_directory_uri() . '/assets/svg/donation/card-wave.svg';
+$args  = wp_parse_args( $args ?? [], [ 'title' => '', 'text' => '', 'cards' => [], 'modifier' => '' ] );
+$wave  = get_template_directory_uri() . ( $args['modifier'] === 'steps' ? '/assets/svg/layout/card-wave-white.svg' : '/assets/svg/donation/card-wave.svg' );
 $cards = array_filter( $args['cards'], function ( $card ) {
 	return ! empty( $card['title'] ) || ! empty( $card['image'] );
 } );
@@ -13,7 +14,7 @@ if ( ! $args['title'] && ! $cards ) {
 	return;
 }
 ?>
-<section class="mission">
+<section class="mission<?php echo $args['modifier'] ? ' mission--' . esc_attr( $args['modifier'] ) : ''; ?>">
     <div class="mission__inner">
         <header class="mission__header" data-reveal>
 			<?php if ( $args['title'] ) : ?>
