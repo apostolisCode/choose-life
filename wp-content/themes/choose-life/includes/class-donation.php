@@ -302,7 +302,33 @@ class Inc_Donation {
 	 * @return string
 	 */
 	public static function get_reference( $donation_id ) {
-		return sprintf( '#CL-%s-%04d', get_the_date( 'Y', $donation_id ), $donation_id );
+		// a donation moved here from another site keeps the number its donor already has
+		$number = (int) get_post_meta( $donation_id, '_cl_source_id', true ) ?: $donation_id;
+
+		return sprintf( '#CL-%s-%04d', get_the_date( 'Y', $donation_id ), $number );
+	}
+
+	/**
+	 * The donation a gateway order id points to. Cardlink keeps the id the
+	 * donation had when its first payment was made, so a donation moved from
+	 * another site (plugin "Choose Life transfer") may now have another id:
+	 * it keeps the old one in `_cl_source_id`.
+	 *
+	 * @param int $gateway_id the id in the gateway's orderid ("{id}at…")
+	 *
+	 * @return int
+	 */
+	public static function resolve_gateway_id( $gateway_id ) {
+		$moved = get_posts( [
+			'post_type'        => 'donations',
+			'post_status'      => 'publish',
+			'posts_per_page'   => 1,
+			'fields'           => 'ids',
+			'suppress_filters' => true,
+			'meta_query'       => [ [ 'key' => '_cl_source_id', 'value' => (int) $gateway_id ] ],
+		] );
+
+		return $moved ? (int) $moved[0] : (int) $gateway_id;
 	}
 
 	public function get_donation_fields_by_id( $id = null ) {

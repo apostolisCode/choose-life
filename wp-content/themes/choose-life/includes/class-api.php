@@ -386,7 +386,7 @@ class Inc_Api {
 		if ( ! preg_match( '/^(\d+)at/', (string) ( $data['orderid'] ?? '' ), $matches ) ) {
 			return new WP_REST_Response( false, 400 );
 		}
-		$first_donation_id = $matches[1];
+		$first_donation_id = Inc_Donation::resolve_gateway_id( $matches[1] );
 
 		$donation_class = Inc_Donation::get_instance();
 		$donation_id    = $donation_class->create_recurring_donation( $first_donation_id, $data );
